@@ -147,9 +147,6 @@ GEM
     nokogiri (1.6.8)
       mini_portile2 (~> 2.1.0)
       pkg-config (~> 1.1.7)
-    notifications (0.2.0)
-      rails (>= 4.2.0, < 5.1)
-      will_paginate (>= 3.0.0)
     pkg-config (1.1.7)
     pry (0.10.4)
       coderay (~> 1.1.0)
@@ -262,7 +259,6 @@ GEM
       binding_of_caller (>= 0.7.2)
       railties (>= 4.0)
       sprockets-rails (>= 2.0, < 4.0)
-    will_paginate (3.1.0)
 
 PLATFORMS
   ruby
@@ -285,7 +281,6 @@ DEPENDENCIES
   jpush (~> 4.0, >= 4.0.2)
   jquery-rails
   mysql2 (~> 0.4.4)
-  notifications (~> 0.2.0)
   pry-byebug (~> 3.4)
   pry-nav (~> 0.2.4)
   pry-rails (~> 0.3.4)

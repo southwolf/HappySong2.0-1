@@ -36,7 +36,7 @@ gem 'smart_sms'
 gem 'rolify', '~> 5.1'
 
 #  notifications
-gem 'notifications', '~> 0.2.0'
+#gem 'notifications', '~> 0.2.0'
 
 # redis
 gem 'redis'
