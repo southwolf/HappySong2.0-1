@@ -5,7 +5,7 @@ module V1
      desc "获取所有省份"
       get do
         provinces = Province.all
-        present :provinces, provinces, with: ::Entities::Province
+        present provinces, with: ::Entities::Province
       end
     end
 
@@ -21,7 +21,7 @@ module V1
         else
           cities = City.where(province_id: province_id)
         end
-        present :cities, cities, with: ::Entities::City
+        present cities, with: ::Entities::City
       end
     end
 
@@ -37,7 +37,7 @@ module V1
         else
           districts = District.where(city_id:city_id)
         end
-        present :districts, districts, with: ::Entities::District
+        present  districts, with: ::Entities::District
       end
     end
 

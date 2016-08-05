@@ -12,7 +12,7 @@ module V1
         else
           schools = School.where(district_id: district_id)
         end
-        present :schools, schools, with: ::Entities::School
+        present  schools, with: ::Entities::School
       end
     end
   end

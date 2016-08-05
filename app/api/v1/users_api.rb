@@ -20,9 +20,8 @@ module V1
         if user.deliver_fake_sms
           present :message, "成功"
         else
-          error!({message: "失败"}, 500)
+          error!("失败", 500)
         end
-        
       end
 
 
@@ -40,7 +39,7 @@ module V1
 
         user = User.find_by_phone(phone)
         if user.verify code
-          present :user, user, with: ::Entities::User
+          present  user, with: ::Entities::User
           present :message, "登陆成功"
         else
           present :errors, "验证码错误"
@@ -72,7 +71,7 @@ module V1
 
         end
 
-        present :user, current_user, with: ::Entities::User
+        present current_user, with: ::Entities::User
       end
 
       desc "更换头像"
@@ -107,9 +106,9 @@ module V1
         desc   = params[:desc].to_s
         # avatar = params[:avatar].nil? ? "happysong_logo.jpg": params[:avatar].to_s
         if current_user.update_attributes(name: name, age: age, sex: sex, desc: desc)
-          present :user, current_user, with: ::Entities::Simpleuser
+          present current_user, with: ::Entities::Simpleuser
         else
-          error!({message: '更新失败'}, 500)
+          error!( '更新失败', 500)
         end
       end
 
@@ -188,6 +187,7 @@ module V1
         present :user, current_user, with: ::Entities::MyProfile
       end
 
+      desc "测试"
       get '/all' do
 
         users = User.all.group_by{|user| DateTime.parse(user.created_at.to_s).strftime('%y-%m')}

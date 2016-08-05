@@ -13,7 +13,7 @@ module V1
           musics = Music.where(music_type_id: music_type_id)
         end
         if musics.size == 0
-          error!({message: "没有找到任何记录"}, 404)
+          error!("没有找到任何记录", 404)
         else
           present musics, with: ::Entities::Music
         end
@@ -24,11 +24,7 @@ module V1
       desc "获取所有音乐类型"
       get do
         music_types = MusicType.all
-        if music_types.size == 0
-          error!({message: "没有找到任何记录"}, 404)
-        else
-          present music_types, with: ::Entities::MusicType
-        end
+        present music_types, with: ::Entities::MusicType
       end
     end
   end

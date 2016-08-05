@@ -9,9 +9,9 @@ module V1
         code = params[:code]
         team_class = GradeTeamClass.find_by(code: code)
         if team_class.nil?
-          error!({message:"没有找到对应记录,请检查你的班级码是否输入正确"},404)
+          error!("没有找到对应记录,请检查你的班级码是否输入正确", 404)
         else
-         present :team_class, team_class, with: ::Entities::TeamClass
+         present  team_class, with: ::Entities::TeamClass
         end
       end
     end

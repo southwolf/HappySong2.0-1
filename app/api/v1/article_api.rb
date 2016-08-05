@@ -48,9 +48,9 @@ module V1
         articles = Article.where(title: title).order(:records_count => :DESC)
 
         if article.nil?
-          error!({message: "没有找到符合的文章"}, 404)
+          error!("没有找到符合的文章", 404)
         else
-          present :article, articles, with: ::Entities::Article
+          present  articles, with: ::Entities::Article
         end
       end
     end
