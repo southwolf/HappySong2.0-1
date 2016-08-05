@@ -17,7 +17,7 @@ module V1
         if user.nil?
           user = User.create(:phone => phone)
         end
-        if user.deliver_fake_sms
+        if user.deliver
           present :message, "成功"
         else
           error!("失败", 500)
