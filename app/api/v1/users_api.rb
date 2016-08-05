@@ -39,7 +39,7 @@ module V1
 
         user = User.find_by_phone(phone)
         if user.verify code
-          present  user, with: ::Entities::User
+          present :user, user, with: ::Entities::User
           present :message, "登陆成功"
         else
           present :errors, "验证码错误"
