@@ -10,13 +10,14 @@ module V1
         requires :phone, type: String, desc: "手机号"
       end
       get '/getcode' do
-        phone = params[:phone]
+        phone = params[:phone].to_s
 
         user = User.find_by_phone(phone)
 
         if user.nil?
           user = User.create(:phone => phone)
         end
+
         if user.deliver
           present :message, "成功"
         else
