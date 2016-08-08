@@ -6,7 +6,8 @@ module V1
         optional :district_id, type: Integer, desc: '区域ID'
       end
       get do
-        district_id = params[:district_id]
+        status 200
+        district_id = params[:district_id].to_i
         if district_id.nil?
           schools = School.all
         else

@@ -7,6 +7,7 @@ module V1
 
       desc "获取所有文章"
       get '/all' do
+        status 200
         articles = Article.all.order(:records_count => :DESC)
         present paginate(articles), with: ::Entities::Article
       end
@@ -18,6 +19,7 @@ module V1
         requires :article_grape_id, type: Integer, desc: "文章班级ID"
       end
       get do
+        status 200
         subject_id = params[:subject_id]
         edition_id = params[:edition_id]
         articles = Article.where(:subject_id => subject_id, :edition_id => edition_id)
@@ -30,6 +32,7 @@ module V1
         requires :cate_item_id, type: Integer, desc: 'cate_item id.'
       end
       get :category do
+        status 200
         cate_item_id = params[:cate_item_id]
         cate_item    = CateItem.find cate_item_id
         articles     = cate_item.articles.order(:records_count => :DESC)
@@ -43,6 +46,7 @@ module V1
       end
 
       get '/search' do
+        status 200
         title = params[:title]
         articles = Article.all.order(:records_count => :DESC) if title.empty?
         articles = Article.where(title: title).order(:records_count => :DESC)

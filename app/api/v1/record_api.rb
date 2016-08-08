@@ -14,6 +14,7 @@ module V1
       end
 
       post do
+        status 200
         authenticate!
         user_id = current_user.id
         result = Result.new( :user_id  => user_id,           :file_url   => params[:file_url],
@@ -30,6 +31,7 @@ module V1
       desc "最新朗读"
       paginate per_page: 20
       get do
+        status 200
         records = Record.all.order(:created_at => :DESC)
         present paginate(records), with: ::Entities::Record
       end
@@ -37,6 +39,7 @@ module V1
       desc "推荐朗读"
 
       get do
+        status 200
 
       end
 
@@ -45,6 +48,7 @@ module V1
         requires :id, type: Integer, desc: "朗读作品ID"
       end
       get '/show' do
+        status 200
         id = params[:id]
         record = Record.find(id)
         if record.nil?
@@ -54,7 +58,7 @@ module V1
         end
       end
 
-      
+
     end
   end
 end

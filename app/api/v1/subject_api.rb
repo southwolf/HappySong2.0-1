@@ -4,12 +4,13 @@ module V1
       desc "取得所有科目"
 
       get do
+        status 200
         subjects  = Subject.all
         categorys = Category.all
 
         present  :subjects, subjects,    with:     ::Entities::Subject,
-                                         grades:   Grade.all,
-                                         editions: Edition.all
+                                         grades:     Grade.all,
+                                         editions:   Edition.all
         present  :categorys, categorys,  with:     ::Entities::Category
       end
     end

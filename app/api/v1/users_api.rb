@@ -10,6 +10,7 @@ module V1
         requires :phone, type: String, desc: "手机号"
       end
       get '/getcode' do
+        status 200
         phone = params[:phone].to_s
 
         user = User.find_by_phone(phone)
@@ -35,6 +36,7 @@ module V1
         requires :code,  type: String, desc: "验证码"
       end
       post '/login' do
+        status 200
         phone = params[:phone].to_s
         code  = params[:code].to_s
 
@@ -43,7 +45,7 @@ module V1
           present :user, user, with: ::Entities::User
           present :message, "登陆成功"
         else
-          present :errors, "验证码错误"
+          error!("验证码错误",500)
         end
       end
 
@@ -59,6 +61,7 @@ module V1
       end
 
       post '/setrole' do
+        status 200
         authenticate!
         role = params[:role].to_i
         case role
@@ -80,6 +83,7 @@ module V1
         requires :avatar, type: String, desc: "用户头像"
       end
       post '/avatar' do
+        status 200
         authenticate!
         avatar = params[:avatar]
         if current_user.update_attributes(avatar: avatar)
@@ -100,6 +104,7 @@ module V1
         # optional :avatar, type: String, desc: "用户头像 "
       end
       post '/update_profile' do
+        status 200
         authenticate!
         name   = params[:user].to_s
         age    = params[:age].to_i
@@ -120,6 +125,7 @@ module V1
       end
 
       get '/checkfollowed' do
+        status 200
         authenticate!
         user = User.find(params[:user_id])
         if current_user.followed? user
@@ -136,6 +142,7 @@ module V1
         requires :user_id, type: Integer, desc: "被关注用户id"
       end
       post '/follow' do
+        status 200
         authenticate!
         user = User.find(params[:user_id])
         present error!({message: '你不能关注自己'}, 500) if current_user == user
@@ -154,6 +161,7 @@ module V1
       end
 
       post '/unfollow' do
+        status 200
         authenticate!
         user = User.find(params[:user_id])
         if current_user.unfollow(user)
@@ -169,6 +177,7 @@ module V1
         requires :name, type: String, desc: "用户名"
       end
       get '/find'do
+        status 200
         name = params[:name]
         user = User.find_by_name(name)
         if user.nil?
@@ -183,6 +192,7 @@ module V1
         requires :token, type: String, desc: "token"
       end
       get '/profile' do
+        status 200
         authenticate!
         puts current_user.name
         present :user, current_user, with: ::Entities::MyProfile
@@ -190,7 +200,7 @@ module V1
 
       desc "测试"
       get '/all' do
-
+        status 200
         users = User.all.group_by{|user| DateTime.parse(user.created_at.to_s).strftime('%y-%m')}
         users.each do |key, value|
           # present :key,   key
@@ -208,6 +218,7 @@ module V1
         requires :contact, type: String,  desc: "联系方式"
       end
       post do
+        status 200
         authenticate!
         content = params[:content]
         contact = params[:contact]

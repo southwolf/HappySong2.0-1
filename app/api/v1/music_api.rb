@@ -6,6 +6,7 @@ module V1
       end
       desc "获取music,如果没有带music_type_id,则取所有音乐"
       get do
+        status 200
         music_type_id = params[:music_type_id]
         if music_type_id.nil?
           musics = Music.all
@@ -23,6 +24,7 @@ module V1
     resources :music_types do
       desc "获取所有音乐类型"
       get do
+        status 200
         music_types = MusicType.all
         present music_types, with: ::Entities::MusicType
       end
