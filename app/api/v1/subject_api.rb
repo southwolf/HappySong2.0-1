@@ -7,10 +7,10 @@ module V1
         subjects  = Subject.all
         categorys = Category.all
 
-        present  :subjects, subjects    with:     ::Entities::Subject,
-                                        grades:   Grade.all,
-                                        editions: Edition.all
-        present  :categorys, categorys  with:     ::Entities::Category
+        present  :subjects, subjects,    with:     ::Entities::Subject,
+                                         grades:   Grade.all,
+                                         editions: Edition.all
+        present  :categorys, categorys,  with:     ::Entities::Category
       end
     end
   end
