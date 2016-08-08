@@ -6,13 +6,13 @@ module V1
         requires :code, type: String, desc: '班级码'
       end
       get do
-        status 200
         code = params[:code].to_s
         team_class = GradeTeamClass.find_by(code: code)
         if team_class.nil?
           error!("没有找到对应记录,请检查你的班级码是否输入正确", 404)
         else
          present  team_class, with: ::Entities::TeamClass
+         status 200
         end
       end
     end

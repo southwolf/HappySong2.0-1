@@ -6,7 +6,6 @@ module V1
         optional :district_id, type: Integer, desc: '区域ID'
       end
       get do
-        status 200
         district_id = params[:district_id].to_i
         if district_id.nil?
           schools = School.all
@@ -14,6 +13,7 @@ module V1
           schools = School.where(district_id: district_id)
         end
         present  schools, with: ::Entities::School
+        status 200
       end
     end
   end

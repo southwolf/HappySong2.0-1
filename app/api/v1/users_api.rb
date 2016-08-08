@@ -10,7 +10,6 @@ module V1
         requires :phone, type: String, desc: "手机号"
       end
       get '/getcode' do
-        status 200
         phone = params[:phone].to_s
 
         user = User.find_by_phone(phone)
@@ -21,6 +20,7 @@ module V1
 
         if user.deliver
           present :message, "成功"
+          status 200
         else
           error!("失败", 500)
         end
@@ -36,7 +36,6 @@ module V1
         requires :code,  type: String, desc: "验证码"
       end
       post '/login' do
-        status 200
         phone = params[:phone].to_s
         code  = params[:code].to_s
 
@@ -44,6 +43,7 @@ module V1
         if user.verify code
           present :user, user, with: ::Entities::User
           present :message, "登陆成功"
+          status 200
         else
           error!("验证码错误",500)
         end
@@ -61,7 +61,6 @@ module V1
       end
 
       post '/setrole' do
-        status 200
         authenticate!
         role = params[:role].to_i
         case role
@@ -76,6 +75,7 @@ module V1
         end
 
         present current_user, with: ::Entities::User
+        status 200
       end
 
       desc "更换头像"
@@ -83,11 +83,11 @@ module V1
         requires :avatar, type: String, desc: "用户头像"
       end
       post '/avatar' do
-        status 200
         authenticate!
         avatar = params[:avatar]
         if current_user.update_attributes(avatar: avatar)
           present :message, "成功"
+          status 200
         else
           error!({message: "失败"}, 500)
         end
@@ -104,7 +104,6 @@ module V1
         # optional :avatar, type: String, desc: "用户头像 "
       end
       post '/update_profile' do
-        status 200
         authenticate!
         name   = params[:user].to_s
         age    = params[:age].to_i
@@ -113,6 +112,7 @@ module V1
         # avatar = params[:avatar].nil? ? "happysong_logo.jpg": params[:avatar].to_s
         if current_user.update_attributes(name: name, age: age, sex: sex, desc: desc)
           present current_user, with: ::Entities::Simpleuser
+          status 200
         else
           error!( '更新失败', 500)
         end
@@ -125,13 +125,14 @@ module V1
       end
 
       get '/checkfollowed' do
-        status 200
         authenticate!
         user = User.find(params[:user_id])
         if current_user.followed? user
           present :status, true
+          status 200
         else
           present :status, false
+          status 200
         end
       end
 
@@ -142,13 +143,13 @@ module V1
         requires :user_id, type: Integer, desc: "被关注用户id"
       end
       post '/follow' do
-        status 200
         authenticate!
         user = User.find(params[:user_id])
         present error!({message: '你不能关注自己'}, 500) if current_user == user
         if current_user.follow(user)
           present :message, "关注成功"
           present :follow_size, user.followers.size
+          status 200
         else
           error!({message: '关注失败'}, 500)
         end
@@ -161,12 +162,12 @@ module V1
       end
 
       post '/unfollow' do
-        status 200
         authenticate!
         user = User.find(params[:user_id])
         if current_user.unfollow(user)
           present :message, "取消关注成功"
           present :follow_size, user.followers.size
+          status 200
         else
           error!({message: '取消关注失败'}, 500)
         end
@@ -177,13 +178,13 @@ module V1
         requires :name, type: String, desc: "用户名"
       end
       get '/find'do
-        status 200
         name = params[:name]
         user = User.find_by_name(name)
         if user.nil?
           error!({message:"没有查到对应用户"},404)
         else
           present user, with: ::Entities::SimpleUser
+          status 200
         end
       end
 
@@ -192,17 +193,17 @@ module V1
         requires :token, type: String, desc: "token"
       end
       get '/profile' do
-        status 200
         authenticate!
         puts current_user.name
         present :user, current_user, with: ::Entities::MyProfile
+        status 200
       end
 
       desc "测试"
       get '/all' do
-        status 200
         users = User.all.group_by{|user| DateTime.parse(user.created_at.to_s).strftime('%y-%m')}
         users.each do |key, value|
+          status 200
           # present :key,   key
           # present :users, value, with: ::Entities::User
         end
@@ -218,13 +219,13 @@ module V1
         requires :contact, type: String,  desc: "联系方式"
       end
       post do
-        status 200
         authenticate!
         content = params[:content]
         contact = params[:contact]
         advise = current_user.advises.new(:content => content, :contact => contact)
         if advise.save
           present :message, "感想你的反馈！"
+          status 200
         else
           error!({ error: "提交失败"}, 503)
         end

@@ -4,9 +4,9 @@ module V1
     resources :provinces do
      desc "获取所有省份"
       get do
-        status 200
         provinces = Province.all
         present provinces, with: ::Entities::Province
+        status 200
       end
     end
 
@@ -16,7 +16,6 @@ module V1
         optional :province_id, type: Integer, desc: "城市ID"
       end
       get do
-        status 200
         province_id = params[:province_id]
         if province_id.nil?
           cities = City.all
@@ -24,6 +23,7 @@ module V1
           cities = City.where(province_id: province_id)
         end
         present cities, with: ::Entities::City
+        status 200
       end
     end
 
@@ -33,7 +33,6 @@ module V1
         optional :city_id, type: Integer, desc: 'city_id 城市 id.'
       end
       get do
-        status 200
         city_id = params[:city_id]
         if city_id.nil?
           districts = District.all
@@ -41,6 +40,7 @@ module V1
           districts = District.where(city_id:city_id)
         end
         present  districts, with: ::Entities::District
+        status 200
       end
     end
 

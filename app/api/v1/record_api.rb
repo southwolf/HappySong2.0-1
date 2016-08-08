@@ -14,7 +14,6 @@ module V1
       end
 
       post do
-        status 200
         authenticate!
         user_id = current_user.id
         result = Result.new( :user_id  => user_id,           :file_url   => params[:file_url],
@@ -22,6 +21,7 @@ module V1
                              :music_id => params[:music_id], :is_public  => params[:is_public] )
         if result.save
           present :result, result, with: ::Entities::Result
+          status 200
         else
           error({message:"创建失败"}, 501)
         end
@@ -31,9 +31,9 @@ module V1
       desc "最新朗读"
       paginate per_page: 20
       get do
-        status 200
         records = Record.all.order(:created_at => :DESC)
         present paginate(records), with: ::Entities::Record
+        status 200
       end
 
       desc "推荐朗读"
@@ -48,13 +48,13 @@ module V1
         requires :id, type: Integer, desc: "朗读作品ID"
       end
       get '/show' do
-        status 200
         id = params[:id]
         record = Record.find(id)
         if record.nil?
           error!({message: "没有找到对应朗读!"}, 404)
         else
           present record, with: ::Entities::Record
+          status 200
         end
       end
 
