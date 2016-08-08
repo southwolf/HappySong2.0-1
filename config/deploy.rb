@@ -12,7 +12,7 @@ set :ssh_options, {
 
 set :use_sudo, false
 set :scm, :git
-set :repo_url, 'git@git.coding.net:silent_hill/love_to_read_version2.git'
+set :repo_url, 'git@git.oschina.net:ljmob/love_to_read_version2.git'
 ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
 set :deploy_to, '/apps/love_to_read_version2'
 
