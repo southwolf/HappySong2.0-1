@@ -7,7 +7,7 @@ module V1
         requires :id,      type: Integer, desc: "评论的ID"
         requires :content, type: String,  desc: "回复内容"
       end
-      post do
+      post "/reply" do
         authenticate!
         id      = params[:id].to_i
         content = params[:content].to_s
