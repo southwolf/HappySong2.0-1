@@ -6,7 +6,6 @@ module V1
       get do
         provinces = Province.all
         present provinces, with: ::Entities::Province
-        status 200
       end
     end
 
@@ -23,7 +22,6 @@ module V1
           cities = City.where(province_id: province_id)
         end
         present cities, with: ::Entities::City
-        status 200
       end
     end
 
@@ -40,7 +38,6 @@ module V1
           districts = District.where(city_id:city_id)
         end
         present  districts, with: ::Entities::District
-        status 200
       end
     end
 

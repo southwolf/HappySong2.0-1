@@ -13,7 +13,6 @@ module V1
           schools = School.where(district_id: district_id)
         end
         present  schools, with: ::Entities::School
-        status 200
       end
     end
   end

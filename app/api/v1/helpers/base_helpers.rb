@@ -1,6 +1,8 @@
 module V1
   module BaseHelpers
+
     extend Grape::API::Helpers
+
     def current_user
       token = params[:token].presence
       return nil unless token
@@ -13,21 +15,24 @@ module V1
 
     def teacher_authenticate!
       authenticate!
-      error!({ error: "你没有教师权限!", detail: "你没有教师权限!" }, 501) unless current_user.roles.first.name == "teacher"
+      error!({ error: "你没有教师权限!", detail: "你没有教师权限!" }, 401) unless current_user.role.name == "teacher"
     end
 
     def manager_authenticate!
       authenticate!
-      error!({ error: "你没有管理员权限!", detail: "你没有管理员权限!" }, 501) unless current_user.roles.first.name == "manager"
+      error!({ error: "你没有管理员权限!", detail: "你没有管理员权限!" }, 401) unless current_user.role.name == "manager"
     end
 
     def sign_in(user)
       token = User.new_token
-      user.update_attribute(:token, User.encrypt(token))
+      user.update(:token, User.encrypt(token))
       @current_user ||= user
     end
 
-    def logout
+    # 注销
+    def logout(user)
+      token = User.new_token
+      user.update(:token, User.encrypt(token))
       @current_user = nil
     end
 
@@ -38,5 +43,8 @@ module V1
     def set_id_code
       ([*?a..?z]+[*?1..?9]).sample(8).join
     end
+
+    # 设置用户角色
+    #
   end
 end

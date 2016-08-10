@@ -8,6 +8,7 @@ module Entities
     expose :sections,      using: Entities::Section do |article, options|
       article.article_sections
     end
+    expose :records_count
     expose :created_at
   end
 end

@@ -7,7 +7,7 @@ module V1
 
       desc "获取所有文章"
       get '/all' do
-        status 200
+
         articles = Article.all.order(:records_count => :DESC)
         present paginate(articles), with: ::Entities::Article
       end
@@ -24,10 +24,10 @@ module V1
         articles = Article.where(:subject_id => subject_id, :edition_id => edition_id)
                           .order(:records_count => :DESC)
         present paginate(articles), with: ::Entities::Article
-        status 200
+
       end
 
-      desc '查询文章根据分类查询.'
+      desc '根据分类查询文章.'
       params do
         requires :cate_item_id, type: Integer, desc: 'cate_item id.'
       end
@@ -37,25 +37,26 @@ module V1
         articles     = cate_item.articles.order(:records_count => :DESC)
 
         present paginate(articles), with: ::Entities::Article
-        status 200
+
       end
 
-      desc "根据文章名取文章"
+      desc "根据文章标题查询文章"
+
       params do
-        optional :title, type: String, desc: "文章标题"
+        optional :q, type: String, desc: "查询标识"
       end
 
       get '/search' do
-        title = params[:title]
-        articles = Article.all.order(:records_count => :DESC) if title.empty?
-        articles = Article.where(title: title).order(:records_count => :DESC)
+        q = params[:q]
+        articles = Article.all.order(:records_count => :DESC) if q.nil?
+        articles = Article.where(:title => q).order(:records_count => :DESC)
 
-        if article.nil?
-          error!("没有找到符合的文章", 404)
-        else
-          present  articles, with: ::Entities::Article
-          status 200
-        end
+        # if article.blank?
+          # error!("没有找到符合的文章", 404)
+        # else
+        present  articles, with: ::Entities::Article
+
+        # end
       end
     end
   end

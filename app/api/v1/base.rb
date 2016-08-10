@@ -15,6 +15,9 @@ module V1
     mount V1::MusicApi
     mount V1::SubjectApi
     mount V1::ArticleApi
+    mount V1::BannerApi
+    mount V1::RecordApi
+    mount V1::CommentsApi
     # add_swagger_documentation(
     #   :api_version => "api/v1",
     #   hide_documentation_path: true,

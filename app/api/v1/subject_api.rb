@@ -11,7 +11,6 @@ module V1
                                          grades:     Grade.all,
                                          editions:   Edition.all
         present  :categorys, categorys,  with:     ::Entities::Category
-        status 200
       end
     end
   end

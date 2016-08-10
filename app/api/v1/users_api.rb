@@ -11,16 +11,12 @@ module V1
       end
       get '/getcode' do
         phone = params[:phone].to_s
-
         user = User.find_by_phone(phone)
-
-        if user.nil?
+        if user.blank?
           user = User.create(:phone => phone)
         end
-
-        if user.deliver
+        if user.deliver_fake_sms
           present :message, "成功"
-          status 200
         else
           error!("失败", 500)
         end
@@ -43,7 +39,6 @@ module V1
         if user.verify code
           present :user, user, with: ::Entities::User
           present :message, "登陆成功"
-          status 200
         else
           error!("验证码错误",500)
         end
@@ -54,65 +49,49 @@ module V1
       # params
       # token 用户登录令牌
       # role  用户所选角色【0代表老师，1代表家长，2代表学生】
-      desc "设置角色"
-      params do
-        requires :token, type: String, desc: "token"
-        requires :role,  type: Integer, desc: "角色[0:老师,1:家长,2:学生]"
-      end
-
-      post '/setrole' do
-        authenticate!
-        role = params[:role].to_i
-        case role
-        when 0
-          current_user.add_role 'teacher'
-        when 1
-          current_user.add_role 'parent'
-        when 2
-          current_user.add_role 'student'
-        else
-
-        end
-
-        present current_user, with: ::Entities::User
-        status 200
-      end
+      # desc "设置角色"
+      # params do
+      #   requires :token, type: String, desc: "token"
+      #   requires :role,  type: Integer, desc: "角色[0:老师,1:家长,2:学生]"
+      # end
+      #
+      # post '/setrole' do
+      #   authenticate!
+      #
+      #
+      #   present current_user, with: ::Entities::User
+      # end
 
       desc "更换头像"
       params do
+        requires :token,  type: String, desc: "用户登录令牌" 
         requires :avatar, type: String, desc: "用户头像"
       end
       post '/avatar' do
         authenticate!
         avatar = params[:avatar]
-        if current_user.update_attributes(avatar: avatar)
+        if current_user.update(avatar: avatar)
           present :message, "成功"
-          status 200
         else
           error!({message: "失败"}, 500)
         end
       end
 
 
-      desc  "更新角色"
+      desc  "完善用户信息"
       params do
         requires :token,  type: String,  desc: "token"
         requires :name,   type: String,  desc: "用户姓名"
-        requires :age,    type: Integer, desc: "用户年龄"
         requires :sex,    type: String,  desc: "用户性别"
-        optional :desc,   type: String,  desc: "用户简介"
-        # optional :avatar, type: String, desc: "用户头像 "
+        requires :role,   type: Integer, desc: "用户角色[老师:0, 家长:1, 学生: 2]"
       end
       post '/update_profile' do
         authenticate!
-        name   = params[:user].to_s
-        age    = params[:age].to_i
-        sex    = params[:sex].to_s
-        desc   = params[:desc].to_s
-        # avatar = params[:avatar].nil? ? "happysong_logo.jpg": params[:avatar].to_s
-        if current_user.update_attributes(name: name, age: age, sex: sex, desc: desc)
-          present current_user, with: ::Entities::Simpleuser
-          status 200
+        name      = params[:name].to_s
+        sex       = params[:sex].to_s
+        role_id   = params[:role].to_i
+        if current_user.update(name: name, sex: sex) && current_user.set_role( role_id )
+          present current_user, with: ::Entities::User
         else
           error!( '更新失败', 500)
         end
@@ -129,10 +108,10 @@ module V1
         user = User.find(params[:user_id])
         if current_user.followed? user
           present :status, true
-          status 200
+
         else
           present :status, false
-          status 200
+
         end
       end
 
@@ -149,7 +128,6 @@ module V1
         if current_user.follow(user)
           present :message, "关注成功"
           present :follow_size, user.followers.size
-          status 200
         else
           error!({message: '关注失败'}, 500)
         end
@@ -173,19 +151,19 @@ module V1
         end
       end
 
-      desc "根据用户名查询用户"
+      desc "根据用户名或者用户ID查询用户"
       params do
-        requires :name, type: String, desc: "用户名"
+        optional :q, type: String, desc: "查询标识"
       end
       get '/find'do
-        name = params[:name]
-        user = User.find_by_name(name)
-        if user.nil?
-          error!({message:"没有查到对应用户"},404)
-        else
-          present user, with: ::Entities::SimpleUser
-          status 200
-        end
+        q = params[:q]
+        user = User.all.take(10) if q.nil?
+        user = User.where("name=? OR uid=?", q, q)
+        # if user.blank?
+          # error!({message:"没有查到对应用户"},404)
+        # else
+        present :user, user, with: ::Entities::SimpleUser
+        # end
       end
 
       desc "我的个人中心"
@@ -196,19 +174,17 @@ module V1
         authenticate!
         puts current_user.name
         present :user, current_user, with: ::Entities::MyProfile
-        status 200
       end
-
-      desc "测试"
-      get '/all' do
-        users = User.all.group_by{|user| DateTime.parse(user.created_at.to_s).strftime('%y-%m')}
-        users.each do |key, value|
-          status 200
-          # present :key,   key
-          # present :users, value, with: ::Entities::User
-        end
-        # present users, with: ::Entities::User
-      end
+      #
+      # desc "测试"
+      # get '/all' do
+      #   users = User.all.group_by{|user| DateTime.parse(user.created_at.to_s).strftime('%y-%m')}
+      #   users.each do |key, value|
+      #     # present :key,   key
+      #     # present :users, value, with: ::Entities::User
+      #   end
+      #   # present users, with: ::Entities::User
+      # end
     end
 
     resources :advise do
@@ -225,7 +201,6 @@ module V1
         advise = current_user.advises.new(:content => content, :contact => contact)
         if advise.save
           present :message, "感想你的反馈！"
-          status 200
         else
           error!({ error: "提交失败"}, 503)
         end

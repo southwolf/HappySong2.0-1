@@ -5,4 +5,7 @@ module Entities
       cate.cate_items
     end
   end
+  class CateItem < Grape::Entity
+    expose :id, :name
+  end
 end
