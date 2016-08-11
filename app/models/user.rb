@@ -14,10 +14,8 @@ class User < ActiveRecord::Base
   has_many   :followings,    :through => :relationships
   has_many   :followers,     :through => :reverse_relationships
   
-  has_many   :team_class_users
-  has_many   :team_classes,  :through => :team_class_users
-  
-  has_many   :grade_team_classes
+  has_many   :grade_team_classes, foreign_key: 'teacher_id'
+  belongs_to :grade_team_class
   has_many   :comments
   has_many   :albums
    

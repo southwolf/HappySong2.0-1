@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160810051422) do
+ActiveRecord::Schema.define(version: 20160811040449) do
 
   create_table "advises", force: :cascade do |t|
     t.string   "content",    limit: 255
@@ -120,11 +120,13 @@ ActiveRecord::Schema.define(version: 20160810051422) do
   add_index "grade_join_schools", ["grade_id", "school_id"], name: "index_grade_join_schools_on_grade_id_and_school_id", using: :btree
 
   create_table "grade_team_classes", force: :cascade do |t|
-    t.string  "code",          limit: 255
-    t.integer "grade_id",      limit: 4
-    t.integer "team_class_id", limit: 4
-    t.integer "user_id",       limit: 4
-    t.integer "school_id",     limit: 4
+    t.string   "code",          limit: 255
+    t.integer  "grade_id",      limit: 4
+    t.integer  "team_class_id", limit: 4
+    t.integer  "teacher_id",    limit: 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "school_id",     limit: 4
   end
 
   create_table "grades", force: :cascade do |t|
@@ -232,20 +234,8 @@ ActiveRecord::Schema.define(version: 20160810051422) do
     t.datetime "updated_at"
   end
 
-  create_table "team_class_users", force: :cascade do |t|
-    t.integer  "user_id",       limit: 4
-    t.integer  "team_class_id", limit: 4
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "team_class_users", ["team_class_id"], name: "index_team_class_users_on_team_class_id", using: :btree
-  add_index "team_class_users", ["user_id", "team_class_id"], name: "index_team_class_users_on_user_id_and_team_class_id", using: :btree
-  add_index "team_class_users", ["user_id"], name: "index_team_class_users_on_user_id", using: :btree
-
   create_table "team_classes", force: :cascade do |t|
     t.string   "name",       limit: 255
-    t.string   "code",       limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -257,20 +247,21 @@ ActiveRecord::Schema.define(version: 20160810051422) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "phone",      limit: 255
-    t.string   "name",       limit: 255
-    t.string   "uid",        limit: 255
-    t.string   "avatar",     limit: 255, default: "happysong_logo.jpg"
-    t.string   "sex",        limit: 255
-    t.integer  "age",        limit: 4
-    t.string   "desc",       limit: 255
-    t.boolean  "vip",                    default: false
-    t.boolean  "is_first",               default: true
-    t.string   "code",       limit: 255
+    t.string   "phone",               limit: 255
+    t.string   "name",                limit: 255
+    t.string   "uid",                 limit: 255
+    t.string   "avatar",              limit: 255, default: "happysong_logo.jpg"
+    t.string   "sex",                 limit: 255
+    t.integer  "age",                 limit: 4
+    t.string   "desc",                limit: 255
+    t.boolean  "vip",                             default: false
+    t.boolean  "is_first",                        default: true
+    t.string   "code",                limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "auth_token", limit: 255
-    t.integer  "role_id",    limit: 4
+    t.string   "auth_token",          limit: 255
+    t.integer  "role_id",             limit: 4
+    t.integer  "grade_team_class_id", limit: 4
   end
 
 end

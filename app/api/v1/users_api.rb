@@ -175,6 +175,7 @@ module V1
         puts current_user.name
         present :user, current_user, with: ::Entities::MyProfile
       end
+
       #
       # desc "测试"
       # get '/all' do
@@ -206,7 +207,7 @@ module V1
         end
       end
     end
-
+    
 
   end
 end

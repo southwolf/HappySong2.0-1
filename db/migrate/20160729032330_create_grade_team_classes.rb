@@ -5,7 +5,9 @@ class CreateGradeTeamClasses < ActiveRecord::Migration
       t.belongs_to :grade
       t.belongs_to :team_class
 
-      t.belongs_to :user
+      t.belongs_to :teacher
+
+      t.timestamps
     end
   end
 end

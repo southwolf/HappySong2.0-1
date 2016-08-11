@@ -7,12 +7,49 @@ module V1
       end
       get do
         code = params[:code].to_s
-        team_class = GradeTeamClass.find_by(code: code)
+        grade_team_class = GradeTeamClass.find_by(code: code)
         if team_class.nil?
           error!("没有找到对应记录,请检查你的班级码是否输入正确", 404)
         else
-         present  team_class, with: ::Entities::TeamClass
+         present  grade_team_class, with: ::Entities::GradeTeamClass
         end
+      end
+      
+      desc "添加班级【老师】"
+
+      params do
+        requires :token,         type: String,  desc: '访问令牌'
+        requires :school_id,     type: Integer, desc: '学校ID'
+        requires :grade_id,      type: Integer, desc: '年级ID'
+        requires :team_class_id, type: Integer, desc: '班级ID'
+      end
+      post '/add' do
+        authenticate!
+        school_id        = params[:school_id]
+        grade_id         = params[:grade_id]
+        team_class_id    = params[:team_class_id]
+        grade_team_class = current_user.grade_team_class.build(
+                              school_id: school_id, grade_id: grade_id,
+                              team_class_id: team_class_id
+                            )
+        if grade_team_class.save! && grade_team_class.set_code
+          present grade_team_class, with: ::Entities::TeamClass
+        else
+          error!("失败", 500)
+        end
+      end
+
+      desc "加入班级【学生】"
+
+      params  do
+        requires :token,               type: String,  desc: '访问token'
+        requires :grade_team_class_id, type: Integer, desc: "年级班级ID"
+      end
+      
+      post '/join' do
+       authenticate!
+       grade_team_class_id = params[:grade_team_class_id]
+       current_user.update(grade_team_class_id: grade_team_class_id)
       end
     end
   end
