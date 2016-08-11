@@ -63,8 +63,10 @@ ActiveRecord::Schema.define(version: 20160810051422) do
   end
 
   create_table "banners", force: :cascade do |t|
-    t.string "cover_img", limit: 255
-    t.string "text",      limit: 255
+    t.string   "cover_img",  limit: 255
+    t.string   "text",       limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "cate_items", force: :cascade do |t|
