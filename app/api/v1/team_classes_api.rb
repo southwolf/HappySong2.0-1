@@ -8,13 +8,13 @@ module V1
       get do
         code = params[:code].to_s
         grade_team_class = GradeTeamClass.find_by(code: code)
-        if team_class.nil?
+        if grade_team_class.nil?
           error!("没有找到对应记录,请检查你的班级码是否输入正确", 404)
         else
          present  grade_team_class, with: ::Entities::GradeTeamClass
         end
       end
-      
+
       desc "添加班级【老师】"
 
       params do
@@ -45,7 +45,7 @@ module V1
         requires :token,               type: String,  desc: '访问token'
         requires :grade_team_class_id, type: Integer, desc: "年级班级ID"
       end
-      
+
       post '/join' do
        authenticate!
        grade_team_class_id = params[:grade_team_class_id]
