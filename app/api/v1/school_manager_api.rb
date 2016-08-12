@@ -407,7 +407,7 @@ module V1
           requires :name,        type: String,  desc: '名称'
         end
         post '/new_cate_item' do
-          category = Category.find(:category_id)
+          category = Category.find(params[:category_id])
           if category.cate_items.create(name: params[:name])
             present "成功"
           else
