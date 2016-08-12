@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160811040449) do
+ActiveRecord::Schema.define(version: 20160811071858) do
 
   create_table "advises", force: :cascade do |t|
     t.string   "content",    limit: 255
@@ -34,18 +34,10 @@ ActiveRecord::Schema.define(version: 20160811040449) do
     t.datetime "updated_at"
   end
 
-  create_table "article_sections", force: :cascade do |t|
-    t.string   "title",      limit: 255
-    t.string   "author",     limit: 255
-    t.string   "content",    limit: 255
-    t.integer  "article_id", limit: 4
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "articles", force: :cascade do |t|
     t.string   "title",            limit: 255
     t.string   "cover_img",        limit: 255
+    t.string   "content",          limit: 255
     t.integer  "subject_id",       limit: 4
     t.integer  "article_grade_id", limit: 4
     t.integer  "edition_id",       limit: 4
@@ -165,16 +157,17 @@ ActiveRecord::Schema.define(version: 20160811040449) do
   end
 
   create_table "records", force: :cascade do |t|
-    t.string   "file_url",   limit: 255
-    t.string   "feeling",    limit: 255
-    t.string   "style",      limit: 255
-    t.integer  "user_id",    limit: 4
-    t.integer  "article_id", limit: 4
-    t.integer  "music_id",   limit: 4
+    t.string   "file_url",    limit: 255
+    t.string   "feeling",     limit: 255
+    t.string   "style",       limit: 255
+    t.integer  "user_id",     limit: 4
+    t.integer  "article_id",  limit: 4
+    t.integer  "music_id",    limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "is_public"
-    t.integer  "view_count", limit: 4
+    t.boolean  "is_public",               default: true
+    t.integer  "view_count",  limit: 4
+    t.integer  "likes_count", limit: 4
   end
 
   create_table "relationships", force: :cascade do |t|

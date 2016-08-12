@@ -8,4 +8,7 @@ module Entities
       options[:editions]
     end
   end
+  class SimpleSubject < Grape::Entity
+    expose :id, :name
+  end
 end

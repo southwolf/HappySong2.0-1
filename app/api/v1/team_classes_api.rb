@@ -16,7 +16,6 @@ module V1
       end
 
       desc "添加班级【老师】"
-
       params do
         requires :token,         type: String,  desc: '访问令牌'
         requires :school_id,     type: Integer, desc: '学校ID'
@@ -40,7 +39,6 @@ module V1
       end
 
       desc "加入班级【学生】"
-
       params  do
         requires :token,               type: String,  desc: '访问token'
         requires :grade_team_class_id, type: Integer, desc: "年级班级ID"

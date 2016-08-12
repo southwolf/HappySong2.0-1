@@ -8,7 +8,7 @@ module V1
         categorys = Category.all
 
         present  :subjects, subjects,    with:     ::Entities::Subject,
-                                         grades:     Grade.all,
+                                         grades:     ArticleGrade.all,
                                          editions:   Edition.all
         present  :categorys, categorys,  with:     ::Entities::Category
       end

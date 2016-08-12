@@ -4,7 +4,6 @@ module V1
     paginate per_page: 20
 
     resources :articles do
-
       desc "获取所有文章"
       get '/all' do
 

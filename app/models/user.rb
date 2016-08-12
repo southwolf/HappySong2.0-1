@@ -64,11 +64,11 @@ class User < ActiveRecord::Base
     User.where(id: self.follower_ids)
   end
   
-  # 我的同学
+  # 我的同学【学生】
   def classmates
-    team_class_id = self.team_classes.first.try(:id)
-    classmate_ids = TeamClassUser.where(team_class_id: team_class_id)
-    User.where(id: classmate_ids)
+    grade_team_class = self.grade_team_class
+    return [] if grade_team_class.nil?
+    grade_team_class.students
   end
   
   # 生成4位 code

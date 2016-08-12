@@ -107,7 +107,7 @@ module V1
         id      = params[:id].to_i
         content = params[:content].to_s
         record  = Record.find(id)
-        c       = record.comments.build(:content => content, user_id => current_user.id)
+        c       = record.comments.build(:content => content, :user_id => current_user.id)
         if c.save
           present "评论成功"
         else

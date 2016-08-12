@@ -175,7 +175,7 @@ module V1
         puts current_user.name
         present :user, current_user, with: ::Entities::MyProfile
       end
-
+      
       #
       # desc "测试"
       # get '/all' do
@@ -207,7 +207,23 @@ module V1
         end
       end
     end
-    
 
+    resources :albums do
+      desc '上传图片到相册'
+      params do
+        requires :token,    type: String,    desc: '用户令牌'
+        requires :file_key, type: String,    desc: '图片名'
+      end
+
+      post '/upload' do
+        authenticate!
+        album = current_user.albums.build( :file_key => file_key )
+        if album.save!
+          present "上传成功"
+        else
+          error!("上传失败", 500)
+        end
+      end
+    end
   end
 end

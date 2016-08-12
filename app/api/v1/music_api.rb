@@ -18,7 +18,7 @@ module V1
         present musics, with: ::Entities::Music
         # end
       end
-    
+
       desc "推荐的10首音乐"
       get'/recommend' do
         musics = Music.all.order(:records_count => :DESC).take(10)

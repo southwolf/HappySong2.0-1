@@ -23,7 +23,7 @@ module Entities
     expose :id, :uid, :phone, :name, :avatar ,:sex, :age, :desc
     expose (:followers_count)  { |user| user.followers.size }
     expose (:followings_count) { |user| user.followings.size }
-    expose (:classmates_count) { |user| user.classmates.size}
+    expose (:classmates_count) { |user| user.classmates.size - 1}
   end
 
 
