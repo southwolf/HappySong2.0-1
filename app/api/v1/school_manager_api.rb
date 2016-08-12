@@ -395,6 +395,12 @@ module V1
           end
         end
 
+        desc '查询所有分类'
+        get '/all' do
+          categorys = Category.all
+          present categorys, with: ::Entities::Category
+        end
+
         desc '新建分类子项目'
         params do
           requires :category_id, type: Integer, desc: '类别ID'
