@@ -398,7 +398,7 @@ module V1
         desc '查询所有分类'
         get '/all' do
           categorys = Category.all
-          present :categorys, categorys, with: ::Entities::Category
+          present categorys, with: ::Entities::SimpleCategory
         end
 
         desc '新建分类子项目'
