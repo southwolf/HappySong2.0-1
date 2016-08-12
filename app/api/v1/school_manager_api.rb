@@ -217,7 +217,7 @@ module V1
           requires :name, type: String,  desc: '年级名称'
         end
         post '/update' do
-          grade = Grape.find(params[:id])
+          grade = Grade.find(params[:id])
           if grade.update( :name => params[:name])
             present grade, with: ::Entities::Grape
           else
@@ -227,7 +227,7 @@ module V1
 
         desc '取得所有年级信息'
         get '/all' do
-          grades = Grape.all
+          grades = Grade.all
           present grades, with: ::Entities::Grape
         end
       end
