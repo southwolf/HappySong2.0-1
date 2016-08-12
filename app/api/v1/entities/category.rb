@@ -11,5 +11,4 @@ module Entities
     expose :id, :name
   end
 
-
 end
