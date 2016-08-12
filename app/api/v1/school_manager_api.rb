@@ -363,12 +363,14 @@ module V1
         params do
           requires :title,        type: String,  desc: '标题'
           requires :cover_img,    type: String,  desc: '封面'
+          requires :author,       type: String,  desc: '作者'
           requires :content,      type: String,  desc: '文章内容'
           requires :cate_item_id, type: Integer, desc: '分类项目ID'
         end
         post '/extra' do
           article = Article.new( title:     params[:title],
                                  cover_img: params[:cover_img],
+                                 author:    params[:author],
                                  content:   params[:content])
 
           cate_item = CateItem.find(params[:cate_item_id])
@@ -423,7 +425,7 @@ module V1
         post '/create' do
           music_type = MusicType.new(:name => params[:name])
           if music_type.save
-            present :music_type, with: ::Entities::MusicType
+            present music_type, with: ::Entities::MusicType
           else
             error!("失败", 500)
           end

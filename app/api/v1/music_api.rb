@@ -15,7 +15,7 @@ module V1
         # if musics.size == 0
           # error!("没有找到任何记录", 404)
         # else
-        present musics, with: ::Entities::Music
+        present musics, with: ::Entities::MusicWithType
         # end
       end
 

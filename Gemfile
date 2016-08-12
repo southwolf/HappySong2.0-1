@@ -20,7 +20,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 gem 'grape', '~> 0.16.2'
-gem 'grape-entity', '~> 0.5.1'
+gem 'grape-entity', '0.5.0'
 gem 'grape-kaminari', '~> 0.1.9'
 gem 'grape-swagger', '~> 0.22.0'
 gem 'grape-swagger-rails', '~> 0.2.2'

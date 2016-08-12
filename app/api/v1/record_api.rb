@@ -33,7 +33,7 @@ module V1
         records = Record.where(:is_public => false ).order(:created_at => :DESC)
         present paginate(records), with: ::Entities::Record
       end
-      
+
       desc "推荐朗读"
       paginate per_page: 20
       get "/recommend" do
@@ -76,7 +76,7 @@ module V1
 
         end
       end
-      
+
       desc "作品点赞"
       params do
         requires :token, type: String,  desc: "访问令牌"
@@ -102,7 +102,7 @@ module V1
         requires :content, type: String,   desc: "评论内容"
       end
 
-      post do
+      post '/comment'do
         authenticate!
         id      = params[:id].to_i
         content = params[:content].to_s

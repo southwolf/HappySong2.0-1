@@ -1,4 +1,4 @@
 class Music < ActiveRecord::Base
   has_many   :records
-  belongs_to :music_types
+  belongs_to :music_type
 end

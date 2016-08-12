@@ -1,8 +1,11 @@
 module Entities
   class Comment < Grape::Entity
     expose :user,    using: Entities::User
-    expose :replys,  using: ::Entities::Reply
     expose :content, :created_at
+  end
+  
+  class CommentWithReply < Comment
+    expose :replys, using: ::Entities::Reply
   end
 
   class Relpy < Grape::Entity
