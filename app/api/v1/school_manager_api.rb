@@ -123,7 +123,7 @@ module V1
           end
         end
       end
-      
+
       resources :school do
         desc '根据区域id查学校'
         params do
@@ -251,7 +251,7 @@ module V1
           requires :id,   type: Integer, desc: '班级ID'
           requires :name, type: String,  desc: '班级名称'
         end
-        
+
         post '/update' do
           team_class = TeamClass.find(params[:id])
           if team_class.update( :name => params[:name])
@@ -315,7 +315,7 @@ module V1
           end
         end
       end
-      
+
       resources :article_grades do
         desc '创建文章年级'
         params do
@@ -358,7 +358,7 @@ module V1
             error!("失败", 500)
           end
         end
-        
+
         desc '创建课外内容'
         params do
           requires :title,        type: String,  desc: '标题'
@@ -372,7 +372,7 @@ module V1
                                  content:   params[:content])
 
           cate_item = CateItem.find(params[:cate_item_id])
-          if article.cate_items << cate_item
+          if article.save && article.cate_items << cate_item
             present "成功"
           else
             error!("失败", 500)
