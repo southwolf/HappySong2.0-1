@@ -44,7 +44,7 @@ module V1
 
       desc "根据文章标题或作者姓名获取朗读结果"
       params do
-        optional :q, type: Integer, desc: "查询参数"
+        optional :q, type: String, desc: "查询参数"
       end
       get '/search' do
         q = params[:q]
