@@ -33,6 +33,7 @@ module YunPian
 
   def verify (mobile, code)
     result = get_mess(mobile)
+    return false unless result
     verify_regexp = /(【.+】|[^a-zA-Z0-9\.\-\+_])/
     if result['text'].to_s.gsub(verify_regexp, '') == code.to_s
       return true
@@ -54,7 +55,11 @@ module YunPian
     options[:page_size] = 20
 
     result = post(api, options)
-    result.first
+    if result.nil?
+      result false
+    else
+      result.first
+    end
   end
 
 
