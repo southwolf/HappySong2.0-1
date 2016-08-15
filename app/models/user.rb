@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   before_create :create_auth_token, :set_code, :set_id_code
   validates :phone, uniqueness: true
   validates :phone, :avatar, presence: true
-  
+
   belongs_to :role
   has_many   :advises
   has_many   :relationships,         foreign_key: 'follower_id',
@@ -13,17 +13,17 @@ class User < ActiveRecord::Base
   dependent: :destroy
   has_many   :followings,    :through => :relationships
   has_many   :followers,     :through => :reverse_relationships
-  
+
   has_many   :grade_team_classes, foreign_key: 'teacher_id'
   belongs_to :grade_team_class
   has_many   :comments
   has_many   :albums
-   
+
   has_many   :likes, foreign_key: :like_user_id
   has_many   :like_records, through: :likes, source: :likeable, source_type: 'Record'
 
 
-  has_sms_verification
+  # has_sms_verification
 
   # 生成token
   def self.new_token
@@ -34,12 +34,12 @@ class User < ActiveRecord::Base
   def self.encrypt(token)
     Digest::SHA1.hexdigest(token.to_s)
   end
-  
+
   # 是否关注
   def followed?(user)
     followings.include?(user)
   end
-  
+
   # 关注用户
   def follow(user)
     return false if user.blank?
@@ -63,14 +63,14 @@ class User < ActiveRecord::Base
   def follower_users
     User.where(id: self.follower_ids)
   end
-  
+
   # 我的同学【学生】
   def classmates
     grade_team_class = self.grade_team_class
     return [] if grade_team_class.nil?
     grade_team_class.students
   end
-  
+
   # 生成4位 code
   def set_code
     loop do
@@ -78,7 +78,7 @@ class User < ActiveRecord::Base
     break if User.where(code: code).empty?
     end
   end
-  
+
   # 生成8位code
   def set_id_code
     loop do

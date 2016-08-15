@@ -15,7 +15,7 @@ module V1
         if user.blank?
           user = User.create(:phone => phone)
         end
-        if user.deliver_fake_sms
+        if YunPian.deliver(user.phone)
           present :message, "成功"
         else
           error!("失败", 500)
@@ -36,7 +36,7 @@ module V1
         code  = params[:code].to_s
 
         user = User.find_by_phone(phone)
-        if user.verify code
+        if YunPian.verify(phone, code)
           present :user, user, with: ::Entities::User
           present :message, "登陆成功"
         else
