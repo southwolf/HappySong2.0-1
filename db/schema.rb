@@ -45,7 +45,8 @@ ActiveRecord::Schema.define(version: 20160815064528) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "author",           limit: 255
-    t.integer  "records_count",    limit: 4
+    t.integer  "records_count",    limit: 4,   default: 0
+    t.boolean  "is_demo",                      default: false
   end
 
   create_table "articles_cate_items", id: false, force: :cascade do |t|
@@ -165,8 +166,8 @@ ActiveRecord::Schema.define(version: 20160815064528) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "is_public",               default: true
-    t.integer  "view_count",  limit: 4
-    t.integer  "likes_count", limit: 4
+    t.integer  "view_count",  limit: 4,   default: 0
+    t.integer  "likes_count", limit: 4,   default: 0
     t.boolean  "is_demo",                 default: false
     t.boolean  "is_hot",                  default: false
     t.boolean  "has_demo",                default: false
