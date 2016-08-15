@@ -5,5 +5,9 @@ class Record < ActiveRecord::Base
   belongs_to :user
   has_many   :likes,      as: :likeable
   has_many   :like_users, through: :likes
+
+  has_many   :views,   foreign_key: 'view_record_id'
+  has_many   :viewers, through: :views
+
   validates :file_url, :style, presence: true
 end

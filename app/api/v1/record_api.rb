@@ -37,6 +37,7 @@ module V1
       desc "推荐朗读"
       paginate per_page: 20
       get "/recommend" do
+        # update_hot
         records = Record.where(:is_public => true ).order(:view_count => :DESC)
         present paginate(records), with: ::Entities::Record
       end

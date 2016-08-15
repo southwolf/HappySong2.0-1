@@ -37,7 +37,12 @@ module V1
 
         user = User.find_by_phone(phone)
         if YunPian.verify(phone, code)
-          present :user, user, with: ::Entities::User
+          if user.role.blank?
+            role = ""
+          else
+            role = user.role
+          end
+          present :user, user, with: ::Entities::User, role: role
           present :message, "登陆成功"
         else
           error!("验证码错误",500)

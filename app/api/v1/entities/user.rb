@@ -1,7 +1,32 @@
 module Entities
   class User < Grape::Entity
     expose :id, :uid, :phone, :name, :avatar ,:sex, :age, :desc, :vip, :is_first, :code, :auth_token
-    expose :role, using: ::Entities::Role
+    expose (:name) do | object|
+      if object.name.blank?
+        ""
+      else
+        object.name
+      end
+    end
+
+    expose(:age) do |object|
+      if object.age.blank? 
+        ""
+      else
+        object.age
+      end
+    end 
+    
+    expose(:desc) do |object|
+      if object.desc.blank?
+        ""
+      else
+        object.desc
+      end
+    end
+
+    expose :role, using: ::Entities::Role 
+
     expose (:school_full_name) do |object, options|
       school   = object.grade_team_classes.first.try(:school)
       district = school.try(:district)

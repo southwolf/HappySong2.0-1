@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160811071858) do
+ActiveRecord::Schema.define(version: 20160815064528) do
 
   create_table "advises", force: :cascade do |t|
     t.string   "content",    limit: 255
@@ -46,7 +46,6 @@ ActiveRecord::Schema.define(version: 20160811071858) do
     t.datetime "updated_at"
     t.string   "author",           limit: 255
     t.integer  "records_count",    limit: 4
-    t.boolean  "is_demo",                      default: false
   end
 
   create_table "articles_cate_items", id: false, force: :cascade do |t|
@@ -168,6 +167,9 @@ ActiveRecord::Schema.define(version: 20160811071858) do
     t.boolean  "is_public",               default: true
     t.integer  "view_count",  limit: 4
     t.integer  "likes_count", limit: 4
+    t.boolean  "is_demo",                 default: false
+    t.boolean  "is_hot",                  default: false
+    t.boolean  "has_demo",                default: false
   end
 
   create_table "relationships", force: :cascade do |t|
@@ -255,6 +257,14 @@ ActiveRecord::Schema.define(version: 20160811071858) do
     t.string   "auth_token",          limit: 255
     t.integer  "role_id",             limit: 4
     t.integer  "grade_team_class_id", limit: 4
+  end
+
+  create_table "views", force: :cascade do |t|
+    t.integer  "viewer_id",      limit: 4
+    t.integer  "view_record_id", limit: 4
+    t.integer  "num",            limit: 4, default: 1
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end
