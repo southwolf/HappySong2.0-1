@@ -6,7 +6,7 @@ class CreateUsers < ActiveRecord::Migration
       t.string  :uid
       t.string  :avatar,   default: 'happysong_logo.jpg'
       t.string  :sex
-      t.integer :age
+      t.string  :age
       t.string  :desc
       t.boolean :vip,      default: false
       t.boolean :is_first, default: true
