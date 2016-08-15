@@ -30,14 +30,14 @@ module V1
       desc "最新朗读"
       paginate per_page: 20
       get "/recent"do
-        records = Record.where(:is_public => false ).order(:created_at => :DESC)
+        records = Record.where(:is_public => true ).order(:created_at => :DESC)
         present paginate(records), with: ::Entities::Record
       end
 
       desc "推荐朗读"
       paginate per_page: 20
       get "/recommend" do
-        records = Record.where(:is_public => false).order(:view_count => :DESC)
+        records = Record.where(:is_public => true ).order(:view_count => :DESC)
         present paginate(records), with: ::Entities::Record
       end
 
@@ -68,7 +68,7 @@ module V1
 
         id = params[:id]
         record = Record.find(id)
-        if record.black?
+        if record.blank?
           error!("没有找到", 404)
         else
           record.view_count += 1
