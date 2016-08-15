@@ -7,6 +7,6 @@ module Entities
     expose :unit,          using: Entities::Unit
     expose :records_count
     expose :created_at
-    expose (:cover_img) {|object| ENV['QINIUPREFIX']+object.cover_img } 
+    expose (:cover_img) {|object| ENV['QINIUPREFIX']+object.cover_img }
   end
 end
