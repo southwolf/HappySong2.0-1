@@ -15,7 +15,7 @@ module V1
         if user.blank?
           user = User.create(:phone => phone)
         end
-        if user.deliver
+        if user.deliver_fake_sms
           present :message, "成功"
         else
           error!("失败", 500)
@@ -64,7 +64,7 @@ module V1
 
       desc "更换头像"
       params do
-        requires :token,  type: String, desc: "用户登录令牌" 
+        requires :token,  type: String, desc: "用户登录令牌"
         requires :avatar, type: String, desc: "用户头像"
       end
       post '/avatar' do
@@ -175,7 +175,7 @@ module V1
         puts current_user.name
         present :user, current_user, with: ::Entities::MyProfile
       end
-      
+
       #
       # desc "测试"
       # get '/all' do
