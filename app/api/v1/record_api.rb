@@ -30,6 +30,7 @@ module V1
       desc "最新朗读"
       paginate per_page: 20
       get "/recent"do
+        update_hot
         records = Record.where(:is_public => true ).order(:created_at => :DESC)
         present paginate(records), with: ::Entities::Record
       end
@@ -37,7 +38,7 @@ module V1
       desc "推荐朗读"
       paginate per_page: 20
       get "/recommend" do
-        # update_hot
+        update_hot
         records = Record.where(:is_public => true ).order(:view_count => :DESC)
         present paginate(records), with: ::Entities::Record
       end
@@ -73,6 +74,9 @@ module V1
           error!("没有找到", 404)
         else
           record.view_count += 1
+
+          record.views.create(:viewer_id => current_user.id)
+
           present record, with: ::Entities::Record
 
         end

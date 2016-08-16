@@ -7,6 +7,7 @@ module V1
     rescue_from :all
 
     helpers BaseHelpers
+    helpers RecordHelpers
 
     mount V1::UsersApi
     mount V1::ProvincesApi

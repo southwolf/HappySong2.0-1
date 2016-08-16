@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160816014910) do
+ActiveRecord::Schema.define(version: 20160816040508) do
 
   create_table "advises", force: :cascade do |t|
     t.string   "content",    limit: 255
@@ -53,6 +53,14 @@ ActiveRecord::Schema.define(version: 20160816014910) do
   create_table "articles_cate_items", id: false, force: :cascade do |t|
     t.integer "cate_item_id", limit: 4
     t.integer "article_id",   limit: 4
+  end
+
+  create_table "attachments", force: :cascade do |t|
+    t.integer  "dynamic_id", limit: 4
+    t.boolean  "is_video",               default: false
+    t.string   "file_url",   limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "banners", force: :cascade do |t|
@@ -97,6 +105,18 @@ ActiveRecord::Schema.define(version: 20160816014910) do
   create_table "districts", force: :cascade do |t|
     t.string   "name",       limit: 255
     t.integer  "city_id",    limit: 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "dynamics", force: :cascade do |t|
+    t.integer  "user_id",          limit: 4
+    t.string   "content",          limit: 255
+    t.string   "address",          limit: 255
+    t.boolean  "is_relay",                     default: false
+    t.integer  "ref_dynamic_id",   limit: 4
+    t.integer  "ref_user_id",      limit: 4
+    t.integer  "original_user_id", limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -160,19 +180,20 @@ ActiveRecord::Schema.define(version: 20160816014910) do
   end
 
   create_table "records", force: :cascade do |t|
-    t.string   "file_url",    limit: 255
-    t.string   "feeling",     limit: 255
-    t.string   "style",       limit: 255
-    t.integer  "user_id",     limit: 4
-    t.integer  "article_id",  limit: 4
-    t.integer  "music_id",    limit: 4
+    t.string   "file_url",       limit: 255
+    t.string   "feeling",        limit: 255
+    t.string   "style",          limit: 255
+    t.integer  "user_id",        limit: 4
+    t.integer  "article_id",     limit: 4
+    t.integer  "music_id",       limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "is_public",               default: true
-    t.integer  "view_count",  limit: 4,   default: 0
-    t.integer  "likes_count", limit: 4,   default: 0
-    t.boolean  "is_demo",                 default: false
-    t.boolean  "is_hot",                  default: false
+    t.boolean  "is_public",                  default: true
+    t.integer  "view_count",     limit: 4,   default: 0
+    t.integer  "likes_count",    limit: 4,   default: 0
+    t.boolean  "is_demo",                    default: false
+    t.boolean  "is_hot",                     default: false
+    t.integer  "comments_count", limit: 4,   default: 0
   end
 
   create_table "relationships", force: :cascade do |t|
@@ -207,6 +228,19 @@ ActiveRecord::Schema.define(version: 20160816014910) do
   add_index "schools_team_classes", ["school_id", "team_class_id"], name: "index_schools_team_classes_on_school_id_and_team_class_id", using: :btree
 
   create_table "subjects", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "taggings", force: :cascade do |t|
+    t.integer  "dynamic_id", limit: 4
+    t.integer  "tag_id",     limit: 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "tags", force: :cascade do |t|
     t.string   "name",       limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"

@@ -1,6 +1,5 @@
 module V1
   module BaseHelpers
-
     extend Grape::API::Helpers
 
     def current_user
