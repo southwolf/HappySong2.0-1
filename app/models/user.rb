@@ -16,6 +16,7 @@ class User < ActiveRecord::Base
 
   has_many   :grade_team_classes, foreign_key: 'teacher_id'
   belongs_to :grade_team_class
+
   has_many   :comments
   has_many   :albums
 

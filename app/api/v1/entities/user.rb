@@ -39,7 +39,7 @@ module Entities
       district = school.try(:district)
       city     = district.try(:city)
 
-      "#{city}#{district}#{school}"
+      "#{city.name}#{district.name}#{school.name}"
     end
     expose :url
     def url
