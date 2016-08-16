@@ -10,7 +10,7 @@ module V1
         present  :subjects, subjects,    with:     ::Entities::Subject,
                                          grades:     ArticleGrade.all,
                                          editions:   Edition.all
-        present  :categorys, categorys,  with:     ::Entities::Category
+        present  :categorys, categorys,  with:     ::Entities::CategoryWithItem
       end
     end
   end
