@@ -1,6 +1,7 @@
 module Entities
   class Article < Grape::Entity
-    expose :id, :title, :author, :content, :records_count,:has_demo,:is_hot, :created_at
+    expose :id, :title, :author,  :records_count,:has_demo,:is_hot, :created_at
+    expose (:content) {|object| object.content}
     expose :subject,       using: Entities::SimpleSubject
     expose :edition,       using: Entities::Edition
     expose :article_grade, using: Entities::ArticleGrape

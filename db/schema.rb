@@ -37,7 +37,7 @@ ActiveRecord::Schema.define(version: 20160816040508) do
   create_table "articles", force: :cascade do |t|
     t.string   "title",            limit: 255
     t.string   "cover_img",        limit: 255
-    t.string   "content",          limit: 255
+    t.text     "content",          limit: 65535
     t.integer  "subject_id",       limit: 4
     t.integer  "article_grade_id", limit: 4
     t.integer  "edition_id",       limit: 4
@@ -45,9 +45,9 @@ ActiveRecord::Schema.define(version: 20160816040508) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "author",           limit: 255
-    t.integer  "records_count",    limit: 4,   default: 0
-    t.boolean  "has_demo",                     default: false
-    t.boolean  "is_hot",                       default: false
+    t.integer  "records_count",    limit: 4,     default: 0
+    t.boolean  "has_demo",                       default: false
+    t.boolean  "is_hot",                         default: false
   end
 
   create_table "articles_cate_items", id: false, force: :cascade do |t|
