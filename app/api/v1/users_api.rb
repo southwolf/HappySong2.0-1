@@ -36,13 +36,9 @@ module V1
         code  = params[:code].to_s
 
         user = User.find_by_phone(phone)
+        puts user.name
         if YunPian.verify(phone, code)
-          if user.role.blank?
-            role = ""
-          else
-            role = user.role
-          end
-          present :user, user, with: ::Entities::User, role: role
+          present :user, user, with: ::Entities::User
           present :message, "登陆成功"
         else
           error!("验证码错误",500)
@@ -96,6 +92,7 @@ module V1
         sex       = params[:sex].to_s
         role_id   = params[:role].to_i
         if current_user.update(name: name, sex: sex) && current_user.set_role( role_id )
+          current_user.update(:is_first => false)
           present current_user, with: ::Entities::User
         else
           error!( '更新失败', 500)
