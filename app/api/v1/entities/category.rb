@@ -7,8 +7,4 @@ module Entities
     expose :cate_items, using: Entities::CateItem
   end
 
-  class CateItem < Grape::Entity
-    expose :id, :name
-  end
-
 end
