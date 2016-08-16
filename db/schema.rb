@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160815064528) do
+ActiveRecord::Schema.define(version: 20160816014910) do
 
   create_table "advises", force: :cascade do |t|
     t.string   "content",    limit: 255
@@ -46,7 +46,8 @@ ActiveRecord::Schema.define(version: 20160815064528) do
     t.datetime "updated_at"
     t.string   "author",           limit: 255
     t.integer  "records_count",    limit: 4,   default: 0
-    t.boolean  "is_demo",                      default: false
+    t.boolean  "has_demo",                     default: false
+    t.boolean  "is_hot",                       default: false
   end
 
   create_table "articles_cate_items", id: false, force: :cascade do |t|
@@ -59,6 +60,8 @@ ActiveRecord::Schema.define(version: 20160815064528) do
     t.string   "text",       limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "target",     limit: 255
+    t.integer  "target_id",  limit: 4
   end
 
   create_table "cate_items", force: :cascade do |t|
@@ -170,7 +173,6 @@ ActiveRecord::Schema.define(version: 20160815064528) do
     t.integer  "likes_count", limit: 4,   default: 0
     t.boolean  "is_demo",                 default: false
     t.boolean  "is_hot",                  default: false
-    t.boolean  "has_demo",                default: false
   end
 
   create_table "relationships", force: :cascade do |t|
@@ -204,26 +206,6 @@ ActiveRecord::Schema.define(version: 20160815064528) do
 
   add_index "schools_team_classes", ["school_id", "team_class_id"], name: "index_schools_team_classes_on_school_id_and_team_class_id", using: :btree
 
-  create_table "smart_sms_messages", force: :cascade do |t|
-    t.string   "sid",               limit: 255
-    t.string   "mobile",            limit: 255
-    t.datetime "send_time"
-    t.text     "text",              limit: 65535
-    t.string   "code",              limit: 255
-    t.string   "send_status",       limit: 255
-    t.string   "report_status",     limit: 255
-    t.string   "fee",               limit: 255
-    t.datetime "user_receive_time"
-    t.text     "error_msg",         limit: 65535
-    t.integer  "smsable_id",        limit: 4
-    t.string   "smsable_type",      limit: 255
-    t.string   "uid",               limit: 255
-  end
-
-  add_index "smart_sms_messages", ["sid"], name: "index_smart_sms_messages_on_sid", using: :btree
-  add_index "smart_sms_messages", ["smsable_id", "smsable_type"], name: "index_smart_sms_messages_on_smsable_id_and_smsable_type", using: :btree
-  add_index "smart_sms_messages", ["uid"], name: "index_smart_sms_messages_on_uid", using: :btree
-
   create_table "subjects", force: :cascade do |t|
     t.string   "name",       limit: 255
     t.datetime "created_at"
@@ -248,7 +230,7 @@ ActiveRecord::Schema.define(version: 20160815064528) do
     t.string   "uid",                 limit: 255
     t.string   "avatar",              limit: 255, default: "happysong_logo.jpg"
     t.string   "sex",                 limit: 255
-    t.integer  "age",                 limit: 4
+    t.string   "age",                 limit: 255
     t.string   "desc",                limit: 255
     t.boolean  "vip",                             default: false
     t.boolean  "is_first",                        default: true

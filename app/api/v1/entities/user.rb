@@ -1,6 +1,6 @@
 module Entities
   class User < Grape::Entity
-    expose :id, :uid, :phone, :name, :avatar ,:sex, :age, :desc, :vip, :is_first, :code, :auth_token
+    expose :id, :uid, :phone,:avatar, :vip, :is_first, :code, :auth_token
     expose (:name) do | object|
       if object.name.blank?
         ""
@@ -25,6 +25,13 @@ module Entities
       end
     end
 
+    expose(:sex) do |object|
+      if object.sex.blank?
+        ""
+      else
+        object.sex
+      end
+    end
     expose :role, using: ::Entities::Role 
 
     expose (:school_full_name) do |object, options|
