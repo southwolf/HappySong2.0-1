@@ -20,8 +20,9 @@ class User < ActiveRecord::Base
   has_many   :comments
   has_many   :albums
 
-  has_many   :likes,        foreign_key: 'like_user_id'
-  has_many   :like_records, through: :likes, source: :likeable, source_type: 'Record'
+  has_many   :likes,         foreign_key: 'like_user_id'
+  has_many   :like_records,  through: :likes, source: :likeable, source_type: 'Record'
+  has_many   :like_dynamics, through: :likes, source: :likeable, source_type: 'Dynamic'
 
   has_many   :views,        foreign_key: 'viewer_id'
   has_many   :view_records, through: :views

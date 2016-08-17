@@ -10,6 +10,11 @@ class Dynamic < ActiveRecord::Base
   has_many   :ref_dynamics,      foreign_key: 'root_dynamic_id', class_name: "Dynamic"
   belongs_to :root_dynamic,     class_name: "Dynamic"
 
+  has_many   :comments,   as: :commentable
+
+  has_many   :likes,      as: :likeable
+  has_many   :like_users, through: :like
+
   def addTag tag_name
     tag = Tag.find_by_name(tag_name)
     if tag.nil?

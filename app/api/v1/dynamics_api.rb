@@ -5,9 +5,12 @@ module V1
     resources :dynamics do
       desc "新建动态"
       params do
-        requires :token,   type: Integer,       desc: '用户访问令牌'
-        requires :content, type: String,        desc: '内容'
-        optional :keys,    type: Array[String], desc: '图片名集合'
+        requires :token,       type: Integer,     desc: '用户访问令牌'
+        requires :content,     type: String,      desc: '内容'
+        optional :attachments, type: Array  do
+          requires :key
+          requires :is_video
+        end
         requires :address, type: String,        desc: '地理位置'
         optional :tags,    type: Array[String], desc: '标签集合'
       end
@@ -15,7 +18,7 @@ module V1
         authenticate!
         content = params[:content]
         address = params[:address]
-        keys    = params[:keys]
+        attachments = params[:attachments]
         tags    = params[:tags]
         dynamic = current_user.dynamics.build( :content => content,
                                                :address => address,
@@ -23,8 +26,9 @@ module V1
 
         if dynamic.save
           # 添加附件
-          keys.each do |key|
-            dynamic.attachments.create(:file_url => key)
+          attachments.each do |attachment|
+            dynamic.attachments.create(:file_url => attachment.key,
+                                       :is_video => attachment.is_video)
           end
           # 添加标签
           tags.each do |tag|
@@ -64,6 +68,64 @@ module V1
           error!("失败",500)
         end
       end
+
+      desc "评论动态"
+      params do
+        requires :token,      type: String,  desc: '用户访问令牌'
+        requires :dynamic_id, type: Integer, desc: '动态ID'
+        requires :content,    type: String,  desc: '评论内容'
+      end
+      post '/comments' do
+        authenticate!
+        dynamic_id = params[:dynamic_id]
+        content    = params[:content]
+        dynamic    = Dynamic.find(dynamic_id)
+        comment    = dynamic.comments.build( :user_id => current_user.id,
+                                             :content => content)
+        if comment.save
+          present message: "评论成功"
+        else
+          error!({error: "评论失败"}, 500)
+        end
+      end
+
+      desc "点赞动态"
+      params do
+        requires :token,      type: String,  desc: '用户访问令牌'
+        requires :dynamic_id, type: Integer, desc: '动态ID'
+      end
+
+      post '/like' do
+        authenticate!
+        dynamic_id = params[:dynamic_id]
+        dynamic    = Dynamic.find(dynamic_id)
+
+        if dynamic.like_users << current_user
+          present message: "成功"
+        else
+          error!({message: "失败"}, 500)
+        end
+      end
+
+      desc "取消点赞动态"
+      params do
+        requires :token,      type: String,  desc: "访问令牌"
+        requires :dynamic_id, type: Integer, desc: "动态ID"
+      end
+
+      post '/unlike' do
+        authenticate!
+
+        dynamic_id = params[:dynamic_id].to_i
+        dynamic    = Dynamic.find(dynamic_id)
+
+        if dynamic.like_users.destroy current_user
+          present message: "成功"
+        else
+          error!("失败",  500)
+        end
+      end
+
     end
   end
 end

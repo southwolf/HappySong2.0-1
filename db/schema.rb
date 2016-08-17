@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160816040508) do
+ActiveRecord::Schema.define(version: 20160817081640) do
 
   create_table "advises", force: :cascade do |t|
     t.string   "content",    limit: 255
@@ -37,7 +37,7 @@ ActiveRecord::Schema.define(version: 20160816040508) do
   create_table "articles", force: :cascade do |t|
     t.string   "title",            limit: 255
     t.string   "cover_img",        limit: 255
-    t.text     "content",          limit: 65535
+    t.text     "content",          limit: 65535,                 null: false
     t.integer  "subject_id",       limit: 4
     t.integer  "article_grade_id", limit: 4
     t.integer  "edition_id",       limit: 4
@@ -118,6 +118,7 @@ ActiveRecord::Schema.define(version: 20160816040508) do
     t.integer  "root_dynamic_id",     limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "likes_count",         limit: 4,   default: 0
   end
 
   create_table "editions", force: :cascade do |t|
@@ -169,7 +170,8 @@ ActiveRecord::Schema.define(version: 20160816040508) do
     t.integer  "music_type_id", limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "records_count", limit: 4
+    t.integer  "records_count", limit: 4,   default: 0
+    t.string   "cover_img",     limit: 255
   end
 
   create_table "provinces", force: :cascade do |t|
