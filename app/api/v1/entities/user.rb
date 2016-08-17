@@ -1,6 +1,7 @@
 module Entities
   class User < Grape::Entity
-    expose :id, :uid, :phone,:avatar, :vip, :is_first, :code, :auth_token
+    expose :id, :uid, :phone, :vip, :is_first, :code, :auth_token
+    expose (:avatar) { |object| ENV['QINIUPREFIX']+object.avatar}
     expose(:name) do |object|
       if object.name.blank?
         ""
@@ -54,7 +55,8 @@ module Entities
   end
 
   class MyProfile < Grape::Entity
-    expose :id, :uid, :phone, :name, :avatar ,:sex, :age, :desc
+    expose :id, :uid, :phone, :name, :sex, :age, :desc
+    expose(:avatar) { |user| ENV['QINIUPREFIX']+user.avatar}
     expose (:followers_count)  { |user| user.followers.size }
     expose (:followings_count) { |user| user.followings.size }
     expose (:classmates_count) { |user| user.classmates.size}

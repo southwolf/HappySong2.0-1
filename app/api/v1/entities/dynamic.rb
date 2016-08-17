@@ -4,15 +4,23 @@ module Entities
     expose :user, using: Entities::User
     expose :attachments, using: Entities::Attachment
 
-    expose :ref_dynamic, using: Entities::Dynamic, if: ->(object) { object.is_relay == true } do|object, options|
-      options[:ref_dynamic]
+    expose (:ref_dynamic_id) do |object|
+      if object.ref_dynamic_id.blank?
+        ""
+      else
+        object.ref_dynamic_id
+      end
     end
-    expose :ref_user, using: ::Entities::SimpleUser, if: ->(object){ object.is_relay == true} do|object, options|
-      options[:ref_user]
+
+    expose (:ref_user_id) do |object|
+      if object.ref_user_id.blank?
+        ""
+      else
+        object.ref_user_id
+      end
     end
-    expose :original_user, using: ::Entities::SimpleUser, if: ->(object){ object.is_relay == true} do|object, options|
-      options[:original_user]
-    end
+
+    expose :original_user_id
 
     expose :tag, using: Entities::Tag
 

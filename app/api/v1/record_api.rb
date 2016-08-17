@@ -99,6 +99,21 @@ module V1
         end
       end
 
+      desc "作品取消点赞"
+      params do
+        requires :token, type: String, desc: "访问令牌"
+        requires :id,    type: Integer, desc: "朗读作品ID"
+      end
+      post '/unlike' do
+        authenticate!
+        id = params[:id].to_i
+        record = Record.find(id)
+        if record.like_users.destroy current_user
+          present "成功"
+        else
+          error!("失败", 500)
+        end
+      end
 
       desc "评论作品"
       params do

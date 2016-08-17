@@ -1,5 +1,5 @@
 module Entities
   class Province < Grape::Entity
-    expose :name
+    expose :id, :name
   end
 end
