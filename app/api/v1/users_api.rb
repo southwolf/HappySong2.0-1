@@ -18,7 +18,7 @@ module V1
         if YunPian.deliver(user.phone)
           present :message, "成功"
         else
-          error!("失败", 500)
+          error!({ error: "失败"}, 500)
         end
       end
 
@@ -40,7 +40,7 @@ module V1
           present :user, user, with: ::Entities::User
           present :message, "登陆成功"
         else
-          error!("验证码错误",500)
+          error!({message: "验证码错误"},500)
         end
       end
 
@@ -94,7 +94,7 @@ module V1
           current_user.update(:is_first => false)
           present current_user, with: ::Entities::User
         else
-          error!( '更新失败', 500)
+          error!( {error: '更新失败'}, 500)
         end
       end
 
@@ -125,12 +125,12 @@ module V1
       post '/follow' do
         authenticate!
         user = User.find(params[:user_id])
-        present error!({message: '你不能关注自己'}, 500) if current_user == user
+        present error!({ message: '你不能关注自己'}, 500) if current_user == user
         if current_user.follow(user)
           present :message, "关注成功"
           present :follow_size, user.followers.size
         else
-          error!({message: '关注失败'}, 500)
+          error!({ message: '关注失败'}, 500)
         end
       end
 
@@ -220,9 +220,9 @@ module V1
         authenticate!
         album = current_user.albums.build( :file_key => file_key )
         if album.save!
-          present "上传成功"
+          present message: "上传成功"
         else
-          error!("上传失败", 500)
+          error!({ error: "上传失败"} , 500)
         end
       end
     end

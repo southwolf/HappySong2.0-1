@@ -26,7 +26,7 @@ module V1
           keys.each do |key|
             dynamic.attachments.create(:file_url => key)
           end
-          # 添加图片
+          # 添加标签
           tags.each do |tag|
             dynamic.addTag(tag)
           end
@@ -39,9 +39,30 @@ module V1
 
       desc "转发动态"
       params do
-        requires :token,   type: String,        desc: "用户访问令牌"
-        requires :content, type: String,        desc: "内容"
-        requires :tags,    type: Array[String], desc: "标签集合"
+        requires :token,      type: String,        desc: "用户访问令牌"
+        requires :dynamic_id, type: Integer,        desc: "动态ID"
+        requires :content,    type: String,        desc: "内容"
+        requires :tags,       type: Array[String], desc: "标签集合"
+      end
+
+      post "/forward" do
+        authenticate!
+        dynamic_id = params[:dynamic_id]
+        content    = params[:content]
+        tags       = params[:tags]
+        dynamic = Dynamic.find(dynamic_id)
+        ref_dynamic = dynamic.ref_dynamics.create( :user_id  => current_user.id,
+                                     :content  => content,
+                                     :is_relay => true,
+                                     :original_dynamic_id => dynamic.original_dynamic_id)
+        if ref_dynamic.save
+          tags.each do |tag|
+            ref_dynamic.addTag tag
+          end
+          present ref_dynamic, with: ::Entities::Dynamoc
+        else
+          error!("失败",500)
+        end
       end
     end
   end

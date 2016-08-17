@@ -99,9 +99,9 @@ module V1
         record = Record.find(id)
 
         if record.like_users << current_user
-          present "成功"
+          present message: "成功"
         else
-          error!("失败", 500)
+          error!({error: "失败"}, 500)
         end
       end
 
@@ -115,7 +115,7 @@ module V1
         id = params[:id].to_i
         record = Record.find(id)
         if record.like_users.destroy current_user
-          present "成功"
+          present message: "成功"
         else
           error!("失败", 500)
         end
@@ -135,9 +135,9 @@ module V1
         record  = Record.find(id)
         c       = record.comments.build(:content => content, :user_id => current_user.id)
         if c.save
-          present "评论成功"
+          present message: "评论成功"
         else
-          errors!("评论失败", 500)
+          errors!({ error: "评论失败"}, 500)
         end
       end
     end

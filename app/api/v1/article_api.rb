@@ -57,6 +57,20 @@ module V1
 
         # end
       end
+
+      desc "查看文章"
+      params do
+        requires :id, type: Integer, desc: '文章ID'
+      end
+      get '/show' do
+        id    = params[:id]
+        article = Article.find(id)
+        if article.nil?
+          error!("没找到",404)
+        else
+          present article, with: ::Entities::Article
+        end
+      end
     end
   end
 end

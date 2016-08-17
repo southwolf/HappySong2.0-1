@@ -17,7 +17,7 @@ module V1
                                  :user_id => current_user.id,
                                  :commentable_id   => comment.commentable_id,
                                  :commentable_type => comment.commentable_type )
-          present "成功"
+          present :message, "成功"
         else
           error!("失败", 500)
         end
