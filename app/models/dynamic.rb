@@ -7,7 +7,7 @@ class Dynamic < ActiveRecord::Base
   has_many   :dynamics,          foreign_key: 'original_dynamic_id'
   belongs_to :original_dynamic, class_name:  'Dynamic'
 
-s  has_many   :ref_dynamics,      foreign_key: 'root_dynamic_id', class_name: "Dynamic"
+  has_many   :ref_dynamics,      foreign_key: 'root_dynamic_id', class_name: "Dynamic"
   belongs_to :root_dynamic,     class_name: "Dynamic"
 
   def addTag tag_name
