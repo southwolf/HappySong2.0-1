@@ -80,7 +80,7 @@ module V1
           if current_user
             record.views.create(:viewer_id => current_user.id)
           else
-            record.views.created
+            record.views.create
           end
 
           present record, with: ::Entities::Record
