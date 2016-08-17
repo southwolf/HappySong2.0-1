@@ -36,7 +36,6 @@ module V1
         code  = params[:code].to_s
 
         user = User.find_by_phone(phone)
-        puts user.name
         if YunPian.verify(phone, code)
           present :user, user, with: ::Entities::User
           present :message, "登陆成功"

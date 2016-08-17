@@ -36,6 +36,13 @@ module V1
         end
 
       end
+
+      desc "转发动态"
+      params do
+        requires :token,   type: String,        desc: "用户访问令牌"
+        requires :content, type: String,        desc: "内容"
+        requires :tags,    type: Array[String], desc: "标签集合"
+      end
     end
   end
 end

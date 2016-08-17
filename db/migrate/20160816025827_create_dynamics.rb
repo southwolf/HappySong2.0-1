@@ -6,10 +6,9 @@ class CreateDynamics < ActiveRecord::Migration
       t.string     :content
       t.string     :address
       t.boolean    :is_relay, default: false
-      t.integer    :ref_dynamic_id
-      t.integer    :ref_user_id
-      t.integer    :original_user_id
 
+      t.belongs_to :original_dynamic
+      t.belongs_to :root_dynamic
       t.timestamps
     end
   end

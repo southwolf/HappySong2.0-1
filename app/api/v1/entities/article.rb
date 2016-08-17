@@ -6,6 +6,7 @@ module Entities
     expose :edition,       using: Entities::Edition
     expose :article_grade, using: Entities::ArticleGrape
     expose :unit,          using: Entities::Unit
+    expose :records,       using: Entities::Record
     expose :records_count
     expose :created_at
     expose (:cover_img) {|object| ENV['QINIUPREFIX']+object.cover_img }

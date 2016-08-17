@@ -110,13 +110,12 @@ ActiveRecord::Schema.define(version: 20160816040508) do
   end
 
   create_table "dynamics", force: :cascade do |t|
-    t.integer  "user_id",          limit: 4
-    t.string   "content",          limit: 255
-    t.string   "address",          limit: 255
-    t.boolean  "is_relay",                     default: false
-    t.integer  "ref_dynamic_id",   limit: 4
-    t.integer  "ref_user_id",      limit: 4
-    t.integer  "original_user_id", limit: 4
+    t.integer  "user_id",             limit: 4
+    t.string   "content",             limit: 255
+    t.string   "address",             limit: 255
+    t.boolean  "is_relay",                        default: false
+    t.integer  "original_dynamic_id", limit: 4
+    t.integer  "root_dynamic_id",     limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end

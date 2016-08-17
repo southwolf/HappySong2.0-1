@@ -1,28 +1,21 @@
 module Entities
-  class Dynamic < Grape::Entity
-    expose :id,:content,:address,:is_relay, :created_at
+  class SimpleDynamic < Grape::Entity
+    expose :id, :content, :address
+    expose :attachments, using: Entities::Attachment
+  end
+
+  class Dynamic < SimpleDynamic
+    expose :is_relay, :created_at
     expose :user, using: Entities::User
     expose :attachments, using: Entities::Attachment
-
-    expose (:ref_dynamic_id) do |object|
-      if object.ref_dynamic_id.blank?
-        ""
-      else
-        object.ref_dynamic_id
-      end
+    expose :root_dynamic, using: Entities::SimpleDynamic
+    expose (:root_dynamic_user), using: Entities::SimpleUser do |object|
+      object.root_dynamic.try(:user)
     end
-
-    expose (:ref_user_id) do |object|
-      if object.ref_user_id.blank?
-        ""
-      else
-        object.ref_user_id
-      end
+    expose (:original_dynamic_user), using: Entities::SimpleUser do |object|
+      object.original_dynamic.try(:user)
     end
-
-    expose :original_user_id
-
     expose :tag, using: Entities::Tag
-
   end
+
 end
