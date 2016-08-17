@@ -32,6 +32,7 @@ gem 'smart_sms'
 #角色
 gem 'rolify', '~> 5.1'
 
+gem 'qiniu', '~> 6.8'
 #  notifications
 #gem 'notifications', '~> 0.2.0'
 

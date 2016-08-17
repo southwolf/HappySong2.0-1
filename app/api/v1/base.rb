@@ -20,6 +20,7 @@ module V1
     mount V1::RecordApi
     mount V1::CommentsApi
     mount V1::SchoolManagerApi
+    mount V1::QiniuUptoken
 
     add_swagger_documentation(
       add_version: true,
