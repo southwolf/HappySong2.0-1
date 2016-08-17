@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160817081640) do
+ActiveRecord::Schema.define(version: 20160817103222) do
 
   create_table "advises", force: :cascade do |t|
     t.string   "content",    limit: 255
@@ -172,6 +172,7 @@ ActiveRecord::Schema.define(version: 20160817081640) do
     t.datetime "updated_at"
     t.integer  "records_count", limit: 4,   default: 0
     t.string   "cover_img",     limit: 255
+    t.string   "author",        limit: 255
   end
 
   create_table "provinces", force: :cascade do |t|
