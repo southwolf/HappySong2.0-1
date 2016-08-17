@@ -62,11 +62,14 @@ module V1
 
       desc "查看朗读"
       params do
-        requires :token, type: String,  desc: "访问令牌"
+        optional :token, type: String,  desc: "访问令牌"
         requires :id,    type: Integer, desc: "朗读作品的ID"
       end
       get '/show' do
-        authenticate!
+        if params[:token]
+          current_user = User.find_by_auth_token(params[:token])
+        else
+        end
 
         id = params[:id]
         record = Record.find(id)
@@ -74,8 +77,11 @@ module V1
           error!("没有找到", 404)
         else
           record.view_count += 1
-
-          record.views.create(:viewer_id => current_user.id)
+          if current_user
+            record.views.create(:viewer_id => current_user.id)
+          else
+            record.views.created
+          end
 
           present record, with: ::Entities::Record
 
