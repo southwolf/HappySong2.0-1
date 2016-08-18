@@ -4,6 +4,7 @@ module V1
     format :json
     prefix 'api'
     version 'v1', using: :path
+    content_type :json, 'application/json'
     rescue_from :all
 
     helpers BaseHelpers

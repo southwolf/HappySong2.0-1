@@ -9,13 +9,15 @@ module V1
         # requires :token,       type: Integer,     desc: '用户访问令牌'
         requires :content,     type: String,      desc: '内容'
         group :attachments, type: Array do
-          requires :key
-          requires :is_video
+          requires :key, type: String
+          requires :is_video, type: Boolean
         end
         requires :address, type: String,        desc: '地理位置'
         optional :tags,    type: Array[String], desc: '标签集合'
       end
       post "/create" do
+        puts params[:attachments].inspect
+        as= params[:attachments]
         puts params[:tags].inspect
         # authenticate!
         # content = params[:content]

@@ -121,6 +121,23 @@ module V1
         end
       end
 
+      desc "判断是否点赞"
+      params do
+        requires :token, type: String, desc: "访问令牌"
+        requires :record_id, type: String, desc: "作品ID"
+      end
+      get '/checklike' do
+       authenticate!
+       record_id = params[:record_id]
+       record    = Record.find(record_id)
+       if record.like_users.includes(current_user)
+         present message: true
+       else
+         presemt message: false
+       end
+
+      end
+
       desc "评论作品"
       params do
         requires :token,   type: String,   desc: "访问令牌"

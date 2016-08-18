@@ -47,7 +47,7 @@ module YunPian
     api="sms/get_record.json"
     time_now = Time.now
     end_time = time_now.strftime '%Y-%m-%d %H:%M:%S'
-    start_time = (time_now - 3.minute).strftime '%Y-%m-%d %H:%M:%S'
+    start_time = (time_now - 60.minute).strftime '%Y-%m-%d %H:%M:%S'
     options[:mobile] = mobile.to_s
     options[:end_time] = end_time
     options[:start_time] = start_time
