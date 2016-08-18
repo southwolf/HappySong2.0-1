@@ -8,7 +8,6 @@ module V1
       get do
         put_policy = ::Qiniu::Auth::PutPolicy.new(
           'happysong',
-          3600
         )
         uptoken = ::Qiniu::Auth.generate_uptoken( put_policy )
         present :uptoken, uptoken

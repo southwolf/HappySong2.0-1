@@ -83,7 +83,7 @@ module V1
         requires :token,  type: String,  desc: "token"
         requires :name,   type: String,  desc: "用户姓名"
         requires :sex,    type: String,  desc: "用户性别"
-        requires :role,   type: Integer, desc: "用户角色[老师:0, 家长:1, 学生: 2]"
+        requires :role,   type: Integer, values:[0,1,2],  desc: "用户角色[老师:0, 家长:1, 学生: 2]"
       end
       post '/update_profile' do
         authenticate!
