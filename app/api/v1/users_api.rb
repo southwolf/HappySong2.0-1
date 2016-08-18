@@ -177,16 +177,16 @@ module V1
         present :user, current_user, with: ::Entities::MyProfile
       end
 
-      #
-      # desc "测试"
-      # get '/all' do
-      #   users = User.all.group_by{|user| DateTime.parse(user.created_at.to_s).strftime('%y-%m')}
-      #   users.each do |key, value|
-      #     # present :key,   key
-      #     # present :users, value, with: ::Entities::User
-      #   end
-      #   # present users, with: ::Entities::User
-      # end
+      
+      desc "测试"
+      get '/all' do
+        users = User.all.group_by{|user| DateTime.parse(user.created_at.to_s).strftime('%y-%m')}
+        users.each do |key, value|
+          present :key,   key
+          present :users, value, with: ::Entities::User
+        end
+        # present users, with: ::Entities::User
+      end
     end
 
     resources :advise do

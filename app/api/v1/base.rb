@@ -22,7 +22,7 @@ module V1
     mount V1::CommentsApi
     mount V1::SchoolManagerApi
     mount V1::QiniuUptoken
-    # mount V1::DynamicsApi
+    mount V1::DynamicsApi
 
     add_swagger_documentation(
       add_version: true,

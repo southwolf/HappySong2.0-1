@@ -16,6 +16,9 @@ module Entities
       object.original_dynamic.try(:user)
     end
     expose :tag, using: Entities::Tag
+    expose (:url) do |object|
+      "http:://localhost:3000/#{object.id}"
+    end
   end
 
 end
