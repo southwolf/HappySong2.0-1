@@ -161,9 +161,9 @@ module V1
         user = User.all.take(10) if q.nil?
         user = User.where("name=? OR uid=?", q, q)
         # if user.blank?
-          # error!({message:"没有查到对应用户"},404)
+        # error!({message:"没有查到对应用户"},404)
         # else
-        present :user, user, with: ::Entities::SimpleUser
+        present :user, user, with: ::Entities::MyProfile
         # end
       end
 
@@ -177,16 +177,16 @@ module V1
         present :user, current_user, with: ::Entities::MyProfile
       end
 
-      
+
       desc "测试"
       get '/all' do
-        users = User.all.group_by{|user| DateTime.parse(user.created_at.to_s).strftime('%y-%m')}
-        users.each do |key, value|
-          present :key,   key
-          present :users, value, with: ::Entities::User
-        end
-        # present users, with: ::Entities::User
+        users = User.all.group_by{|user| DateTime.parse(user.created_at.to_s).strftime('%y-%m')}.to_a
+        # users.each do |key, value|
+          # present :"#{key}", value, with: ::Entities::User
+        # end
+        present users, with: ::Entities::HashUser
       end
+
     end
 
     resources :advise do

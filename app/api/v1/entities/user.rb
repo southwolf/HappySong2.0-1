@@ -61,4 +61,11 @@ module Entities
     expose (:followings_count) { |user| user.followings.size }
     expose (:classmates_count) { |user| user.classmates.size}
   end
+  class HashUser < Grape::Entity
+    expose (:time) { |object| object[0]}
+    expose (:size) { |object| object[1].size}
+    expose :users, using: Entities::User do |object|
+      object[1]
+    end
+  end
 end

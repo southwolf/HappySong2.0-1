@@ -25,7 +25,7 @@ module V1
                                                :original_user_id => current_user.id)
 
         if dynamic.save
-          if picture_keys.present? 
+          if picture_keys.present?
             # 添加附件
             picture_keys.each do |picture_key|
               dynamic.attachments.create(:file_url => picture_key,
@@ -33,12 +33,12 @@ module V1
             end
           end
 
-          if video_key.present? 
+          if video_key.present?
             dynamic.attachments.create( :file_url => video_key,
                                        :is_video => true)
           end
 
-          if tags.present? 
+          if tags.present?
             # 添加标签
             tags.each do |tag|
               dynamic.addTag(tag)
@@ -153,7 +153,7 @@ module V1
           present message: false
         end
       end
-      
+
       desc "按标签查询动态"
       params do
         optional :q, type: String, desc: "查询参数"
@@ -192,6 +192,13 @@ module V1
           end
         end
         present paginate(dynamics), with: ::Entities::Dynamic
+      end
+
+      desc "按月分组取动态"
+      get '/all' do
+        dynamics = Dynamic.all.group_by{|dynamic| DateTime.parse(dynamic.created_at.to_s).strftime('%y-%m')}.to_a
+
+        present dynamics, with: ::Entities::HashDynamic
       end
     end
   end
