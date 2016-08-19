@@ -36,7 +36,7 @@ module V1
           grade_articles << article.grade_article
         end
         editions         = editions.uniq
-        grgrade_articles = grgrade_articles.uniq
+        grade_articles = grade_articles.uniq
         present :editions, editions, with: ::Entities::IdAndName
         present :grade_articles, grade_articles, with: ::Entities::IdAndName
       end
