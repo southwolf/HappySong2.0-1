@@ -208,7 +208,7 @@ module V1
 
       desc "按月分组取动态"
       get '/group' do
-        dynamics = Dynamic.all.group_by{|dynamic| DateTime.parse(dynamic.created_at.to_s).strftime('%y-%m')}.to_a
+        dynamics = Dynamic.all.group_by{|dynamic| DateTime.parse(dynamic.created_at.to_s).strftime('%Y-%-m')}.to_a
 
         present paginate(Kaminari.paginate_array(dynamics)), with: ::Entities::HashDynamic
       end

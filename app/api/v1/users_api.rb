@@ -182,7 +182,7 @@ module V1
       desc "测试"
       paginate per_page: 10
       get '/all' do
-        users = User.all.group_by{|user| DateTime.parse(user.created_at.to_s).strftime('%y-%m')}.to_a
+        users = User.all.group_by{|user| DateTime.parse(user.created_at.to_s).strftime('%Y-%-m')}.to_a
         # users.each do |key, value|
           # present :"#{key}", value, with: ::Entities::User
         # end

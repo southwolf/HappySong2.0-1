@@ -1,4 +1,4 @@
-class User < ActiveRecord::Base
+Ylass User < ActiveRecord::Base
 
   before_create :create_auth_token, :set_code, :set_id_code
   validates :phone, uniqueness: true
@@ -26,6 +26,9 @@ class User < ActiveRecord::Base
 
   has_many   :views,        foreign_key: 'viewer_id'
   has_many   :view_records, through: :views
+
+  belongs_to :credit
+  has_many   :credit_managers
 
 
   # has_sms_verification

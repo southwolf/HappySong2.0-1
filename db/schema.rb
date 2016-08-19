@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160817103222) do
+ActiveRecord::Schema.define(version: 20160819035856) do
 
   create_table "advises", force: :cascade do |t|
     t.string   "content",    limit: 255
@@ -100,6 +100,22 @@ ActiveRecord::Schema.define(version: 20160817103222) do
     t.datetime "updated_at"
     t.integer  "root_id",          limit: 4
     t.integer  "user_id",          limit: 4
+  end
+
+  create_table "credit_managers", force: :cascade do |t|
+    t.integer  "user_id",    limit: 4
+    t.string   "reson",      limit: 255
+    t.string   "type",       limit: 255
+    t.integer  "point",      limit: 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "credits", force: :cascade do |t|
+    t.integer  "point",      limit: 4, default: 0
+    t.integer  "used",       limit: 4, default: 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "districts", force: :cascade do |t|
@@ -276,6 +292,7 @@ ActiveRecord::Schema.define(version: 20160817103222) do
     t.string   "auth_token",          limit: 255
     t.integer  "role_id",             limit: 4
     t.integer  "grade_team_class_id", limit: 4
+    t.integer  "credit_id",           limit: 4
   end
 
   create_table "views", force: :cascade do |t|
