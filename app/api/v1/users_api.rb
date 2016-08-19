@@ -233,12 +233,23 @@ module V1
 
       post '/upload' do
         authenticate!
-        album = current_user.albums.build( :file_key => file_key )
+        file_key = params[:file_key]
+        album = current_user.albums.build( :file_url => file_key )
         if album.save!
           present message: "上传成功"
         else
           error!({ error: "上传失败"} , 500)
         end
+      end
+
+      desc '取我的相册'
+      params do
+        requires :token, type: String, desc: '用户访问令牌'
+      end
+      get '/my_albums' do
+        authenticate!
+        albums = current_user.albums
+        present albums, with: ::Entities::Album
       end
     end
   end
