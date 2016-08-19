@@ -33,7 +33,7 @@ module V1
         grade_articles = []
         articles.each do |article|
           editions       << article.edition
-          grade_articles << article.grade_article
+          grade_articles << article.article_grade
         end
         editions         = editions.uniq
         grade_articles = grade_articles.uniq
