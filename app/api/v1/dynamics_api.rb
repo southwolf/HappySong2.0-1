@@ -85,7 +85,7 @@ module V1
         requires :dynamic_id, type: Integer, desc: '动态ID'
         requires :content,    type: String,  desc: '评论内容'
       end
-      post '/comments' do
+      post '/comment' do
         authenticate!
         dynamic_id = params[:dynamic_id]
         content    = params[:content]
@@ -97,6 +97,18 @@ module V1
         else
           error!({error: "评论失败"}, 500)
         end
+      end
+
+      desc "根据动态ID取评论列表"
+
+      params do
+        requires :dynamic_id, type: Integer, desc: '动态ID'
+      end
+      get '/comments' do
+        dynamic_id = params[:dynamic_id]
+        dynamic    = Dynamic.find(dynamic_id)
+        comments   = dynamic.comments
+        present paginate(comments), with: ::Entities::CommentWithReply
       end
 
       desc "点赞动态"
@@ -195,11 +207,20 @@ module V1
       end
 
       desc "按月分组取动态"
-      get '/all' do
+      get '/group' do
         dynamics = Dynamic.all.group_by{|dynamic| DateTime.parse(dynamic.created_at.to_s).strftime('%y-%m')}.to_a
 
-        present dynamics, with: ::Entities::HashDynamic
+        present paginate(Kaminari.paginate_array(dynamics)), with: ::Entities::HashDynamic
       end
+
+      desc "获取所有动态"
+      get '/all' do
+        dynamics = Dynamic.all.order( created_at: :DESC)
+        present paginate(dynamics), with: ::Entities::Dynamic
+      end
+
+
+
     end
   end
 end

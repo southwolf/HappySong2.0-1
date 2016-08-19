@@ -157,6 +157,21 @@ module V1
           errors!({ error: "评论失败"}, 500)
         end
       end
+
+      desc "根据朗读作品ID拉取评论"
+      paginate per_page: 20
+      params do
+        requires :record_id, type: Integer, desc: '朗读作品ID'
+      end
+
+      get '/comments' do
+        record_id = params[:record_id]
+        record    = Record.find(record_id)
+
+        comments  = record.comments
+        present paginate(comments), with: Entities::CommentWithReply
+      end
+
     end
   end
 end

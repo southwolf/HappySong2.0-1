@@ -1,5 +1,6 @@
 module V1
   class UsersApi < Grape::API
+    include Grape::Kaminari
     resources :users do
       # 获取短信验证码接口
       # http://host/api/v1/users/getcode?phone=?
@@ -163,7 +164,7 @@ module V1
         # if user.blank?
         # error!({message:"没有查到对应用户"},404)
         # else
-        present :user, user, with: ::Entities::MyProfile
+        present :user, user, with: ::Entities::SimpleUser
         # end
       end
 
@@ -179,12 +180,13 @@ module V1
 
 
       desc "测试"
+      paginate per_page: 10
       get '/all' do
         users = User.all.group_by{|user| DateTime.parse(user.created_at.to_s).strftime('%y-%m')}.to_a
         # users.each do |key, value|
           # present :"#{key}", value, with: ::Entities::User
         # end
-        present users, with: ::Entities::HashUser
+        present paginate(Kaminari.paginate_array(users)), with: ::Entities::HashUser
       end
 
     end

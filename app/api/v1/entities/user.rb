@@ -55,7 +55,7 @@ module Entities
   end
 
   class MyProfile < Grape::Entity
-    expose :id, :uid, :phone, :name, :sex, :age, :desc
+    expose :id, :uid, :phone, :name, :sex, :age, :vip, :desc
     expose(:avatar) { |user| ENV['QINIUPREFIX']+user.avatar}
     expose (:followers_count)  { |user| user.followers.size }
     expose (:followings_count) { |user| user.followings.size }
