@@ -11,4 +11,12 @@ module Entities
     expose :id, :feeling, :style, :is_demo, :is_hot, :view_count, :comments_count, :likes_count, :created_at
     expose :user, using: Entities::User
   end
+
+  class HashRecord < Grape::Entity
+    expose (:time) { |object| object[0] }
+    expose (:size) { |object| object[1].size}
+    expose :records, using: Entities::Record do |object|
+      object[1]
+    end
+  end
 end

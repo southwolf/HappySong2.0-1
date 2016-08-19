@@ -206,9 +206,13 @@ module V1
         present paginate(dynamics), with: ::Entities::Dynamic
       end
 
-      desc "按月分组取动态"
+      desc "按月分组取个人动态"
+      params do
+        requires :token, type: String, desc: "用户访问令牌"
+      end
       get '/group' do
-        dynamics = Dynamic.all.group_by{|dynamic| DateTime.parse(dynamic.created_at.to_s).strftime('%Y-%-m')}.to_a
+        authenticate!
+        dynamics = current_user.dynamics.group_by{|dynamic| DateTime.parse(dynamic.created_at.to_s).strftime('%Y-%-m')}.to_a
 
         present paginate(Kaminari.paginate_array(dynamics)), with: ::Entities::HashDynamic
       end

@@ -11,4 +11,6 @@ class Record < ActiveRecord::Base
   has_many   :viewers, through: :views
 
   validates :file_url, :style, presence: true
+
+  has_many  :reports, as: :reportable
 end

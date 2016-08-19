@@ -6,6 +6,7 @@ class CreateCreditManagers < ActiveRecord::Migration
       t.string  :type
       t.integer :point
 
+      has_many   :credit_managers
       t.timestamps
     end
   end

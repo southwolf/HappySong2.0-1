@@ -30,6 +30,7 @@ class User < ActiveRecord::Base
   belongs_to :credit
   has_many   :credit_managers
 
+  has_many   :reports
 
   # has_sms_verification
 

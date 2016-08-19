@@ -172,6 +172,15 @@ module V1
         present paginate(comments), with: Entities::CommentWithReply
       end
 
+      desc "按月分组取个人朗读"
+      params do
+        requires :token, type: String, desc: "用户访问令牌"
+      end
+      get '/my_records' do
+        authenticate!
+        records = current_user.records.group_by{ |record| DataTime.parse(record.created_at.to_s).strftime('%Y-%-m')}.to_a
+        present paginate(Kaminari.paginate_array(records)), with: ::Entities::HashRecord
+      end
     end
   end
 end

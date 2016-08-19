@@ -178,6 +178,19 @@ module V1
         present :user, current_user, with: ::Entities::MyProfile
       end
 
+      desc "获取我喜欢的内容"
+      params do
+        requires :token, type: String, desc: "token"
+      end
+
+      get '/mylikes' do
+        authenticate!
+        liked_records  = current_user.like_records
+        liked_dynamics = current_user.like_dynamics
+        present :like_records,   paginate(liked_records),  with: ::Entities::Record
+        present :liked_dynamics, paginate(liked_dynamics), with: ::Entities::Dynamic
+      end
+
 
       desc "测试"
       paginate per_page: 10

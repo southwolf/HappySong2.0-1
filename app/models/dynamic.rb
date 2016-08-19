@@ -15,6 +15,8 @@ class Dynamic < ActiveRecord::Base
   has_many   :likes,      as: :likeable
   has_many   :like_users, through: :like
 
+  has_many   :reports,    as: :reportable
+
   def addTag tag_name
     tag = Tag.find_by_name(tag_name)
     if tag.nil?

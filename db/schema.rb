@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160819035856) do
+ActiveRecord::Schema.define(version: 20160819070242) do
 
   create_table "advises", force: :cascade do |t|
     t.string   "content",    limit: 255
@@ -224,6 +224,14 @@ ActiveRecord::Schema.define(version: 20160819035856) do
   add_index "relationships", ["follower_id", "following_id"], name: "index_relationships_on_follower_id_and_following_id", using: :btree
   add_index "relationships", ["follower_id"], name: "index_relationships_on_follower_id", using: :btree
   add_index "relationships", ["following_id"], name: "index_relationships_on_following_id", using: :btree
+
+  create_table "reports", force: :cascade do |t|
+    t.integer  "user_id",         limit: 4
+    t.integer  "reportable_id",   limit: 4
+    t.string   "reportable_type", limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "roles", force: :cascade do |t|
     t.string   "name",       limit: 255
