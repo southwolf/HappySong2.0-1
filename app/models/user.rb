@@ -1,4 +1,4 @@
-Ylass User < ActiveRecord::Base
+class User < ActiveRecord::Base
 
   before_create :create_auth_token, :set_code, :set_id_code
   validates :phone, uniqueness: true
