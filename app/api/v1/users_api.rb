@@ -122,7 +122,7 @@ module V1
         requires :token,   type: String,  desc: "token"
         requires :user_id, type: Integer, desc: "被关注用户id"
       end
-      get'/follow' do
+      post'/follow' do
         authenticate!
         user = User.find(params[:user_id].to_i)
         present error!({ message: '你不能关注自己'}, 500) if current_user == user
@@ -140,7 +140,7 @@ module V1
         requires :user_id, type: Integer, desc: "被关注用户的id"
       end
 
-      get '/unfollow' do
+      post '/unfollow' do
         authenticate!
         user = User.find(params[:user_id])
         if current_user.unfollow(user)
