@@ -21,10 +21,10 @@ module V1
         video_key    = params[:video_key]
         tags         = params[:tags]
         dynamic      = current_user.dynamics.build( :content => content,
-                                               :address => address,
-                                               :original_user_id => current_user.id)
+                                               :address => address)
 
         if dynamic.save
+          dynamic.update( :original_dynamic_id => dynamic.id)
           if picture_keys.present?
             # 添加附件
             picture_keys.each do |picture_key|
