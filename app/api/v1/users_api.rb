@@ -126,6 +126,7 @@ module V1
         authenticate!
         user = User.find(params[:user_id].to_i)
         present error!({ message: '你不能关注自己'}, 500) if current_user == user
+        present error!({ message: '不能重复关注'}, 500) if current_user.followed? user
         if current_user.follow(user)
           present :message, "关注成功"
           present :follow_size, user.followers.size
@@ -146,7 +147,6 @@ module V1
         if current_user.unfollow(user)
           present :message, "取消关注成功"
           present :follow_size, user.followers.size
-          status 200
         else
           error!({message: '取消关注失败'}, 500)
         end
