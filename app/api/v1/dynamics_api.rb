@@ -73,7 +73,7 @@ module V1
           tags.each do |tag|
             ref_dynamic.addTag tag
           end
-          present ref_dynamic, with: ::Entities::Dynamoc
+          present ref_dynamic, with: ::Entities::Dynamic
         else
           error!("失败",500)
         end
