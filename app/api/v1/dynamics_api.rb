@@ -79,6 +79,20 @@ module V1
         end
       end
 
+      desc "查看动态"
+      params do
+        requires :token,      type: String, desc: '用户访问令牌'
+        requires :dynamic_id, type: Integer, desc: '动态ID'
+      end
+
+      get '/show' do
+        authenticate!
+        dynamic_id = params[:dynamic_id]
+        dynamic    = Dynamic.find(dynamic_id)
+
+        present dynamic, ::Entities::Dynamic
+      end
+
       desc "评论动态"
       params do
         requires :token,      type: String,  desc: '用户访问令牌'

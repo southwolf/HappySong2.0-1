@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160819070242) do
+ActiveRecord::Schema.define(version: 20160822043008) do
 
   create_table "advises", force: :cascade do |t|
     t.string   "content",    limit: 255
@@ -301,6 +301,7 @@ ActiveRecord::Schema.define(version: 20160819070242) do
     t.integer  "role_id",             limit: 4
     t.integer  "grade_team_class_id", limit: 4
     t.integer  "credit_id",           limit: 4
+    t.integer  "parent_id",           limit: 4
   end
 
   create_table "views", force: :cascade do |t|

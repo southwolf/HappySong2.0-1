@@ -178,6 +178,23 @@ module V1
         present :user, current_user, with: ::Entities::MyProfile
       end
 
+      desc "父母关联子女"
+      params do
+        requires :token,    type: String, desc: '用户访问令牌'
+        requires :child_id, type: Integer, desc: '子女Id'
+      end
+
+      post '/add_child' do
+        authenticate!
+        present :error, "你当前身份不是父母" unless current_user.role.try(:name) == "parent"
+        child_id = params[:child_id]
+        child    = User.find(child_id)
+        if child.parent = current_user
+          present :message, "成功"
+        else
+          error!({ message: "失败"},500)
+        end
+      end
       desc "获取我喜欢的内容"
       params do
         requires :token, type: String, desc: "token"
