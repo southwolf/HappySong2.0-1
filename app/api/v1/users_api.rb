@@ -125,8 +125,8 @@ module V1
       post'/follow' do
         authenticate!
         user = User.find(params[:user_id].to_i)
-        present error!({ message: '你不能关注自己'}, 500) if current_user == user
-        present error!({ message: '不能重复关注'}, 500) if current_user.followed? user
+        present error!({ message: '你不能关注自己'}, 400) if current_user == user
+        present error!({ message: '不能重复关注'}, 400) if current_user.followed? user
         if current_user.follow(user)
           present :message, "关注成功"
           present :follow_size, user.followers.size
