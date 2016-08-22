@@ -110,7 +110,6 @@ module V1
         user = User.find(params[:user_id])
         if current_user.followed? user
           present :status, true
-
         else
           present :status, false
 
@@ -123,9 +122,9 @@ module V1
         requires :token,   type: String,  desc: "token"
         requires :user_id, type: Integer, desc: "被关注用户id"
       end
-      post '/follow' do
+      get'/follow' do
         authenticate!
-        user = User.find(params[:user_id])
+        user = User.find(params[:user_id].to_i)
         present error!({ message: '你不能关注自己'}, 500) if current_user == user
         if current_user.follow(user)
           present :message, "关注成功"
@@ -141,7 +140,7 @@ module V1
         requires :user_id, type: Integer, desc: "被关注用户的id"
       end
 
-      post '/unfollow' do
+      get '/unfollow' do
         authenticate!
         user = User.find(params[:user_id])
         if current_user.unfollow(user)

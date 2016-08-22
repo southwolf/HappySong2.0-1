@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160822043008) do
+ActiveRecord::Schema.define(version: 20160822073150) do
 
   create_table "advises", force: :cascade do |t|
     t.string   "content",    limit: 255
@@ -48,6 +48,7 @@ ActiveRecord::Schema.define(version: 20160822043008) do
     t.integer  "records_count",    limit: 4,     default: 0
     t.boolean  "has_demo",                       default: false
     t.boolean  "is_hot",                         default: false
+    t.boolean  "article_type",                   default: true
   end
 
   create_table "articles_cate_items", id: false, force: :cascade do |t|
