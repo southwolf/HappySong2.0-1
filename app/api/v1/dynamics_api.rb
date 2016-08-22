@@ -6,7 +6,7 @@ module V1
     resources :dynamics do
       desc "新建动态"
       params do
-        requires :token,        type: Integer,       desc: '用户访问令牌'
+        requires :token,        type: String,       desc: '用户访问令牌'
         requires :content,      type: String,        desc: '内容'
         requires :address,      type: String,        desc: '地理位置'
         optional :picture_keys, type: Array[String], desc: '图片集合'
