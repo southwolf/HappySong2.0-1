@@ -24,6 +24,8 @@ class User < ActiveRecord::Base
   has_many   :like_records,  through: :likes, source: :likeable, source_type: 'Record'
   has_many   :like_dynamics, through: :likes, source: :likeable, source_type: 'Dynamic'
 
+  has_many   :dynamics
+
   has_many   :views,        foreign_key: 'viewer_id'
   has_many   :view_records, through: :views
 
