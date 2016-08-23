@@ -6,7 +6,6 @@ module V1
     resources :articles do
       desc "获取所有文章"
       get '/all' do
-
         articles = Article.all.order(:records_count => :DESC)
         present paginate(articles), with: ::Entities::Article
       end

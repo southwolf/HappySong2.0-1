@@ -22,7 +22,6 @@ module V1
         tags         = params[:tags]
         dynamic      = current_user.dynamics.build( :content => content,
                                                :address => address)
-
         if dynamic.save
           dynamic.update( :original_dynamic_id => dynamic.id)
           if picture_keys.present?

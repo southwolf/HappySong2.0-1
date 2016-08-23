@@ -45,5 +45,9 @@ module V1
 
     # 设置用户角色
     #
+    Grape::Entity.format_with :utc do |date|
+      date.utc if date
+    end
+
   end
 end
