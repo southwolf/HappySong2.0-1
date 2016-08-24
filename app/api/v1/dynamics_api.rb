@@ -241,7 +241,7 @@ module V1
         follwing_users.each do |user|
           dynamics << user.dynamics
         end
-        dynamics = dynamics.flatten.sort_by {|dynamic| dynamic.created_by}.reverse
+        dynamics = dynamics.flatten.sort_by {|dynamic| dynamic.created_at}.reverse
         present paginate(Kaminari.paginate_array(dynamics)), with: Entities::Dynamic
       end
 
