@@ -284,6 +284,15 @@ module V1
         end
       end
 
+      desc "获取动态的评论"
+      params do
+        requires :dynamic_id, type: Integer, desc: "动态Id"
+      end
+       get '/comments' do
+        dynamic = Dynamic.find(params[:dynamic_id])
+        comments = dynamic.comments.order(created_at: :DESC)
+        present paginate(comments), with: ::Entities::CommentWithReply
+      end
 
       desc "举报动态"
       params do

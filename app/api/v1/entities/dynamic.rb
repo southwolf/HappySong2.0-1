@@ -5,7 +5,7 @@ module Entities
   end
 
   class Dynamic < SimpleDynamic
-    expose :is_relay, :created_at
+    expose :is_relay, :comments_count, :created_at
     expose :user,                    using: Entities::User
     expose :attachments,             using: Entities::Attachment
     expose :root_dynamic,            using: Entities::SimpleDynamic
