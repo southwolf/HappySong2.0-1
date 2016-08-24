@@ -65,12 +65,14 @@ module YunPian
 
   private
 
-  # Method that parse JSON to Hash
-  #
+  # code 
   def set_code
     ([*?1..?9]).sample(4).join
   end
 
+
+  # Method that parse JSON to Hash
+  #
   def result(body)
     begin
       ActiveSupport::JSON.decode body

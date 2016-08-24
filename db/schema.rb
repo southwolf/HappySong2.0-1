@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160822073150) do
+ActiveRecord::Schema.define(version: 20160823061502) do
 
   create_table "advises", force: :cascade do |t|
     t.string   "content",    limit: 255
@@ -191,6 +191,24 @@ ActiveRecord::Schema.define(version: 20160822073150) do
     t.string   "cover_img",     limit: 255
     t.string   "author",        limit: 255
   end
+
+  create_table "notifications", force: :cascade do |t|
+    t.integer  "user_id",            limit: 4,   null: false
+    t.integer  "actor_id",           limit: 4
+    t.string   "notify_type",        limit: 255, null: false
+    t.string   "target_type",        limit: 255
+    t.integer  "target_id",          limit: 4
+    t.string   "second_target_type", limit: 255
+    t.integer  "second_target_id",   limit: 4
+    t.string   "third_target_type",  limit: 255
+    t.integer  "third_target_id",    limit: 4
+    t.datetime "read_at"
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+  end
+
+  add_index "notifications", ["user_id", "notify_type"], name: "index_notifications_on_user_id_and_notify_type", using: :btree
+  add_index "notifications", ["user_id"], name: "index_notifications_on_user_id", using: :btree
 
   create_table "provinces", force: :cascade do |t|
     t.string   "name",       limit: 255

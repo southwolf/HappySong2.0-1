@@ -230,14 +230,76 @@ module V1
         present paginate(Kaminari.paginate_array(dynamics)), with: ::Entities::HashDynamic
       end
 
+      desc "获取好友动态"
+      params do
+        requires :token, type: String, desc: "用户访问令牌"
+      end
+      get '/friend_dynamics' do
+        authenticate!
+        follwing_users = current_user.following_users
+        dynamics = []
+        follwing_users.each do |user|
+          dynamics << user.dynamics
+        end
+        dynamics = dynamics.flatten.sort_by {|dynamic| dynamic.created_by}.reverse
+        present paginate(Kaminari.paginate_array(dynamics)), with: Entities::Dynamic
+      end
+
+
+      desc "获取好友动态按月分组"
+      params do
+        requires :token,   type: String, desc: "用户访问令牌"
+        requires :user_id, type: Integer, desc: "好友Id"
+      end
+      get '/other_group_dynamics' do
+        authenticate!
+        user = User.find(params[:user_id])
+        other_dynamics = user.dynamics.group_by{ |dynamic| DateTime.parse(dynamic.created_at.to_s).strftime('%Y-%-m')}.to_a
+        present paginate(Kaminari.paginate_array(other_dynamics)), with: ::Entities::HashDynamic
+      end
+
       desc "获取所有动态"
       get '/all' do
         dynamics = Dynamic.all.order( created_at: :DESC)
         present paginate(dynamics), with: ::Entities::Dynamic
       end
 
+      desc "根据时间查动态"
+      params do
+        requires :token,   type: String,  desc: "用户访问令牌"
+        optional :user_id, type: Integer, desc: "用户ID"
+        requires :time,    type: String,  desc: "时间"
+      end
+      get '/time_dynamics' do
+        authenticate!
+        user_id = params[:user_id]
+        time    = params[:time]
+        if user_id.nil?
+          dynamics = current_user.dynamics.select {|dynamic| DateTime.parse(dynamic.created_at.to_s).strftime('%Y-%-m') == time }
+          present paginate(Kaminari.paginate_array(dynamics)), with: ::Entities::Dynamic
+        else
+          user = User.find(user_id)
+          dynamics = user.dynamics.reject { |dynamic| DateTime.parse(dynamic.created_at.to_s).strftime('%Y-%-m') != time}
+          present paginate(Kaminari.paginate_array(dynamics)), with: ::Entities::Dynamic
+        end
+      end
 
 
+      desc "举报动态"
+      params do
+        requires :token,      type: String,  desc: "用户访问令牌"
+        requires :dynamic_id, type: Integer, desc: "动态ID"
+      end
+      post '/report' do
+        authenticate!
+        dynamic_id = params[:dynamic_id]
+        dynamic = Dynamic.find(dynamic_id)
+        if dynamic.reports.create(:user_id => current_user.id)
+          present :message, "举报成功"
+        else
+          error!({error: "失败"}, 500)
+        end
+      end
     end
   end
 end
