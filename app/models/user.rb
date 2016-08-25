@@ -9,10 +9,10 @@ class User < ActiveRecord::Base
   belongs_to :role
   has_many   :advises
   has_many   :relationships,         foreign_key: 'follower_id',
-  dependent: :destroy
+                                     dependent: :destroy
   has_many   :reverse_relationships, class_name: "Relationship",
-  foreign_key: 'following_id',
-  dependent: :destroy
+                                     foreign_key: 'following_id',
+                                     dependent: :destroy
   has_many   :followings,    :through => :relationships
   has_many   :followers,     :through => :reverse_relationships
 
@@ -41,6 +41,12 @@ class User < ActiveRecord::Base
   belongs_to :parent,   class_name: 'User'
   
   has_one    :member
+
+  has_many   :own_notifications, class_name: 'Notification'
+  has_many   :notifications,     as: :targetable
+
+
+
   # has_sms_verification
 
   # 生成token

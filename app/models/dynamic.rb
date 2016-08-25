@@ -17,6 +17,8 @@ class Dynamic < ActiveRecord::Base
 
   has_many   :reports,    as: :reportable
 
+  has_many   :notifications, as: :targetable
+
   def addTag tag_name
     tag = Tag.find_by_name(tag_name)
     if tag.nil?

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160825020043) do
+ActiveRecord::Schema.define(version: 20160825062018) do
 
   create_table "advises", force: :cascade do |t|
     t.string   "content",    limit: 255
@@ -202,6 +202,16 @@ ActiveRecord::Schema.define(version: 20160825020043) do
     t.string   "author",        limit: 255
   end
 
+  create_table "notifications", force: :cascade do |t|
+    t.string   "notification_type", limit: 255,                null: false
+    t.integer  "user_id",           limit: 4
+    t.integer  "targetable_id",     limit: 4
+    t.string   "targetable_type",   limit: 255
+    t.boolean  "unread",                        default: true
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "provinces", force: :cascade do |t|
     t.string   "name",       limit: 255
     t.datetime "created_at"
@@ -281,6 +291,7 @@ ActiveRecord::Schema.define(version: 20160825020043) do
     t.string   "name",       limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "recommend",              default: false
   end
 
   create_table "team_classes", force: :cascade do |t|

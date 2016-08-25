@@ -24,7 +24,7 @@ module V1
     mount V1::SchoolManagerApi
     mount V1::QiniuUptoken
     mount V1::DynamicsApi
-
+    mount V1::TagsApi
     add_swagger_documentation(
       add_version: true,
       api_version: 'api/v1'

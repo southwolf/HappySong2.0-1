@@ -13,4 +13,6 @@ class Record < ActiveRecord::Base
   validates :file_url, :style, presence: true
 
   has_many  :reports, as: :reportable
+
+  has_many  :notifications, as: :targetable
 end

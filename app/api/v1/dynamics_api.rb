@@ -84,12 +84,11 @@ module V1
         requires :dynamic_id, type: Integer, desc: '动态ID'
       end
 
-      get '/show' do
+      get '/show_dynaminc' do
         authenticate!
         dynamic_id = params[:dynamic_id]
         dynamic    = Dynamic.find(dynamic_id)
-
-        present dynamic, ::Entities::Dynamic
+        present  dynamic, with: ::Entities::Dynamic
       end
 
       desc "评论动态"
