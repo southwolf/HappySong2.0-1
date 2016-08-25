@@ -39,6 +39,8 @@ class User < ActiveRecord::Base
   has_many   :children, class_name: 'User',
                         foreign_key: 'parent_id'
   belongs_to :parent,   class_name: 'User'
+  
+  has_one    :member
   # has_sms_verification
 
   # 生成token
@@ -85,6 +87,36 @@ class User < ActiveRecord::Base
     grade_team_class = self.grade_team_class
     return [] if grade_team_class.nil?
     grade_team_class.students
+  end
+
+  # 是否是VIP
+  def vip?
+    return false if self.member.nil?
+    if self.member.expire_time > Time.now
+      self.update(:vip => true)
+      return true
+    else
+      self.update(:vip => false )
+      return false
+    end
+  end
+  
+  # 设置为会员
+  def add_vip( day)
+    if self.member.nil?
+      if day == 30
+        type = "mon"
+      elsif day == 365
+        type = "year"
+      else
+        type = "free"
+      end
+      self.create_member(:start_time => Time.now,
+                         :expire_time => Time.now + day.day,
+                         :member_type => type)
+    else
+      self.member.update(:expire_time => Time.now + day.day)
+    end
   end
 
   # 生成4位 code

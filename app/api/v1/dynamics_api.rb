@@ -284,7 +284,7 @@ module V1
         end
       end
 
-      desc "获取动态的评论"
+      desc "根据动态ID获取动态的评论"
       params do
         requires :dynamic_id, type: Integer, desc: "动态Id"
       end

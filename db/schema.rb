@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160824080155) do
+ActiveRecord::Schema.define(version: 20160825020043) do
 
   create_table "advises", force: :cascade do |t|
     t.string   "content",    limit: 255
@@ -172,6 +172,15 @@ ActiveRecord::Schema.define(version: 20160824080155) do
     t.integer  "like_user_id",  limit: 4
     t.integer  "likeable_id",   limit: 4
     t.string   "likeable_type", limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "members", force: :cascade do |t|
+    t.integer  "user_id",     limit: 4
+    t.datetime "start_time"
+    t.datetime "expire_time"
+    t.string   "member_type", limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end

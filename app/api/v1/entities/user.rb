@@ -1,6 +1,7 @@
 module Entities
   class User < Grape::Entity
-    expose :id, :uid, :phone, :vip, :code, :auth_token
+    expose :id, :uid, :phone, :code, :auth_token
+    expose (:vip) {|object| object.vip? }
     expose (:avatar) { |object| ENV['QINIUPREFIX']+object.avatar}
     expose(:name) do |object|
       if object.name.blank?
@@ -55,7 +56,8 @@ module Entities
   end
 
   class MyProfile < Grape::Entity
-    expose :id, :uid, :phone, :name, :sex, :age, :vip, :desc
+    expose :id, :uid, :phone, :name, :sex, :age, :desc
+    expose (:vip) { |object| object.vip?}
     expose (:children), using: Entities::MyProfile, if: -> (parent, options){ parent.role.try(:name) == "parent"}
 
     expose (:parent),   using: Entities::MyProfile, if: -> (child, options) { child.role.try(:name) == "student" }

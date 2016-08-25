@@ -13,7 +13,7 @@ class Dynamic < ActiveRecord::Base
   has_many   :comments,   as: :commentable
 
   has_many   :likes,      as: :likeable
-  has_many   :like_users, through: :like
+  has_many   :like_users, through: :likes
 
   has_many   :reports,    as: :reportable
 
