@@ -6,8 +6,12 @@ class Notification < ActiveRecord::Base
 
   after_create :push_to_client
   def push_to_client
-    puts "#{notify_one}"
-    puts "#{notify_two}"
+    if ['comment', 'like', 'follow'].include? self.notification_type
+      puts "#{notify_one}"
+      puts "#{notify_two}"
+    else
+      puts "#{notify_one}"
+    end
   end
 
   def notify_one

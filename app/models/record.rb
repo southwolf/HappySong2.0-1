@@ -15,9 +15,10 @@ class Record < ActiveRecord::Base
   has_many  :reports, as: :reportable
   has_many  :notifications, as: :targetable
 
-  after_commit :push_record_notify
+  after_commit :push_record_notify, on: :create
 
   def push_record_notify
-    notifications.create( :user_id => self.user.id)
+    notifications.create( :user_id => self.user.id,
+                          :notification_type => 'record')
   end
 end

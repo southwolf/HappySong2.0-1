@@ -19,6 +19,15 @@ class Dynamic < ActiveRecord::Base
 
   has_many   :notifications, as: :targetable
 
+  after_commit :push_dynamic_notify, on: :create
+
+  def push_dynamic_notify
+    notifications.create(
+      :user_id => user.id,
+      :notification_type => 'dynamic'
+    )
+  end
+
   def addTag tag_name
     tag = Tag.find_by_name(tag_name)
     if tag.nil?

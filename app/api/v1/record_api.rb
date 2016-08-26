@@ -16,12 +16,12 @@ module V1
       post do
         authenticate!
         user_id = current_user.id
-        result = Result.new( :user_id  => user_id,           :file_url   => params[:file_url],
-                             :felling  => params[:felling],  :article_id => params[:article_id],
+        record = Record.new( :user_id  => user_id,           :file_url   => params[:file_url],
+                             :feeling  => params[:felling],  :article_id => params[:article_id],
                              :style    => params[:style],
                              :music_id => params[:music_id], :is_public  => params[:is_public] )
-        if result.save
-          present :result, result, with: ::Entities::Result
+        if record.save
+          present  record, with: ::Entities::Record
         else
           error({message:"创建失败"}, 501)
         end
@@ -131,10 +131,10 @@ module V1
        authenticate!
        record_id = params[:record_id]
        record    = Record.find(record_id)
-       if record.like_users.includes(current_user)
+       if record.like_users.include?(current_user)
          present message: true
        else
-         presemt message: false
+         present message: false
        end
 
       end

@@ -8,7 +8,7 @@ class Comment < ActiveRecord::Base
 
   validates :content, presence: true
   
-  after_commit :push_comment_notify
+  after_commit :push_comment_notify, on: :create
 
   def push_comment_notify
     if self.root_id.nil?
