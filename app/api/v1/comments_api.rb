@@ -13,10 +13,12 @@ module V1
         content = params[:content].to_s
         comment = Comment.find(id)
 
-        if comment.replys.create(:content => content,
+        reply = comment.replys.new(:content => content,
                                  :user_id => current_user.id,
                                  :commentable_id   => comment.commentable_id,
                                  :commentable_type => comment.commentable_type )
+
+        if reply.save
           present :message, "成功"
         else
           error!("失败", 500)

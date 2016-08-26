@@ -17,20 +17,20 @@ module V1
         authenticate!
         content      = params[:content]
         address      = params[:address]
-        picture_keys = params[:picture_keys]
+        # picture_keys = params[:picture_keys]
         video_key    = params[:video_key]
         tags         = params[:tags]
         dynamic      = current_user.dynamics.build( :content => content,
                                                :address => address)
         if dynamic.save
           dynamic.update( :original_dynamic_id => dynamic.id)
-          if picture_keys.present?
-            # 添加附件
-            picture_keys.each do |picture_key|
-              dynamic.attachments.create(:file_url => picture_key,
-                                         :is_video => false)
-            end
-          end
+          # if picture_keys.present?
+          #   # 添加附件
+          #   picture_keys.each do |picture_key|
+          #     dynamic.attachments.create(:file_url => picture_key,
+          #                                :is_video => false)
+          #   end
+          # end
 
           if video_key.present?
             dynamic.attachments.create( :file_url => video_key,
@@ -48,6 +48,27 @@ module V1
           error!("失败", 500)
         end
 
+      end
+
+      desc "用动态ID上传该动态的图片附件"
+      params do
+        requires :token, type: String, desc: "用户访问令牌"
+        requires :dynamic_id, type: Integer, desc: "动态Id"
+        requires :key,   type: String, desc: "图片key"
+      end
+
+      post '/upload_attachment' do
+        authenticate!
+        key = params[:key]
+        dynamic_id = params[:dynamic_id]
+        dynamic = Dynamic.find(dynamic_id)
+
+        if dynamic.attachments.create(:file_url => key,
+                                      :is_video => false)
+          present :message, '成功'
+        else
+          error!({error: '上传失败'}, 500)
+        end
       end
 
       desc "转发动态"
@@ -180,7 +201,7 @@ module V1
 
       desc "按标签查询动态"
       params do
-        optional :q, type: String, desc: "查询参数"
+        requires :q, type: String, desc: "查询参数[标签名称]"
       end
       get '/tag_search' do
         q = params[:q]
