@@ -43,7 +43,8 @@ module V1
               dynamic.addTag(tag)
             end
           end
-          present dynamic, with: ::Entities::Dynamic
+          present dynamic, with: ::Entities::Dynamic,
+                           current_user: current_user
         else
           error!("失败", 500)
         end
@@ -93,7 +94,8 @@ module V1
           tags.each do |tag|
             ref_dynamic.addTag tag
           end
-          present ref_dynamic, with: ::Entities::Dynamic
+          present ref_dynamic, with: ::Entities::Dynamic,
+                                    current_user: current_user
         else
           error!("失败",500)
         end
@@ -101,15 +103,21 @@ module V1
 
       desc "查看动态"
       params do
-        requires :token,      type: String, desc: '用户访问令牌'
+        optional :token,      type: String, desc: '用户访问令牌'
         requires :dynamic_id, type: Integer, desc: '动态ID'
       end
 
       get '/show_dynaminc' do
-        authenticate!
+        if params[:token].present?
+          authenticate!
+        else
+          current_user = nil
+        end
+        
         dynamic_id = params[:dynamic_id]
         dynamic    = Dynamic.find(dynamic_id)
-        present  dynamic, with: ::Entities::Dynamic
+        present  dynamic, with: ::Entities::Dynamic,
+                                current_user: current_user
       end
 
       desc "评论动态"
@@ -221,10 +229,15 @@ module V1
 
       desc "按照用户查询动态"
       params do
-        optional :q, type: String, desc: "用户名"
+        optional :q,     type: String, desc: "用户名"
+        optional :token, type: String, desc: "用户访问令牌"
       end
-
       get '/user_search' do
+        if params[:token].present?
+          authenticate!
+        else
+          current_user = nil
+        end
         q = params[:q]
         user = User.find_by_name(q)
         if q.blank?
@@ -236,7 +249,8 @@ module V1
             dynamics = user.dynamics
           end
         end
-        present paginate(dynamics), with: ::Entities::Dynamic
+        present paginate(dynamics), with: ::Entities::Dynamic,
+                                          current_user: current_user
       end
 
       desc "按月分组取个人动态"
@@ -262,7 +276,8 @@ module V1
           dynamics << user.dynamics
         end
         dynamics = dynamics.flatten.sort_by {|dynamic| dynamic.created_at}.reverse
-        present paginate(Kaminari.paginate_array(dynamics)), with: Entities::Dynamic
+        present paginate(Kaminari.paginate_array(dynamics)), with: Entities::Dynamic,
+                                                                   current_user: current_user
       end
 
 
@@ -279,9 +294,18 @@ module V1
       end
 
       desc "获取所有动态"
+      params do
+        optional :token, type: String, desc: '用户访问令牌'
+      end
       get '/all' do
+        if params[:token].present?
+          authenticate!
+        else
+          current_user = nil
+        end
         dynamics = Dynamic.all.order( created_at: :DESC)
-        present paginate(dynamics), with: ::Entities::Dynamic
+        present paginate(dynamics), with: ::Entities::Dynamic,
+                                          current_user: current_user
       end
 
       desc "根据时间查动态"

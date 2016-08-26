@@ -4,7 +4,7 @@ class Notification < ActiveRecord::Base
 
   scope :unread, -> { where(unread: true) }
 
-  after_create :push_to_client
+  after_create :push_to_client, on: :create
   def push_to_client
     if ['comment', 'like', 'follow'].include? self.notification_type
       puts "#{notify_one}"
@@ -15,6 +15,7 @@ class Notification < ActiveRecord::Base
   end
 
   def notify_one
+    return "#{self.targetable.content}" if notification_type == 'announce'
     return '' if self.user.blank?
     if notification_type == 'comment'
       "#{self.user.name}评论了#{self.targetable.user.name}的#{nest_notity}"
@@ -29,7 +30,7 @@ class Notification < ActiveRecord::Base
     elsif notification_type == 'follow'
       "#{self.user.name}关注了#{self.targetable.name}"
     else
-      ''
+      ' '
     end
   end
  
