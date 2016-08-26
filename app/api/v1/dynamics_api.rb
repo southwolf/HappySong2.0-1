@@ -9,7 +9,7 @@ module V1
         requires :token,        type: String,       desc: '用户访问令牌'
         requires :content,      type: String,        desc: '内容'
         requires :address,      type: String,        desc: '地理位置'
-        optional :picture_keys, type: Array[String], desc: '图片集合'
+        # optional :picture_keys, type: Array[String], desc: '图片集合'
         optional :video_key,    type: String
         optional :tags,         type: Array[String], desc: '标签集合'
       end

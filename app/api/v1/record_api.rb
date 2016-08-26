@@ -8,7 +8,7 @@ module V1
         requires :file_url,   type: String,  desc: "文件"
         requires :article_id, type: String,  desc: "文章ID"
         requires :music_id,   type: String,  desc: "背景音乐ID"
-        requires :type,       type: String,  desc: "朗读类型"
+        requires :style,       type: String,  desc: "朗读类型【video, media】"
         requires :is_public,  type: Boolean, desc: "是否公开"
         optional :felling,    type: String,  desc: "感想"
       end
@@ -18,6 +18,7 @@ module V1
         user_id = current_user.id
         result = Result.new( :user_id  => user_id,           :file_url   => params[:file_url],
                              :felling  => params[:felling],  :article_id => params[:article_id],
+                             :style    => params[:style],
                              :music_id => params[:music_id], :is_public  => params[:is_public] )
         if result.save
           present :result, result, with: ::Entities::Result

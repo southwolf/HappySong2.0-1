@@ -11,12 +11,14 @@ class Comment < ActiveRecord::Base
   after_commit :push_comment_notify
 
   def push_comment_notify
-    Notification.create(
-      :notification_type => 'Comment',
-      :user_id => self.user.id,
-      :targetable_id => self.commentable_id,
-      :targetable_type => self.commentable_type
-    )
+    if self.root_id.nil?
+      Notification.create(
+        :notification_type => 'comment',
+        :user_id => self.user.id,
+        :targetable_id => self.commentable_id,
+        :targetable_type => self.commentable_type
+      )
+    end
   end
 
 end
