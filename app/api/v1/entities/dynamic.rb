@@ -9,6 +9,9 @@ module Entities
     expose :user,                    using: Entities::User
     # expose :attachments,             using: Entities::Attachment
     expose :root_dynamic,            using: Entities::SimpleDynamic
+    expose :original_dynamic, using: Entities::SimpleDynamic do |object|
+      object.original_dynamic
+    end
 
     expose (:root_dynamic_user),     using: Entities::SimpleUser do |object|
       object.root_dynamic.try(:user)
