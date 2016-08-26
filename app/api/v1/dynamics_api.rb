@@ -86,7 +86,8 @@ module V1
         content    = params[:content]
         tags       = params[:tags]
         dynamic = Dynamic.find(dynamic_id)
-        ref_dynamic = dynamic.ref_dynamics.create( :user_id  => current_user.id,
+        ref_dynamic = dynamic.ref_dynamics.create(
+                                     :user_id  => current_user.id,
                                      :content  => content,
                                      :is_relay => true,
                                      :original_dynamic_id => dynamic.original_dynamic_id)
@@ -94,8 +95,7 @@ module V1
           tags.each do |tag|
             ref_dynamic.addTag tag
           end
-          present ref_dynamic, with: ::Entities::Dynamic,
-                                    current_user: current_user
+          present ref_dynamic, with: ::Entities::Dynamic
         else
           error!("失败",500)
         end
