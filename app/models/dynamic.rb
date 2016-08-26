@@ -21,6 +21,8 @@ class Dynamic < ActiveRecord::Base
 
   after_commit :push_dynamic_notify, on: :create
 
+  scope :not_relay, ->{ where(is_relay: false)}
+
   def push_dynamic_notify
     notifications.create(
       :user_id => user.id,
