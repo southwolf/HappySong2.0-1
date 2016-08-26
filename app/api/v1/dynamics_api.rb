@@ -276,7 +276,8 @@ module V1
           dynamics << user.dynamics
         end
         dynamics = dynamics.flatten.sort_by {|dynamic| dynamic.created_at}.reverse
-        present paginate(Kaminari.paginate_array(dynamics)), with: Entities::Dynamic
+        present paginate(Kaminari.paginate_array(dynamics)), with: Entities::Dynamic,
+                                                                   current_user: current_user
       end
 
 

@@ -27,7 +27,7 @@ module Entities
     expose :is_liked do |object, option|
       current_user = option[:current_user]
       if current_user.present?
-        if object.like_user.include? current_user
+        if object.like_users.include? current_user
           false
         else
           true
