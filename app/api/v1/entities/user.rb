@@ -3,6 +3,18 @@ module Entities
     expose :id, :uid, :phone, :code, :auth_token
     expose (:vip) {|object| object.vip? }
     expose (:avatar) { |object| ENV['QINIUPREFIX']+object.avatar}
+    expose (:width) do |object|
+      uri = URI(ENV['QINIUPREFIX']+object.avatar+'?imageInfo')
+      res = ::Net::HTTP.get_response(uri)
+      info = ::ActiveSupport::JSON.decode res.body
+      info["width"]
+    end
+    expose(:height) do |object|
+      uri = URI(ENV['QINIUPREFIX']+object.avatar+'?imageInfo')
+      res = ::Net::HTTP.get_response(uri)
+      info = ::ActiveSupport::JSON.decode res.body
+      info["height"]
+    end
     expose(:name) do |object|
       if object.name.blank?
         ""
