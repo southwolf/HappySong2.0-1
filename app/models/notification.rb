@@ -25,6 +25,8 @@ class Notification < ActiveRecord::Base
       "#{self.user.name}发布一篇动态"
     elsif notification_type == 'work'
       "#{self.user.name}发布了新的朗读作业"
+    elsif notification_type == 'complete_work'
+      "#{self.user.name}完成了朗读作业"
     elsif notification_type == 'like'
       "#{self.user.name}喜欢了#{self.targetable.user.name}的#{nest_notity}"
     elsif notification_type == 'follow'

@@ -34,6 +34,9 @@ module Entities
     end
     expose :role, using: ::Entities::Role
 
+    expose (:points) do |object|
+      0
+    end
     expose (:school_full_name) do |object, options|
       school   = object.grade_team_classes.first.try(:school)
       district = school.try(:district)
