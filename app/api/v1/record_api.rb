@@ -21,9 +21,9 @@ module V1
                              :style    => params[:style],
                              :music_id => params[:music_id], :is_public  => params[:is_public] )
         if record.save
-          present  record, with: ::Entities::Record
+          present  :message, "创建成功"
         else
-          error({message:"创建失败"}, 501)
+          present :message, "创建失败"
         end
       end
 

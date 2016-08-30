@@ -46,8 +46,10 @@ class User < ActiveRecord::Base
   has_many   :own_notifications, class_name: 'Notification'
   has_many   :notifications,     as: :targetable
 
+  # 账单
   has_many   :bills
 
+  belongs_to :target_bill
 
   # has_sms_verification
 

@@ -28,10 +28,12 @@ gem 'grape-swagger-entity', '~> 0.1.4'
 
 gem 'require_all', '~> 1.3', '>= 1.3.3'
 #短信
-gem 'smart_sms'
+# gem 'smart_sms'
 #角色
-gem 'rolify', '~> 5.1'
+# gem 'rolify', '~> 5.1'
 
+# ping++支付
+gem 'pingpp', '~> 2.0', '>= 2.0.1'
 gem 'qiniu', '~> 6.8'
 #  notifications
 # gem 'notifications', '~> 0.2.0'

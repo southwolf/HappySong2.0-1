@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160826055704) do
+ActiveRecord::Schema.define(version: 20160830024642) do
 
   create_table "advises", force: :cascade do |t|
     t.string   "content",    limit: 255
@@ -86,6 +86,7 @@ ActiveRecord::Schema.define(version: 20160826055704) do
     t.string   "bill_type",      limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "complete",                   default: false
   end
 
   create_table "cate_items", force: :cascade do |t|
