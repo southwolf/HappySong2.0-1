@@ -29,4 +29,11 @@ class Bill < ActiveRecord::Base
     end
 
   end
+
+  def set_order_no
+    loop do
+      self.order_no = ([*?a..?z]+[*?0..?9]).sample(30).join
+    break if  Bill.where(:order_no => order_no).empty?
+    end    
+  end
 end

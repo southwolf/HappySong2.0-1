@@ -8,12 +8,12 @@ module Entities
     expose :is_relay, :comments_count, :created_at
     expose :user,                    using: Entities::User
     # expose :attachments,             using: Entities::Attachment
-    expose :root_dynamic,            using: Entities::SimpleDynamic
+    expose :root_dynamic,            using: Entities::SimpleDynamic, if: lambda { |object, options| object.root_dynamic.present?}
     expose :original_dynamic, using: Entities::SimpleDynamic do |object|
       object.original_dynamic
     end
 
-    expose (:root_dynamic_user),     using: Entities::SimpleUser do |object|
+    expose (:root_dynamic_user),     using: Entities::SimpleUser, if: lambda { |object, options| object.root_dynamic.present?}  do |object|
       object.root_dynamic.try(:user)
     end
 

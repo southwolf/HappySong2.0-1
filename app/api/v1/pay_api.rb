@@ -1,12 +1,14 @@
 module V1
   class Pay < Grape::API
+    use ActionDispatch::RemoteIp
+
     namespace :pay do
       desc "支付接口"
       params do
         requires :channel,        type: String,  desc: "渠道类型"
         requires :amount,         type: Integer, desc: "支付金额"
         requires :client_ip,      type: String,  desc: "客户端IP"
-        requires :token,          type: Integer, desc: "用户访问令牌"
+        requires :token,          type: String,  desc: "用户访问令牌"
         optional :target_user_id, type: Integer, desc: "目标ID"
       end
 
@@ -46,6 +48,11 @@ module V1
         end
 
         present :result, res_body
+      end
+      desc "test"
+      post "/test" do
+        ip = client_ip()
+        present ip
       end
     end
   end

@@ -43,17 +43,8 @@ module V1
       ([*?a..?z]+[*?1..?9]).sample(8).join
     end
 
-    def set_order_no
-      loop do
-        order_no = ([*?a..?z]+[*?1..?9]).sample(30).join
-      break if Bill.where(:order_no => order_no).empty?
-      end
+    def client_ip
+      env['action_dispatch.remote_ip'].to_s
     end
-    # 设置用户角色
-    #
-    Grape::Entity.format_with :utc do |date|
-      date.utc if date
-    end
-
   end
 end
