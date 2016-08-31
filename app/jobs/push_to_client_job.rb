@@ -18,9 +18,10 @@ class PushToClientJob < ActiveJob::Base
     notification = JPush::Push::Notification.new
     notification.set_android(
       title: notify,
+      extras: extras
     ).set_ios(
       aletr: notify,
-      badget: +1
+      badget: Notification.unread.size
     )
 
     push_payload = JPush::Push::push_payload.new(

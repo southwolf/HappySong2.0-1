@@ -28,6 +28,7 @@ module V1
       @current_user ||= user
     end
 
+
     # 注销
     def logout(user)
       token = User.new_token

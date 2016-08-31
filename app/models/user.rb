@@ -7,6 +7,8 @@ class User < ActiveRecord::Base
   validates :phone, :avatar, presence: true
 
   belongs_to :role
+
+  #建议
   has_many   :advises
   has_many   :relationships,         foreign_key: 'follower_id',
                                      dependent: :destroy
@@ -19,7 +21,9 @@ class User < ActiveRecord::Base
   has_many   :grade_team_classes, foreign_key: 'teacher_id'
   belongs_to :grade_team_class
 
+  #评论
   has_many   :comments
+  # 相册
   has_many   :albums
 
   has_many   :records
@@ -29,18 +33,23 @@ class User < ActiveRecord::Base
 
   has_many   :dynamics
 
+  # 浏览
   has_many   :views,        foreign_key: 'viewer_id'
   has_many   :view_records, through: :views
 
+  # 积分
   belongs_to :credit
   has_many   :credit_managers
 
+  # 举报
   has_many   :reports
 
+  # 子女
   has_many   :children, class_name: 'User',
                         foreign_key: 'parent_id'
   belongs_to :parent,   class_name: 'User'
-  
+
+  #会员
   has_one    :member
 
   has_many   :own_notifications, class_name: 'Notification'
@@ -48,11 +57,18 @@ class User < ActiveRecord::Base
 
   # 账单
   has_many   :bills
+  has_one    :target_bill, foreign_key: :target_user_id, class_name:'Bill'
 
-  belongs_to :target_bill
+  #推荐
+  has_many   :invites
+  has_one    :target_invite, foreign_key: :target_user_id, class_name: 'Invite'
 
   # has_sms_verification
 
+  def reset_auth_token!
+    create_auth_token
+    save
+  end
   # 生成token
   def self.new_token
     SecureRandom.urlsafe_base64

@@ -19,7 +19,6 @@ class PingsController < ApplicationController
           elsif event['data']['object']['amounts'] == 1000
              order_no = event['data']['object']['order_no']
              bill = Bill.find(order_no)
-
              bill.complete(30)
           end
           status = 200

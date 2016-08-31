@@ -44,6 +44,20 @@ module V1
           error!({message: "验证码错误"},500)
         end
       end
+      
+      # 登出接口
+      #
+      # 返回操作结果信息
+      desc "退出登录"
+      params do
+        requires :token, type: String, desc: "用户登录令牌"
+      end
+      get '/logout' do
+        authenticate!
+        current_user.reset_auth_token!
+      end
+
+
 
       # 设置角色接口
       # http://host/api/v1/users/setrole?token=?&&role=?

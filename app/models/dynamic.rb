@@ -21,6 +21,7 @@ class Dynamic < ActiveRecord::Base
 
   after_commit :push_dynamic_notify, on: :create
 
+  # 非转发的动态
   scope :not_relay, ->{ where(is_relay: false)}
 
   def push_dynamic_notify
