@@ -34,7 +34,7 @@ module V1
         if grade_team_class.save! && grade_team_class.set_code
           present grade_team_class, with: ::Entities::TeamClass
         else
-          error!("失败", 500)
+          error!({ message: " 失败"}, 500)
         end
       end
 
@@ -47,7 +47,11 @@ module V1
       post '/join' do
        authenticate!
        grade_team_class_id = params[:grade_team_class_id]
-       current_user.update(grade_team_class_id: grade_team_class_id)
+       if current_user.update(grade_team_class_id: grade_team_class_id)
+         present :message, "加入班级成功！"
+       else
+         error!({ error: "失败"}, 500)
+       end
       end
     end
   end
