@@ -3,6 +3,7 @@ module Entities
     expose :id, :uid, :phone, :code, :auth_token
     expose (:vip) {|object| object.vip? }
     expose (:avatar) { |object| ENV['QINIUPREFIX']+object.avatar}
+    expose (:bg_image) { |object| ENV['QINIUPREFIX']+object.bg_image_url}
     expose(:name) do |object|
       if object.name.blank?
         ""
