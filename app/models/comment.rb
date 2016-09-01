@@ -6,8 +6,8 @@ class Comment < ActiveRecord::Base
   belongs_to :root,   class_name: "Comment"
 
   #定位回复
-  has_many   :own_replys,     class_name: "Comment", foreign_key: 'top_comment_id'
-  belongs_to :top_comment,    class_name: "Comment"
+  has_many   :own_replys,    class_name: "Comment", foreign_key: 'top_comment_id'
+  belongs_to :top_comment,   class_name: "Comment"
 
   has_many   :notifications, as: :targetable
   scope      :reply, -> { where(:is_reply => true) }
