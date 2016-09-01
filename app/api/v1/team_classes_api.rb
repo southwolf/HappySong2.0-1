@@ -28,7 +28,8 @@ module V1
         grade_id         = params[:grade_id]
         team_class_id    = params[:team_class_id]
         grade_team_class = current_user.grade_team_class.build(
-                              school_id: school_id, grade_id: grade_id,
+                              school_id: school_id, 
+                              grade_id: grade_id,
                               team_class_id: team_class_id
                             )
         if grade_team_class.save! && grade_team_class.set_code

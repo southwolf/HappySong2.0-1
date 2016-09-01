@@ -4,7 +4,13 @@ class Comment < ActiveRecord::Base
   #回复
   has_many   :replys, class_name: "Comment", foreign_key: 'root_id'
   belongs_to :root,   class_name: "Comment"
+
+  #定位回复
+  has_many   :own_replys,     class_name: "Comment", foreign_key: 'top_comment_id'
+  belongs_to :top_comment,    class_name: "Comment"
+
   has_many   :notifications, as: :targetable
+  scope      :reply, -> { where(:is_reply => true) }
 
   validates :content, presence: true
   
