@@ -5,7 +5,9 @@ module Entities
   end
 
   class CommentWithReply < Comment
-    expose :own_replys, using: ::Entities::Reply
+    expose :replys, using: ::Entities::Reply do |object|
+      object.own_replys
+    end
   end
 
   class Relpy < Grape::Entity
