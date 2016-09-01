@@ -327,6 +327,16 @@ module V1
           present paginate(Kaminari.paginate_array(dynamics)), with: ::Entities::Dynamic
         end
       end
+      
+      desc "根据tag查动态"
+      params do
+        requires :tag_id, type: String, desc: "tag_id"
+      end
+      get '/tag_dynamic' do
+        tag = Tag.find(params[:tag_id])
+        dynamics = tag.dynamics
+        present paginate(dynamics), with: ::Entities::Dynamic
+      end
 
       desc "根据动态ID获取动态的评论"
       params do

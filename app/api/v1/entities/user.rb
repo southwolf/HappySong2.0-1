@@ -3,18 +3,6 @@ module Entities
     expose :id, :uid, :phone, :code, :auth_token
     expose (:vip) {|object| object.vip? }
     expose (:avatar) { |object| ENV['QINIUPREFIX']+object.avatar}
-    # expose (:width) do |object|
-    #   uri = URI(ENV['QINIUPREFIX']+object.avatar+'?imageInfo')
-    #   res = ::Net::HTTP.get_response(uri)
-    #   info = ::ActiveSupport::JSON.decode res.body
-    #   info["width"]
-    # end
-    # expose(:height) do |object|
-    #   uri = URI(ENV['QINIUPREFIX']+object.avatar+'?imageInfo')
-    #   res = ::Net::HTTP.get_response(uri)
-    #   info = ::ActiveSupport::JSON.decode res.body
-    #   info["height"]
-    # end
     expose(:name) do |object|
       if object.name.blank?
         ""
@@ -77,6 +65,9 @@ module Entities
 
     expose (:parent),   using: Entities::MyProfile, if: -> (child, options) { child.role.try(:name) == "student" }
 
+    expose :expire_time, if: ->(object, options){ object.member.present?} do |object|
+      object.member.expire_time
+    end
 
     expose(:avatar) { |user| ENV['QINIUPREFIX']+user.avatar}
     expose (:followers_count)  { |user| user.followers.size }

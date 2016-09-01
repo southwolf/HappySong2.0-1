@@ -12,25 +12,24 @@ class PushToClientJob < ActiveJob::Base
       target_id: notification.targetable_id
 
     }
+    android_badget = { badget: 1 }
     audience = JPush::Push::Audience.new
     audience.set_alias(user_ids)
 
     notification = JPush::Push::Notification.new
     notification.set_android(
+      alert: notify,
       title: notify,
-      extras: extras
+      extras: extras.merge(android_badget)
     ).set_ios(
       aletr: notify,
-      badget: Notification.unread.size
+      badget: 1,
+      extras: extras
     )
-
     push_payload = JPush::Push::push_payload.new(
       platform: ['android', 'ios'],
       audience: audience,
       notification: notification
-    ).set_message(
-      notify,
-      extras: extras
     )
     pusher = jpush.pusher
 

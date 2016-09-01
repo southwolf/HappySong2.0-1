@@ -30,6 +30,21 @@ module YunPian
     end
   end
 
+  def deliver_pay_message(mobile, count)
+    options = {}
+    api = "sms/single_send.json"
+    options[:mobile] = mobile.to_s
+    time = Time.now
+    content = count
+    options[:text] = "【欢乐诵】尊敬的用户，您的帐号于#{time}成功充值#{content}元，如有疑问请联系客服。"
+    result = post(api, options)
+    if result['code'] == 0
+      return true
+    else
+      return false
+    end
+  end
+
 
   def verify (mobile, code)
     result = get_mess(mobile)
