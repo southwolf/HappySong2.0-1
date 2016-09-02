@@ -1,9 +1,10 @@
 class Bill < ActiveRecord::Base
+  before_create :set_order_no
+
   belongs_to :user
   belongs_to :target_user, class_name: 'User'
-  validates  :order_no, :amount, presence:{ message: "不能为空!"}
-  validates  :order_no,  uniqueness:{ message: "订单号重复!"}
-
+  validates  :amount, presence:{ message: "不能为空!"}
+  # validates  :order_no,  uniqueness:{ message: "订单号重复!"}
 
   def complete(time)
     self.complete = true
@@ -36,11 +37,11 @@ class Bill < ActiveRecord::Base
     end
 
   end
-
+private
   def set_order_no
     loop do
       self.order_no = ([*?a..?z]+[*?0..?9]).sample(30).join
     break if  Bill.where(:order_no => order_no).empty?
-    end    
+    end
   end
 end

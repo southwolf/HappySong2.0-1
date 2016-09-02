@@ -1,8 +1,26 @@
+# encoding: utf-8
 module V1
   class Pay < Grape::API
     use ActionDispatch::RemoteIp
 
     namespace :pay do
+
+      desc "测试"
+      post '/fuck' do
+        res = Pingpp::Charge.create(
+          :order_no  => "1231231231234214324",
+          :app       => { :id => 'app_yT48q5PWfLyL8qvj'},
+          :channel   => "wx",
+          :amount    => 100,
+          :client_ip => "101.228.149.134",
+          :currency  => "cny",
+          :subject   => "sdasd",
+          :body      => "sadasdas"
+        )
+        puts res
+        present res
+
+      end
       desc "支付接口"
       params do
         requires :channel,        type: String,  desc: "渠道类型"
@@ -16,39 +34,49 @@ module V1
         authenticate!
         channel   = params[:channel]
         amount    = params[:amount]
-        client_ip = params[:client_ip]
-        currency  = "cny"
-        subject   = "【欢乐诵】会员充值"
-        body      = "欢乐诵会员"
-        res_body = ''
+        client_ip = params[:client_ip].to_s || client_ip()
         if amount == 100
           bill_type = "years"
         else
           bill_type = "month"
         end
+        bill = current_user.bills.create(
+           :target_user_id => current_user.id,
+           :amount      => amount,
+           :bill_type   => bill_type,
+           :channel     => channel,
+           :client_ip   => client_ip
+        )
         begin
-          bill = current_user.bills.create(
-             :target_user => current_user.id,
-             :amount      => amount,
-             :bill_type   => bill_type
-          )
-          res = Pingpp::Charge.create(
+          currency  = "cny"
+          subject   = "asdas"
+          body      = "sadas"
+
+          charge = Pingpp::Charge.create(
             :order_no  => bill.order_no,
             :app       => { :id => 'app_yT48q5PWfLyL8qvj'},
-            :channel   => channel,
-            :amount    => amount*100,
-            :client_ip => client_ip,
+            :channel   => bill.channel,
+            :amount    => 100,
+            :client_ip => bill.client_ip,
             :currency  => currency,
             :subject   => subject,
             :body      => body
           )
-          
-          res_body = ActiveSupport::JSON.decode res
-        rescue Pingpp::PingppError => error
-          res_body = error.http_body
-        end
 
-        present :result, res_body
+          # charge = Pingpp::Charge.create(
+          #   :order_no  => "1231231231234214324",
+          #   :app       => { :id => 'app_yT48q5PWfLyL8qvj'},
+          #   :channel   => "wx",
+          #   :amount    => 100,
+          #   :client_ip => "101.228.149.134",
+          #   :currency  => "cny",
+          #   :subject   => "sdasd",
+          #   :body      => "sadasdas"
+          # )
+          present charge
+        rescue Pingpp::PingppError => error
+            error!({error: error}, 500)
+        end
       end
       desc "test"
       post "/test" do

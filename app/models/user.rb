@@ -126,7 +126,7 @@ class User < ActiveRecord::Base
       return false
     end
   end
-  
+
   # 设置为会员
   def add_vip( day)
     if self.member.nil?
@@ -145,21 +145,6 @@ class User < ActiveRecord::Base
     end
   end
 
-  # 生成4位 code
-  def set_code
-    loop do
-    self.code = ([*?a..?z]+[*?1..?9]).sample(4).join
-    break if User.where(code: code).empty?
-    end
-  end
-
-  # 生成8位code
-  def set_id_code
-    loop do
-    self.uid = ([*?a..?z]+[*?1..?9]).sample(8).join
-    break if User.where(uid: uid).empty?
-    end
-  end
 
   # 添加角色
   def add_role name
@@ -196,6 +181,21 @@ class User < ActiveRecord::Base
     loop do
     self.auth_token = User.encrypt(User.new_token)
     break if User.where(auth_token: auth_token).empty?
+    end
+  end
+  # 生成4位 code
+  def set_code
+    loop do
+    self.code = ([*?a..?z]+[*?1..?9]).sample(4).join
+    break if User.where(code: code).empty?
+    end
+  end
+
+  # 生成8位code
+  def set_id_code
+    loop do
+    self.uid = ([*?a..?z]+[*?1..?9]).sample(8).join
+    break if User.where(uid: uid).empty?
     end
   end
 end
