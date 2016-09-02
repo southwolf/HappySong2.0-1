@@ -13,6 +13,7 @@ module V1
       end
 
       post 'pay' do
+        authenticate!
         channel   = params[:channel]
         amount    = params[:amount]
         client_ip = params[:client_ip]
@@ -26,7 +27,7 @@ module V1
           bill_type = "month"
         end
         begin
-          bill = current_user.create_bill(
+          bill = current_user.bills.create(
              :target_user => current_user.id,
              :amount      => amount,
              :bill_type   => bill_type
