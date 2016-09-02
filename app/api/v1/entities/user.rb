@@ -66,6 +66,10 @@ module Entities
 
     expose (:parent),   using: Entities::MyProfile, if: -> (child, options) { child.role.try(:name) == "student" }
 
+    expose (:points) do |object|
+      0
+    end
+
     expose :expire_time, if: ->(object, options){ object.member.present?} do |object|
       object.member.expire_time
     end

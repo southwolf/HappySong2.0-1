@@ -17,7 +17,14 @@ class Comment < ActiveRecord::Base
   after_commit :push_comment_notify, on: :create
 
   def push_comment_notify
-    if self.root_id.nil?
+    if self.is_reply?
+      Notification.create(
+        :notification_type => 'reply',
+        :user_id           => self.user_id,
+        :targetable_id     => self.commentable_id,
+        :targetable_type   => self.commentable_type
+      )
+    else
       Notification.create(
         :notification_type => 'comment',
         :user_id => self.user.id,
@@ -25,6 +32,10 @@ class Comment < ActiveRecord::Base
         :targetable_type => self.commentable_type
       )
     end
+  end
+
+  def is_reply?
+    is_reply == true
   end
 
 end

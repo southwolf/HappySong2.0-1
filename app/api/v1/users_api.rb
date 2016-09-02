@@ -113,6 +113,21 @@ module V1
         end
       end
 
+      desc "更新个人中心背景图片"
+      params do
+        requires :token,        type: String, desc: "token"
+        requires :bg_image_url, type: String, desc: "背景图片key"
+      end
+      post '/update_bg_image' do
+        authenticate!
+        bg_image_url = params[:bg_image_url]
+        if current_user.update( :bg_image_url => bg_image_url)
+          present :message, "更新成功"
+        else
+          error!({error: "失败"}, 500)
+        end
+      end
+
       desc "检查是否关注对应用户"
       params do
         requires :token,   type: String,  desc: "token"
@@ -126,7 +141,6 @@ module V1
           present :status, true
         else
           present :status, false
-
         end
       end
 
@@ -215,10 +229,11 @@ module V1
 
       get '/mylikes' do
         authenticate!
-        liked_records  = current_user.like_records
-        liked_dynamics = current_user.like_dynamics
-        present :like_records,   paginate(liked_records),  with: ::Entities::Record
-        present :liked_dynamics, paginate(liked_dynamics), with: ::Entities::Dynamic
+
+        liked_records  = current_user.like_records.group_by{ |liked_record| DateTime.parse(user.created_at.to_s).strftime('%Y-%-m')}.to_a
+        liked_dynamics = current_user.like_dynamics.group_by{ |like_dynamic| DateTime.parse(user.created_at.to_s).strftime('%Y-%-m')}.to_a
+        present :like_records,   paginate(Kaminari.paginate_array(liked_records)),  with: ::Entities::HashRecord
+        present :liked_dynamics, paginate(Kaminari.paginate_array(liked_dynamics)), with: ::Entities::HashDynamic
       end
 
 
