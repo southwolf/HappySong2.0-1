@@ -45,7 +45,7 @@ class PingsController < ApplicationController
       else
         response.status = 403
       end
-      format.json { message:"ok"}
+      format.json 
     end
   end
 end
