@@ -70,6 +70,16 @@ module Entities
       0
     end
 
+    expose (:grade_team_classes) do |user|
+      grade_team_class = user.try(:grade_team_class)
+      if grade_team_class.present?
+        grade = grade_team_class.try(:grade).try(:name)
+        team_class = grade_team_class.try(:team_class).try(:name)
+      "#{grade}#{team_class}"
+      else
+       " "
+      end
+    end
     expose :expire_time, if: ->(object, options){ object.member.present?} do |object|
       object.member.expire_time
     end

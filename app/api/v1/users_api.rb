@@ -98,6 +98,7 @@ module V1
         requires :token,  type: String,  desc: "token"
         requires :name,   type: String,  desc: "用户姓名"
         requires :sex,    type: String,  desc: "用户性别"
+        optional :desc,   type: String,  desc: "个性签名"
         requires :role,   type: Integer, values:[0,1,2],  desc: "用户角色[老师:0, 家长:1, 学生: 2]"
       end
       post '/update_profile' do
@@ -105,7 +106,8 @@ module V1
         name      = params[:name].to_s
         sex       = params[:sex].to_s
         role_id   = params[:role].to_i
-        if current_user.update(name: name, sex: sex) && current_user.set_role( role_id )
+        desc      = params[:desc].to_s || ""
+        if current_user.update(name: name, sex: sex, desc: desc) && current_user.set_role( role_id )
           current_user.update(:is_first => false)
           present current_user, with: ::Entities::User
         else
