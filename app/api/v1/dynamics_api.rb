@@ -148,7 +148,7 @@ module V1
       get '/comments' do
         dynamic_id = params[:dynamic_id]
         dynamic    = Dynamic.find(dynamic_id)
-        comments   = dynamic.comments
+        comments   = dynamic.comments.where(:is_reply => false)
         present paginate(comments), with: ::Entities::CommentWithReply
       end
 

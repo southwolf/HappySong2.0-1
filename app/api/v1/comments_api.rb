@@ -19,7 +19,8 @@ module V1
                                    :user_id           => current_user.id,
                                    :top_comment_id    => top_comment_id,
                                    :commentable_id    => comment.commentable_id,
-                                   :commentable_type  => comment.commentable_type )
+                                   :commentable_type  => comment.commentable_type,
+                                   :is_reply          => true )
 
         if reply.save
           present :message, "成功"

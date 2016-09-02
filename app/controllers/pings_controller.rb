@@ -1,6 +1,6 @@
 # encoding: utf-8
 class PingsController < ApplicationController
- 
+
   def test
     respond_to do |format|
       format.json
@@ -23,12 +23,12 @@ class PingsController < ApplicationController
               order_no = event['data']['object']['order_no']
               bill = Bill.find(order_no)
               #完成支付
-              bill.complete(365)
+              bill.complete(1.years)
               #月费
             elsif event['data']['object']['amounts'] == 1000
               order_no = event['data']['object']['order_no']
               bill = Bill.find(order_no)
-              bill.complete(30)
+              bill.complete(1.month)
             end
             status = 200
             response_body = 'OK'
@@ -45,7 +45,7 @@ class PingsController < ApplicationController
       else
         response.status = 403
       end
-      format.json
+      format.json { message:"ok"}
     end
   end
 end

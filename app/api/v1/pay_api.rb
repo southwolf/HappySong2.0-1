@@ -56,7 +56,7 @@ module V1
             :order_no  => bill.order_no,
             :app       => { :id => 'app_yT48q5PWfLyL8qvj'},
             :channel   => bill.channel,
-            :amount    => amount*100,
+            :amount    => amount * 100,
             :client_ip => bill.client_ip,
             :currency  => currency,
             :subject   => subject,

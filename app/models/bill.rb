@@ -18,19 +18,19 @@ class Bill < ActiveRecord::Base
     if member.empty?
       self.target_user.create_member(
         :start_time  => Time.now,
-        :expire_time => expire_time + time.day,
+        :expire_time => expire_time + time,
         :member_type => member_type
       )
     else
       if Time.now > expire_time
         member.update(
           :start_time  => Time.now,
-          :expire_time => expire_time + time.day,
+          :expire_time => expire_time + time,
           :member_type => member_type
         )
       else
         member.update(
-          :expire_time => expire_time + time.day,
+          :expire_time => expire_time + time,
           :member_type => member_type
         )
       end
