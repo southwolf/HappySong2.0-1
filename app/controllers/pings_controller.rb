@@ -1,5 +1,10 @@
 class PingsController < ApplicationController
  
+  def test
+    respond_to do |format|
+      format.json
+    end
+  end
   # webhooks 回调逻辑处理
   def webhooks
     respond_to do |format|
