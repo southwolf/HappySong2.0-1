@@ -1,3 +1,4 @@
+# encoding: utf-8
 class PingsController < ApplicationController
  
   def test
@@ -8,15 +9,17 @@ class PingsController < ApplicationController
   # webhooks 回调逻辑处理
   def webhooks
     respond_to do |format|
+      puts Pingpp::Webhook.verify?(request)
+      puts params['data']['object']['amount']
       if Pingpp::Webhook.verify?(request)
         status =  400
         response_body = ''
         begin
-          event = JSON.parse(request.body)
+          event = params
           if event['type'].nil?
           elsif event['type'] == 'charge.succeeded'
             # 年费
-            if event['data']['object']['amounts'] == 10000
+            if event['data']['object']['amount'] == 10000
               order_no = event['data']['object']['order_no']
               bill = Bill.find(order_no)
               #完成支付
@@ -42,7 +45,7 @@ class PingsController < ApplicationController
       else
         response.status = 403
       end
-      format.json 
+      format.json
     end
   end
 end
