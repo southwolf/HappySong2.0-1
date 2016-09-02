@@ -19,7 +19,6 @@ module V1
         currency  = "cny"
         subject   = "【欢乐诵】会员充值"
         body      = "欢乐诵会员"
-        order_no  = set_order_no
         res_body = ''
         if amount == 100
           bill_type = "years"
@@ -27,8 +26,13 @@ module V1
           bill_type = "month"
         end
         begin
+          bill = current_user.create_bill(
+             :target_user => current_user.id,
+             :amount      => amount,
+             :bill_type   => bill_type
+          )
           res = Pingpp::Charge.create(
-            :order_no  => order_no,
+            :order_no  => bill.order_no,
             :app       => { :id => 'app_yT48q5PWfLyL8qvj'},
             :channel   => channel,
             :amount    => amount*100,
@@ -37,11 +41,7 @@ module V1
             :subject   => subject,
             :body      => body
           )
-          current_user.create_bill(
-             :target_user => current_user.id,
-             :amount      => amount,
-             :bill_type   => bill_type
-          )
+          
           res_body = ActiveSupport::JSON.decode res
         rescue Pingpp::PingppError => error
           res_body = error.http_body
