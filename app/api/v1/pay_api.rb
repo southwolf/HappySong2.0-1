@@ -49,8 +49,8 @@ module V1
         )
         begin
           currency  = "cny"
-          subject   = "asdas"
-          body      = "sadas"
+          subject   = "【欢乐诵】充值"
+          body      = "【欢乐诵】会员充值"
 
           charge = Pingpp::Charge.create(
             :order_no  => bill.order_no,
