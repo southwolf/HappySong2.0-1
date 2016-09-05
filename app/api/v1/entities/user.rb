@@ -53,6 +53,9 @@ module Entities
     def url
       "http://host/users/show/#{object.id}"
     end
+    expose :invite_url do |object|
+      "http://120.26.118.28/invites?code=#{object.code}"
+    end
   end
 
   class SimpleUser < Grape::Entity
@@ -82,6 +85,9 @@ module Entities
     end
     expose :expire_time, if: ->(object, options){ object.member.present?} do |object|
       object.member.expire_time
+    end
+    expose :invite_url do |object|
+      "http://120.26.118.28/invites?code=#{object.code}"
     end
 
     expose(:avatar) { |user| ENV['QINIUPREFIX']+user.avatar}
