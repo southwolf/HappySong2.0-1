@@ -1,0 +1,30 @@
+#wrap
+  .banner style="height:100%"
+    = image_tag("banner.png")
+    = text_field_tag 'phone',placeholder="请输入手机号", id:"js_phone",
+      class:"phone_input",style:"height:2.1em;width:17.6em;margin: 0 auto;text-align:center;display:block;margin-bottom:0.6em"
+    = hidden_field_tag 'user_id', @user_id, id:"js_user_id"
+    button#go style="background:#f13f4b;width:18.6em;height:2.8em;margin:0 auto;display:block;border-radius:0.3em;color:#fff;margin-bottom:0.8em;border-color:#f13f4b" 
+      | 下载欢乐诵
+
+
+javascript:
+  $('#go').click(function(){
+    var phone = $("#js_phone").val();
+    var user_id = $("#js_user_id").val();
+    $.ajax({
+      type: 'POST',
+      url:  '/invites.json',
+      dataType: "json",
+      data: {
+        phone: phone,
+        user_id: user_id
+      },
+      success: function(){
+        window.location.href="http://itunes.apple.com/cn/app/id1071039522"
+      },
+      error: function(data){
+        alert(data.error);
+      }
+    })
+  })

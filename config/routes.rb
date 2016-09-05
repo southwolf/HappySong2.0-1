@@ -4,4 +4,5 @@ Rails.application.routes.draw do
 
   get  '/webhooks', to: 'pings#test',     as: :test
   post '/webhooks', to: 'pings#webhooks', as: :webhooks
+  resource :invites, only: [:show, :create]
 end

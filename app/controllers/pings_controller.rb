@@ -25,7 +25,7 @@ class PingsController < ApplicationController
               #完成支付
               bill.complete(1.years)
               #月费
-            elsif event['data']['object']['amounts'] == 1000
+            elsif event['data']['object']['amounts'] == 10
               order_no = event['data']['object']['order_no']
               bill = Bill.find(order_no)
               bill.complete(1.month)
