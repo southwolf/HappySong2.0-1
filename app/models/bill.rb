@@ -9,10 +9,10 @@ class Bill < ActiveRecord::Base
   def complete
     time = 0
     if self.bill_type == 'month'
-      time = 1.month
+      time = 31
       member_type = 'month'
     else
-      time = 1.years
+      time = 365
       member_type = 'years'
     end
     puts time
