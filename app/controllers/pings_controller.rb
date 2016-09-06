@@ -44,8 +44,7 @@ class PingsController < ApplicationController
         response.status = status
       else
         response.status = 403
-      end
-      render json: { code: 0, message: "OK"} 
+      end 
     end
   end
 end
