@@ -21,19 +21,19 @@ class Bill < ActiveRecord::Base
       puts time
       self.target_user.create_member(
         :start_time  => Time.now,
-        :expire_time => Time.now+ time,
+        :expire_time => Time.now+ time.day,
         :member_type => member_type
       )
     else
       if Time.now > member.expire_time
         member.update(
           :start_time  => Time.now,
-          :expire_time => member.expire_time + time,
+          :expire_time => member.expire_time + time.day,
           :member_type => member_type
         )
       else
         member.update(
-          :expire_time => member.expire_time + time,
+          :expire_time => member.expire_time + time.day,
           :member_type => member_type
         )
       end
