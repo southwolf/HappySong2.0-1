@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160902055600) do
+ActiveRecord::Schema.define(version: 20160824080155) do
 
   create_table "advises", force: :cascade do |t|
     t.string   "content",    limit: 255
@@ -26,12 +26,6 @@ ActiveRecord::Schema.define(version: 20160902055600) do
     t.integer  "user_id",    limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
-  end
-
-  create_table "announces", force: :cascade do |t|
-    t.string   "content",    limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
   end
 
   create_table "article_grades", force: :cascade do |t|
@@ -79,19 +73,6 @@ ActiveRecord::Schema.define(version: 20160902055600) do
     t.integer  "target_id",  limit: 4
   end
 
-  create_table "bills", force: :cascade do |t|
-    t.integer  "user_id",        limit: 4
-    t.integer  "target_user_id", limit: 4
-    t.integer  "amount",         limit: 4
-    t.string   "bill_type",      limit: 255
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.boolean  "complete",                   default: false
-    t.string   "order_no",       limit: 255
-    t.string   "channel",        limit: 255
-    t.string   "client_ip",      limit: 255
-  end
-
   create_table "cate_items", force: :cascade do |t|
     t.string   "name",        limit: 255
     t.integer  "category_id", limit: 4
@@ -120,8 +101,6 @@ ActiveRecord::Schema.define(version: 20160902055600) do
     t.datetime "updated_at"
     t.integer  "root_id",          limit: 4
     t.integer  "user_id",          limit: 4
-    t.integer  "top_comment_id",   limit: 4
-    t.boolean  "is_reply",                     default: false
   end
 
   create_table "credit_managers", force: :cascade do |t|
@@ -189,26 +168,10 @@ ActiveRecord::Schema.define(version: 20160902055600) do
     t.datetime "updated_at"
   end
 
-  create_table "invites", force: :cascade do |t|
-    t.integer  "user_id",        limit: 4
-    t.integer  "target_user_id", limit: 4
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
-  end
-
   create_table "likes", force: :cascade do |t|
     t.integer  "like_user_id",  limit: 4
     t.integer  "likeable_id",   limit: 4
     t.string   "likeable_type", limit: 255
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "members", force: :cascade do |t|
-    t.integer  "user_id",     limit: 4
-    t.datetime "start_time"
-    t.datetime "expire_time"
-    t.string   "member_type", limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -228,16 +191,6 @@ ActiveRecord::Schema.define(version: 20160902055600) do
     t.integer  "records_count", limit: 4,   default: 0
     t.string   "cover_img",     limit: 255
     t.string   "author",        limit: 255
-  end
-
-  create_table "notifications", force: :cascade do |t|
-    t.string   "notification_type", limit: 255,                null: false
-    t.integer  "user_id",           limit: 4
-    t.integer  "targetable_id",     limit: 4
-    t.string   "targetable_type",   limit: 255
-    t.boolean  "unread",                        default: true
-    t.datetime "created_at"
-    t.datetime "updated_at"
   end
 
   create_table "provinces", force: :cascade do |t|
@@ -319,7 +272,6 @@ ActiveRecord::Schema.define(version: 20160902055600) do
     t.string   "name",       limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "recommend",              default: false
   end
 
   create_table "team_classes", force: :cascade do |t|
@@ -352,7 +304,6 @@ ActiveRecord::Schema.define(version: 20160902055600) do
     t.integer  "grade_team_class_id", limit: 4
     t.integer  "credit_id",           limit: 4
     t.integer  "parent_id",           limit: 4
-    t.string   "bg_image_url",        limit: 255, default: "bg_image.png"
   end
 
   create_table "views", force: :cascade do |t|
