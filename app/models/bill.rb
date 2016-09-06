@@ -9,10 +9,10 @@ class Bill < ActiveRecord::Base
   def complete
     time = 0
     if self.bill_type == 'month'
-      time = 31
+      time = 1.month
       member_type = 'month'
     else
-      time = 365
+      time = 1.years
       member_type = 'years'
     end
     puts time
@@ -21,19 +21,19 @@ class Bill < ActiveRecord::Base
       puts time
       self.target_user.create_member(
         :start_time  => Time.now,
-        :expire_time => Time.now+ time.day,
+        :expire_time => Time.now+ time,
         :member_type => member_type
       )
     else
       if Time.now > member.expire_time
         member.update(
           :start_time  => Time.now,
-          :expire_time => member.expire_time + time.day,
+          :expire_time => member.expire_time + time,
           :member_type => member_type
         )
       else
         member.update(
-          :expire_time => member.expire_time + time.day,
+          :expire_time => member.expire_time + time,
           :member_type => member_type
         )
       end
