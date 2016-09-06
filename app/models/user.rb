@@ -118,7 +118,7 @@ class User < ActiveRecord::Base
   # 是否是VIP
   def vip?
     return false if self.member.nil?
-    if self.member.expire_time > Time.now
+    if self.member.expire_time > Time.now.to_i
       self.update(:vip => true)
       return true
     else
