@@ -6,7 +6,7 @@ class Notification < ActiveRecord::Base
 
   after_create :push_to_client, on: :create
   def push_to_client
-    if ['comment', 'like', 'follow'].include? self.notification_type
+    if ['comment', 'like', 'follow','reply'].include? self.notification_type
       puts "#{notify_one}"
       puts "#{notify_two}"
     else
@@ -31,6 +31,8 @@ class Notification < ActiveRecord::Base
       "#{self.user.name}喜欢了#{self.targetable.user.name}的#{nest_notity}"
     elsif notification_type == 'follow'
       "#{self.user.name}关注了#{self.targetable.name}"
+    elsif notification_type == 'reply'
+      "#{self.user.name}回复了#{self.targetable.user.name}的评论"
     else
       ' '
     end
@@ -40,6 +42,8 @@ class Notification < ActiveRecord::Base
     return '' if self.user.blank?
     if notification_type == 'comment'
       "#{self.user.name}评论了你的#{nest_notity}"
+    elsif notification_type == 'reply'
+      "#{self.user.name}回复了你的评论"
     elsif notification_type == 'like'
       "#{self.user.name}喜欢了你的#{nest_notity}"
     elsif notification_type == 'follow'
@@ -49,11 +53,11 @@ class Notification < ActiveRecord::Base
     end
   end
   def nest_notity
-    if self.targetable_type == 'Record'
+    if self.targetable_type == 'record'
       "朗读"
-    elsif self.targetable_type == 'Dynamic'
+    elsif self.targetable_type == 'dynamic'
       "动态"
-    elsif self.targetable_type == 'Work'
+    elsif self.targetable_type == 'work'
       "作业"
     else
       ''

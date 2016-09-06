@@ -20,8 +20,11 @@ javascript:
         phone: phone,
         user_id: user_id
       },
-      success: function(){
-        window.location.href="http://itunes.apple.com/cn/app/id1071039522"
+      success: function(data){
+        if (data.code == 0)
+          window.location.href="http://itunes.apple.com/cn/app/id1071039522"
+        else
+          alert(data.error)
       },
       error: function(data){
         alert(data.error);

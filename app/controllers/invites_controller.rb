@@ -12,14 +12,14 @@ class InvitesController < ApplicationController
       invite = invite_user.invites.new(target_user: user)
       respond_to do |format|
         if invite.save
-          format.json { render :json => { :message =>"success"}.to_json }
+          format.json { render :json => { code: 1, :message =>"success"}}
         else
-          format.json { render :json => {:error => "错误"}.to_json }
+          format.json { render :json => {code: 0, :error => "错误"} }
         end
       end
     else
       respond_to do |format|
-        format.json { render :json => { :error => user.errors.messages}}
+        format.json { render json: {code: 1, error: "错误"} }
       end
     end
   end

@@ -13,16 +13,16 @@ class Comment < ActiveRecord::Base
   scope      :reply, -> { where(:is_reply => true) }
 
   validates :content, presence: true
-  
+
   after_commit :push_comment_notify, on: :create
 
   def push_comment_notify
     if self.is_reply?
+      comment = Comment.find(self.root.id)
       Notification.create(
         :notification_type => 'reply',
         :user_id           => self.user_id,
-        :targetable_id     => self.commentable_id,
-        :targetable_type   => self.commentable_type
+        :targetable        => comment
       )
     else
       Notification.create(
