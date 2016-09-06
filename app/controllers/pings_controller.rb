@@ -16,22 +16,34 @@ class PingsController < ApplicationController
         response_body = ''
         begin
           event = params
+          puts  "begin"
           if event['type'].nil?
+            puts "fuck"
           elsif event['type'] == 'charge.succeeded'
             # 年费
+            #
+            puts "成功"
+            puts  event['data']['object']['amount']
             if event['data']['object']['amount'] == 10000
+              puts "年费"
               order_no = event['data']['object']['order_no']
-              bill = Bill.find(order_no)
+              bill = Bill.find_by(order_no: order_no)
+              bill.update(:complete => true)
               #完成支付
-              bill.complete(1.years)
+              bill.complete
               #月费
-            elsif event['data']['object']['amounts'] == 10
+            elsif event['data']['object']['amount'] == 100
+              puts "月费"
               order_no = event['data']['object']['order_no']
-              bill = Bill.find(order_no)
-              bill.complete(1.month)
+              bill = Bill.find_by(order_no: order_no)
+              bill.update(:complete => true)
+              bill.complete
+            else
+              puts "支付失败"
             end
             status = 200
             response_body = 'OK'
+
           else
             response_body = '未知类型'
           end
