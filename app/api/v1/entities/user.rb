@@ -84,7 +84,7 @@ module Entities
       end
     end
     expose :expire_time, if: ->(object, options){ object.member.present?} do |object|
-      object.member.expire_time
+      object.member.expire_time.to_i
     end
     expose :invite_url do |object|
       "http://120.26.118.28/invites?code=#{object.code}"
