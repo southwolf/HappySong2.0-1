@@ -20,14 +20,14 @@ class Bill < ActiveRecord::Base
     if member.nil?
       puts time
       self.target_user.create_member(
-        :start_time  => Time.now,
-        :expire_time => Time.now + time,
+        :start_time  => Time.now.to_i,
+        :expire_time => Time.now.to_i + time,
         :member_type => member_type
       )
     else
       if Time.now > member.expire_time
         member.update(
-          :start_time  => Time.now,
+          :start_time  => Time.now.to_i,
           :expire_time => member.expire_time + time,
           :member_type => member_type
         )
