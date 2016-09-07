@@ -23,6 +23,16 @@ module V1
         end
         present cities, with: ::Entities::City
       end
+
+      desc "根据名称找区"
+      params do
+        requires :name, type: Integer, desc: '城市名称'
+      end
+      get '/byname' do
+        city = City.where("name LIKE '#{params[:name]}%'").first
+        districts = city.districts
+        present districts, ::Entities::District
+      end
     end
 
     resources :districts do
