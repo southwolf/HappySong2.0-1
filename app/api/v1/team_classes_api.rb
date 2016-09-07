@@ -11,7 +11,7 @@ module V1
         if grade_team_class.nil?
           error!("没有找到对应记录,请检查你的班级码是否输入正确", 404)
         else
-         present  grade_team_class, with: ::Entities::TeamClass
+         present  grade_team_class, with: ::Entities::GrapeTeamClass
         end
       end
 
@@ -33,7 +33,7 @@ module V1
                               team_class_id: team_class_id
                             )
         if grade_team_class.save! && grade_team_class.set_code
-          present grade_team_class, with: ::Entities::TeamClass
+          present grade_team_class, with: ::Entities::GradeTeamClass
         else
           error!({ message: " 失败"}, 500)
         end

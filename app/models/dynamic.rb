@@ -17,18 +17,30 @@ class Dynamic < ActiveRecord::Base
 
   has_many   :reports,    as: :reportable
 
-  has_many   :notifications, as: :targetable
+  # has_many   :notifications, as: :targetable
 
-  after_commit :push_dynamic_notify, on: :create
+  after_commit :async_create_dynamic_notify, on: :create
 
   # 非转发的动态
   scope :not_relay, ->{ where(is_relay: false)}
 
-  def push_dynamic_notify
-    notifications.create(
-      :user_id => user.id,
-      :notification_type => 'dynamic'
-    )
+  def async_create_dynamic_notify
+    NotifyDynamicJob.perform_later(id)
+  end
+  def self.push_dynamic_notify(id)
+    dynamic = Dynamic.find(id)
+    follower_ids = dynamic.user.follower_ids
+
+    return if dynamic.nil?
+    return if follower_ids.empty?
+    follower_ids.each do |follower_id|
+      Notification.create(
+        user_id: follower_id,
+        actor_id: dynamic.user_id,
+        targetable: dynamic,
+        notice_type: 'dynamic'
+      )
+    end
   end
 
   def addTag tag_name

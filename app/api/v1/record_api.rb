@@ -182,6 +182,17 @@ module V1
         records = current_user.records.group_by{ |record| DateTime.parse(record.created_at.to_s).strftime('%Y-%-m')}.to_a
         present paginate(Kaminari.paginate_array(records)), with: ::Entities::HashRecord
       end
+
+      desc "获取教师朗读总篇数"
+      params do
+        requires :teacher_id, type: Integer, desc: "教师ID"
+      end
+
+      get '/count' do
+         teacher = User.find(params[:teacher_id])
+         records_count = teacher.records.size
+         present :count, records_count
+      end
     end
   end
 end

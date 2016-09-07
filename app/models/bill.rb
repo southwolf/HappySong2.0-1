@@ -25,7 +25,7 @@ class Bill < ActiveRecord::Base
         :member_type => member_type
       )
     else
-      if Time.now > member.expire_time
+      if Time.now.to_i > member.expire_time
         member.update(
           :start_time  => Time.now.to_i,
           :expire_time => member.expire_time + time,

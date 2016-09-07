@@ -27,6 +27,7 @@ gem 'grape-swagger', '~> 0.22.0'
 gem 'grape-swagger-rails', '~> 0.2.2'
 gem 'grape-swagger-entity', '~> 0.1.4'
 
+gem 'sinatra', require: false
 gem 'require_all', '~> 1.3', '>= 1.3.3'
 #短信
 # gem 'smart_sms'

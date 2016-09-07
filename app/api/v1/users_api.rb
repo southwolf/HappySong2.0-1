@@ -158,6 +158,11 @@ module V1
         present error!({ message: '你不能关注自己'}, 403) if current_user == user
         present error!({ message: '不能重复关注'}, 403) if current_user.followed? user
         if current_user.follow(user)
+          Notification.create(
+            user_id: user.id,
+            actor_id: current_user.id,
+            notice_type: "follow"
+          )
           present :message, "关注成功"
           present :follow_size, user.followers.size
         else
@@ -238,7 +243,16 @@ module V1
         present :liked_dynamics, paginate(Kaminari.paginate_array(liked_dynamics)), with: ::Entities::HashDynamic
       end
 
+      desc "家长查询子女"
+      params do
+        requires :auth_token, type: String, desc:"用户访问令牌"
+      end
 
+      get '/children' do
+        authenticate!
+        children = current_user.children
+        present children, with: ::Entities::User
+      end
       desc "测试"
       paginate per_page: 10
       get '/all' do

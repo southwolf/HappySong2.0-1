@@ -231,11 +231,16 @@ ActiveRecord::Schema.define(version: 20160902055600) do
   end
 
   create_table "notifications", force: :cascade do |t|
-    t.string   "notification_type", limit: 255,                null: false
-    t.integer  "user_id",           limit: 4
-    t.integer  "targetable_id",     limit: 4
-    t.string   "targetable_type",   limit: 255
-    t.boolean  "unread",                        default: true
+    t.string   "notice_type",            limit: 255,                null: false
+    t.integer  "actor_id",               limit: 4
+    t.integer  "user_id",                limit: 4
+    t.integer  "targetable_id",          limit: 4
+    t.string   "targetable_type",        limit: 255
+    t.integer  "second_targetable_id",   limit: 4
+    t.string   "second_targetable_type", limit: 255
+    t.integer  "third_targetable_id",    limit: 4
+    t.string   "third_targetable_type",  limit: 255
+    t.boolean  "unread",                             default: true
     t.datetime "created_at"
     t.datetime "updated_at"
   end

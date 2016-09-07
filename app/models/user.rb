@@ -52,8 +52,8 @@ class User < ActiveRecord::Base
   #会员
   has_one    :member
 
-  has_many   :own_notifications, class_name: 'Notification'
-  has_many   :notifications,     as: :targetable
+  # has_many   :own_notifications, class_name: 'Notification', foreign_key: 'actor_id'
+  # has_many   :notifications,     as: :targetable
 
   # 账单
   has_many   :bills

@@ -2,14 +2,30 @@ class Like < ActiveRecord::Base
   belongs_to :likeable,  polymorphic: true, counter_cache: true
   belongs_to :like_user, class_name: 'User'
 
-  after_commit :push_like_notify, on: :create
+  after_commit :async_create_like_notify, on: :create
 
-  def push_like_notify
+  def async_create_like_notify
+    NotifyLikeJob.perform_later(id)
+  end
+  def self.push_like_notify(id)
+    like = Like.find(id)
+    like_user = like.like_user
+    follower_ids = like_user.follower_ids
+    return if like_user.nil?
     Notification.create(
-      :user_id => like_user.id,
-      :targetable_type => likeable_type,
-      :targetable_id   => likeable_id,
-      :notification_type => 'like'
+      :actor_id => self.like_user_id,
+      :user_id  => self.likeable.user.id,
+      :notice_type => "like",
+      :targetable  => self.likeable
     )
+    return if follower_ids.empty?
+    follower_ids.each do |follower_id|
+      Notification.create(
+      :actor_id    => self.like_user_id,
+      :user_id     => follower_id,
+      :notice_type => "like",
+      :targetable  => self.likeable
+      )
+    end
   end
 end

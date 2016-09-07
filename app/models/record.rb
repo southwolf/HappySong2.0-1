@@ -3,7 +3,6 @@ class Record < ActiveRecord::Base
   belongs_to :article, counter_cache: true
   belongs_to :music,   counter_cache: true
   belongs_to :user
-
   has_many   :likes,      as: :likeable
   has_many   :like_users, through: :likes
 
@@ -13,12 +12,30 @@ class Record < ActiveRecord::Base
   validates :file_url, :style, presence: true
 
   has_many  :reports, as: :reportable
-  has_many  :notifications, as: :targetable
+  # has_many  :notifications, as: :targetable
 
-  after_commit :push_record_notify, on: :create
+  after_commit :async_create_record_notify, on: :create
 
-  def push_record_notify
-    notifications.create( :user_id => self.user.id,
-                          :notification_type => 'record')
+  def async_create_record_notify
+    NotifyRecordJob.perform_later(id) 
+  end
+
+  def self.push_record_notify(id)
+    record = Record.find(id)
+    user = record.user
+    follower_ids = user.follower_ids
+    puts record
+    puts follower_ids.to_s
+    return if record.nil?
+    return if follower_ids.empty?
+    follower_ids.each do |follower_id|
+      puts "join"
+      Notification.create(
+        actor_id: record.user_id,
+        user_id:  follower_id,
+        targetable: record,
+        notice_type: "record"
+      )
+    end
   end
 end
