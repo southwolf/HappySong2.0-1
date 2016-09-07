@@ -26,7 +26,7 @@ module V1
 
       desc "根据名称找区"
       params do
-        requires :name, type: Integer, desc: '城市名称'
+        requires :name, type: String, desc: '城市名称'
       end
       get '/byname' do
         city = City.where("name LIKE '#{params[:name]}%'").first
