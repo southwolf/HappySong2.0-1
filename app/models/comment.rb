@@ -24,10 +24,12 @@ class Comment < ActiveRecord::Base
     comment = Comment.find(id)
     comment_user = comment.user
     return if comment.nil?
+
     follower_ids = comment_user.follower_ids
+
     if comment.is_reply?
-      
-      c       = Comment.find(comment.root_id)
+
+      c       = comment.top_comment
       user    = c.user
 
 
@@ -52,7 +54,7 @@ class Comment < ActiveRecord::Base
     else
       Notification.create(
         :notice_type => 'comment',
-        :user_id =>     comment.commentable.id,
+        :user_id =>     comment.commentable.user_id,
         :actor_id =>    comment.user_id,
         :targetable =>  comment.commentable,
         :second_targetable => comment
