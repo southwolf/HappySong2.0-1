@@ -53,18 +53,18 @@ class Comment < ActiveRecord::Base
     else
       Notification.create(
         :notice_type => 'comment',
-        :user_id =>     comment.commentable.user_id,
-        :actor_id =>    comment.user_id,
+        :user_id =>     comment.commentable.user.id,
+        :actor_id =>    comment.user.id,
         :targetable =>  comment.commentable,
         :second_targetable => comment
       )
       return if follower_ids.empty?
-      follower_ids = follower_ids.select { |follower_id| follower_id != comment.commentable.user_id }
+      follower_ids = follower_ids.select { |follower_id| follower_id != comment.commentable.user.id }
       follower_ids.each do |follower_id|
         Notification.create(
           :notice_type => 'comment',
           :user_id     => follower_id,
-          :actor_id    => comment.user_id,
+          :actor_id    => comment.user.id,
           :targetable  => comment.commentable,
           :second_targetable => comment
         )
