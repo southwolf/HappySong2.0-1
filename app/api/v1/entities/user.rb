@@ -3,6 +3,7 @@ module Entities
     expose :id, :uid, :phone, :code, :auth_token
     # expose (:vip) {|object| object.vip? }
     expose (:avatar) { |object| ENV['QINIUPREFIX']+object.avatar}
+    expose (:vip) { |object| object.vip?}
     expose (:bg_image) { |object| ENV['QINIUPREFIX']+object.bg_image_url}
     expose(:name) do |object|
       if object.name.blank?
@@ -65,9 +66,9 @@ module Entities
   class MyProfile < Grape::Entity
     expose :id, :uid, :phone, :name, :sex, :age, :desc
     expose (:vip) { |object| object.vip?}
-    expose (:children), using: Entities::User, if: -> (parent, options){ parent.role.try(:name) == "parent"}
+    # expose (:children), using: Entities::User, if: -> (parent, options){ parent.role.try(:name) == "parent"}
 
-    expose (:parent),   using: Entities::User, if: -> (child, options) { child.role.try(:name) == "student" }
+    # expose (:parent),   using: Entities::User, if: -> (child, options) { child.role.try(:name) == "student" }
 
     expose (:bg_image) { |object| ENV['QINIUPREFIX']+object.bg_image_url}
 

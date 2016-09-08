@@ -236,7 +236,7 @@ module V1
 
       get '/mylikes' do
         authenticate!
-        
+
         liked_records  = current_user.like_records.group_by { |record| DateTime.parse(record.created_at.to_s).strftime('%Y-%-m')}.to_a
         liked_dynamics = current_user.like_dynamics.group_by{ |dynamic| DateTime.parse(dynamic.created_at.to_s).strftime('%Y-%-m')}.to_a
         present :like_records,   paginate(Kaminari.paginate_array(liked_records)),  with: ::Entities::HashRecord
@@ -252,6 +252,18 @@ module V1
         authenticate!
         children = current_user.children
         present children, with: ::Entities::User
+      end
+
+
+      desc "子女查家长"
+      params do
+        requires :token, type: String, desc: "用户访问令牌"
+      end
+
+      get '/parent' do
+        authenticate!
+        parent = current_user.parent
+        present parent, with: ::Entities::User
       end
       desc "测试"
       paginate per_page: 10
