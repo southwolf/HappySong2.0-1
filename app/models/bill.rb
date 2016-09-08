@@ -7,8 +7,8 @@ class Bill < ActiveRecord::Base
   # validates  :order_no,  uniqueness:{ message: "订单号重复!"}
 
   def complete
-    puts "成功"
-    time = 0
+    # puts "成功"
+    # time = 0
     if self.bill_type == 'month'
       time = 1.month
       member_type = 'month'
@@ -17,27 +17,33 @@ class Bill < ActiveRecord::Base
       member_type = 'years'
     end
 
-    puts time
+    # puts time
     member = self.target_user.member
     if member.nil?
-      puts time
+      # puts time
+      # puts member_type
       self.target_user.create_member(
         :start_time  => Time.now.to_i,
         :expire_time => Time.now.to_i + time,
         :member_type => member_type
       )
+      return true
     else
       if Time.now.to_i > member.expire_time
+        # puts member_type
         member.update(
           :start_time  => Time.now.to_i,
           :expire_time => member.expire_time + time,
           :member_type => member_type
         )
+        return true
       else
+        # puts member_type
         member.update(
           :expire_time => member.expire_time + time,
           :member_type => member_type
         )
+        return true
       end
     end
   end
