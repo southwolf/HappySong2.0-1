@@ -35,7 +35,7 @@ module V1
         channel   = params[:channel]
         amount    = params[:amount]
         client_ip = params[:client_ip].to_s || client_ip()
-        target_user_id = params[:target_user_id]
+        target_user_id = params[:target_user_id] || current_user.id
         if amount == 100
           bill_type = "years"
         else
