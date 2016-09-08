@@ -17,7 +17,7 @@ class Comment < ActiveRecord::Base
   after_commit :async_create_comment_notify, on: :create
 
   def async_create_comment_notify
-    NotifyComment.perform_later(id)
+    NotifyCommentJob.perform_later(id)
   end
 
   def self.push_comment_notify(id)
