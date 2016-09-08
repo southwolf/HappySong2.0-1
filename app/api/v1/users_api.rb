@@ -223,7 +223,7 @@ module V1
         present :error, "你当前身份不是父母" unless current_user.role.try(:name) == "parent"
         child_id = params[:child_id]
         child    = User.find(child_id)
-        if child.parent = current_user
+        if child.parent.id = current_user.id
           present :message, "成功"
         else
           error!({ message: "失败"},500)
