@@ -28,7 +28,7 @@ class PingsController < ApplicationController
             puts "年费"
             order_no = event['data']['object']['order_no']
             bill = Bill.find_by(order_no: order_no)
-            bill.update(:complete => true)
+            # bill.update(:complete => true)
             #完成支付
             bill.complete
             #月费
@@ -36,7 +36,7 @@ class PingsController < ApplicationController
             puts "月费"
             order_no = event['data']['object']['order_no']
             bill = Bill.find_by(order_no: order_no)
-            bill.update(:complete => true)
+            # bill.update(:complete => true)
             bill.complete
           else
             puts "支付失败"

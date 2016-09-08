@@ -7,6 +7,7 @@ class Bill < ActiveRecord::Base
   # validates  :order_no,  uniqueness:{ message: "订单号重复!"}
 
   def complete
+    self.complete = true
     # puts "成功"
     # time = 0
     if self.bill_type == 'month'
