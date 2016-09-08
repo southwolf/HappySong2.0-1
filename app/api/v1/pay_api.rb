@@ -35,13 +35,14 @@ module V1
         channel   = params[:channel]
         amount    = params[:amount]
         client_ip = params[:client_ip].to_s || client_ip()
+        target_user_id = params[:target_user_id]
         if amount == 100
           bill_type = "years"
         else
           bill_type = "month"
         end
         bill = current_user.bills.create(
-           :target_user_id => current_user.id,
+           :target_user_id => target_user_id,
            :amount      => amount,
            :bill_type   => bill_type,
            :channel     => channel,

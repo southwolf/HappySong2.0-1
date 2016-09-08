@@ -2,8 +2,8 @@ class User < ActiveRecord::Base
 
   before_create :create_auth_token, :set_code, :set_id_code
   validates :phone, uniqueness: true
-  validates :phone, format: { with: /\d{11}/,
-                              message: "手机号格式不对"}
+  # validates :phone, format: { with: /\d{11}/,
+  #                             message: "手机号格式不对"}
   validates :phone, :avatar, presence: true
 
   belongs_to :role
