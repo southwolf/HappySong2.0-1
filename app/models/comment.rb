@@ -34,7 +34,7 @@ class Comment < ActiveRecord::Base
 
       Notification.create(
         :notice_type => 'reply',
-        :actor_id          => comment.user_id,
+        :actor_id          => comment.user.id,
         :user              => user.id,
         :targetable        => c,
         :second_targetable => comment
@@ -44,7 +44,7 @@ class Comment < ActiveRecord::Base
       follower_ids.each do |follower_id|
         Notification.create(
           :notice_type => 'reply',
-          :actor_id    => comment.user_id,
+          :actor_id    => comment.user.id,
           :user_id     => follower_id,
           :targetable  => c,
           :second_targetable => comment

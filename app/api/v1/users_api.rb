@@ -44,7 +44,7 @@ module V1
           error!({message: "验证码错误"},500)
         end
       end
-      
+
       # 登出接口
       #
       # 返回操作结果信息
@@ -245,7 +245,7 @@ module V1
 
       desc "家长查询子女"
       params do
-        requires :auth_token, type: String, desc:"用户访问令牌"
+        requires :token, type: String, desc:"用户访问令牌"
       end
 
       get '/children' do
