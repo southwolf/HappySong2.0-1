@@ -39,6 +39,16 @@ module Entities
     expose (:points) do |object|
       0
     end
+    expose (:grade_team_classes) do |user|
+      grade_team_class = user.try(:grade_team_class)
+      if grade_team_class.present?
+        grade = grade_team_class.try(:grade).try(:name)
+        team_class = grade_team_class.try(:team_class).try(:name)
+      "#{grade}#{team_class}"
+      else
+       " "
+      end
+    end
     expose (:school_full_name) do |object, options|
       school   = object.grade_team_classes.first.try(:school)
       district = school.try(:district)
