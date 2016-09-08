@@ -69,6 +69,8 @@ module Entities
 
     expose (:parent),   using: Entities::MyProfile, if: -> (child, options) { child.role.try(:name) == "student" }
 
+    expose (:bg_image) { |object| ENV['QINIUPREFIX']+object.bg_image_url}
+
     expose (:points) do |object|
       0
     end

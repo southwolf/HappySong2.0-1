@@ -11,7 +11,7 @@ class PingsController < ApplicationController
     respond_to do |format|
       puts Pingpp::Webhook.verify?(request)
       puts params['data']['object']['amount']
-      if Pingpp::Webhook.verify?(request)
+      if !Pingpp::Webhook.verify?(request)
         status =  400
         response_body = ''
         # begin
@@ -56,7 +56,7 @@ class PingsController < ApplicationController
         response.status = status
       else
         response.status = 403
-      end 
+      end
       format.json { render json: { message: "code"}}
     end
   end

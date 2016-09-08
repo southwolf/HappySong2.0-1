@@ -7,6 +7,7 @@ class Bill < ActiveRecord::Base
   # validates  :order_no,  uniqueness:{ message: "订单号重复!"}
 
   def complete
+    puts "成功"
     time = 0
     if self.bill_type == 'month'
       time = 1.month
@@ -15,6 +16,7 @@ class Bill < ActiveRecord::Base
       time = 1.years
       member_type = 'years'
     end
+
     puts time
     member = self.target_user.member
     if member.nil?
