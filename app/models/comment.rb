@@ -32,7 +32,6 @@ class Comment < ActiveRecord::Base
       c       = comment.top_comment
       user    = c.user
 
-
       Notification.create(
         :notice_type => 'reply',
         :actor_id          => comment.user_id,
@@ -60,7 +59,7 @@ class Comment < ActiveRecord::Base
         :second_targetable => comment
       )
       return if follower_ids.empty?
-      follower_ids = follower_ids.select { |follower_id| follower_id != user_id }
+      follower_ids = follower_ids.select { |follower_id| follower_id != comment.commentable.user_id }
       follower_ids.each do |follower_id|
         Notification.create(
           :notice_type => 'comment',
