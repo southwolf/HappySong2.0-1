@@ -20,7 +20,7 @@ module V1
         requires :q, type: String, desc: "查询标示"
       end
       get '/by_q'do
-        schools = School.whrer(name LIKE '%#{params[:q]}%')
+        schools = School.whrer("name LIKE '%#{params[:q]}%'")
         present schools, with: ::Entities::School
       end
     end
@@ -31,7 +31,8 @@ module V1
         requires :school_id, type: Integer, desc:"学校ID"
       end
       get 'byschool' do
-        grades = Grape.find(params[:school_id])
+        shool = School.find(params[:school_id])
+        grades = shool.grades
         if grades.empty?
           present :message, "没有找到数据"
         else
@@ -46,8 +47,8 @@ module V1
         requires :school_id, type: Integer, desc:"学校ID"
       end
       get 'byschool' do
-
-        team_classes = TeamClass.find(params[:school_id])
+        shool = School.find(params[:school_id])
+        team_classes = shool.team_classes
         if team_classes.blank?
           present :message, "没有找到数据"
         else
