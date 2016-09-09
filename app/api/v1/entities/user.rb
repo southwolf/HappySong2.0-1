@@ -49,7 +49,7 @@ module Entities
        " "
       end
     end
-    expose (:school_full_name) do |object, options|
+    expose :school_full_name, if: ->(object, options){ object.role.name =="teacher" } do |object, options|
       school   = object.grade_team_classes.first.try(:school)
       district = school.try(:district)
       city     = district.try(:city)
@@ -58,6 +58,18 @@ module Entities
         "#{city.try(:name)}#{district.try(:name)}#{school.try(:name)}"
       else
         ""
+      end
+    end
+
+    expose :school_full_name, if: ->(object, options) { object.role.name == "student"} do |object, options|
+      school = object.grade_team_class.try(:school)
+      district = school.try(:district)
+      city = district.try(:city)
+
+      if school.present? && district.present? && city.present?
+        "#{city.try(:name)}#{district.try(:name)}#{school.try(:name)}"
+      else
+        " "
       end
     end
     expose :url
