@@ -7,11 +7,18 @@ class PushToClientJob < ActiveJob::Base
     jpush         = JPush::Client.new(app_key, master_secret)
     user = User.find(user_id)
     # badge = 1
-    badge = Notification.unread_notify(user).size
+    badge_follow = Notification.unread_notify(user).where(notice_type: "follow").size
+    badge_like   = Notification.unread_notify(user).where(notice_type: "like").size
+    badge_comment = Notification.unread_notify(user).where(notice_type: "comment").size
+    badge_work    = Notification.unread_notify(user).where(notice_type: "work").size
     extras = {
       nitification_id: notify[:notify_id]
+      badge_follow: badge_follow,
+      badge_like: badge_like,
+      badge_comment: badge_comment,
+      badge_work: badge_work
     }
-    android_badge = { badge: badge }
+
     notice = notify[:notify_one]
     puts notify
     puts notify[:notify_one]
@@ -24,10 +31,9 @@ class PushToClientJob < ActiveJob::Base
     notification.set_android(
       alert: notice,
       title: notice,
-      extras: extras.merge(android_badge)
+      extras: extras
     ).set_ios(
       alert: notice,
-      badge: badge,
       extras: extras
     )
 
