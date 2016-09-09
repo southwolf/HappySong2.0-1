@@ -71,6 +71,7 @@ module Entities
 
   class SimpleUser < Grape::Entity
     expose :id, :uid,:phone, :name
+    expose (:avatar) { |object| ENV['QINIUPREFIX']+object.avatar}
   end
 
   class MyProfile < Grape::Entity

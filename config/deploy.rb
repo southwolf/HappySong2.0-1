@@ -34,6 +34,7 @@ namespace :deploy do
     on roles(:app), in: :sequence, wait: 5 do
       within release_path do
         execute :bundle, "exec thin start -C #{shared_path}/config/thin.yml"
+        # execute :bundle, "exec sidekiq -C #{shared_path}/config/sidekiq.yml -d"
       end
     end
   end
