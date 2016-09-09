@@ -14,10 +14,14 @@ module V1
       end
 
 
-      desc "获取所有未读消息"
+      desc "获取用户所有未读消息"
+      params do
+        requires :token, type: String, desc: "用户令牌"
+      end
 
       get '/all' do
-        notifications = Notification.unread
+        authenticate!
+        notifications = Notification.unread.where(user: user)
         present notifications, ::Entities::Notification
       end
     end
