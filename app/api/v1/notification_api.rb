@@ -9,7 +9,6 @@ module V1
       get '/notice' do
         id = params[:id]
         notification = Notification.find(id)
-        present :message, "没有找到" if notification.blank?
         present notification, with: ::Entities::Notification
       end
 
