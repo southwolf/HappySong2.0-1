@@ -12,7 +12,7 @@ class PushToClientJob < ActiveJob::Base
     badge_comment = Notification.unread_notify(user).where(notice_type: "comment").size
     badge_work    = Notification.unread_notify(user).where(notice_type: "work").size
     extras = {
-      nitification_id: notify[:notify_id]
+      nitification_id: notify[:notify_id],
       badge_follow: badge_follow,
       badge_like: badge_like,
       badge_comment: badge_comment,
