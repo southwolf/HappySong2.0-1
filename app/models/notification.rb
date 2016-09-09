@@ -20,6 +20,12 @@ class Notification < ActiveRecord::Base
     # end
   end
 
+  def notice
+    {
+      notify_one: notify_one,
+      notify_id: self.id
+    }
+  end
   def notify_one
     return "#{self.targetable.content}" if notice_type == 'announce'
     return '' if self.user.blank?
@@ -73,5 +79,8 @@ class Notification < ActiveRecord::Base
     else
       ''
     end
+  end
+  def self.unread_notify(user)
+    self.unread.where(user: user)
   end
 end

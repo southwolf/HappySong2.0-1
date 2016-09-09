@@ -1,38 +1,45 @@
 class PushToClientJob < ActiveJob::Base
   queue_as :push_to_client
 
-  def perform(user_ids, notify)
+  def perform(user_id, notify)
     app_key       = 'e83807dedab1e27198297a43'
     master_secret = 'b7f3d205505764f6b6ec815b'
-    jpush         = JPush::Cilent.new(app_key, master_secret)
+    jpush         = JPush::Client.new(app_key, master_secret)
+    user = User.find(user_id)
+    # badge = 1
+    badge = Notification.unread_notify(user).size
     extras = {
-      user_id: notification.user_id,
-      type: notification.type,
-      target_type: notification.targetable_type,
-      target_id: notification.targetable_id
-
+      nitification_id: notify[:notify_id]
     }
-    android_badget = { badget: 1 }
+    android_badge = { badge: badge }
+    notice = notify[:notify_one]
+    puts notify
+    puts notify[:notify_one]
+    #设置Audience
     audience = JPush::Push::Audience.new
-    audience.set_alias(user_ids)
+    audience.set_alias(user_id.to_s)
 
+    #设置Notification
     notification = JPush::Push::Notification.new
     notification.set_android(
-      alert: notify,
-      title: notify,
-      extras: extras.merge(android_badget)
+      alert: notice,
+      title: notice,
+      extras: extras.merge(android_badge)
     ).set_ios(
-      aletr: notify,
-      badget: 1,
+      alert: notice,
+      badge: badge,
       extras: extras
     )
-    push_payload = JPush::Push::push_payload.new(
+
+    #构建PushPayload对象
+    push_payload = JPush::Push::PushPayload.new(
       platform: ['android', 'ios'],
       audience: audience,
       notification: notification
     )
     pusher = jpush.pusher
 
+    #推送消息
     pusher.push(push_payload)
   end
 end

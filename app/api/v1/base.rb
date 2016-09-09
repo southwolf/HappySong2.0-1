@@ -26,6 +26,7 @@ module V1
     mount V1::DynamicsApi
     mount V1::TagsApi
     mount V1::Pay
+    mount V1::NotificationApi
     add_swagger_documentation(
       add_version: true,
       api_version: 'api/v1'
