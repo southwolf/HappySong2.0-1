@@ -7,8 +7,8 @@ class PushToClientJob < ActiveJob::Base
     jpush         = JPush::Client.new(app_key, master_secret)
     user = User.find(user_id)
     # badge = 1
-    badge_follow = Notification.unread_notify(user).where(notice_type: "follow").size
-    badge_like   = Notification.unread_notify(user).where(notice_type: "like").size
+    badge_follow  = Notification.unread_notify(user).where(notice_type: "follow").size
+    badge_like    = Notification.unread_notify(user).where(notice_type: "like").size
     badge_comment = Notification.unread_notify(user).where(notice_type: "comment").size
     badge_work    = Notification.unread_notify(user).where(notice_type: "work").size
     extras = {

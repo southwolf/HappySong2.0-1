@@ -14,6 +14,15 @@ module V1
         end
         present  schools, with: ::Entities::School
       end
+
+      desc "学校名查学校"
+      params do
+        requires :q, type: String, desc: "查询标示"
+      end
+      get '/by_q'do
+        schools = School.whrer(name LIKE '%#{params[:q]}%')
+        present schools, with: ::Entities::School
+      end
     end
 
     resources :grade do
