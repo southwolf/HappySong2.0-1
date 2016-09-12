@@ -104,7 +104,7 @@ module Entities
       0
     end
     #老师的年级班级
-    expose :grade_team_classes, if: ->(user, options) { user.role.name == "teacher"}, using: Entities::GradeTeamClass
+    # expose :grade_team_classes, if: ->(user, options) { user.role.name == "teacher"}, using: Entities::GradeTeamClass
 
     # 学生的年级班级
     expose :grade_team_classes, if: ->(user, options) {user.role.name =="student"}do |user|
