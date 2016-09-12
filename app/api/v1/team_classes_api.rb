@@ -20,7 +20,7 @@ module V1
         requires :token, type: String, desc: "访问令牌"
       end
 
-      pots '/all' do
+      get '/all' do
         authenticate!
         grade_team_classes = current_user.grade_team_classes
         present grade_team_classes, with: ::Entities::GradeTeamClass
