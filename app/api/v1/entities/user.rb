@@ -6,33 +6,17 @@ module Entities
     expose (:vip) { |object| object.vip?}
     expose (:bg_image) { |object| ENV['QINIUPREFIX']+object.bg_image_url}
     expose(:name) do |object|
-      if object.name.blank?
-        ""
-      else
-        object.name
-      end
+      object.try(:name) || ""
     end
     expose(:age) do |object|
-      if object.age.blank?
-        ""
-      else
-        object.age
-      end
+      object.try(:age) || ""
     end
     expose(:desc) do |object|
-      if object.desc.blank?
-        ""
-      else
-        object.desc
-      end
+      object.try(:desc) || ""
     end
 
     expose(:sex) do |object|
-      if object.sex.blank?
-        ""
-      else
-        object.sex
-      end
+    object.try(:sex) || ""
     end
     expose :role, using: ::Entities::Role
 
