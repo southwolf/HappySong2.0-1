@@ -32,7 +32,7 @@ module V1
                               grade_id: grade_id,
                               team_class_id: team_class_id
                             )
-        if grade_team_class.save! && grade_team_class.set_code
+        if grade_team_class.save!
           present grade_team_class, with: ::Entities::GradeTeamClass
         else
           error!({ message: " 失败"}, 500)
