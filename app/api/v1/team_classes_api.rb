@@ -24,7 +24,7 @@ module V1
       get '/all' do
         authenticate!
         grade_team_classes = current_user.grade_team_classes
-        present grade_team_classes, with: ::Entities::GradeTeamClass
+        present paginate(grade_team_classes), with: ::Entities::GradeTeamClass
       end
 
       desc "查班级学生"
