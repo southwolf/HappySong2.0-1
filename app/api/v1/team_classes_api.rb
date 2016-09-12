@@ -31,7 +31,7 @@ module V1
       end
       get '/students' do
         grade_team_class_id = params[:grade_team_class_id]
-        grade_team_class = GrapeTeamClass.find(grade_team_class_id)
+        grade_team_class = GradeTeamClass.find(grade_team_class_id)
 
         students = grade_team_class.students
         present students, with: ::Entities::User
