@@ -15,6 +15,16 @@ module V1
         end
       end
 
+      desc "查询所有班级【老师】"
+      params do
+        requires :token, type: String, desc: "访问令牌"
+      end
+
+      pots '/all' do
+        authenticate!
+        grade_team_classes = current_user.grade_team_classes
+        present grade_team_classes, with: ::Entities::GradeTeamClass
+      end
       desc "添加班级【老师】"
       params do
         requires :token,         type: String,  desc: '访问令牌'
