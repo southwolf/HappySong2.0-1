@@ -24,7 +24,7 @@ module Entities
       0
     end
     #学生的班级
-    expose :grade_team_classes, if: ->(user,options){ user.role.name =="student"} do |user|
+    expose :grade_team_classes, if: ->(user,options){ user.try(:role).try(:name) =="student"} do |user|
       grade_team_class = user.try(:grade_team_class)
       if grade_team_class.present?
         grade = grade_team_class.try(:grade).try(:name)
@@ -35,7 +35,7 @@ module Entities
       end
     end
     #教师的学校全名
-    expose :school_full_name, if: ->(object, options){ object.role.name =="teacher" } do |object, options|
+    expose :school_full_name, if: ->(object, options){ object.try(:role).try(:name) =="teacher" } do |object, options|
       school   = object.grade_team_classes.first.try(:school)
       district = school.try(:district)
       city     = district.try(:city)
@@ -48,7 +48,7 @@ module Entities
     end
     # expose :grade_team_classes, if: ->(user, options) { user.role.name == "teacher"}, using: Entities::GradeTeamClass
     #学生的学校全名
-    expose :school_full_name, if: ->(object, options) { object.role.name == "student"} do |object, options|
+    expose :school_full_name, if: ->(object, options) { object.try(:role).try(:name) == "student"} do |object, options|
       school = object.grade_team_class.try(:school)
       district = school.try(:district)
       city = district.try(:city)
@@ -91,7 +91,7 @@ module Entities
     # expose :grade_team_classes, if: ->(user, options) { user.role.name == "teacher"}, using: Entities::GradeTeamClass
 
     # 学生的年级班级
-    expose :grade_team_classes, if: ->(user, options) {user.role.name =="student"}do |user|
+    expose :grade_team_classes, if: ->(user, options) {user.try(:role).try(:name) =="student"}do |user|
       grade_team_class = user.try(:grade_team_class)
       if grade_team_class.present?
         grade = grade_team_class.try(:grade).try(:name)
