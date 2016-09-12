@@ -36,5 +36,10 @@ a{
 #send_verify{
   width:114px;
   height:56px;
-  border-radius:1px;margin-left:10px;color:#333333;border:1px solid #f7f7f7;font-size:16px;background-color:#f7f7f7
+  border-radius:1px;
+  margin-left:10px;
+  color:#ffffff;
+  border:1px solid #f7f7f7;
+  font-size:16px;
+  background-color:#ef4141;
 }

@@ -4,20 +4,32 @@ p.p align='center'
   span 登录
 = form_tag channel_session_url, method: :post, id: "form1",name:"form1"  do
   p
-    = text_field_tag :username, placeholder='Account or Email'
+    = text_field_tag :username, '',placeholder:'Account or Email'
 
   p
-    = password_field_tag :password, placeholder='Password'
+    = password_field_tag :password,'',placeholder:'Passwordaa'
 
   p
-    = text_field_tag :phone, placeholder='Phone number'
+    = text_field_tag :phone,'',placeholder:'Phone number'
 
   p
     label for="code"
     = text_field_tag :code, placeholder='code', style:'width:173px;height:50px'
-
+    button#send_verify name="send_verify",id="send_verify" 获取验证码
   P
-    = submit_tag :submit, style:'width:310px', value:"登录"
+    = submit_tag :submit, style:'width:310px;background-color:#ef4141;color:#FFFFFF;font-size: 20px;outline:none;', value:"登录"
 
 
 link href="/css/login.css" rel="stylesheet" type="text/css"
+
+javascript:
+  $("#send_verify").click(function(){
+    var phone = $("#code").val();
+    var data = {
+      phone: phone
+    }
+    $.ajax({
+      type: "POST",
+      url: ""
+    })
+  })
