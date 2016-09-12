@@ -1,6 +1,8 @@
 module V1
   class RecordApi < Grape::API
     include Grape::Kaminari
+    paginate per_page: 20
+
     resources :records do
       desc "新建朗读"
       params do
@@ -178,6 +180,7 @@ module V1
         requires :token, type: String, desc: "用户访问令牌"
       end
       get '/my_records' do
+        paginate per_page: 5
         authenticate!
         records = current_user.records.group_by{ |record| DateTime.parse(record.created_at.to_s).strftime('%Y-%-m')}.to_a
         present paginate(Kaminari.paginate_array(records)), with: ::Entities::HashRecord
