@@ -5,6 +5,7 @@ class GradeTeamClass < ActiveRecord::Base
   belongs_to :teacher,  class_name: 'User'
   has_many   :students, class_name: 'User'
  
+  validates  :teacher_id, :uniqueness => { :scope => [:grade_id,:team_class_id]}
   before_create :set_code
   # 生成4位 code
   def set_code

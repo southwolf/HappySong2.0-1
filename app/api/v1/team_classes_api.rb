@@ -35,7 +35,7 @@ module V1
         if grade_team_class.save!
           present grade_team_class, with: ::Entities::GradeTeamClass
         else
-          error!({ message: " 失败"}, 500)
+          error!({ message: grade_team_class.error.message}, 400)
         end
       end
 

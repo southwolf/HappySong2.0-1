@@ -20,7 +20,7 @@ module V1
         requires :q, type: String, desc: "查询标示"
       end
       get '/by_q'do
-        schools = School.whrer("name LIKE '%#{params[:q]}%'")
+        schools = School.where("name LIKE '%#{params[:q]}%'")
         present schools, with: ::Entities::School
       end
     end
