@@ -8,5 +8,6 @@ module Entities
     expose :school,  using: Entities::School
     expose :grade,   using: Entities::Grade
     expose :students, using: Entities::User
+    expose :team_class, using: Entities::TeamClass
   end
 end
