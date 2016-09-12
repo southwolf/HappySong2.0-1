@@ -1,5 +1,7 @@
 module V1
   class TeamClassesApi < Grape::API
+    include Grape::Kaminari
+    paginate per_page: 20
     resources :team_classes do
       desc "根据班级码查找对应班级"
       params do
@@ -34,7 +36,7 @@ module V1
         grade_team_class = GradeTeamClass.find(grade_team_class_id)
 
         students = grade_team_class.students
-        present students, with: ::Entities::User
+        present paginate(students), with: ::Entities::User
       end
 
       desc "添加班级【老师】"
