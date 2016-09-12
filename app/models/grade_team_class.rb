@@ -8,7 +8,7 @@ class GradeTeamClass < ActiveRecord::Base
   def set_code
     loop do
     self.code = ([*?a..?z]+[*?1..?9]).sample(4).join
-    break if GradeTeamClass.where(code: code).empty?
+    return true if GradeTeamClass.where(code: code).empty?
     end
   end
 
