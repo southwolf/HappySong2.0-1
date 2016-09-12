@@ -20,6 +20,17 @@ module V1
         requires :token, type: String, desc: "访问令牌"
       end
 
+      desc "查班级学生"
+      params do
+        requires :grade_team_class_id, type: Integer, desc: "班级Id"
+      end
+      get '/students' do
+        grade_team_class_id = params[:grade_team_class_id]
+        grade_team_class = GrapeTeamClass.find(grade_team_class_id)
+
+        students = grade_team_class.students
+        present students, with: ::Entities::User
+      end
       get '/all' do
         authenticate!
         grade_team_classes = current_user.grade_team_classes
@@ -38,7 +49,7 @@ module V1
         grade_id         = params[:grade_id]
         team_class_id    = params[:team_class_id]
         grade_team_class = current_user.grade_team_classes.build(
-                              school_id: school_id, 
+                              school_id: school_id,
                               grade_id: grade_id,
                               team_class_id: team_class_id
                             )
