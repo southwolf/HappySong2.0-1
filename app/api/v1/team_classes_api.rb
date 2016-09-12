@@ -19,6 +19,11 @@ module V1
       params do
         requires :token, type: String, desc: "访问令牌"
       end
+      get '/all' do
+        authenticate!
+        grade_team_classes = current_user.grade_team_classes
+        present grade_team_classes, with: ::Entities::GradeTeamClass
+      end
 
       desc "查班级学生"
       params do
@@ -31,11 +36,7 @@ module V1
         students = grade_team_class.students
         present students, with: ::Entities::User
       end
-      get '/all' do
-        authenticate!
-        grade_team_classes = current_user.grade_team_classes
-        present grade_team_classes, with: ::Entities::GradeTeamClass
-      end
+
       desc "添加班级【老师】"
       params do
         requires :token,         type: String,  desc: '访问令牌'
