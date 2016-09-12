@@ -13,7 +13,7 @@ module V1
         if grade_team_class.nil?
           error!("没有找到对应记录,请检查你的班级码是否输入正确", 404)
         else
-         present  grade_team_class, with: ::Entities::GrapeTeamClass
+         present  grade_team_class, with: ::Entities::GradeTeamClass
         end
       end
 

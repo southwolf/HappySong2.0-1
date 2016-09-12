@@ -1,0 +1,40 @@
+.h1 {
+	font-size: 36px;
+	color: #ff5c5c;
+	text-align:center
+}
+.p {
+	color: #333333;
+}
+#form1 p {
+	text-align: center;
+}
+
+#form1 p input{
+	width:300px;
+	height:50px;
+	border-radius:1px;
+	padding-left:5px;
+}
+
+.p span {
+	font-size: 22px;
+}
+
+#submit{
+	background: #ff5c5c;
+	color:#FFF;
+	font-size:20px;
+	border-radius:1px;
+}
+
+a{
+	font-size:16px;
+	text-decoration:none;
+	color:#666666
+}
+#send_verify{
+  width:114px;
+  height:56px;
+  border-radius:1px;margin-left:10px;color:#333333;border:1px solid #f7f7f7;font-size:16px;background-color:#f7f7f7
+}
