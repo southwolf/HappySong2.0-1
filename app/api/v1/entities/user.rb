@@ -62,7 +62,7 @@ module Entities
         ""
       end
     end
-    expose :grade_team_classes, if: ->(user, options) { user.role.name == "teacher"}, using: Entities::GradeTeamClass
+    # expose :grade_team_classes, if: ->(user, options) { user.role.name == "teacher"}, using: Entities::GradeTeamClass
     #学生的学校全名
     expose :school_full_name, if: ->(object, options) { object.role.name == "student"} do |object, options|
       school = object.grade_team_class.try(:school)
