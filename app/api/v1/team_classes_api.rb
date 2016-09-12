@@ -35,7 +35,11 @@ module V1
         if grade_team_class.save!
           present grade_team_class, with: ::Entities::GradeTeamClass
         else
-          error!({ message: grade_team_class.error.message}, 400)
+          if grade_team_class.errors.messages[:teacher_id].present?
+            error!({ message: "班级已经存在"}, 403)
+          else
+            error!({message: "错误"}, 500)
+          end
         end
       end
 
