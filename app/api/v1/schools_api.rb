@@ -26,7 +26,7 @@ module V1
     end
 
     resources :grade do
-      desc "根据学校ID查班级"
+      desc "根据学校ID查年级"
       params do
         requires :school_id, type: Integer, desc:"学校ID"
       end
@@ -42,7 +42,7 @@ module V1
     end
 
     resources :team_classes do
-      desc "根据学校ID查年级"
+      desc "根据学校ID查班级"
       params do
         requires :school_id, type: Integer, desc:"学校ID"
       end

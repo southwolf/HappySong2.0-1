@@ -27,7 +27,7 @@ module V1
         school_id        = params[:school_id]
         grade_id         = params[:grade_id]
         team_class_id    = params[:team_class_id]
-        grade_team_class = current_user.grade_team_class.build(
+        grade_team_class = current_user.build_grade_team_class(
                               school_id: school_id, 
                               grade_id: grade_id,
                               team_class_id: team_class_id

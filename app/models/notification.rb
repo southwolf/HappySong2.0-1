@@ -14,9 +14,10 @@ class Notification < ActiveRecord::Base
       # puts "#{notify_one}"
       # puts "#{notify_two}"
     # else
-    puts "#{notify_one}"
+    #向对应用户推送消息
+    PushToClientJob.perform_later(self.user_id, notice)
     # PushToCilentJob.(user_id, notify)
-    # 
+    #
     # end
   end
 
@@ -48,10 +49,10 @@ class Notification < ActiveRecord::Base
     elsif notice_type == 'announce'
        "#{self.targetable.content}"
     else
-      ' '
+      'sad'
     end
   end
- 
+
   def user_show
     self.user.id == self.targetable.id ? "你" : self.user.name
   end

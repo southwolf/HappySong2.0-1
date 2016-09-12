@@ -4,6 +4,9 @@ Rails.application.routes.draw do
   mount API => '/'
   mount GrapeSwaggerRails::Engine => '/swagger_doc'
 
+  # namespace :channel do
+  #   resources :channel_users
+  # end
   get  '/webhooks', to: 'pings#test',     as: :test
   post '/webhooks', to: 'pings#webhooks', as: :webhooks
   resource :invites, only: [:show, :create]
