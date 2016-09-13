@@ -23,7 +23,7 @@ html lang="en"
       p
         label for="code"
         = text_field_tag :code, placeholder='code', style:'width:173px;height:50px'
-        button#send_verify name="send_verify",id="send_verify" 获取验证码
+        button#send_verify name="send_verify" 获取验证码
       P
         = submit_tag :submit, style:'width:310px;background-color:#ef4141;color:#FFFFFF;font-size: 20px;outline:none;', value:"登录"
 
@@ -31,10 +31,34 @@ html lang="en"
     link href="/css/login.css" rel="stylesheet" type="text/css"
 
 javascript:
+
+  var countdown=60;
+  function settime(obj) {
+      if (countdown == 0) {
+          obj.removeAttr("disabled");
+          obj.css({"background-color":"#ef4141", "background-color": "#FFFFFF"});
+          obj.text("获取验证码");
+          countdown = 60;
+          return;
+      } else {
+          obj.attr("disabled", "disabled");
+          obj.css({"background-color": "#908f8f"})
+          console.log('aaa');
+          obj.text("重新发送(" + countdown + ")");
+          countdown--;
+    }
+      setTimeout(function() {
+        settime(obj) }
+        ,1000)
+    }
+
   $("#send_verify").click(function(event){
     var phone = $("#code").val();
     var data = {
       phone: phone
     }
+
+    settime($("#send_verify"));
     event.preventDefault();
-  })
+
+  });

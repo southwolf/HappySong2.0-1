@@ -111,6 +111,7 @@ ActiveRecord::Schema.define(version: 20160912050222) do
     t.string  "password_digest", limit: 255
     t.string  "type",            limit: 255
     t.string  "phone",           limit: 255
+    t.string  "token",           limit: 255
     t.integer "district_id",     limit: 4
   end
 

@@ -75,9 +75,9 @@ module V1
       desc "转发动态"
       params do
         requires :token,      type: String,        desc: "用户访问令牌"
-        requires :dynamic_id, type: Integer,        desc: "动态ID"
+        requires :dynamic_id, type: Integer,       desc: "动态ID"
         requires :content,    type: String,        desc: "内容"
-        requires :tags,       type: Array[String], desc: "标签集合"
+        optional :tags,       type: Array[String], desc: "标签集合"
       end
 
       post "/forward" do
@@ -91,14 +91,12 @@ module V1
                                      :content  => content,
                                      :is_relay => true,
                                      :original_dynamic_id => dynamic.original_dynamic_id)
-        if ref_dynamic.save
+        if ref_dynamic.save && tags.present?
           tags.each do |tag|
             ref_dynamic.addTag tag
           end
-          present ref_dynamic, with: ::Entities::Dynamic
-        else
-          error!("失败",500)
         end
+        present ref_dynamic, with: ::Entities::Dynamic
       end
 
       desc "查看动态"

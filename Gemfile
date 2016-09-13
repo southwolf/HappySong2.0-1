@@ -1,4 +1,4 @@
-source 'https://rubygems.org/'
+source "https://gems.ruby-china.org/"
 
 
 gem 'rails', '4.2.6'
@@ -13,7 +13,7 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 # Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
+gem 'bcrypt', '~> 3.1.7'
 
 # Use Unicorn as the app server
 # gem 'unicorn'
@@ -50,7 +50,7 @@ gem 'thin'
 # 队列
 gem 'sidekiq'
 # Sidekiq Web
-gem 'sinatra', require: false
+# gem 'sinatra', require: false
 # 推送通知
 gem 'jpush', '~> 4.0', '>= 4.0.2'
 

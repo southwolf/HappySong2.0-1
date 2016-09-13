@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   mount GrapeSwaggerRails::Engine => '/swagger_doc'
 
   namespace :channel do
+    root "channel#index"
     resources :channel_users
     resource :session, only: [:new, :create, :destroy]
   end

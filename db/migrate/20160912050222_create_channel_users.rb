@@ -7,6 +7,7 @@ class CreateChannelUsers < ActiveRecord::Migration
       #渠道类型【个人/公司】
       t.string :type
       t.string :phone
+      t.string :token
       t.belongs_to :district
     end
   end
