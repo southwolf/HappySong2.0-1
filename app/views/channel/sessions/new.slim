@@ -12,7 +12,7 @@ html lang="en"
       span 登录
     = form_tag channel_session_url, method: :post, id: "form1",name:"form1"  do
       p
-        = text_field_tag :username, '',placeholder:'Account or Email'
+        = text_field_tag :email, '',placeholder:'Account or Email'
 
       p
         = password_field_tag :password,'',placeholder:'Passwordaa'
@@ -36,7 +36,7 @@ javascript:
   function settime(obj) {
       if (countdown == 0) {
           obj.removeAttr("disabled");
-          obj.css({"background-color":"#ef4141", "background-color": "#FFFFFF"});
+          obj.css({"background-color":"#ef4141", "color": "#FFFFFF"});
           obj.text("获取验证码");
           countdown = 60;
           return;
@@ -53,11 +53,19 @@ javascript:
     }
 
   $("#send_verify").click(function(event){
-    var phone = $("#code").val();
+    var phone = $("#phone").val();
     var data = {
       phone: phone
     }
-
+    $.ajax({
+      url: '/api/v1/channel_users/getcode',
+      method: "GET",
+      dataType: "json",
+      data: data,
+      success: function(data){
+        alert(data.message);
+      }
+    })
     settime($("#send_verify"));
     event.preventDefault();
 

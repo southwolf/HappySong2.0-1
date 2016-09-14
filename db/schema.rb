@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160912050222) do
+ActiveRecord::Schema.define(version: 20160914025417) do
 
   create_table "advises", force: :cascade do |t|
     t.string   "content",    limit: 255
@@ -106,13 +106,16 @@ ActiveRecord::Schema.define(version: 20160912050222) do
   end
 
   create_table "channel_users", force: :cascade do |t|
-    t.string  "email",           limit: 255
-    t.string  "name",            limit: 255
-    t.string  "password_digest", limit: 255
-    t.string  "type",            limit: 255
-    t.string  "phone",           limit: 255
-    t.string  "token",           limit: 255
-    t.integer "district_id",     limit: 4
+    t.string   "email",           limit: 255
+    t.string   "name",            limit: 255
+    t.string   "password_digest", limit: 255
+    t.boolean  "company",                     default: false
+    t.string   "phone",           limit: 255
+    t.string   "token",           limit: 255
+    t.boolean  "admin",                       default: false
+    t.integer  "district_id",     limit: 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "cities", force: :cascade do |t|
@@ -304,10 +307,11 @@ ActiveRecord::Schema.define(version: 20160912050222) do
   end
 
   create_table "schools", force: :cascade do |t|
-    t.string   "name",        limit: 255
-    t.integer  "district_id", limit: 4
+    t.string   "name",            limit: 255
+    t.integer  "district_id",     limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "channel_user_id", limit: 4
   end
 
   create_table "schools_team_classes", id: false, force: :cascade do |t|

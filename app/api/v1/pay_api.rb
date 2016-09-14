@@ -80,9 +80,16 @@ module V1
         end
       end
       desc "test"
+      params do
+        optional :arry, type: Array[String], desc: "数组"
+      end
       post "/test" do
-        ip = client_ip()
-        present ip
+        c = params[:arry]
+        if c.present?
+          present c
+        else
+          present :message, "FUck"
+        end
       end
     end
   end

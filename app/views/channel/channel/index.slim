@@ -1,0 +1,101 @@
+doctype 5
+html lang="en"
+  head
+    meta charset="UTF-8"
+    title 欢乐诵管理员首页
+    = javascript_include_tag 'application'
+    link rel="stylesheet" href="/css/lanrenzhijia.css" media="all"
+    link rel="stylesheet" href="/css/admin_root.css" media="all"
+    = csrf_meta_tags
+    script src="/js/jquery.min.js"
+    javascript:
+      $(document).ready(function ($) {
+          $('#tx').click(function () {
+              $('.theme-popover-mask').fadeIn(100);
+              $('.theme-popover-tx').slideDown(200);
+          })
+          $('.theme-poptit .close').click(function () {
+              $('.theme-popover-mask').fadeOut(100);
+              $('.theme-popover-tx').slideUp(200);
+          })
+      })
+  body style="border-top:2px solid red;"
+  p.top
+    span.p1 系统管理员
+    span.s2 = current_user.name
+    span.s1#tx
+      = link_to "退出登录 ",channel_session_path,class:'f13f4b', method: :delete
+      | |
+    span.s1 style="color:#ff5c5c"
+      | 学校报备&nbsp;&nbsp;&nbsp
+      span style='color:#666666' |
+    .clear
+
+  hr.hr
+  .tit
+    p
+      h3 = current_user.name+",您好"
+      span
+        | 你有34条新消息未处理,
+        = link_to "立即处理?", "#", class:'f13f4b'
+
+  div style="padding-left:40px;"
+    .shai
+      p
+        span 年份：
+        span 不限
+        - [2017, 2018,2019].each do |value|
+          span = value
+      p
+        span 月份：
+        span 不限
+        - [1,2,3,4,5,6,7,8,9,10,11,12].each do |value|
+          span = value
+      p
+        span 类型：
+        span 不限
+        span 公司
+        span.selected 个人
+      p
+        span 区域:
+        select
+          option 省份
+        select
+          option 市
+        select
+          option 区(县)
+
+    .tab
+      .qd
+        span style='dispaly:block;float:left;font-size:16px;color:#333333' 渠道用户数据
+
+        p style='float:right'
+          |渠道商:
+          span.f13f4b = @channel_users.size.to_s+"人"
+      table width="918" cellspacing="0" cellpadding="10"
+        thead
+          tr
+            th 序号
+            th 名称
+            th 地区
+            th 公司/个人
+            th 开通时间
+            th 渠道资源
+            th 注册用户
+            th 开通会员
+            th 详情
+        tbody
+          - @channel_users.each do |channel_user|
+            tr
+              td = channel_user.id
+              td = channel_user.name
+              td = channel_user.try(:district).try(:city).try(:name).to_s+channel_user.try(:district).try(:name).to_s
+              td = channel_user.company?? "公司" : "个人"
+              td = DateTime.parse(channel_user.created_at.to_s).strftime('%Y-%m-%d').to_s
+              td = channel_user.schools.size
+              td  1
+              td  2
+              td
+                = link_to "详情", channel_channel_user_path(current_user), class:"f13f4b"
+
+.footer Copyright ©2016-2018 欢乐诵

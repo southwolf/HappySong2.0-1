@@ -6,16 +6,21 @@ class Channel::SessionsController < Channel::ChannelAdminController
 
   def create
     user = ChannelUser.find_by_email(params[:email])
-    if user && user.authenticate(params[:password])
+    puts user
+    if user && user.authenticate(params[:password]) && YunPian.verify(user.phone, params[:code])
       cookies.permanent[:token] = user.token
-      redirect_to channel_root_url
+      if user.admin?
+        redirect_to channel_root_url
+      else
+        redirect_to channel_root_url
+      end
     else
-      redirect_to :new
+      render :new, layout: false
     end
   end
 
   def destroy
     cookies.delete(:token)
-    redirect_to :new
+    redirect_to new_channel_session_path
   end
 end

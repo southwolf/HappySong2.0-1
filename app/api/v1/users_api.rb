@@ -1,6 +1,7 @@
 module V1
   class UsersApi < Grape::API
     include Grape::Kaminari
+    paginate per_page: 20
     resources :users do
       # 获取短信验证码接口
       # http://host/api/v1/users/getcode?phone=?
@@ -254,6 +255,27 @@ module V1
         present children, with: ::Entities::User
       end
 
+      desc "获取我关注的用户"
+      params do
+        requires :token, type: String, desc:"用户令牌"
+      end
+
+      get '/followers' do
+        authenticate!
+        followers = current_user.followers
+        present paginate(followers), with: ::Entities::User
+      end
+
+      desc "获取关注我的用户"
+      params do
+        requires :token, type: String, desc:"用户令牌"
+      end
+
+      get '/followings' do
+        authenticate!
+        followings = current_user.followings
+        present paginate(followings), with: ::Entities::User
+      end
 
       desc "子女查家长"
       params do
