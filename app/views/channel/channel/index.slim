@@ -24,10 +24,10 @@ html lang="en"
     span.p1 系统管理员
     span.s2 = current_user.name
     span.s1#tx
-      = link_to "退出登录 ",channel_session_path,class:'f13f4b', method: :delete
-      | |
+      = link_to "退出登录 ",channel_session_path,class:'f13f4b', method: :delete, :confirm => "Are you sure ?"
+      ||
     span.s1 style="color:#ff5c5c"
-      | 学校报备&nbsp;&nbsp;&nbsp
+      = link_to "转账记录 ",channel_channel_user_transfers_path(current_user),class:'f13f4b'
       span style='color:#666666' |
     .clear
 
@@ -44,13 +44,13 @@ html lang="en"
       p
         span 年份：
         span 不限
-        - [2017, 2018,2019].each do |value|
+        - (2017..2020).to_a.each do |value|
           span = value
       p
         span 月份：
         span 不限
-        - [1,2,3,4,5,6,7,8,9,10,11,12].each do |value|
-          span = value
+        - (1..12).to_a.each do |value|
+          span  = value
       p
         span 类型：
         span 不限
@@ -58,12 +58,12 @@ html lang="en"
         span.selected 个人
       p
         span 区域:
-        select
-          option 省份
-        select
-          option 市
-        select
-          option 区(县)
+        = select_tag "province", options_from_collection_for_select(@provinces, "id", "name"), prompt: "选择省"
+
+        select#city name="city"
+          option value= " " 市
+        select#district name="district"
+          option value= "" 区(县)
 
     .tab
       .qd
@@ -97,5 +97,57 @@ html lang="en"
               td  2
               td
                 = link_to "详情", channel_channel_user_path(current_user), class:"f13f4b"
-
+      = paginate @channel_users
 .footer Copyright ©2016-2018 欢乐诵
+
+javascript:
+  var province = $("#province"),city = $("#city");
+  province.change(function(event){
+    var province_id = province.val();
+    if (province_id == " ")
+      return
+    else{
+      $.ajax({
+        url: '/api/v1/cities',
+        method:'GET',
+        data: { province_id: province_id},
+        dataType: "json",
+        success: function(data){
+           var city = $("#city");
+           city.empty();
+             var dom = '<option value="">市</option>';
+           $.each(data, function(k, v){
+             dom += "<option value=" + v.id + ">" + v.name +"</option>";
+           });
+           console.log(dom);
+           city.append(dom);
+        }
+      })
+    }
+  });
+
+  city.change(function(event){
+    console.log("city change")
+    var city_id = city.val();
+    if (city_id == " ")
+      return
+    else{
+      $.ajax({
+        url:'/api/v1/districts',
+        method: 'GET',
+        data: { city_id : city_id},
+        dataType: "json",
+        success: function(data){
+          var district = $("#district");
+          district.empty();
+          var dom ='<option value="">区(县)</option>';
+          $.each(data, function(k, v){
+            dom += "<option value="+ v.id + ">" + v.name + "</option>";
+          });
+          console.log(dom);
+          district.append(dom);
+        }
+      })
+    }
+
+  });

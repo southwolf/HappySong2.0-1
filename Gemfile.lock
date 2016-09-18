@@ -302,6 +302,7 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jpush (~> 4.0, >= 4.0.2)
   jquery-rails
+  kaminari (~> 0.17.0)
   mysql2 (~> 0.4.4)
   pingpp (~> 2.0, >= 2.0.1)
   pry-byebug (~> 3.4)

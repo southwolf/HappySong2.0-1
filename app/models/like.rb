@@ -13,18 +13,18 @@ class Like < ActiveRecord::Base
     follower_ids = like_user.follower_ids
     return if like_user.nil?
     Notification.create(
-      :actor_id => self.like_user_id,
-      :user_id  => self.likeable.user.id,
+      :actor_id => like.like_user_id,
+      :user_id  => like.likeable.user.id,
       :notice_type => "like",
-      :targetable  => self.likeable
+      :targetable  => like.likeable
     )
     return if follower_ids.empty?
     follower_ids.each do |follower_id|
       Notification.create(
-      :actor_id    => self.like_user_id,
+      :actor_id    => like.like_user_id,
       :user_id     => follower_id,
       :notice_type => "like",
-      :targetable  => self.likeable
+      :targetable  => like.likeable
       )
     end
   end

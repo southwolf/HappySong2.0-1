@@ -20,6 +20,8 @@ gem 'bcrypt', '~> 3.1.7'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
+gem 'kaminari', '~> 0.17.0'
+
 gem 'grape', '~> 0.16.2'
 gem 'grape-entity', '0.5.0'
 gem 'grape-kaminari', '~> 0.1.9'

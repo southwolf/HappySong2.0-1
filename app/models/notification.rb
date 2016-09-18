@@ -6,6 +6,7 @@ class Notification < ActiveRecord::Base
   belongs_to :second_targetable, polymorphic: true
   belongs_to :third_targetable, polymorphic: true
 
+
   scope :unread, -> { where(unread: true) }
 
   after_create :push_to_client, on: :create
@@ -15,7 +16,7 @@ class Notification < ActiveRecord::Base
       # puts "#{notify_two}"
     # else
     #向对应用户推送消息
-    PushToClientJob.perform_later(self.user_id, notice)
+    #PushToClientJob.perform_later(self.user_id, notice)
     # PushToCilentJob.(user_id, notify)
     #
     # end

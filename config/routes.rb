@@ -6,7 +6,10 @@ Rails.application.routes.draw do
 
   namespace :channel do
     root "channel#index"
-    resources :channel_users
+    resources :channel_users do
+      resources  :transfers, only: [:index]
+    end
+
     resource :session, only: [:new, :create, :destroy]
   end
 

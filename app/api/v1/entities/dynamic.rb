@@ -28,9 +28,9 @@ module Entities
       current_user = option[:current_user]
       if current_user.present?
         if object.like_users.include? current_user
-          false
-        else
           true
+        else
+          false
         end
       else
         false

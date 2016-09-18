@@ -3,6 +3,11 @@ class ChannelUser < ActiveRecord::Base
 
   has_many :schools
   belongs_to :district
+
+  has_many :transfers, foreign_key: "transfer_user_id"
+  belongs_to :transfer, foreign_key: "collector_id"
+
+
   validates :email,:phone, uniqueness: true
   before_create :set_token
 

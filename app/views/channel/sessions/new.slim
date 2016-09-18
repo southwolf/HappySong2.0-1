@@ -22,7 +22,7 @@ html lang="en"
 
       p
         label for="code"
-        = text_field_tag :code, placeholder='code', style:'width:173px;height:50px'
+        = text_field_tag :code, '', placeholder:'code', style:'width:173px;height:50px'
         button#send_verify name="send_verify" 获取验证码
       P
         = submit_tag :submit, style:'width:310px;background-color:#ef4141;color:#FFFFFF;font-size: 20px;outline:none;', value:"登录"
@@ -31,7 +31,13 @@ html lang="en"
     link href="/css/login.css" rel="stylesheet" type="text/css"
 
 javascript:
-
+  $("#code").keyup(function(event){
+    if (event.keyCode == 13)
+    {
+      $("input[type == 'submit']").click();
+      return false;
+    }
+  });
   var countdown=60;
   function settime(obj) {
       if (countdown == 0) {
@@ -63,10 +69,12 @@ javascript:
       dataType: "json",
       data: data,
       success: function(data){
-        alert(data.message);
+        console.log(data.message);
       }
     })
     settime($("#send_verify"));
     event.preventDefault();
 
   });
+
+  
