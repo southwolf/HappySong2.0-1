@@ -111,7 +111,7 @@ module V1
         else
           current_user = nil
         end
-        
+
         dynamic_id = params[:dynamic_id]
         dynamic    = Dynamic.find(dynamic_id)
         present  dynamic, with: ::Entities::Dynamic,
@@ -160,7 +160,7 @@ module V1
         authenticate!
         dynamic_id = params[:dynamic_id]
         dynamic    = Dynamic.find(dynamic_id)
-
+        error!({message: "你已经点过赞了!"}, 400) if dynamic.like_users.include? current_user
         if dynamic.like_users << current_user
           present message: "成功"
         else
@@ -325,7 +325,7 @@ module V1
           present paginate(Kaminari.paginate_array(dynamics)), with: ::Entities::Dynamic
         end
       end
-      
+
       desc "根据tag查动态"
       params do
         requires :tag_id, type: String, desc: "tag_id"

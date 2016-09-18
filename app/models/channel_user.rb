@@ -1,7 +1,9 @@
 class ChannelUser < ActiveRecord::Base
   has_secure_password
 
-  has_many :schools
+  has_many :channel_schools
+  has_many :schools, :through => :channel_schools
+
   belongs_to :district
 
   has_many :transfers, foreign_key: "transfer_user_id"

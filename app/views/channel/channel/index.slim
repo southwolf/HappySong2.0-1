@@ -41,22 +41,22 @@ html lang="en"
 
   div style="padding-left:40px;"
     .shai
-      p
+      p.year
         span 年份：
         span 不限
         - (2017..2020).to_a.each do |value|
           span = value
-      p
+      p.month
         span 月份：
         span 不限
         - (1..12).to_a.each do |value|
           span  = value
-      p
+      p.type
         span 类型：
         span 不限
         span 公司
         span.selected 个人
-      p
+      p.district
         span 区域:
         = select_tag "province", options_from_collection_for_select(@provinces, "id", "name"), prompt: "选择省"
 

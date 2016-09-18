@@ -3,5 +3,8 @@ class School < ActiveRecord::Base
   has_and_belongs_to_many :grades, :join_table => :grade_join_schools
   has_and_belongs_to_many :team_classes
   has_many :grade_team_classes
-  belongs_to :channel_user
+
+  has_many :channel_schools
+  has_many :channel_users, :through => :channel_schools
+
 end
