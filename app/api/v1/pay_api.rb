@@ -81,10 +81,12 @@ module V1
       end
       desc "test"
       params do
-        optional :arry, type: Array[String], desc: "数组"
+        requires :json, type: JSON do
+          requires :int, type: Integer, values: [1, 2, 3]
+        end
       end
       post "/test" do
-        c = params[:arry]
+        c = params[:json]
         if c.present?
           present c
         else

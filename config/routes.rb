@@ -10,7 +10,13 @@ Rails.application.routes.draw do
       resources  :transfers, only: [:index]
     end
 
+    resources :school, only: [:show]
+
     resource :session, only: [:new, :create, :destroy]
+  end
+
+  namespace :admin do
+    root "admin#index"
   end
 
 

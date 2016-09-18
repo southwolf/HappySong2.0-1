@@ -10,7 +10,7 @@ class Channel::SessionsController < Channel::ChannelAdminController
     if user && user.authenticate(params[:password]) && YunPian.verify(user.phone, params[:code])
       cookies.permanent[:token] = user.token
       if user.admin?
-        redirect_to channel_root_url
+        redirect_to admin_root_url
       else
         redirect_to channel_root_url
       end

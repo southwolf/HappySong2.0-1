@@ -2,152 +2,55 @@ doctype 5
 html lang="en"
   head
     meta charset="UTF-8"
-    title 欢乐诵管理员首页
+    title 欢迎首页
     = javascript_include_tag 'application'
     link rel="stylesheet" href="/css/lanrenzhijia.css" media="all"
     link rel="stylesheet" href="/css/admin_root.css" media="all"
+    link rel="stylesheet" href="/css/welcome.css"
     = csrf_meta_tags
     script src="/js/jquery.min.js"
-    javascript:
-      $(document).ready(function ($) {
-          $('#tx').click(function () {
-              $('.theme-popover-mask').fadeIn(100);
-              $('.theme-popover-tx').slideDown(200);
-          })
-          $('.theme-poptit .close').click(function () {
-              $('.theme-popover-mask').fadeOut(100);
-              $('.theme-popover-tx').slideUp(200);
-          })
-      })
-  body style="border-top:2px solid red;"
-  p.top
-    span.p1 系统管理员
-    span.s2 = current_user.name
-    span.s1#tx
-      = link_to "退出登录 ",channel_session_path,class:'f13f4b', method: :delete, :confirm => "Are you sure ?"
-      ||
-    span.s1 style="color:#ff5c5c"
-      = link_to "转账记录 ",channel_channel_user_transfers_path(current_user),class:'f13f4b'
-      span style='color:#666666' |
-    .clear
 
-  hr.hr
-  .tit
-    p
-      h3 = current_user.name+",您好"
-      span
-        | 你有34条新消息未处理,
-        = link_to "立即处理?", "#", class:'f13f4b'
 
-  div style="padding-left:40px;"
-    .shai
-      p.year
-        span 年份：
-        span 不限
-        - (2017..2020).to_a.each do |value|
-          span = value
-      p.month
-        span 月份：
-        span 不限
-        - (1..12).to_a.each do |value|
-          span  = value
-      p.type
-        span 类型：
-        span 不限
-        span 公司
-        span.selected 个人
-      p.district
-        span 区域:
-        = select_tag "province", options_from_collection_for_select(@provinces, "id", "name"), prompt: "选择省"
+  body style="border-top: 2px solid red;"
+    p.top
+      span.p1 渠道用户数据
+      span.s2 = current_user.name
+      span.s1
+        | 申请提现&nbsp;&nbsp;&nbsp;|
+      span.s1
+        | 学校报备&nbsp;&nbsp;&nbsp;|
+      .clear
+    div
+      p.hc.l = current_user.name+", 您好"
+      p.l style="margin-top:45px;margin-left:15px;"
+        sub
+          | 你一共报备了#{@schools.size}所学校，
+          = link_to "添加新学校?", ""
+      .clear
 
-        select#city name="city"
-          option value= " " 市
-        select#district name="district"
-          option value= "" 区(县)
-
-    .tab
-      .qd
-        span style='dispaly:block;float:left;font-size:16px;color:#333333' 渠道用户数据
-
-        p style='float:right'
-          |渠道商:
-          span.f13f4b = @channel_users.size.to_s+"人"
-      table width="918" cellspacing="0" cellpadding="10"
-        thead
-          tr
-            th 序号
-            th 名称
-            th 地区
-            th 公司/个人
-            th 开通时间
-            th 渠道资源
-            th 注册用户
-            th 开通会员
-            th 详情
-        tbody
-          - @channel_users.each do |channel_user|
-            tr
-              td = channel_user.id
-              td = channel_user.name
-              td = channel_user.try(:district).try(:city).try(:name).to_s+channel_user.try(:district).try(:name).to_s
-              td = channel_user.company?? "公司" : "个人"
-              td = DateTime.parse(channel_user.created_at.to_s).strftime('%Y-%m-%d').to_s
-              td = channel_user.schools.size
-              td  1
-              td  2
-              td
-                = link_to "详情", channel_channel_user_path(current_user), class:"f13f4b"
-      = paginate @channel_users
-.footer Copyright ©2016-2018 欢乐诵
-
-javascript:
-  var province = $("#province"),city = $("#city");
-  province.change(function(event){
-    var province_id = province.val();
-    if (province_id == " ")
-      return
-    else{
-      $.ajax({
-        url: '/api/v1/cities',
-        method:'GET',
-        data: { province_id: province_id},
-        dataType: "json",
-        success: function(data){
-           var city = $("#city");
-           city.empty();
-             var dom = '<option value="">市</option>';
-           $.each(data, function(k, v){
-             dom += "<option value=" + v.id + ">" + v.name +"</option>";
-           });
-           console.log(dom);
-           city.append(dom);
-        }
-      })
-    }
-  });
-
-  city.change(function(event){
-    console.log("city change")
-    var city_id = city.val();
-    if (city_id == " ")
-      return
-    else{
-      $.ajax({
-        url:'/api/v1/districts',
-        method: 'GET',
-        data: { city_id : city_id},
-        dataType: "json",
-        success: function(data){
-          var district = $("#district");
-          district.empty();
-          var dom ='<option value="">区(县)</option>';
-          $.each(data, function(k, v){
-            dom += "<option value="+ v.id + ">" + v.name + "</option>";
-          });
-          console.log(dom);
-          district.append(dom);
-        }
-      })
-    }
-
-  });
+    div
+      .l style="width:630px;min-height:500px;padding-left:40px;"
+        p.bao 你报备学校用户数据详情
+        - @schools.each do |school|
+          div.xl style="width:284px;height:69px;background:#f7f7f7;margin-bottom:20px;margin-top:20px;border-radius:3px"
+            .l
+              p style="font-size:14px;color:#666666;padding:11px 6px;"
+                = school.try(:district).try(:name)+school.name
+              p style="font-size:14px;color:#666666;padding:11px 6px;"
+                = school.try(:district).try(:city).try(:name) + school.try(:district).try(:name)
+            .l
+              p style="font-size:36px;font-weight:bold;padding:6px 6px;" 122
+              p style="font-size:12px;padding:0px 6px;color:#666666" 已注册: 827
+            div style="width:76px;height:69px;float:right"
+              = link_to do
+                = image_tag "矩形 @2x.png", width:"76", height:"69"
+          .clear
+      div style="float:left;height:400px;width:350px;margin-left:60px"
+        p style="font-size:16px;" 快速查找你要查看的信息
+        p style="font-size:12px;margin-top:15px" 根据地区,学校名称进行搜素，在文本框内输入信息
+        p
+          input style='width:290px;height:38px;border:1px solid #ccc;border-radius:7px;margin-top:23px;'
+          button style='width:45px;height:35px;background:url(/imgs/search.png) no-repeat;border:none;border-radius:3px;position:relative;left:-48px;top:0.5px;' &nbsp;
+      .clear
+    .footer
+      | Copyright ©2016-2018 欢乐诵
