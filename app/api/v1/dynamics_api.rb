@@ -305,7 +305,7 @@ module V1
       get '/other_group_dynamics' do
         authenticate!
         user = User.find(params[:user_id])
-        other_dynamics = user.dynamics.group_by{ |dynamic| DateTime.parse(dynamic.created_at.to_s).strftime('%Y-%-m')}.to_a
+        other_dynamics = user.dynamics.reverse.group_by{ |dynamic| DateTime.parse(dynamic.created_at.to_s).strftime('%Y-%-m')}.to_a
         present paginate(Kaminari.paginate_array(other_dynamics)), with: ::Entities::HashDynamic
       end
 
