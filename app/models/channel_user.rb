@@ -15,11 +15,41 @@ class ChannelUser < ActiveRecord::Base
 
   scope :channels, ->{ where(admin: false)}
 
+  def user_count
+    schools = self.schools
+    user_count = 0
+    return 0 if schools.blank?
+    schools.each do |school|
+      user_count += school.user_count
+    end
+    return user_count
+  end
+
+  def vip_count
+    schools = self.schools
+    user_count = 0
+    return 0 if schools.blank?
+    schools.each do |school|
+      user_count += school.vip_count
+    end
+    return user_count
+  end
   def admin?
     self.admin == true
   end
-  def company
+  def company?
     self.company == true
+  end
+  def user_type
+    if self.company?
+      return "公司"
+    else
+      return "个人"
+    end
+  end
+
+  def address
+    "#{self.try(:district).try(:city).try(:name)}#{self.try(:district).try(:name)}"
   end
   private
   def set_token

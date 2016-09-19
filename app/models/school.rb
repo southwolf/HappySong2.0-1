@@ -27,4 +27,12 @@ class School < ActiveRecord::Base
     end
     return count
   end
+
+  def fullname
+    "#{self.try(:district).try(:name)} #{self.name}"
+  end
+
+  def address
+    "#{self.try(:district).try(:city).try(:name)}#{self.try(:district).try(:name)}"
+  end
 end

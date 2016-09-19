@@ -89,7 +89,7 @@ html lang="en"
             tr
               td = channel_user.id
               td = channel_user.name
-              td = channel_user.try(:district).try(:city).try(:name).to_s+channel_user.try(:district).try(:name).to_s
+              td = channel_user.address
               td = channel_user.company?? "公司" : "个人"
               td = DateTime.parse(channel_user.created_at.to_s).strftime('%Y-%m-%d').to_s
               td = channel_user.schools.size

@@ -17,7 +17,7 @@ class Notification < ActiveRecord::Base
     # else
     #向对应用户推送消息
     #PushToClientJob.perform_later(self.user_id, notice)
-    # PushToCilentJob.(user_id, notify)
+    PushToCilentJob.(user_id, notify)
     #
     # end
   end

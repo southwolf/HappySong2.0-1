@@ -1,1 +1,170 @@
-h1 Show
+link rel="stylesheet" href="/css/admin_root.css" media="all"
+css:
+  *{
+    margin:0;
+    padding:0;
+  }
+
+  .clear {	clear:both;
+  }
+  .footer {	width:100%;
+    height:73px;
+    color:#ffffff;
+    font-size:12px;
+    line-height:73px;
+    text-align:center;
+    background-color:#f13f4b;
+  }
+  .p1 {	color:#ff5c5c;
+    font-size:20px;
+    float:left;
+    padding-left:40px;
+  }
+  .s1 {	font-size:14px;
+    display:block;
+    color:#333333;
+    width:100px;
+    height:30px;
+    line-height:30px;
+    float:right;
+  }
+  .s2 {	display:block;
+    width:150px;
+    height:30px;
+    line-height:30px;
+    font-size:14px;
+    color:#f13f4b;
+    float:right;
+  }
+  .top {	heigth:30px;
+    width:100%;
+    margin-top:20px;
+  }
+
+  .l{
+    float:left;
+  }
+
+  .comp{
+    padding:9px 0px;
+  }
+
+  .info{
+    width:284px;
+    float:left;
+    height:69px;
+    background:#f7f7f7;
+    margin:22px;
+    border-radius:3px;
+  }
+
+  .info .school{
+    font-size:14px;
+    color:#666666;
+    padding:11px 6px;
+  }
+
+  .info .city{
+
+    font-size:12px;
+    color:#666666;
+    padding:11px 6px;
+  }
+
+  .info .number{
+    font-size:36px;
+    font-weight:bold;
+    padding:6px 6px
+  }
+
+  .info .reg{
+    font-size:12px;
+    padding:0px 6px;
+    color:#666666
+  }
+
+  .info .infoicon{
+    width:76px;
+    height:69px;
+    float:right
+  }
+
+
+body
+  p.top
+    span.p1 渠道详情
+    span.s2 = current_user.name
+    span.s1
+      = link_to "退出登录 ",channel_session_path,class:'f13f4b', method: :delete, :confirm => "Are you sure ?"
+      ||
+    span.s1 style="color:#ff5c5c"
+      = link_to "转账记录 ",channel_channel_user_transfers_path(current_user),class:'f13f4b'
+      span style='color:#666666' |
+  .clear
+  hr style="background:#f6cbcb;height:5px;opacity:0.8;border-top:none;margin:20px 0px"
+  div style="padding-left:40px"
+    p style="height:74px;line-height:74px;width:838px"
+      span style="font-size:20px;color:#333333"
+        | #{@channel_user.name}
+      span style="font-size:12px;color:#666666"
+        | 一共
+        b style="color:red"
+          | #{@schools.size}
+        | 个渠道资源，注册会员
+        span style="color:red"
+          | #{@channel_user.user_count}
+        | 个
+    p style="font-size:16px;color:#333333;height:27px;" 详细信息
+    div style="padding:11px 0px;height:170px;"
+      div style="font-size:14px;color:#333333;float:left"
+        p.comp
+          span 账号
+          span 326524898@qq.com
+        p.comp
+          span 时间
+          span = DateTime.parse(@channel_user.created_at.to_s).strftime('%Y-%m-%d').to_s + "开通"
+        p.comp
+          span 用户类型:
+          span = @channel_user.user_type
+        p.comp
+          span 地址：
+          span = @channel_user.address
+        p.comp
+          span 余额:
+          span style="color:#f13f4b"
+            | ￥54221.00
+      div style="float:left;margin-left:450px"
+        p
+          button style="width:70px;color:#fce3e4;font-size:16px;height:32px;border-radius:3px;background:#f13f4b;border:1px solid #f13f4b;margin-bottom:15px;"
+            | 转账
+        p
+            = link_to "转账记录 ",channel_channel_user_transfers_path(@channel_user),style:'font-size:14px;color:#89b550;'
+
+  div style="clear:both"
+
+  div style="padding-left: 40px"
+    div style="width:984px;height:22px;"
+      span style="dispaly:block;float:left;font-size:16px;color:#333333" 推广明细
+      p style="float:right;font-size:14px;"
+        | 注册总计:
+        span style="color:#f13f4b"
+          | #{@channel_user.user_count}人
+        | 付费:
+        span style="color:#f13f4b"
+          | #{@channel_user.user_count}人
+    div
+      .l style="height:400px;"
+        - @schools.each do |school|
+          .info
+            .l
+              p.school = school.fullname
+              p.city = school.address
+            .l
+              .number = school.vip_count
+              .reg
+                | 已注册: #{school.user_count}
+            .infoicon
+              = image_tag "矩形 @2x.png", width:"76", height:"69"
+      div style='clear:both'
+  .footer
+    | Copyright ©2016-2018 欢乐诵

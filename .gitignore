@@ -16,3 +16,5 @@
 *.swo
 *.swn
 .idea/*
+git.sh
+restart.sh
