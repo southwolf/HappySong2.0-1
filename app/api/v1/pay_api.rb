@@ -81,15 +81,11 @@ module V1
       end
       desc "test"
       params do
-        requires :json, type: String, desc: "啊啊"
+        requires :json, type: Boolean, desc: "啊啊"
       end
       post "/test" do
-        c = params[:json].split
-        if c.present?
-          present c
-        else
-          present :message, "FUck"
-        end
+        json = params[:json]
+        User.first.update(vip: json)
       end
     end
   end
