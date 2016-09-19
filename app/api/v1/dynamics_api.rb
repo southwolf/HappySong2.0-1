@@ -11,7 +11,7 @@ module V1
         requires :address,      type: String,        desc: '地理位置'
         # optional :picture_keys, type: Array[String], desc: '图片集合'
         optional :video_key,    type: String
-        optional :tags,         type: Array[String], desc: '标签集合用空格隔开'
+        optional :tags,         type: String, desc: '标签集合用空格隔开'
       end
       post "/create" do
         authenticate!
