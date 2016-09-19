@@ -21,7 +21,7 @@ module YunPian
     api="sms/single_send.json"
     options[:mobile] = mobile.to_s
     code = set_code
-    options[:text] = "【欢乐诵】您的验证码是#{code}。如非本人操作，请忽略本短信[短信验证码一个小时内有效]"
+    options[:text] = "【欢乐诵】您的验证码是#{code}。如非本人操作，请忽略本短信[短信验证码一小时内有效]"
     result = post(api, options)
     if result['code'] == 0
       return true
