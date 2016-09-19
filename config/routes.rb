@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   namespace :channel do
     root "channel#index"
     resources :channel_users do
-      resources  :transfers, only: [:index]
+      resources  :transfers, only: [:index, :new, :create]
     end
 
     resources :school, only: [:show,:new, :create]

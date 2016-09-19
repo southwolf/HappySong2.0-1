@@ -1,1 +1,113 @@
-h1 IndexTransfers
+css:
+
+  *{
+    margin:0;
+    padding:0;
+  }
+
+
+  .top{
+    heigth:30px;
+    width:100%;
+    margin-top:20px;
+  }
+
+  .p1{
+    color:#ff5c5c;
+    font-size:20px;
+    float:left;
+    padding-left:40px;
+  }
+
+  .s1{
+    font-size:14px;
+    display:block;
+    color:#333333;
+    width:100px;
+    height:30px;
+    line-height:30px;
+    float:right;
+
+  }
+
+  .s2{
+    display:block;
+    width:150px;
+    height:30px;
+    line-height:30px;
+    font-size:14px;
+    color:#f13f4b;
+    float:right;
+  }
+
+  .clear{
+    clear:both;
+  }
+
+  table{
+    border:1px solid #f7f7f7;
+    border-collapse:collapse;
+
+  }
+
+  table tr{
+    height:35px;
+    line-height:35px;
+  }
+
+  table tr th{
+    font-size:14px;
+    color:#333333;
+    border:1px solid #f7f7f7;
+    font-weight:300;
+  }
+
+  table tr td{
+    border:1px solid #f7f7f7;
+    font-size:14px;
+    color:#666666;
+    text-align:center;
+  }
+
+
+  .footer{
+    width:100%;
+    height:73px;
+    color:#ffffff;
+    font-size:12px;
+    line-height:73px;
+    text-align:center;
+    background-color:#f13f4b;
+  }
+body style="border-top:2px solid red;"
+  p.top
+    span.p1
+      = link_to "渠道管理员", admin_root_path,style:"color:#ff5c5c;text-decoration:none"
+
+    span.s2 = current_user.name
+    span.s1
+      = link_to "转账记录 ",channel_channel_user_transfers_path(current_user),style:"color:#ff5c5c;text-decoration:none"
+    .clear
+  hr style="background:#f7f7f7;height:5px;opacity:0.8;border-top:none;margin:20px 0px"
+  span style="display:block;font-size:14px;color:#7a7a7a;width:80px;height:40px;line-height:40px;text-align:center;border:1px solid #f7f7f7;margin-left:40px;"
+    | 转账记录
+  div style="padding-left:40px;min-height: 525px;"
+    table  cellspacing='0' cellpadding='5'
+      thread
+        tr
+          th width="45" 序号
+          th width="110" 转账时间
+          th width="155" 名称
+          th width="150" 地区
+          th width="150" 公司/个人
+          th witdh="150" 转账金额
+          th width="150" 详情
+      tbody
+        - @transfers.each do |transfer|
+          tr
+            td = transfer.id
+            td = DateTime.parse(transfer.created_at.to_s).strftime('%Y-%m-%d').to_s
+            td = transfer.collector.name
+            td = transfer.collector.address
+            td = transfer.user_type
+            td  详情

@@ -3,11 +3,12 @@ html lang="en"
   head
     meta charset="UTF-8"
     title 欢乐诵管理员首页
-    = javascript_include_tag 'application'
+    = javascript_include_tag 'application', "data-turbolinks-track" => false
     link rel="stylesheet" href="/css/lanrenzhijia.css" media="all"
     link rel="stylesheet" href="/css/admin_root.css" media="all"
-    = csrf_meta_tags
-    script src="/js/jquery.min.js"
+    link rel="stylesheet" href="/css/admin_channel.css" media="all"
+
+    script src="/js/jquery.min.js" data-turbolinks-track="false",
     javascript:
       $(document).ready(function ($) {
           $('#tx').click(function () {
