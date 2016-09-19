@@ -19,7 +19,7 @@ module V1
         address      = params[:address]
         # picture_keys = params[:picture_keys]
         video_key    = params[:video_key]
-        tags         = params[:tags].split
+        tags         = params[:tags]
         dynamic      = current_user.dynamics.build( :content => content,
                                                :address => address)
         if dynamic.save
@@ -39,7 +39,7 @@ module V1
 
           if tags.present?
             # 添加标签
-            tags.each do |tag|
+            tags.split.each do |tag|
               dynamic.addTag(tag)
             end
           end
