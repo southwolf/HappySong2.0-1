@@ -81,12 +81,10 @@ module V1
       end
       desc "test"
       params do
-        requires :json, type: JSON do
-          requires :int, type: Integer, values: [1, 2, 3]
-        end
+        requires :json, type: String, desc: "啊啊"
       end
       post "/test" do
-        c = params[:json]
+        c = params[:json].split
         if c.present?
           present c
         else

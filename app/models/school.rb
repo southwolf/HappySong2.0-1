@@ -7,4 +7,24 @@ class School < ActiveRecord::Base
   has_many :channel_schools
   has_many :channel_users, :through => :channel_schools
 
+
+  def vip_count
+    count = 0
+    self.try(:grade_team_classes).each do |grade_team_class|
+      grade_team_class.try(:students).each do |student|
+        if student.vip?
+          count += 1
+        end
+      end
+    end
+    return count
+  end
+
+  def user_count
+    count = 0
+    self.try(:grade_team_classes).each do |grade_team_class|
+      count += grade_team_class.try(:students).size
+    end
+    return count
+  end
 end

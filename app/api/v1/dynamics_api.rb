@@ -19,7 +19,7 @@ module V1
         address      = params[:address]
         # picture_keys = params[:picture_keys]
         video_key    = params[:video_key]
-        # tags         = params[:tags]
+        tags         = params[:tags].split
         dynamic      = current_user.dynamics.build( :content => content,
                                                :address => address)
         if dynamic.save
@@ -37,12 +37,12 @@ module V1
                                        :is_video => true)
           end
 
-          # if tags.present?
-          #   # 添加标签
-          #   tags.each do |tag|
-          #     dynamic.addTag(tag)
-          #   end
-          # end
+          if tags.present?
+            # 添加标签
+            tags.each do |tag|
+              dynamic.addTag(tag)
+            end
+          end
           present dynamic, with: ::Entities::Dynamic,
                            current_user: current_user
         else
@@ -51,24 +51,24 @@ module V1
 
       end
 
-      desc "用动态ID设置Tags"
-      params do
-        requires :token, type: String, desc: "用户访问令牌"
-        requires :dynamic_id, type: Integer, desc: "动态Id"
-        requires :tag,   type: String, desc: "图片key"
-      end
-      post '/set_tag' do
-        authenticate!
-        tag  = params[:tag]
-        dynamic_id = params[:dynamic_id]
-        dynamic = Dynamic.find(dynamic_id)
-
-        if dynamic.addTag(tag)
-           present :message, "成功"
-         else
-           present :message, "失败"
-        end
-      end
+      # desc "用动态ID设置Tags"
+      # params do
+      #   requires :token, type: String, desc: "用户访问令牌"
+      #   requires :dynamic_id, type: Integer, desc: "动态Id"
+      #   requires :tag,   type: String, desc: "图片key"
+      # end
+      # post '/set_tag' do
+      #   authenticate!
+      #   tag  = params[:tag]
+      #   dynamic_id = params[:dynamic_id]
+      #   dynamic = Dynamic.find(dynamic_id)
+      #
+      #   if dynamic.addTag(tag)
+      #      present :message, "成功"
+      #    else
+      #      present :message, "失败"
+      #   end
+      # end
       desc "用动态ID上传该动态的图片附件"
       params do
         requires :token, type: String, desc: "用户访问令牌"
