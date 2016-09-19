@@ -319,7 +319,7 @@ module V1
         else
           current_user = nil
         end
-        dynamics = Dynamic.all.order( created_at: :DESC)
+        dynamics = Dynamic.where(:is_relay: false).order( created_at: :DESC)
         present paginate(dynamics), with: ::Entities::Dynamic,
                                         current_user: current_user
       end
