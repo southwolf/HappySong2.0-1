@@ -21,7 +21,7 @@ module YunPian
     api="sms/single_send.json"
     options[:mobile] = mobile.to_s
     code = set_code
-    options[:text] = "【欢乐诵】您的验证码是#{code}。如非本人操作，请忽略本短信 [短信验证码1小时内有效]"
+    options[:text] = "【欢乐诵】您的验证码是#{code}。如非本人操作，请忽略本短信[短信验证码一个小时内有效]"
     result = post(api, options)
     if result['code'] == 0
       return true
@@ -49,7 +49,7 @@ module YunPian
   def verify (mobile, code)
     result = get_mess(mobile)
     return false unless result
-    verify_regexp = /(【.+】|[^a-zA-Z0-9\.\-\+_])/
+    verify_regexp = /(【.+】|[^a-zA-Z0-9\.\-\+_]| \[\w+1\w+\])/
     if result['text'].to_s.gsub(verify_regexp, '') == code.to_s
       return true
     else
