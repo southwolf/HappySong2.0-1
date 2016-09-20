@@ -95,7 +95,7 @@ module V1
         requires :token,      type: String,        desc: "用户访问令牌"
         requires :dynamic_id, type: Integer,       desc: "动态ID"
         requires :content,    type: String,        desc: "内容"
-        optional :tags,       type: Array[String], desc: "标签集合"
+        optional :tags,       type: String,        desc: "标签集合"
       end
 
       post "/forward" do
@@ -110,7 +110,7 @@ module V1
                                      :is_relay => true,
                                      :original_dynamic_id => dynamic.original_dynamic_id)
         if ref_dynamic.save && tags.present?
-          tags.each do |tag|
+          tags.split.each do |tag|
             ref_dynamic.addTag tag
           end
         end

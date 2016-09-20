@@ -126,4 +126,12 @@ module Entities
       object[1]
     end
   end
+
+  #student
+  class InviteUser < Grape::Entity
+    expose (:phone) do |object|
+      object.phone.splice(0..2)+"****"+object.phone.splice(-1..-4)
+    end
+    expose (:vip) { |object| object.vip?}
+  end
 end
