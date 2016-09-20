@@ -136,6 +136,21 @@ module V1
                                 current_user: current_user
       end
 
+      desc "删除动态"
+      params do
+        requires :token, type: String, desc: "用户访问令牌"
+        requires :dynamic_id, type: Integer, desc: '动态ID'
+      end
+
+      post '/delete' do
+        authenticate!
+        dynamic = Dynamic.find(params[:dynamic_id])
+        if dynamic.destroy
+          present :message, "成功"
+        else
+          present :message, "删除失败"
+        end
+      end
       desc "评论动态"
       params do
         requires :token,      type: String,  desc: '用户访问令牌'

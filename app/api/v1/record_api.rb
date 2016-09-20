@@ -91,6 +91,22 @@ module V1
         end
       end
 
+      desc "删除朗读"
+      params do
+        requires :token, type: String, desc: "用户访问令牌"
+        requires :record_id, type: Integer, desc: '朗读ID'
+      end
+
+      post '/delete' do
+        authenticate!
+        record = Record.find(params[:record_id])
+        if record.destroy
+          present :message, "成功"
+        else
+          present :message, "删除失败"
+        end
+      end
+      
       desc "作品点赞"
       params do
         requires :token, type: String,  desc: "访问令牌"
