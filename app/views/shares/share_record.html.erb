@@ -104,8 +104,8 @@
               </span>
 
               <div class="user-title-zuoping">
-                <%= comment.user.grade_team_class.school.name %>
-                <%= comment.user.grade_team_class.grade.name %>
+                <%= comment.try(:user).try(:grade_team_class).try(:school).try(:name) %>
+                <%= comment.try(:user).try(:grade_team_class).try(:grade).try(:name) %>
               </div>
 
             </div>
@@ -251,7 +251,7 @@
 
   $('#gotoWork').click(function () {
     var rid = $('.will_go').attr('rid');
-    location.href = '/share_record/' + rid;
+    location.href = '/share_record/'+ rid;
   })
 
   $('#audo').css('width', '100%')
