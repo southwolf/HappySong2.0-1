@@ -46,7 +46,7 @@ module V1
           present dynamic, with: ::Entities::Dynamic,
                            current_user: current_user
         else
-          error!("失败", 500)
+          error!("失败", 400)
         end
 
       end
