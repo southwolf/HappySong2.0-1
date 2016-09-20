@@ -29,6 +29,21 @@ module V1
         end
       end
 
+      desc "举报动态"
+      params do
+        requires :token,      type: String,  desc: "用户访问令牌"
+        requires :record_id, type: Integer, desc: "动态ID"
+      end
+      post '/report' do
+        authenticate!
+        record_id = params[:record_id]
+        record = Record.find(record_id)
+        if record.reports.create(:user_id => current_user.id)
+          present :message, "举报成功"
+        else
+          error!({error: "失败"}, 500)
+        end
+      end
 
       desc "最新朗读"
       paginate per_page: 20
@@ -106,7 +121,7 @@ module V1
           present :message, "删除失败"
         end
       end
-      
+
       desc "作品点赞"
       params do
         requires :token, type: String,  desc: "访问令牌"
