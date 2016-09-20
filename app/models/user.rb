@@ -115,6 +115,9 @@ class User < ActiveRecord::Base
     grade_team_class.students
   end
 
+  def show_phone
+    "#{self.phone.slice(0..2)}****#{self.phone.slice(-4..-1)}"
+  end
   # 是否是VIP
   def vip?
     return false if self.member.nil?

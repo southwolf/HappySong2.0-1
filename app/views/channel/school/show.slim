@@ -1,1 +1,210 @@
-h1 SchoolShow
+css:
+  * {
+      margin: 0;
+      padding: 0;
+  }
+
+  .top {
+      heigth: 30px;
+      width: 100%;
+      margin-top: 20px;
+  }
+
+  .p1 {
+      color: #ff5c5c;
+      font-size: 20px;
+      float: left;
+      padding-left: 40px;
+  }
+
+  .s1 {
+      font-size: 14px;
+      display: block;
+      color: #333333;
+      width: 100px;
+      height: 30px;
+      line-height: 30px;
+      float: right;
+
+  }
+
+  .s2 {
+      display: block;
+      width: 150px;
+      height: 30px;
+      line-height: 30px;
+      font-size: 14px;
+      color: #f13f4b;
+      float: right;
+  }
+
+  .clear {
+      clear: both;
+  }
+
+  .footer {
+      width: 100%;
+      height: 73px;
+      color: #ffffff;
+      font-size: 12px;
+      line-height: 73px;
+      text-align: center;
+      background-color: #f13f4b;
+  }
+
+  .s12 {
+      font-size: 12px;
+      color: #333333;
+  }
+
+  .s16 {
+      font-size: 16px;
+      color: #333333;
+  }
+
+  .pf {
+      padding-left: 10px;
+      padding-right: 15px;
+  }
+
+  .onlypf {
+      padding-left: 10px;
+  }
+
+  .selected {
+      color: #f13f4b;
+  }
+
+  .tuiinfo {
+      dispaly: block;
+      float: left;
+      font-size: 16px;
+      color: #333333;
+  }
+
+  .f13f4b {
+      color: #f13f4b;
+  }
+
+  .query {
+      width: 908px;
+      height: 180px;
+      line-height: 45px;
+      padding-left: 10px;
+      font-size: 14px;
+      color: #333333;
+      border: 1px solid #f7f7f7
+  }
+
+  .tuiguain {
+      width: 908px;
+      height: 38px;
+      line-height: 38px;
+      padding-left: 10px;
+      border: 1px solid #f7f7f7;
+  }
+
+  .reg {
+      width: 908px;
+      min-height: 300px;
+      border: 1px solid #f7f7f7;
+      padding-left:10px;
+  }
+
+  .page {
+      width: 918px;
+      min-height: 30px;
+      border: 1px solid #f7f7f7;
+      line-height: 30px;
+      text-align:center;
+      margin-bottom:40px;
+  }
+
+  .info {
+      width: 205px;
+      float: left;
+      height: 59px;
+      background: #f7f7f7;
+      border-radius: 3px;
+      margin:15px 10px;
+  }
+
+  .info .school {
+      font-size: 14px;
+      color: #666666;
+      padding: 11px 6px;
+  }
+
+  .info .city {
+      font-size: 12px;
+      color: #666666;
+      padding: 5px 6px;
+  }
+
+  .info .number {
+      font-size: 36px;
+      font-weight: bold;
+      padding: 6px 6px
+  }
+
+  .info .reg {
+      font-size: 12px;
+      padding: 0px 6px;
+      color: #666666
+  }
+
+  .info .infoicon {
+      float: right
+  }
+
+  .lef {
+      float: left;
+  }
+body style='border-top:2px solid red;'
+p.top
+  span.p1 = @school.fullname
+  span.s2 = current_user.name
+  span.s1 消息提醒&nbsp;&nbsp;&nbsp;|
+  span.s1 style="color:#ff5c5c"
+    = link_to "转账记录 ",channel_channel_user_transfers_path(current_user),class:'f13f4b',style:"text-decoration: none"
+    span style="color:#666666" |
+  .clear
+hr style="background:#f7f7f7;height:5px;opacity:0.8;border-top:none;margin:20px 0px"
+div style="padding-left:40px;"
+  div style="width:908px;height:91px;line-height:45.5px;border:1px solid #f7f7f7;padding-left:10px;"
+    p.s16 = @school.fullname
+    p.s12 会员付款详细信息
+  .query
+    p
+      span 年份:
+      span.pf 不限
+      - (2016..2018).to_a.each do |time|
+        span.pf  = time
+    p
+      span 月份:
+      span.pf 不限
+      - (1..12).to_a.each do |month|
+        span.pf = month
+    p
+      span 状态:
+      span.pf 不限
+      span.pf 注册
+      span.pf 月费
+  .tuiguain
+    span.tuiinfo 推广明细
+    p style="float:right;font-size:14px;"
+      | 注册统计:&nbsp
+      span.f13f4b = @school.user_count
+      | &nbsp&nbsp付费:&nbsp&nbsp
+      span.f13f4b = @school.vip_count
+    .reg
+      - @students.each do |student|
+        .info
+          .lef
+            p.school = DateTime.parse(student.created_at.to_s).strftime('%Y-%m-%d %H:%M:%S').to_s
+            p.city = student.show_phone
+          .infoicon style="float:right"
+            img src="/imgs/reg.png"
+    = paginate @students
+.footer
+  | Copyright ©2016-2018 欢乐诵
