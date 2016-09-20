@@ -21,7 +21,7 @@ module V1
         video_key    = params[:video_key]
         tags         = params[:tags]
         dynamic      = current_user.dynamics.build( :content => content,
-                                               :address => address)
+                                                    :address => address)
         if dynamic.save
           dynamic.update( :original_dynamic_id => dynamic.id)
           # if picture_keys.present?
@@ -34,7 +34,7 @@ module V1
 
           if video_key.present?
             dynamic.attachments.create( :file_url => video_key,
-                                       :is_video => true)
+                                        :is_video => true)
           end
 
           if tags.present?
