@@ -83,9 +83,9 @@
         <li class="suggest-item">
           <a href="javascript:;" onclick="more(this)" rid="<%= record.id %>" class="relative suggest-link-zuoping">
             <% if record.style == 'audio' %>
-                <%= image_tag(record.article.cover_img, class: 'public-img') %>
+                <img src="<%= ENV["QINIUPREFIX"]+record.article.cover_img%>" class="public-img">
             <% else %>
-                <%= image_tag(record.file_url+'?vframe/png/offset/5', class: 'public-img') %>
+                <img src="<%= ENV["QINIUPREFIX"]+record.file_url+'?vframe/png/offset/5'%>" class="public-img">
             <% end %>
           </a>
           <div class="suggest-info">
