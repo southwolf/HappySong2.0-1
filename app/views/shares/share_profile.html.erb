@@ -82,7 +82,7 @@
 
         <li class="suggest-item">
           <a href="javascript:;" onclick="more(this)" rid="<%= record.id %>" class="relative suggest-link-zuoping">
-            <% if record.style == 'audio' %>
+            <% if record.style == 'media' %>
                 <img src="<%= ENV["QINIUPREFIX"]+record.article.cover_img%>" class="public-img">
             <% else %>
                 <img src="<%= ENV["QINIUPREFIX"]+record.file_url+'?vframe/png/offset/1'%>" class="public-img">
