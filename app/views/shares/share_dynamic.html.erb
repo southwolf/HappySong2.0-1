@@ -105,7 +105,7 @@
           <span class="user-name-zuoping"><%= com.user.name %></span><span class="listen-num-zuoping"><%= com.created_at.strftime("%m-%d") %></span>
 
           <div class="user-title-zuoping">
-            <%= com.user.try(:grade_team_class).try(:school).try(:name) %> <%= com.user.try(:grade_team_class).try(:grade).try(:name)%>
+            <%= com.user.try(:grade_team_class).try(:school).try(:name)%> <%= com.user.try(:grade_team_class).try(:grade).try(:name)%>
           </div>
 
         </div>

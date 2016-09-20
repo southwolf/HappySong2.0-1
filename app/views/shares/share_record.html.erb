@@ -146,7 +146,7 @@
             <% if record.style == 'audio' %>
                <img src="<%= ENV["QINIUPREFIX"]+record.article.cover_img%>"class='public-img'/>
             <% else %>
-                <img src="<%=ENV["QINIUPREFIX"]+record.file_url+'?vframe/png/offset/5%>" class= 'public-img' )%>
+                <img src="<%=ENV["QINIUPREFIX"]+record.file_url+'?vframe/png/offset/5'%>" class= 'public-img' )%>
             <% end %>
 
             <div class="yinying"><%= record.article.title %></div>
