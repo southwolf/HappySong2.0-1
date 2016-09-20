@@ -32,7 +32,7 @@
       <% if dynamic.try(:attachments).first.try(:is_video)%>
 
           <div class="content-img">
-            <a href="/managements/shares/share_dynamic?id=<%= dynamic.id %>">
+            <a href="/share_dynamic/<%= dynamic.id %>">
                <img src="<%= ENV['QINIUPREFIX'] +dynamic.attachments.first.file_url+'?vframe/png/offset/1'%>"/>
             </a>
           </div>
@@ -40,7 +40,7 @@
       <% else %>
 
           <% dynamic.attachments.each do |img| %>
-              <a href="/managements/shares/share_dynamic?id=<%= dynamic.id %>">
+              <a href="/share_dynamic/<%= dynamic.id %>">
                 <div class="content-img">
                   <img src="<%= ENV['QINIUPREFIX'] +img.file_url%>"/>
                 </div>
