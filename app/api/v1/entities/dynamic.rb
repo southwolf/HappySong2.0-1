@@ -21,9 +21,7 @@ module Entities
       object.original_dynamic.try(:user)
     end
     expose :tags,                     using: Entities::Tag
-    expose (:url) do |object|
-      "http:://localhost:3000/#{object.id}"
-    end
+    expose (:share_url) {|object| ENV['SHARERECORD']+"/share_dynamic/#{object.id}"}
     expose :is_liked do |object, option|
       current_user = option[:current_user]
       if current_user.present?

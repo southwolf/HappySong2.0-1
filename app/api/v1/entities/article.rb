@@ -10,6 +10,7 @@ module Entities
     expose :records_count
     expose :created_at
     expose (:cover_img) {|object| ENV['QINIUPREFIX']+object.cover_img }
+    expose (:share_url) {|object| ENV['SHARERECORD']+"/share_article/#{object.id}"}
     # expose (:width) do |object|
     #   uri = URI(ENV['QINIUPREFIX']+object.cover_img+'?imageInfo')
     #   res = ::Net::HTTP.get_response(uri)

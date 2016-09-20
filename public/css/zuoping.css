@@ -1,0 +1,376 @@
+.top-img {
+    width: 100%;
+    margin-top: 0px;
+    position: relative;
+    top: 70px;
+    margin-bottom: 80px;
+}
+
+.info {
+    padding: 1rem .4rem .9rem 1rem;
+    background-color: #ffffff;
+    width: 98%;
+    height: 14rem;
+}
+
+.info-desc {
+    color: #666666;
+    font-size: 1.3rem;
+}
+
+.user-name {
+    font-size: 1.4rem;
+    color: #333333;
+}
+
+.user-school {
+    font-size: 1.4rem;
+    color: #999999;
+}
+
+.user-circle-img-zuoping {
+    float: left;
+    height: 4.5rem;
+    width: 4.5rem;
+    border-radius: 2rem;
+    margin-right: 10px;
+}
+
+.user-desc {
+    margin: 1.5rem 0px;
+    color: #666666;
+    font-size: 1.3rem;
+}
+
+.zuoping-talk-content {
+    color: #999999;
+    font-size: 1.4rem;
+    padding-left: 0.4rem;
+}
+
+.zuoping-info-hr {
+    background: #F7F7F7;
+    margin: 1.5rem 0px;
+    height: 0.01rem;
+    border-bottom: none;
+    opacity: 0.2;
+
+}
+
+.sdc {
+    padding: 0rem 1rem .9rem;
+    background-color: #ffffff
+}
+
+.desc {
+    color: #666666;
+    width: 96%;
+    font-size: 1.2rem;
+    margin: 1.5rem 0px;
+}
+
+.listen {
+    display: block;
+    width: 1.8rem;
+    float: left;
+}
+
+.love {
+    display: block;
+    float: left;
+    width: 1.95rem;
+}
+
+.wtalk {
+    display: block;
+    float: left;
+    width: 1.9rem;
+}
+
+.fl {
+    float: left;
+}
+
+.suggest-section-zuoping {
+    padding: 0 1rem 0rem;
+    font-size: 1.2rem;
+    background: #f7f7f7;
+    color: #666666;
+    height: 4.5rem;
+    line-height: 4.5rem;
+}
+
+.zuoping-talk {
+
+    width: 98%;
+    height: 9rem;
+    padding: 1.4rem 1rem;
+    background-color: #ffffff;
+}
+
+.user-circle-img-zuoping {
+    float: left;
+    height: 4.5rem;
+    width: 4.5rem;
+    border-radius: 2rem;
+    margin-right: 10px
+}
+
+.relative {
+    position: relative
+}
+
+.user-name-zuoping {
+
+    color: #cd3e3a;
+    font-size: 1.3rem;
+
+}
+
+.listen-num-zuoping {
+    float: right;
+    margin-right: 1.5rem;
+    margin-top: 2px;
+    font-size: 1.2rem;
+    color: #999
+}
+
+.user-title-zuoping {
+    display: -webkit-box;
+    overflow: hidden;
+    font-size: 1.1rem;
+    color: #999999;
+    margin-top: 0.7rem;
+}
+
+.zuoping-talk-content {
+    color: #999999;
+    font-size: 1.4rem;
+    padding-left: 0.4rem;
+}
+
+.zuoping-hr {
+    background: #F7F7F7;
+    margin-top: 0.7rem;
+    margin-bottom: 0;
+    height: 0.01rem;
+    border-bottom: none;
+    opacity: 0.2;
+
+}
+
+.suggest-section {
+    font-size: 1.2rem;
+    color: #ccc
+}
+
+#suggest-list {
+    width: 100%
+}
+
+.suggest-item {
+    position: relative;
+    float: left;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    width: 32%;
+    padding:0.18rem;
+    margin-bottom: .3rem;
+}
+
+.public-img {
+    display: block;
+    width: 100%;
+    height: 9.5rem;
+}
+
+.suggest-info {
+    padding: 7px 10px;
+    background-color: #ffffff;
+    line-height: 18px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis
+}
+
+.suggest-song-name {
+    font-size: 1.3rem;
+    color: #666666
+}
+
+.text-nowrap {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.suggest-link-zuoping {
+    display: block;
+    text-decoration: none;
+    height: 9.6rem;
+}
+
+.open-div {
+    position: fixed;
+    max-width: 640px;
+    width: 100%;
+    top: 0;
+    left: 0;
+    height: 4.8rem;
+    background-color: rgba(60, 55, 57, .9);
+    z-index: 100;
+    right: 0;
+}
+
+.work-confirm-container {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .5);
+    z-index: 1000
+}
+
+.confirm-content {
+    padding: 20px;
+    line-height: 16px;
+    color: #000;
+    text-align: center
+}
+
+.work-confirm {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 71%;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+    font-size: 13px;
+    background-color: #f9f9f8;
+    z-index: 1000
+}
+
+.confirm-seprator-horizontal {
+    height: 1px;
+    background-color: #dfdfe3;
+    -webkit-transform: scaleY(0.5);
+    transform: scaleY(0.5)
+}
+
+.confirm-action-bar {
+    display: -webkit-box
+}
+
+.confirm-seprator-vetical {
+    width: 1px;
+    height: 37px;
+    background-color: #dfdfe3;
+    -webkit-transform: scaleY(0.5);
+    transform: scaleX(0.5)
+}
+
+.confirm-btn {
+    -webkit-box-flex: 1;
+    display: block;
+    line-height: 37px;
+    border: none;
+    font-size: 13px;
+    background-color: transparent;
+    color: #097fff;
+    text-align: center
+}
+
+.zuoping-talk-hr {
+    background: #F7F7F7;
+    margin: 1.5rem 0px;
+    height: 0.01rem;
+    border-bottom: none;
+    opacity: 0.2;
+
+}
+
+.zuoping-more {
+    height: 4.7rem;
+    width: 100%;
+    line-height: 4.7rem;
+    color: #666666;
+    font-size: 1.4rem;
+    background: #f2f2f2;
+    text-align: center;
+}
+
+.yinying {
+    height: 2rem;
+    position: relative;
+    top: -2rem;
+    background: #000000;
+    opacity: 0.6;
+    color: #ffffff;
+    line-height: 2rem;
+    text-align: center;
+    font-size: 1.1rem;
+}
+
+#audio {
+    width: 100%;
+}
+
+.acl {
+    display: block;
+    width: 98%;
+    height: 22rem;
+    margin: 0 auto;
+    padding: 0;
+}
+
+.zuopin-down {
+    height: 7rem;
+    width: 100%;
+    background: #f2f2f2;
+    line-height: 6.45rem;
+}
+
+.zuopin-down img {
+    width: 100%;
+    height: 1.5rem;
+    display: block;
+    margin-bottom: 0.3rem;
+}
+
+.download {
+    width: 94%;
+    height: 4.2rem;
+    background: #f1404b;
+    color: #ffffff;
+    line-height: 4.2rem;
+    font-size: 1.4rem;
+    text-align: center;
+    border-radius: 4px;
+    border: none;
+    margin: 0 auto;
+    display: block;
+}
+
+
+.subtitle {
+    line-height: 4.65rem
+}
+
+.wenzhang-more {
+
+    background: #f7f7f7;
+    color: #666666;
+    height: 5rem;
+    line-height: 5rem;
+    font-size: 1.6rem;
+    text-align: center;
+}
+
+#video{
+    width:96%;
+    margin:0 auto;
+}

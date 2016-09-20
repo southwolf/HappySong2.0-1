@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+  <meta content="telephone=no" name="format-detection">
+  <link href="/css/mobile_common.css" rel="stylesheet">
+  <script src="//cdn.bootcss.com/jquery/1.12.2/jquery.js"></script>
+  <link href="/css/gerenzhongxin.css" rel="stylesheet">
+  <script src="/js/com.js"></script>
+  <title>个人中心</title>
+
+</head>
+<body>
+
+<div class="header">
+  <div style="width:100%;margin:0 auto;">
+    <img src="<%= ENV['QINIUPREFIX']+@user.avatar %>" alt="" class='user-circle-img-dongtai')/>
+    <!-- <%= image_tag(@user.avatar, class: 'user-circle-img-dongtai') %> -->
+  </div>
+  <p class="user-name"><%= @user.name %></p>
+  <p class="user-desc"><%= @user.desc %></p>
+  <hr class="header-hr">
+</div>
+
+<% @user.dynamics.each do |dynamic| %>
+
+    <section class="content">
+
+
+      <% if dynamic.try(:attachments).first.try(:is_video)%>
+
+          <div class="content-img">
+            <a href="/managements/shares/share_dynamic?id=<%= dynamic.id %>">
+               <img src="<%= ENV['QINIUPREFIX'] +dynamic.attachments.first.file_url+'?vframe/png/offset/5'%>"/>
+            </a>
+          </div>
+
+      <% else %>
+
+          <% dynamic.attachments.each do |img| %>
+              <a href="/managements/shares/share_dynamic?id=<%= dynamic.id %>">
+                <div class="content-img">
+                  <img src="<%= ENV['QINIUPREFIX'] +img.file_url%>"/>
+                </div>
+              </a>
+          <% end %>
+
+      <% end %>
+
+      <div class="content-text">
+        <%= dynamic.content %>
+      </div>
+
+      <div class="content-bottom">
+        <span><%= dynamic.created_at.strftime('%m-%d') %></span>
+        <span class="talk">评论: <%= dynamic.comments_count %></span>
+      </div>
+
+      <hr class="header-hr">
+
+    </section>
+
+<% end %>
+
+<div>
+  <span style='border-top:1px solid #d5d5d5;display:block;width:11rem;position: relative;top:2.6rem;left:1.1rem;'></span>
+  <div class="wenzhang-more">
+    热门作品
+  </div>
+  <span style='border-top:1px solid #d5d5d5;display:block;width:11rem;position: relative;float:right;top:-2.5rem;right:1rem;'></span>
+</div>
+
+<!--最多显示5条 再加个查点更多的图片-->
+
+<section class="suggest-section">
+
+  <ul id="suggest-list" class="clearfix" style="margin-top:1rem;">
+
+    <% @user.records.take(5).each do |record| %>
+
+        <li class="suggest-item">
+          <a href="javascript:;" onclick="more(this)" rid="<%= record.id %>" class="relative suggest-link-zuoping">
+            <% if record.style == 'audio' %>
+                <%= image_tag(record.article.cover_img, class: 'public-img') %>
+            <% else %>
+                <%= image_tag(record.file_url+'?vframe/png/offset/5', class: 'public-img') %>
+            <% end %>
+          </a>
+          <div class="suggest-info">
+            <div class="nowrap"><%= record.article.title %></div>
+          </div>
+        </li>
+
+    <% end %>
+
+    <% if @user.records.size > 5 %>
+        <li class="suggest-item">
+          <a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.happysong.android"  class="relative suggest-link-zuoping">
+            <img src="./dist/see_more.png" class="public-img">
+          </a>
+          <div class="suggest-info">
+            <div class="nowrap"></div>
+          </div>
+        </li>
+    <% end %>
+  </ul>
+
+</section>
+
+<div class="open-div">
+  <a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.happysong.android">
+    <div>
+      <img src="/imgs/icon.png"
+           style="display:block;width:3.7rem;float:left;margin-left:1rem;margin-right:0.7rem;margin-top:0.6rem">
+      <div style="float:left;margin-top:0.7rem;">
+        <h3 style="font-size:1.4rem;margin-bottom:0.01rem;color:#fff">欢乐诵</h3>
+        <p style="font-size:1rem;color:#fff">注册立即送一个会月</p>
+      </div>
+      <div style="float:right;margin-right:1.1rem;margin-top:0.9rem">
+        <button style="background:#f1404b;width:8.2rem;color:#fff;font-size:1.3rem;height:3.1rem;border-radius:4px;border-color:#f1404b;">
+          立即下载
+        </button>
+      </div>
+      <div style="clear: both"></div>
+    </div>
+  </a>
+</div>
+
+<div class="work-confirm-container" onclick="hidediv()">
+  <div class="work-confirm">
+    <div class="confirm-content">去欢乐诵查看更多好玩的作品</div>
+    <div class="confirm-seprator-horizontal"></div>
+    <div class="confirm-action-bar">
+      <a id="seeMore" href="http://a.app.qq.com/o/simple.jsp?pkgname=com.happysong.android" class="confirm-btn">下载欢乐诵</a>
+      <div class="confirm-seprator-vetical"></div>
+      <button type="button" class="confirm-btn" id="gotoWork">查看作品</button>
+    </div>
+  </div>
+</div>
+
+<div class="more-zuoping">
+  <img src="/imgs/sanjiao.png">
+  <a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.happysong.android">
+    <button class="chakan">
+      查看更多作品
+    </button>
+  </a>
+</div>
+
+<script>
+
+  $('#gotoWork').click(function () {
+    var rid = $('.will_go').attr('rid');
+    location.href = '/share_record/' + rid;
+  })
+
+
+</script>
+
+</body>
+</html>

@@ -5,6 +5,7 @@ module Entities
     expose :user,     using: Entities::User
     expose :music,    using: Entities::Music
     expose :article,  using: Entities::Article
+    expose (:share_url) {|object| ENV['SHARERECORD']+"/share_record/#{object.id}"}
     # expose :comments, using: Entities::CommentWithReply
     # expose (:liked?) do |object, option|
     #   current_user = option[:current_user]

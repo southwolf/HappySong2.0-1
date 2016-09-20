@@ -49,7 +49,7 @@ module YunPian
   def verify (mobile, code)
     result = get_mess(mobile)
     return false unless result
-    verify_regexp = /(【.+】|[^a-zA-Z0-9\.\-\+_]| \[\w+1\w+\])/
+    verify_regexp = /(【.+】|[^a-zA-Z0-9\.\-\+_])/
     if result['text'].to_s.gsub(verify_regexp, '') == code.to_s
       return true
     else

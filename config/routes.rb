@@ -20,6 +20,11 @@ Rails.application.routes.draw do
   end
 
 
+  get  '/share_article/:id', to: 'shares#share_article', as: :share_article
+  get  '/share_record/:id',  to: 'shares#share_record',  as: :share_record
+  get  '/share_dynamic/:id', to: 'shares#share_dynamic', as: :share_dynamic
+  get  '/share_profile/:id', to: 'shares#share_profile', as: :share_profile
+    
   get  '/webhooks', to: 'pings#test',     as: :test
   post '/webhooks', to: 'pings#webhooks', as: :webhooks
   resource :invites, only: [:show, :create]

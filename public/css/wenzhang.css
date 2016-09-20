@@ -1,0 +1,441 @@
+html {
+    height: 100%
+}
+
+body {
+    min-height: 100%;
+    padding-top: 0px;
+    background-color: #ffffff
+}
+
+.song-detail-container {
+    padding: 1rem 1rem .9rem;
+    background-color: #ffffff;
+    width: 98px;
+
+}
+
+.relative {
+    position: relative
+}
+
+.user-name {
+    display: inline-block;
+    color: #333333;
+    font-size: 1.3rem;
+    max-width: 140px;
+    max-width: -webkit-calc(100% - 80px);
+    max-width: -moz-calc(100% - 80px);
+    max-width: calc(100% - 80px);
+    vertical-align: top
+}
+
+.user-title {
+    display: -webkit-box;
+    margin: .5rem 0;
+    max-width: 140px;
+    max-width: -webkit-calc(100% - 80px);
+    max-width: -moz-calc(100% - 80px);
+    max-width: calc(100% - 80px);
+    -webkit-box-orient: vertical;
+    line-height: 16px;
+    max-height: 32px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 2;
+    font-size: 1.2rem;
+    color: #999999
+}
+
+.listen-num {
+    float: right;
+    margin-right: 1.3rem;
+    margin-top: 2px;
+    font-size: 1.2rem;
+    color: #999
+}
+
+.open-div {
+    position: fixed;
+    max-width: 640px;
+    width: 100%;
+    top: 0;
+    left: 0;
+    height: 4.8rem;
+    background-color: rgba(60, 55, 57, .9);
+    z-index: 100;
+    right: 0;
+}
+
+.top-user-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0
+}
+
+.animate1 {
+    -webkit-animation: animate1 5s linear;
+    animation: animate1 5s linear
+}
+
+@-webkit-keyframes animate1 {
+    0% {
+        opacity: 0
+    }
+    20%, 80% {
+        opacity: 1
+    }
+    100% {
+        opacity: 0
+    }
+}
+
+@keyframes animate1 {
+    0% {
+        opacity: 0
+    }
+    20%, 80% {
+        opacity: 1
+    }
+    100% {
+        opacity: 0
+    }
+}
+
+.animate2 {
+    -webkit-animation: animate2 5s linear forwards;
+    animation: animate2 5s linear forwards
+}
+
+@-webkit-keyframes animate2 {
+    0% {
+        -webkit-transform: translate3d(0, -100%, 0);
+        transform: translate3d(0, -100%, 0)
+    }
+    20%, 80% {
+        -webkit-transform: translate3d(0, 0, 0)
+    }
+    100% {
+        -webkit-transform: translate3d(0, 100%, 0);
+        transform: translate3d(0, 100%, 0)
+    }
+}
+
+@keyframes animate2 {
+    0% {
+        -webkit-transform: translate3d(0, -100%, 0);
+        transform: translate3d(0, -100%, 0)
+    }
+    20%, 80% {
+        -webkit-transform: translate3d(0, 0, 0)
+    }
+    100% {
+        -webkit-transform: translate3d(0, 100%, 0);
+        transform: translate3d(0, 100%, 0)
+    }
+}
+
+.animate3 {
+    -webkit-animation: animate3 5s linear backwards;
+    animation: animate3 5s linear backwards
+}
+
+@-webkit-keyframes animate3 {
+    0% {
+        -webkit-filter: blur(50px)
+    }
+    20% {
+        -webkit-filter: blur(0)
+    }
+    80% {
+        -webkit-filter: blur(0);
+        opacity: 1
+    }
+    100% {
+        -webkit-filter: blur(50px);
+        opacity: 0
+    }
+}
+
+@keyframes animate3 {
+    0% {
+        -webkit-filter: blur(50px)
+    }
+    20% {
+        -webkit-filter: blur(0)
+    }
+    80% {
+        -webkit-filter: blur(0);
+        opacity: 1
+    }
+    100% {
+        -webkit-filter: blur(50px);
+        opacity: 0
+    }
+}
+
+.animate4 {
+    -webkit-transform: translate3d(0, 0, 0) rotateZ(0deg);
+    transform: translate3d(0, 0, 0) rotateZ(0deg);
+    -webkit-animation: animate4 5s linear backwards;
+    animation: animate4 5s linear backwards
+}
+
+@-webkit-keyframes animate4 {
+    0% {
+        -webkit-transform: translate3d(-100%, 0, 0) rotateZ(-90deg);
+        transform: translate3d(-100%, 0, 0) rotateZ(-90deg)
+    }
+    20% {
+        -webkit-transform: translate3d(0, 0, 0) rotateZ(0deg);
+        transform: translate3d(0, 0, 0) rotateZ(0deg)
+    }
+    80% {
+        -webkit-transform: translate3d(0, 0, 0) rotateZ(0deg);
+        transform: translate3d(0, 0, 0) rotateZ(0deg);
+        opacity: 1
+    }
+    100% {
+        -webkit-transform: translate3d(100%, 0, 0) rotateZ(90deg);
+        transform: translate3d(100%, 0, 0) rotateZ(90deg);
+        opacity: 0
+    }
+}
+
+@keyframes animate4 {
+    0% {
+        -webkit-transform: translate3d(-100%, 0, 0) rotateZ(-90deg);
+        transform: translate3d(-100%, 0, 0) rotateZ(-90deg)
+    }
+    20% {
+        -webkit-transform: translate3d(0, 0, 0) rotateZ(0deg);
+        transform: translate3d(0, 0, 0) rotateZ(0deg)
+    }
+    80% {
+        -webkit-transform: translate3d(0, 0, 0) rotateZ(0deg);
+        transform: translate3d(0, 0, 0) rotateZ(0deg);
+        opacity: 1
+    }
+    100% {
+        -webkit-transform: translate3d(100%, 0, 0) rotateZ(90deg);
+        transform: translate3d(100%, 0, 0) rotateZ(90deg);
+        opacity: 0
+    }
+}
+
+.animate5 {
+    -webkit-animation: animate5 5s linear backwards;
+    animation: animate5 5s linear backwards
+}
+
+@-webkit-keyframes animate5 {
+    0% {
+        border-radius: 0 100%
+    }
+    20% {
+        border-radius: 0
+    }
+    80% {
+        border-radius: 0;
+        opacity: 1
+    }
+    100% {
+        border-radius: 0 100%;
+        opacity: 0
+    }
+}
+
+@keyframes animate5 {
+    0% {
+        border-radius: 0 100%
+    }
+    20% {
+        border-radius: 0
+    }
+    80% {
+        border-radius: 0;
+        opacity: 1
+    }
+    100% {
+        border-radius: 0 100%;
+        opacity: 0
+    }
+}
+
+/*文章分享*/
+
+#lrc_container-wenzhang {
+    color: #666666;
+    width: 96%;
+    font-size: 1.4rem;
+    margin-top: 60px;
+}
+
+#lrc_container-wenzhang .tit {
+    font-size: 1.8rem;
+    color: #333333;
+}
+
+#lrc_container-wenzhang .aut {
+    font-size: 1.3rem;
+    color: #666666
+}
+
+#lrc_container-wenzhang .content {
+    width: 100%;
+    height: auto;
+    padding: 10px;
+
+}
+
+.user-circle-img-wenzhang {
+    float: left;
+    height: 4.5rem;
+    width: 4.5rem;
+    border-radius: 2rem;
+    margin-right: 10px
+}
+
+.wenzhang-talk {
+    padding: 1rem 0rem .9rem 0rem;
+    background-color: #ffffff;
+    width: 100%;
+}
+
+.wenzhang-hr {
+    background: #F7F7F7;
+    margin-top: 0.7rem;
+    margin-bottom: 0;
+    height: 0.01rem;
+    border-bottom: none;
+    opacity: 0.2;
+
+}
+
+.wenzhang-talk-content {
+    color: #999999;
+    font-size: 1.4rem;
+    margin: 1rem 0 1rem 0;
+    padding-left: 0.4rem;
+}
+
+.wenzhang-more {
+    padding: 0 1rem 5px;
+    background: #f7f7f7;
+    color: #666666;
+    height: 5rem;
+    line-height: 5rem;
+    font-size: 1.6rem;
+    text-align: center;
+    margin-bottom: 0.4rem;
+}
+
+.wenzhang-ping {
+    display: block;
+    float: left;
+    width: 1rem
+}
+
+.wenzhang-listen {
+    display: block;
+    float: left;
+    width: 1.35rem;
+}
+
+.wenzhang-talk .relative .spec > div, .wenzhang-talk .relative .spec div span {
+    float: left;
+}
+
+.wenzhang-talk .relative .spec div span {
+    float: left;
+    margin-right: 0.5rem;
+    display: block;
+}
+
+.wenzhang-talk .relative .spec > div, .wenzhang-talk .relative .spec div span {
+    float: left;
+}
+
+.wenzhang-talk .relative .spec div span {
+    float: left;
+    margin-right: 0.8rem;
+    margin-left: 0.4rem;
+    display: block;
+
+}
+
+.song-detail-container-wenzhang {
+    width: 100%;
+}
+
+.song-detail-container-wenzhang img {
+    width: 96%;
+    margin: 0 auto;
+    display: block;
+    margin-bottom: 0.5rem;
+
+}
+
+.toolbar {
+    position: absolute;
+    bottom: -3.5rem;
+    right: 2.2rem;
+}
+
+.toolbar img {
+    width: 1.95rem;
+    height: 1.95rem;
+}
+
+.opc {
+    position: absolute;
+    height: 4.5rem;
+    width: 4.5rem;
+    border-radius: 4.5rem;
+    background: black;
+    bottom: -4.5rem;
+    right: 1rem;
+    opacity: 0.23;
+
+}
+
+.more-zuoping {
+    height: 7rem;
+    width: 100%;
+    background: #f2f2f2;
+    line-height: 6.45rem;
+
+}
+
+.more-zuoping img {
+    width: 100%;
+    height: 1.5rem;
+    display: block;
+    margin-bottom: 0.3rem;
+}
+
+.chakan {
+    width: 94%;
+    height: 4.2rem;
+    background: #f1404b;
+    color: #ffffff;
+    line-height: 4.2rem;
+    font-size: 1.4rem;
+    text-align: center;
+    border-radius: 4px;
+    border: none;
+    margin: 0 auto;
+    display: block;
+}
+
+.wz-clearfix {
+    zoom: 1;
+    background: pink;
+}
+
+.mar {
+    width: 94%;
+    margin: 0 auto;
+"
+}

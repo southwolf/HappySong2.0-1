@@ -59,10 +59,9 @@ module Entities
         " "
       end
     end
-    expose :url
-    def url
-      "http://host/users/show/#{object.id}"
-    end
+
+    expose (:share_url) {|object| ENV['SHARERECORD']+"/share_profile/#{object.id}"}
+
     expose :invite_url do |object|
       "http://120.26.118.28/invites?code=#{object.code}"
     end
@@ -105,6 +104,8 @@ module Entities
     expose :expire_time, if: ->(object, options){ object.member.present?} do |object|
       object.member.expire_time.to_i
     end
+
+    expose (:share_url) {|object| ENV['SHARERECORD']+"/share_profile/#{object.id}"}
     #分享链接
     expose :invite_url do |object|
       "http://120.26.118.28/invites?code=#{object.code}"

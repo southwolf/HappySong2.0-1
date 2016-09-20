@@ -436,12 +436,16 @@ module V1
         desc '新建音乐'
         params do
           requires :file_url,      type: String,  desc: '音乐key'
+          requires :name,          type: String,  desc: '音乐名称'
+          requires :author,        type: String,  desc: '音乐作者'
           requires :music_type_id, type: Integer, desc: '音乐类型'
+          requires :cover_img,     type: String, desc: "音乐封面key"
         end
 
         post '/create' do
           music_type = MusicType.find(params[:music_type_id])
-          music = music_type.musics.build( :file_url => params[:file_url])
+          music = music_type.musics.build( :file_url => params[:file_url], :name => params[:name],
+                                           :author => params[:author], :cover_img => params[:cover_img])
           if music.save
             present music, with: ::Entities::Music
           else
