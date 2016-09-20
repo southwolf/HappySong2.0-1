@@ -51,7 +51,8 @@
       </span>
 
       <div class="user-school">
-        <%= @record.user.grade_team_class.school.name %> <%= @record.user.grade_team_class.grade.name %>
+        <%= @record.user.try(:grade_team_class).try(:school).try(:name)%> <%= @record.user.try(:grade_team_class).try(:grade).try(:name)%>
+        <!-- <%= @record.user.grade_team_class.school.name %> <%= @record.user.grade_team_class.grade.name %> -->
       </div>
     </div>
 
