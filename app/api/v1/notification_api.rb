@@ -82,7 +82,7 @@ module V1
         present paginate(notifications), with: ::Entities::Notification
       end
 
-      
+
       desc "获取动态消息"
       params do
         requires :token, type: String, desc: "用户令牌"
