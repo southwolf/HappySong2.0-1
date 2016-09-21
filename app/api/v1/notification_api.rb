@@ -3,8 +3,8 @@ module V1
     include Grape::Kaminari
     paginate per_page: 20
     resources :notifications do
-      desc "构建消息ID取消息信息"
 
+      desc "构建消息ID取消息信息"
       params do
         requires :id, type: Integer, desc: "信息ID"
       end
@@ -15,7 +15,7 @@ module V1
       end
 
 
-      desc "获取用户粉丝未读消息"
+      desc "获取用户粉丝消息"
       params do
         requires :token, type: String, desc: "用户令牌"
       end
@@ -29,7 +29,7 @@ module V1
         end
       end
 
-      desc "获取用户喜欢未读消息"
+      desc "获取用户喜欢消息"
       params do
         requires :token, type: String, desc: "用户令牌"
       end
@@ -43,7 +43,7 @@ module V1
         end
       end
 
-      desc "获取用户评论未读消息"
+      desc "获取用户评论消息"
       params do
         requires :token, type: String, desc: "用户令牌"
       end
@@ -57,7 +57,7 @@ module V1
         end
       end
 
-      desc "获取用户作业未读消息"
+      desc "获取用户作业消息"
       params do
         requires :token, type: String, desc: "用户令牌"
       end
@@ -71,7 +71,7 @@ module V1
         end
       end
 
-      desc "获取官方通知未读消息"
+      desc "获取官方通知消息"
       params do
         requires :token, type: String, desc: "用户令牌"
       end
@@ -79,6 +79,18 @@ module V1
       get '/announce' do
         authenticate!
         notifications = Notification.where(user: current_user, notice_type: "announce")
+        present paginate(notifications), with: ::Entities::Notification
+      end
+
+
+      desc "获取动态消息"
+      params do
+        requires :token, type: String, desc: "用户令牌"
+      end
+
+      get '/notify' do
+        authenticate!
+        notifications = Notification.where("user = ? && targetable != ?", current_user, current_user)
         present paginate(notifications), with: ::Entities::Notification
       end
     end

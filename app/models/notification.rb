@@ -32,7 +32,7 @@ class Notification < ActiveRecord::Base
     return "#{self.targetable.content}" if notice_type == 'announce'
     return '' if self.user.blank?
     if notice_type == 'comment'
-      "#{self.actor.name}评论了#{user_show}的#{nest_notity} #{self.second_targetable.content}"
+      "#{self.actor.name}评论了#{user_show}的#{nest_notity}#{self.second_targetable.content}"
     elsif notice_type == 'record'
       "#{self.actor.name}创建了一篇朗读《#{self.targetable.article.title}》"
     elsif notice_type == 'dynamic'
