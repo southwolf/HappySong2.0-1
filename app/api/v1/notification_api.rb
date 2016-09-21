@@ -90,7 +90,7 @@ module V1
 
       get '/notify' do
         authenticate!
-        notifications = Notification.where(user:current_user).where(targetable: current_user)
+        notifications = Notification.where(user:current_user).where.not(targetable: current_user)
         present paginate(notifications), with: ::Entities::Notification
       end
     end
