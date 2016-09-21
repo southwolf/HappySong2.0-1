@@ -11,7 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160918032308) do
+ActiveRecord::Schema.define(version: 20160921053746) do
+
+  create_table "admins", force: :cascade do |t|
+    t.string   "name",            limit: 255
+    t.string   "password_digest", limit: 255
+    t.string   "remember_token",  limit: 255
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+  end
 
   create_table "advises", force: :cascade do |t|
     t.string   "content",    limit: 255
@@ -90,6 +98,13 @@ ActiveRecord::Schema.define(version: 20160918032308) do
     t.string   "order_no",       limit: 255
     t.string   "channel",        limit: 255
     t.string   "client_ip",      limit: 255
+  end
+
+  create_table "cash_backs", force: :cascade do |t|
+    t.integer  "cash",       limit: 4
+    t.integer  "user_id",    limit: 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "cate_items", force: :cascade do |t|

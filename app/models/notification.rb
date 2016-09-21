@@ -57,20 +57,7 @@ class Notification < ActiveRecord::Base
   def user_show
     self.user.id == self.targetable.id ? "你" : self.user.name
   end
-  # def notify_two
-  #   return '' if self.user.blank?
-  #   if notice_type == 'comment'
-  #     "#{self.actor.name}评论了你的#{nest_notity}"
-  #   elsif notice_type == 'reply'
-  #     "#{self.actor.name}回复了你的评论"
-  #   elsif notice_type == 'like'
-  #     "#{self.actor.name}喜欢了你的#{nest_notity}"
-  #   elsif notice_type == 'follow'
-  #     "#{self.actor.name}关注了你"
-  #   else
-  #     ""
-  #   end
-  # end
+
   def nest_notity
     if self.targetable_type == 'record'
       "朗读"

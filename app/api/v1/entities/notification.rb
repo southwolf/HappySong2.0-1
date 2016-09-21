@@ -3,6 +3,6 @@ module Entities
     expose :id, :notice_type
     expose :actor,using: ::Entities::User
 
-    expose :targetable_id, :targetable_type, :second_targetable_id, :second_targetable_type
+    expose :targetable_id, :targetable_type, :second_targetable_id, :second_targetable_type, :created_at
   end
 end

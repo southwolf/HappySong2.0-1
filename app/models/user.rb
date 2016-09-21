@@ -41,6 +41,8 @@ class User < ActiveRecord::Base
   belongs_to :credit
   has_many   :credit_managers
 
+  #返现
+  has_many   :cash_backs
   # 举报
   has_many   :reports
 

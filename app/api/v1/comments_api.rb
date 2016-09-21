@@ -28,6 +28,18 @@ module V1
           error!("失败", 500)
         end
       end
+
+
+      desc "通过ID查评论"
+      params do
+        requires :token, type: String,  desc: "用户访问令牌"
+        requires :id,    type: Integer, desc: "评论/回复的ID"
+      end
+
+      get '/comment' do
+        comment = Comment.find(params[:id])
+        present comment, with: ::Entities::Comment
+      end
     end
   end
 end

@@ -1,6 +1,6 @@
 module Channel
   class SchoolController < ChannelAdminController
-
+    before_action :authenticate!
     def new
 
     end
