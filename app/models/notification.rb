@@ -55,7 +55,7 @@ class Notification < ActiveRecord::Base
   end
 
   def user_show
-    self.user.id == self.targetable.id ? "你" : self.targetable.name
+    self.user.id == self.targetable.id ? "你" : self.targetable.user.name
   end
 
   def nest_notity
