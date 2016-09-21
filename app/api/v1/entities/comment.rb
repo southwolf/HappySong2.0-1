@@ -9,7 +9,7 @@ module Entities
       object.own_replys
     end
   end
-# 
+#
 #   class Relpy < Grape::Entity
 #     # expose :id
 #     # expose :user,    using: Entities::User

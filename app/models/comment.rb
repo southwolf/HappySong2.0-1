@@ -23,23 +23,23 @@ class Comment < ActiveRecord::Base
   def self.push_comment_notify(id)
     comment = Comment.find(id)
     comment_user = comment.user
-    return if comment.nil?
+    return  if comment.nil?
 
     follower_ids = comment_user.follower_ids
 
     if comment.is_reply?
 
       c       = comment.top_comment
-      user    = c.user
-
-      Notification.create(
+      user    = comment.root.user
+      puts "Commme" + comment.id.to_s
+      Notification.new(
         :notice_type => 'reply',
         :actor_id          => comment.user.id,
-        :user              => user.id,
+        :user              => user,
         :targetable        => c,
         :second_targetable => comment
       )
-      return if follower_ids.empty?
+      return  if follower_ids.empty?
       follower_ids = follower_ids.select {|follower_id| follower_id != user.id}
       follower_ids.each do |follower_id|
         Notification.create(
