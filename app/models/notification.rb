@@ -9,7 +9,7 @@ class Notification < ActiveRecord::Base
 
   scope :unread, -> { where(unread: true) }
 
-  # after_create :push_to_client, on: :create
+  after_create :push_to_client, on: :create
   def push_to_client
     # if ['comment', 'like', 'follow','reply'].include? self.notice_type
       # puts "#{notify_one}"
