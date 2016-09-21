@@ -2,9 +2,9 @@ class Notification < ActiveRecord::Base
   belongs_to :user
   belongs_to :actor, class_name: 'User'
 
-  belongs_to :targetable, polymorphic: true
+  belongs_to :targetable,        polymorphic: true
   belongs_to :second_targetable, polymorphic: true
-  belongs_to :third_targetable, polymorphic: true
+  belongs_to :third_targetable,  polymorphic: true
 
 
   scope :unread, -> { where(unread: true) }

@@ -26,16 +26,16 @@ class User < ActiveRecord::Base
   # 相册
   has_many   :albums
 
-  has_many   :records
-  has_many   :likes,         foreign_key: 'like_user_id'
+  has_many   :records,       dependent: :destroy
+  has_many   :likes,         foreign_key: 'like_user_id', dependent: :destroy
   has_many   :like_records,  through: :likes, source: :likeable, source_type: 'Record'
   has_many   :like_dynamics, through: :likes, source: :likeable, source_type: 'Dynamic'
 
-  has_many   :dynamics
+  has_many   :dynamics,      dependent: :destroy
 
   # 浏览
   has_many   :views,        foreign_key: 'viewer_id'
-  has_many   :view_records, through: :views
+  has_many   :view_records, through: :views, dependent: :destroy
 
   # 积分
   belongs_to :credit
@@ -46,21 +46,22 @@ class User < ActiveRecord::Base
 
   # 子女
   has_many   :children, class_name: 'User',
-                        foreign_key: 'parent_id'
-  belongs_to :parent,   class_name: 'User'
+                        foreign_key: 'parent_id',
+                        dependent: :destroy
+  belongs_to :parent,   class_name: 'User', dependent: :destroy
 
   #会员
-  has_one    :member
+  has_one    :member, dependent: :destroy
 
   # has_many   :own_notifications, class_name: 'Notification', foreign_key: 'actor_id'
   # has_many   :notifications,     as: :targetable
 
   # 账单
-  has_many   :bills
+  has_many   :bills, dependent: :destroy
   has_one    :target_bill, foreign_key: :target_user_id, class_name:'Bill'
 
   #推荐
-  has_many   :invites
+  has_many   :invites, dependent: :destroy
   has_one    :target_invite, foreign_key: :target_user_id, class_name: 'Invite'
 
   # has_sms_verification

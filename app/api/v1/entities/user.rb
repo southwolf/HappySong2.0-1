@@ -60,7 +60,7 @@ module Entities
       end
     end
 
-    expose (:share_url) {|object| ENV['SHARERECORD']+"/share_profile/#{object.id}"}
+    expose (:share_url) {|object| ENV['SHARERECORD']+"share_profile/#{object.id}"}
 
     expose :invite_url do |object|
       "http://120.26.118.28/invites?code=#{object.code}"
