@@ -1,7 +1,7 @@
 module V1
   class UsersApi < Grape::API
     include Grape::Kaminari
-    paginate per_page: 20
+
     resources :users do
       # 获取短信验证码接口
       # http://host/api/v1/users/getcode?phone=?
@@ -13,10 +13,11 @@ module V1
       end
       get '/getcode' do
         phone = params[:phone].to_s
-        user = User.find_by_phone(phone)
-        if user.blank?
-          user = User.create(:phone => phone)
-        end
+        # user = User.find_by_phone(phone)
+        # if user.blank?
+        #   user = User.create(:phone => phone)
+        # end
+        user = User.find_or_create_by(phone: phone)
         if YunPian.deliver(user.phone)
           present :message, "成功"
         else
@@ -24,7 +25,18 @@ module V1
         end
       end
 
-
+      desc "check用户是否注册"
+      params do
+        requires :phone, type: String, desc: "手机号"
+      end
+      get '/check' do
+        user = User.find_by(phone: params[:phone])
+        if user.blank?
+          present :message, false
+        else
+          present :message, true
+        end
+      end
       # 登陆接口
       # http://host/api/v1/users/login?phone=?&&code=?
       # 返回用户信息
@@ -234,7 +246,7 @@ module V1
       params do
         requires :token, type: String, desc: "token"
       end
-
+      paginate per_page: 20
       get '/mylikes' do
         authenticate!
 
@@ -259,7 +271,7 @@ module V1
       params do
         requires :token, type: String, desc:"用户令牌"
       end
-
+      paginate per_page: 20
       get '/followers' do
         authenticate!
         followers = current_user.followers
@@ -270,7 +282,7 @@ module V1
       params do
         requires :token, type: String, desc:"用户令牌"
       end
-
+      paginate per_page: 20
       get '/followings' do
         authenticate!
         followings = current_user.followings

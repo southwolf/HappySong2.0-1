@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160921053746) do
+ActiveRecord::Schema.define(version: 20160922074657) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "name",            limit: 255
@@ -101,8 +101,17 @@ ActiveRecord::Schema.define(version: 20160921053746) do
   end
 
   create_table "cash_backs", force: :cascade do |t|
-    t.integer  "cash",       limit: 4
+    t.integer  "cash",       limit: 4, default: 0
+    t.integer  "used",       limit: 4, default: 0
     t.integer  "user_id",    limit: 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "cash_managers", force: :cascade do |t|
+    t.integer  "amount",         limit: 4, default: 0
+    t.integer  "user_id",        limit: 4
+    t.integer  "target_user_id", limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -158,10 +167,9 @@ ActiveRecord::Schema.define(version: 20160921053746) do
   end
 
   create_table "credit_managers", force: :cascade do |t|
-    t.integer  "user_id",    limit: 4
-    t.string   "reson",      limit: 255
-    t.string   "type",       limit: 255
-    t.integer  "point",      limit: 4
+    t.integer  "user_id",        limit: 4
+    t.integer  "target_user_id", limit: 4
+    t.integer  "point",          limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -169,6 +177,7 @@ ActiveRecord::Schema.define(version: 20160921053746) do
   create_table "credits", force: :cascade do |t|
     t.integer  "point",      limit: 4, default: 0
     t.integer  "used",       limit: 4, default: 0
+    t.integer  "user_id",    limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -396,7 +405,6 @@ ActiveRecord::Schema.define(version: 20160921053746) do
     t.string   "auth_token",          limit: 255
     t.integer  "role_id",             limit: 4
     t.integer  "grade_team_class_id", limit: 4
-    t.integer  "credit_id",           limit: 4
     t.integer  "parent_id",           limit: 4
     t.string   "bg_image_url",        limit: 255, default: "bg_image.png"
   end

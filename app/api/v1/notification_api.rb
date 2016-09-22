@@ -22,7 +22,7 @@ module V1
 
       get '/follow' do
         authenticate!
-        notifications = Notification.where(user: current_user, notice_type: "follow")
+        notifications = Notification.where(user: current_user, notice_type: "follow").order( created_at: :DESC)
         present paginate(notifications), ::Entities::Notification
         notifications.each do |notification|
           notification.update(unread: false)
@@ -36,7 +36,7 @@ module V1
 
       get '/like' do
         authenticate!
-        notifications = Notification.where(user: current_user, notice_type: "like")
+        notifications = Notification.where(user: current_user, notice_type: "like").order( created_at: :DESC)
         present paginate(notifications), with: ::Entities::Notification
         notifications.each do |notification|
           notification.update(unread: false)
@@ -50,7 +50,7 @@ module V1
 
       get '/comment' do
         authenticate!
-        notifications = Notification.where(user: current_user, notice_type: "comment")
+        notifications = Notification.where(user: current_user, notice_type: "comment").order( created_at: :DESC)
         present paginate(notifications), with: ::Entities::Notification
         notifications.each do |notification|
           notification.update(unread: false)
@@ -64,7 +64,7 @@ module V1
 
       get '/work' do
         authenticate!
-        notifications = Notification.where(user: user, notice_type: "work")
+        notifications = Notification.where(user: user, notice_type: "work").order( created_at: :DESC)
         present paginate(notifications), with: ::Entities::Notification
         notifications.each do |notification|
           notification.update(unread: false)
@@ -78,7 +78,7 @@ module V1
 
       get '/announce' do
         authenticate!
-        notifications = Notification.where(user: current_user, notice_type: "announce")
+        notifications = Notification.where(user: current_user, notice_type: "announce").order( created_at: :DESC)
         present paginate(notifications), with: ::Entities::Notification
       end
 
@@ -90,7 +90,7 @@ module V1
 
       get '/notify' do
         authenticate!
-        notifications = Notification.where(user:current_user).where.not(targetable: current_user)
+        notifications = Notification.where(user:current_user).where.not(targetable: current_user).order( created_at: :DESC)
         present paginate(notifications), with: ::Entities::Notification
       end
     end

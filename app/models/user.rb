@@ -8,6 +8,8 @@ class User < ActiveRecord::Base
 
   belongs_to :role
 
+  scope :teacher_users,   ->{ where(role_id: 1)}
+  scope :parent_users,    ->{where(role_id: 2)}
   #建议
   has_many   :advises
   has_many   :relationships,         foreign_key: 'follower_id',
@@ -22,7 +24,7 @@ class User < ActiveRecord::Base
   belongs_to :grade_team_class
 
   #评论
-  has_many   :comments
+  has_many   :comments,      dependent: :destroy
   # 相册
   has_many   :albums
 
@@ -38,11 +40,12 @@ class User < ActiveRecord::Base
   has_many   :view_records, through: :views, dependent: :destroy
 
   # 积分
-  belongs_to :credit
+  has_one    :credit
   has_many   :credit_managers
 
   #返现
   has_many   :cash_backs
+  has_many   :cash_managers
   # 举报
   has_many   :reports
 
@@ -132,7 +135,8 @@ class User < ActiveRecord::Base
       return false
     end
   end
-  def my_student?(student)
+
+  def has_student?(student)
     self.grade_team_classes.each do |grade_team_class|
       if grade_team_class.students.include?(student)
         return true
@@ -140,6 +144,8 @@ class User < ActiveRecord::Base
     end
     return false
   end
+
+  
   # 设置为会员
   def add_vip( day)
     if self.member.nil?
