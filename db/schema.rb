@@ -79,12 +79,12 @@ ActiveRecord::Schema.define(version: 20160922074657) do
   end
 
   create_table "banners", force: :cascade do |t|
-    t.string   "cover_img",  limit: 255
-    t.string   "text",       limit: 255
+    t.string   "cover_img",       limit: 255
+    t.string   "text",            limit: 255
+    t.integer  "targetable_id",   limit: 4
+    t.string   "targetable_type", limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "target",     limit: 255
-    t.integer  "target_id",  limit: 4
   end
 
   create_table "bills", force: :cascade do |t|
@@ -169,7 +169,7 @@ ActiveRecord::Schema.define(version: 20160922074657) do
   create_table "credit_managers", force: :cascade do |t|
     t.integer  "user_id",        limit: 4
     t.integer  "target_user_id", limit: 4
-    t.integer  "point",          limit: 4
+    t.integer  "point",          limit: 4, default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -9,6 +9,9 @@ class Record < ActiveRecord::Base
   has_many   :views,   foreign_key: 'view_record_id'
   has_many   :viewers, through: :views
 
+  #banner
+  has_many   :banners, as: :targetable
+  
   validates :file_url, :style, presence: true
 
   has_many  :reports, as: :reportable
@@ -17,7 +20,7 @@ class Record < ActiveRecord::Base
   after_commit :async_create_record_notify, on: :create
 
   def async_create_record_notify
-    NotifyRecordJob.perform_later(id) 
+    NotifyRecordJob.perform_later(id)
   end
 
   def self.push_record_notify(id)

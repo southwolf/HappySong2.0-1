@@ -6,5 +6,6 @@ class Article < ActiveRecord::Base
   belongs_to :unit
   has_many   :records
 
+  has_many   :banners, as: :targetable
   # has_many   :reports, as: :reportable
 end
