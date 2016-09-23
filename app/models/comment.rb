@@ -32,13 +32,15 @@ class Comment < ActiveRecord::Base
       c       = comment.top_comment
       user    = comment.root.user
       puts "Commme" + comment.id.to_s
-      Notification.new(
-        :notice_type => 'reply',
-        :actor_id          => comment.user.id,
-        :user              => user,
-        :targetable        => c,
-        :second_targetable => comment
-      )
+      if comment.user != user
+        Notification.new(
+          :notice_type => 'reply',
+          :actor_id          => comment.user.id,
+          :user              => user,
+          :targetable        => c,
+          :second_targetable => comment
+        )
+      end
       return  if follower_ids.empty?
       follower_ids = follower_ids.select {|follower_id| follower_id != user.id}
       follower_ids.each do |follower_id|
