@@ -1,6 +1,9 @@
 module Entities
   class Targetable < Grape::Entity
     expose :id
+    expose :type do |object|
+      object.class.to_s
+    end
     expose :file_url, if: ->(object, option){ object.respond_to?(:file_url)} do |object|
       ENV['QINIUPREFIX']+object.file_url
     end
