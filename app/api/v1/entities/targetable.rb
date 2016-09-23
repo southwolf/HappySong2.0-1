@@ -7,5 +7,8 @@ module Entities
     expose :content, if: ->(object, option){ object.respond_to?(:content)} do |object|
       object.content
     end
+    expose :attachments, if: ->(object, option){ object.respond_to?(:attachments)},using: ::Entities::Attachment do |object|
+      object.attachments
+    end
   end
 end
