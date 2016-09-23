@@ -26,6 +26,6 @@ class Like < ActiveRecord::Base
     #   :notice_type => "like",
     #   :targetable  => like.likeable
     #   )
-    end
+    # end
   end
 end
