@@ -137,6 +137,7 @@ class User < ActiveRecord::Base
   end
 
   def has_student?(student)
+    return false if self.grade_team_classes.blank?
     self.grade_team_classes.each do |grade_team_class|
       if grade_team_class.students.include?(student)
         return true
@@ -145,7 +146,7 @@ class User < ActiveRecord::Base
     return false
   end
 
-  
+
   # 设置为会员
   def add_vip( day)
     if self.member.nil?

@@ -2,18 +2,17 @@ namespace :cash_back do
   desc "每月返现"
   task task: :environment do
     User.teacher_users.each do |teacher|
-      teacher.invites do |user|
-        if user.vip?
-          if teacher.has_student?(user)
-            #返现5元
-            teacher.cash_managers.create(target_user: user, amount: 5)
+      teacher.invites do |invites|
+        if invites.cash_back_count != 0
+          if invites.is_student == 1
+            teacher.cash_managers.create(target_user: invites.target_user, amount: 5)
+            invites.cash_back_count -= 1
+            invites.save
           else
-            #返现3元
-            teacher.cash_managers.create(target_user: user, amount: 3)
+            teacher.cash_managers.create(target_user: invites.target_user, amount: 3)
+            invites.cash_back_count -= 1
+            invites.save
           end
-        else
-          #返现为0
-          teacher.cash_managers.create(target_user: user)
         end
       end
     end

@@ -232,10 +232,12 @@ ActiveRecord::Schema.define(version: 20160922074657) do
   end
 
   create_table "invites", force: :cascade do |t|
-    t.integer  "user_id",        limit: 4
-    t.integer  "target_user_id", limit: 4
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.integer  "user_id",         limit: 4
+    t.integer  "target_user_id",  limit: 4
+    t.integer  "cash_back_count", limit: 4, default: 0
+    t.boolean  "is_student",                default: false
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
   end
 
   create_table "likes", force: :cascade do |t|

@@ -6,10 +6,15 @@ class InvitesController < ApplicationController
   end
 
   def create
+    #被邀请人
     user = User.new(params.permit(:phone))
     if user.save
+      #邀请人
       invite_user = User.find(params[:user_id])
       invite = invite_user.invites.new(target_user: user)
+      if invites_user.has_student?(user)
+        invite.update!(is_student: true)
+      end
       respond_to do |format|
         if invite.save
           format.json { render :json => { code: 1, :message =>"success"}}
