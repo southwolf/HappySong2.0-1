@@ -91,6 +91,7 @@ module V1
       get '/notify' do
         authenticate!
         notifications = Notification.where(user:current_user).order( created_at: :DESC)
+        notifications.select{|notify| notify.targetable.user != current_user}
         present paginate(notifications), with: ::Entities::Notification
       end
     end
