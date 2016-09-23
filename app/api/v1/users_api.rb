@@ -324,7 +324,7 @@ module V1
         contact = params[:contact]
         advise = current_user.advises.new(:content => content, :contact => contact)
         if advise.save
-          present :message, "感想你的反馈！"
+          present :message, "感谢你的反馈！"
         else
           error!({ error: "提交失败"}, 503)
         end
