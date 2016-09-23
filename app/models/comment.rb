@@ -53,7 +53,7 @@ class Comment < ActiveRecord::Base
         )
       end
     else
-      if comment.user != user
+      if comment.commentable.user.id != comment.user.id
         Notification.create(
           :notice_type => 'comment',
           :user_id =>     comment.commentable.user.id,
