@@ -21,7 +21,7 @@ class Like < ActiveRecord::Base
       )
     end
     return if follower_ids.empty?
-    follower_ids = follower_ids.select{|follower_id| follower_id != like.likeable.user_id}
+    follower_ids.reject!{|follower_id| follower_id == like.likeable.user_id}
     follower_ids.each do |follower_id|
       Notification.create(
       :actor_id    => like.like_user_id,

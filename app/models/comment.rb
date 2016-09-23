@@ -42,7 +42,7 @@ class Comment < ActiveRecord::Base
         )
       end
       return  if follower_ids.empty?
-      follower_ids = follower_ids.select {|follower_id| follower_id != user.id}
+      follower_ids.reject! {|follower_id| follower_id == user.id}
       follower_ids.each do |follower_id|
         Notification.create(
           :notice_type => 'reply',
@@ -63,7 +63,7 @@ class Comment < ActiveRecord::Base
         )
       end
       return if follower_ids.empty?
-      follower_ids = follower_ids.select { |follower_id| follower_id != comment.commentable.user.id }
+      follower_ids.reject! { |follower_id| follower_id == comment.commentable.user.id }
       follower_ids.each do |follower_id|
         Notification.create(
           :notice_type => 'comment',
