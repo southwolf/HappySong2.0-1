@@ -66,6 +66,7 @@ end
 group :development do
   gem 'capistrano'
   gem 'capistrano-bundler'
+  gem 'capistrano-sidekiq', '~> 0.5.4'
   gem 'capistrano-rails'
   gem 'capistrano-rbenv'
   gem 'web-console', '~> 2.0'
