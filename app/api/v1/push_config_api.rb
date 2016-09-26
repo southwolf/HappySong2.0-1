@@ -37,7 +37,8 @@ module V1
           like: false
         }
         if current_user.push_actions.present?
-          current_user.push_actions do |push_action|
+          current_user.push_actions.each do |push_action|
+            puts push_action.action
             case push_action.action
             when "follow"
               result.merge!({follow:true})
