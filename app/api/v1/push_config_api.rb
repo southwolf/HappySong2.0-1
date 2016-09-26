@@ -32,7 +32,7 @@ module V1
           like: false
         }
         current_user.push_actions do |push_action|
-          case push_action
+          case push_action.action
           when "follow"
             result.merger({follow:true})
           when "comment","reply"
