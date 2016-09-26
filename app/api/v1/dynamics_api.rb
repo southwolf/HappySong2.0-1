@@ -332,6 +332,7 @@ module V1
         unless params[:token].nil?
           current_user = User.find_by(auth_token: params[:token])
         end
+        puts "CurrentUser"+ current_user.inspect
         dynamics = Dynamic.where(:is_relay => false).order( created_at: :DESC)
         present paginate(dynamics), with: ::Entities::Dynamic,
                                     current_user: current_user
