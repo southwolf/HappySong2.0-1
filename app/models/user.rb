@@ -182,9 +182,11 @@ class User < ActiveRecord::Base
   end
 
   #停止接受消息
-  def add_push_action(push_action)
-    return if self.push_actions.include?(push_action)
-    self.push_actions << push_action
+  def add_push_action(*push_actions)
+    push_actions.each do |push_action|
+      return if self.push_actions.include?(push_action)
+      self.push_actions << push_action
+    end
     return true
   end
   #开启接受消息
