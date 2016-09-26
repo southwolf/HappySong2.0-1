@@ -336,7 +336,7 @@ module V1
         end
         dynamics = Dynamic.where(:is_relay => false).order( created_at: :DESC)
         present paginate(dynamics), with: ::Entities::Dynamic,
-                                        current_user: current_user
+                                    current_user: current_user
       end
 
       desc "根据时间查动态"

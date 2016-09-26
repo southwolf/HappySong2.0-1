@@ -31,7 +31,7 @@ module Entities
           false
         end
       else
-        false
+        true
       end
     end
   end

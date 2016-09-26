@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
   scope :teacher_users,   ->{ where(role_id: 1)}
   scope :parent_users,    ->{where(role_id: 2)}
   #建议
-  has_many   :advises
+  has_many   :advises,               dependent: :destroy
   has_many   :relationships,         foreign_key: 'follower_id',
                                      dependent: :destroy
   has_many   :reverse_relationships, class_name: "Relationship",
@@ -20,13 +20,13 @@ class User < ActiveRecord::Base
   has_many   :followings,    :through => :relationships
   has_many   :followers,     :through => :reverse_relationships
 
-  has_many   :grade_team_classes, foreign_key: 'teacher_id'
+  has_many   :grade_team_classes, foreign_key: 'teacher_id', dependent: :destroy
   belongs_to :grade_team_class
 
   #评论
   has_many   :comments,      dependent: :destroy
   # 相册
-  has_many   :albums
+  has_many   :albums,        dependent: :destroy
 
   has_many   :records,       dependent: :destroy
   has_many   :likes,         foreign_key: 'like_user_id', dependent: :destroy
@@ -36,24 +36,24 @@ class User < ActiveRecord::Base
   has_many   :dynamics,      dependent: :destroy
 
   # 浏览
-  has_many   :views,        foreign_key: 'viewer_id'
-  has_many   :view_records, through: :views, dependent: :destroy
+  has_many   :views,        foreign_key: 'viewer_id', dependent: :destroy
+  has_many   :view_records, through: :views
 
   # 积分
-  has_one    :credit
-  has_many   :credit_managers
+  has_one    :credit,      dependent: :destroy
+  has_many   :credit_managers, dependent: :destroy
 
   #返现
-  has_many   :cash_backs
-  has_many   :cash_managers
+  has_many   :cash_backs, dependent: :destroy
+  has_many   :cash_managers, dependent: :destroy
   # 举报
-  has_many   :reports
+  has_many   :reports, dependent: :destroy
 
   # 子女
   has_many   :children, class_name: 'User',
                         foreign_key: 'parent_id',
                         dependent: :destroy
-  belongs_to :parent,   class_name: 'User', dependent: :destroy
+  belongs_to :parent,   class_name: 'User'
 
   #会员
   has_one    :member, dependent: :destroy
@@ -71,7 +71,7 @@ class User < ActiveRecord::Base
 
   #推送通知设置
 
-  has_many   :notify_configs
+  has_many   :notify_configs, dependent: :destroy
   has_many   :push_actions, through: :notify_configs
   # has_sms_verification
 
