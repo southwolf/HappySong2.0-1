@@ -17,9 +17,9 @@ module V1
         when 3
           current_user.add_push_action(PushAction.find_by(action:'like'))
         end
-        {
-          message: true
-        }
+
+        message = true
+        present :message, message
 
       end
 
@@ -63,14 +63,13 @@ module V1
         when 1
           current_user.remove_push_action(PushAction.find_by(action: 'follow'))
         when 2
-          current_user.remove_push_action(PushAction.find_by(action:'comment'), PushAction.find_by(action: 'reply'))
+          current_user.remove_push_action(PushAction.find_by(action:'comment'),PushAction.find_by(action: 'reply'))
         when 3
           current_user.remove_push_action(PushAction.find_by(action:'like'))
         end
       end
-      {
-        message: true
-      }
+      message = true
+      present :message, message
     end
   end
 end
