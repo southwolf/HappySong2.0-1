@@ -17,6 +17,10 @@ module V1
         when 3
           current_user.add_push_action(PushAction.find_by(action:'like'))
         end
+        {
+          message: true
+        }
+
       end
 
 
