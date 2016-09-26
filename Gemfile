@@ -36,6 +36,8 @@ gem 'require_all', '~> 1.3', '>= 1.3.3'
 #角色
 # gem 'rolify', '~> 5.1'
 
+#定时任务
+gem 'whenever', '~> 0.9.7', require: false
 # ping++支付
 gem 'pingpp', '~> 2.0', '>= 2.0.1'
 gem 'qiniu', '~> 6.8'
