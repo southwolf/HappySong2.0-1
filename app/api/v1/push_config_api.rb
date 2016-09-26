@@ -1,6 +1,6 @@
 module V1
   class PushConfigAPi < Grape::API
-    namspace :push_config do
+    namespace :push_config do
       desc "关闭接受指定消息"
       params do
         requires :token,  type: String, desc: "用户登录令牌"
