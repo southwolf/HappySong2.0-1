@@ -11,11 +11,11 @@ module V1
         notify = params[:notify]
         case notify
         when 1
-          current_user.add_push_action(PushAction.find_by(name: 'follow'))
+          current_user.add_push_action(PushAction.find_by(action: 'follow'))
         when 2
-          current_user.add_push_action(PushAction.find_by(name:'comment'),PushAction.find_by(name: 'reply'))
+          current_user.add_push_action(PushAction.find_by(action:'comment'),PushAction.find_by(action: 'reply'))
         when 3
-          current_user.add_push_action(PushAction.find_by(name:'like'))
+          current_user.add_push_action(PushAction.find_by(action:'like'))
         end
       end
 
@@ -57,11 +57,11 @@ module V1
         notify = params[:notify]
         case notify
         when 1
-          current_user.remove_push_action(PushAction.find_by(name: 'follow'))
+          current_user.remove_push_action(PushAction.find_by(action: 'follow'))
         when 2
-          current_user.remove_push_action(PushAction.find_by(name:'comment'),PushAction.find_by(name: 'reply'))
+          current_user.remove_push_action(PushAction.find_by(action:'comment'),PushAction.find_by(action: 'reply'))
         when 3
-          current_user.remove_push_action(PushAction.find_by(name:'like'))
+          current_user.remove_push_action(PushAction.find_by(action:'like'))
         end
       end
 

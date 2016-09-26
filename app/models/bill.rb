@@ -11,7 +11,7 @@ class Bill < ActiveRecord::Base
     # puts "成功"
     # time = 0
     if self.bill_type == 'month'
-      time = 1.month
+      time = 31.days
       member_type = 'month'
     else
       time = 1.years
