@@ -40,11 +40,11 @@ module V1
           current_user.push_actions do |push_action|
             case push_action.action
             when "follow"
-              result.merger({follow:true})
+              result.merge!({follow:true})
             when "comment","reply"
-              result.merger({comment: true})
+              result.merge!({comment: true})
             when "like"
-              result.merger({comment: true})
+              result.merge!({comment: true})
             end
           end
         end
