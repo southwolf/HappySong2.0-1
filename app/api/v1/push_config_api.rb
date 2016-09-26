@@ -63,8 +63,7 @@ module V1
         when 1
           current_user.remove_push_action(PushAction.find_by(action: 'follow'))
         when 2
-          current_user.remove_push_action(PushAction.find_by(action:'comment'))
-          # current_user.remove_push_action(PushAction.find_by(action: 'reply'))
+          current_user.remove_push_action(PushAction.find_by(action:'comment'), PushAction.find_by(action: 'reply'))
         when 3
           current_user.remove_push_action(PushAction.find_by(action:'like'))
         end

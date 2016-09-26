@@ -187,9 +187,11 @@ class User < ActiveRecord::Base
     self.push_actions << push_action
   end
   #开启接受消息
-  def remove_push_action(push_action)
-    return unless self.push_actions.include?(push_action)
-    self.push_actions.destroy(push_action)
+  def remove_push_action(*push_actions)
+    push_actions.each do |push_action|
+      return unless self.push_actions.include?(push_action)
+      self.push_actions.destroy(push_action)
+    end
   end
   # 判断是否有对应角色
   def has_role? name
