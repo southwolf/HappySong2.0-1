@@ -24,7 +24,7 @@ module Entities
     expose (:share_url) {|object| ENV['SHARERECORD']+"/share_dynamic/#{object.id}"}
     expose :is_liked do |object, option|
       current_user = option[:current_user]
-      if current_user.nil?
+      if current_user.present?
         if object.like_users.include? current_user
           true
         else
