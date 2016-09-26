@@ -1,4 +1,5 @@
 module V1
+  require 'active_support'
   module RecordHelpers
     extend Grape::API::Helpers
     def update_hot
