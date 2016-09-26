@@ -18,8 +18,9 @@ module V1
           current_user.add_push_action(PushAction.find_by(action:'like'))
         end
 
-        message = true
-        present :message, message
+        {
+          "message": true
+        }
 
       end
 
@@ -68,8 +69,11 @@ module V1
           current_user.remove_push_action(PushAction.find_by(action:'like'))
         end
       end
-      message = true
-      present :message, message
+
+        {
+          "message": true
+        }
+
     end
   end
 end
