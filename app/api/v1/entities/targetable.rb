@@ -4,7 +4,7 @@ module Entities
     expose :type do |object|
       object.class.to_s
     end
-    expose :user, if: ->(object, option){ object.respond_to?(:user)} do |object|
+    expose :user, if: ->(object, option){ object.respond_to?(:user)}, using: ::Entities::User do |object|
       object.user
     end
     expose :file_url, if: ->(object, option){ object.respond_to?(:file_url)} do |object|
