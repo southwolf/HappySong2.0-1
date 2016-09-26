@@ -185,6 +185,7 @@ class User < ActiveRecord::Base
   def add_push_action(push_action)
     return if self.push_actions.include?(push_action)
     self.push_actions << push_action
+    return true
   end
   #开启接受消息
   def remove_push_action(*push_actions)
@@ -192,6 +193,7 @@ class User < ActiveRecord::Base
       return unless self.push_actions.include?(push_action)
       self.push_actions.destroy(push_action)
     end
+    return true
   end
   # 判断是否有对应角色
   def has_role? name
