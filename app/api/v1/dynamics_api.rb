@@ -330,9 +330,7 @@ module V1
       end
       get '/all' do
         if params[:token].present?
-          authenticate!
-        else
-          current_user = nil
+          current_user = User.find_by(auth_token: params[:token])
         end
         dynamics = Dynamic.where(:is_relay => false).order( created_at: :DESC)
         present paginate(dynamics), with: ::Entities::Dynamic,
