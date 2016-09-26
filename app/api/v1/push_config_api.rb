@@ -23,19 +23,23 @@ module V1
       desc "检查是否关闭指定消息"
       params do
         requires :token,  type: String, desc: "用户登录令牌"
-        requires :notify, type: Integer, desc: "消息类型自己传ID [新粉丝: 1, 评论: 2, 喜欢: 3]"
       end
       post '/check' do
         authenticate!
-        notify = params[:notify]
-        result = false
-        case notify
-        when 1
-          result = current_user.push_actions.include?(PushAction.find_by(name:'follow'))
-        when 2
-          result = current_user.push_actions.include?(PushAction.find_by(name:'comment')) && current_user.push_actions.include?(PushAction.find_by(name: 'reply'))
-        when 3
-          result = current_user.push_actions.include?(PushAction.find_by(name:'like'))
+        result = {
+          follow: false,
+          comment: false,
+          like: false
+        }
+        current_user.push_actions do |push_action|
+          case push_action
+          when "follow"
+            result.merger({follow:true})
+          when "comment","reply"
+            result.merger({comment: true})
+          when "like"
+            result.merger({comment: true})
+          end
         end
         present :message, result
       end
