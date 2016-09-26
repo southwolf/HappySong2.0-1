@@ -69,6 +69,10 @@ class User < ActiveRecord::Base
   has_many   :invites, dependent: :destroy
   has_one    :target_invite, foreign_key: :target_user_id, class_name: 'Invite'
 
+  #推送通知设置
+
+  has_many   :notify_configs
+  has_many   :push_actions, through: :notify_configs
   # has_sms_verification
 
   def reset_auth_token!
@@ -177,6 +181,16 @@ class User < ActiveRecord::Base
     end
   end
 
+  #停止接受消息
+  def add_push_action(push_action)
+    return if self.push_actions.include?(push_action)
+    self.push_actions << push_action
+  end
+  #开启接受消息
+  def remove_push_action(push_action)
+    return unless self.push_actions.include?(push_action)
+    self.push_actions.destroy(push_action)
+  end
   # 判断是否有对应角色
   def has_role? name
     role.try(:name) == name

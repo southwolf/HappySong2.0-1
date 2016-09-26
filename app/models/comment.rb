@@ -24,7 +24,7 @@ class Comment < ActiveRecord::Base
     comment = Comment.find(id)
     comment_user = comment.user
     return  if comment.nil?
-
+    
     follower_ids = comment_user.follower_ids
 
     if comment.is_reply?

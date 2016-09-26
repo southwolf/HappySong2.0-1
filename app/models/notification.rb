@@ -16,7 +16,12 @@ class Notification < ActiveRecord::Base
       # puts "#{notify_two}"
     # else
     #向对应用户推送消息
-    PushToClientJob.perform_later(self.user_id, notice)
+    notice_type = self.notice_type
+    push_action = PushAction.find_by(name: notice_type)
+    #用户不接收notice_type类型的消息
+    unless self.user.push_actions.include?(push_action)
+      PushToClientJob.perform_later(self.user_id, notice)
+    end
     # PushToCilentJob.(user_id, notify)
     #
     # end
