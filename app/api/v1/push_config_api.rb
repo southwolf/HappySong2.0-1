@@ -31,14 +31,16 @@ module V1
           comment: false,
           like: false
         }
-        current_user.push_actions do |push_action|
-          case push_action.action
-          when "follow"
-            result.merger({follow:true})
-          when "comment","reply"
-            result.merger({comment: true})
-          when "like"
-            result.merger({comment: true})
+        if current_user.push_actions.present?
+          current_user.push_actions do |push_action|
+            case push_action.action
+            when "follow"
+              result.merger({follow:true})
+            when "comment","reply"
+              result.merger({comment: true})
+            when "like"
+              result.merger({comment: true})
+            end
           end
         end
         present :message, result
