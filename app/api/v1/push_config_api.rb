@@ -65,7 +65,9 @@ module V1
           current_user.remove_push_action(PushAction.find_by(action:'like'))
         end
       end
-      present :message, true
+      {
+        message: true
+      }
     end
   end
 end
