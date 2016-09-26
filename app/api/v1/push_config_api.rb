@@ -18,8 +18,7 @@ module V1
           current_user.add_push_action(PushAction.find_by(action:'like'))
         end
 
-        present :message, true
-
+        present :message, "更新成功"
       end
 
 
@@ -68,8 +67,7 @@ module V1
           current_user.remove_push_action(PushAction.find_by(action:'like'))
         end
       end
-
-      present :message, true
+      present :message, "更新成功"
 
     end
   end
