@@ -130,8 +130,8 @@ module Entities
   #student
   class InviteUser < Grape::Entity
     expose (:phone) do |object|
-      object.phone.splice(0..2)+"****"+object.phone.splice(-4..-1)
+      object.phone.to_s.slice(0..2)+"****"+object.phone.to_s.slice(-4..-1)
     end
-    expose (:vip) { |object| object.vip?}
+    # expose (:vip) { |object| object.vip?}
   end
 end

@@ -11,7 +11,7 @@ class Record < ActiveRecord::Base
 
   #banner
   has_many   :banners, as: :targetable
-  
+
   validates :file_url, :style, presence: true
 
   has_many  :reports, as: :reportable
@@ -31,6 +31,7 @@ class Record < ActiveRecord::Base
     puts follower_ids.to_s
     return if record.nil?
     return if follower_ids.empty?
+    return if self.is_public == false
     follower_ids.each do |follower_id|
       puts "join"
       Notification.create(

@@ -299,6 +299,53 @@ module V1
         parent = current_user.parent
         present parent, with: ::Entities::User
       end
+
+      desc "查询返现总数据【教师】"
+      params do
+        requires :token, type: String, desc: "用户访问令牌"
+      end
+
+      get '/cash_data' do
+        authenticate!
+        invites_count = current_user.invites.count
+        cash_backs    = current_user.cash_backs.cash
+
+        present :invites_count, invites_count
+        present :cash_backs, cash_backs
+      end
+
+      desc "查询返现数据【教师】"
+      params do
+        requires :token, type: String, desc: "用户访问令牌"
+        requires :years, type: Integer, desc: "年"
+        requires :month, type: Integer, desc: "月"
+      end
+      get '/cash_backs' do
+        authenticate!
+        years = params[:years]
+        month = params[:month]
+        cash_managers = current_user.cash_managers.where("year(created_at) = ?", years)
+                                                  .where("month(created_at) = ?", month)
+        present :count_amount,  cash_managers.sum(:amount)
+        present :cash_managers, cash_managers, with: ::Entities::CashManager
+      end
+
+      #
+      # desc "查询返现数据"
+      # params do
+      #   requires :token, type: String, desc: "用户访问令牌"
+      #   requires :years, type: Integer, desc: "年"
+      #   requires :month, type: Integer, desc: "月"
+      # end
+      # get '/cash_back_count' do
+      #   authenticate!
+      #   years = params[:years]
+      #   month = params[:month]
+      #   cash_managers = current_user.cash_managers.where("year(created_at) = ?", years)
+      #                                             .where("year(created_at) = ?", month).count(:amount)
+      #   present cash_managers, with: ::Entities::CashManager
+      # end
+
       desc "测试"
       paginate per_page: 10
       get '/all' do

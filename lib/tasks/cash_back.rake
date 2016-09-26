@@ -7,14 +7,16 @@
         teacher.invites do |invites|
           if invites.cash_back_count != 0
             if invites.is_student == 1
-              teacher.cash_managers.create(target_user: invites.target_user, amount: 5)
-              invites.cash_back_count -= 1
-              invites.save
-            else
               teacher.cash_managers.create(target_user: invites.target_user, amount: 3)
               invites.cash_back_count -= 1
               invites.save
+            else
+              teacher.cash_managers.create(target_user: invites.target_user, amount: 2)
+              invites.cash_back_count -= 1
+              invites.save
             end
+          else
+            teacher.cash_managers.create(target_user: invites.target_user, amount: 0)
           end
         end
       end
