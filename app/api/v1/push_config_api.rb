@@ -18,9 +18,7 @@ module V1
           current_user.add_push_action(PushAction.find_by(action:'like'))
         end
 
-        {
-          "message": true
-        }
+        present :message, true
 
       end
 
@@ -71,9 +69,7 @@ module V1
         end
       end
 
-        {
-          "message": true
-        }
+      present :message, true
 
     end
   end
