@@ -329,7 +329,7 @@ module V1
         optional :token, type: String, desc: '用户访问令牌'
       end
       get '/all' do
-        if params[:token].present?
+        unless params[:token].nil?
           current_user = User.find_by(auth_token: params[:token])
         end
         dynamics = Dynamic.where(:is_relay => false).order( created_at: :DESC)
