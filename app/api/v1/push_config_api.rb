@@ -17,10 +17,8 @@ module V1
         when 3
           current_user.add_push_action(PushAction.find_by(action:'like'))
         end
-        result = {
-          message: "更新成功"
-        }
-        present :message, result
+
+        present :message, "更新成功"
       end
 
 
@@ -42,11 +40,9 @@ module V1
         when 3
           current_user.remove_push_action(PushAction.find_by(action:'like'))
         end
-        result = {
-          message: "更新成功"
-        }
-        present :message, result
-        
+      
+        present :message, "更新成功"
+
       end
 
 
