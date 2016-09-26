@@ -6,7 +6,7 @@ module V1
         requires :token,  type: String, desc: "用户登录令牌"
         requires :notify, type: Integer, desc: "消息类型自己传ID [新粉丝: 1, 评论: 2, 喜欢: 3]"
       end
-      post '/seting' do
+      post '/colse' do
         authenticate!
         notify = params[:notify]
         case notify
@@ -25,7 +25,7 @@ module V1
         requires :token,  type: String, desc: "用户登录令牌"
         requires :notify, type: Integer, desc: "消息类型自己传ID [新粉丝: 1, 评论: 2, 喜欢: 3]"
       end
-      post '/seting' do
+      post '/check' do
         authenticate!
         notify = params[:notify]
         result = false
@@ -46,7 +46,7 @@ module V1
         requires :token,  type: String, desc: "用户登录令牌"
         requires :notify, type: Integer, desc: "消息类型自己传ID [新粉丝: 1, 评论: 2, 喜欢: 3]"
       end
-      post '/seting' do
+      post '/open' do
         authenticate!
         notify = params[:notify]
         case notify
