@@ -4,7 +4,7 @@ module Entities
     expose (:file_url) {|object| ENV['QINIUPREFIX']+object.file_url}
     expose :user,     using: Entities::SimpleUser
     # expose :music,    using: Entities::Music
-    expose :article,  using: Entities::Article
+    expose :article,  using: Entities::SimpleArticle
     expose (:share_url) {|object| ENV['SHARERECORD']+"/share_record/#{object.id}"}
     # expose :comments, using: Entities::CommentWithReply
   end

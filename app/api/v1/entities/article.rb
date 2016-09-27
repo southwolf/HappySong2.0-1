@@ -11,18 +11,11 @@ module Entities
     expose :created_at
     expose (:cover_img) {|object| ENV['QINIUPREFIX']+object.cover_img }
     expose (:share_url) {|object| ENV['SHARERECORD']+"/share_article/#{object.id}"}
-    # expose (:width) do |object|
-    #   uri = URI(ENV['QINIUPREFIX']+object.cover_img+'?imageInfo')
-    #   res = ::Net::HTTP.get_response(uri)
-    #   info = ::ActiveSupport::JSON.decode res.body
-    #   info["width"]
-    # end
+  end
 
-    # expose (:height) do |object|
-    #   uri = URI(ENV['QINIUPREFIX']+object.cover_img+'?imageInfo')
-    #   res = ::Net::HTTP.get_response(uri)
-    #   info = ::ActiveSupport::JSON.decode res.body
-    #   info["height"]
-    # end
+  class SimpleArticle < Grape::Entity
+    expose :id, :title, :author
+    expose (:content) {|object| object.content}
+    expose (:cover_img) {|object| ENV['QINIUPREFIX']+object.cover_img }
   end
 end
