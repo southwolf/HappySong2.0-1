@@ -18,7 +18,7 @@ set :deploy_to, '/apps/love_to_read_version2'
 set :linked_files, %w{config/database.yml config/secrets.yml}
 set :linked_dirs, %w{log tmp/pids tmp/cache tmp/sockets vendor/bundle }
 
-set :whenever_identifier, ->{ "#{fetch(:application)}_#{fetch(:stage)}" }
+# set :whenever_identifier, ->{ "#{fetch(:application)}_#{fetch(:stage)}" }
 set :keep_releases, 5
 set :bundle_binstubs, nil
 
@@ -28,7 +28,7 @@ set :rbenv_prefix, "RBENV_ROOT=#{fetch(:rbenv_path)} RBENV_VERSION=#{fetch(:rben
 set :rbenv_map_bins, %w{rake gem bundle ruby rails}
 set :rbenv_roles, :all # default value
 
-set :pty,  false
+# set :pty,  false
 set :sidekiq_config, "config/sidekqi.yml"
 namespace :deploy do
   desc "Start Application"
