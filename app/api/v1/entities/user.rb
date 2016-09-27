@@ -46,12 +46,10 @@ module Entities
         ""
       end
     end
-    expose :can_inviter, if: ->(object, options){ object.try(:role).try(:name) =="teacher" } do |object, options|
-      object.can_inviter?
-    end
+
     # expose :grade_team_classes, if: ->(user, options) { user.role.name == "teacher"}, using: Entities::GradeTeamClass
     #学生的学校全名
-    expose :school_full_name, if: ->(object, options) { object.try(:role).try(:name) == "student"} do |object, options|
+    expose :school_full_name, if: ->(object, options){ object.try(:role).try(:name) == "student"} do |object, options|
       school = object.grade_team_class.try(:school)
       district = school.try(:district)
       city = district.try(:city)
@@ -102,6 +100,37 @@ module Entities
       else
        " "
       end
+    end
+
+    #教师的学校全名
+    expose :school_full_name, if: ->(object, options){ object.try(:role).try(:name) =="teacher" } do |object, options|
+      school   = object.grade_team_classes.first.try(:school)
+      district = school.try(:district)
+      city     = district.try(:city)
+
+      if school.present? && district.present? && city.present?
+        "#{city.try(:name)}#{district.try(:name)}#{school.try(:name)}"
+      else
+        ""
+      end
+    end
+
+    # expose :grade_team_classes, if: ->(user, options) { user.role.name == "teacher"}, using: Entities::GradeTeamClass
+    #学生的学校全名
+    expose :school_full_name, if: ->(object, options){ object.try(:role).try(:name) == "student"} do |object, options|
+      school = object.grade_team_class.try(:school)
+      district = school.try(:district)
+      city = district.try(:city)
+
+      if school.present? && district.present? && city.present?
+        "#{city.try(:name)}#{district.try(:name)}#{school.try(:name)}"
+      else
+        " "
+      end
+    end
+
+    expose :can_inviter, if: ->(object, options){ object.try(:role).try(:name) =="teacher" } do |object, options|
+      object.can_inviter?
     end
     #会员到期时间
     expose :expire_time, if: ->(object, options){ object.member.present?} do |object|
