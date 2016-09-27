@@ -44,7 +44,7 @@ class User < ActiveRecord::Base
   has_many   :credit_managers, dependent: :destroy
 
   #返现
-  has_many   :cash_backs, dependent: :destroy
+  has_one    :cash_back,     dependent: :destroy
   has_many   :cash_managers, dependent: :destroy
   # 举报
   has_many   :reports, dependent: :destroy
