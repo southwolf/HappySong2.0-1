@@ -21,5 +21,6 @@ module LoveToReadVersion2
      config.autoload_paths += Dir[Rails.root.join('app', 'api','*')]
      config.autoload_paths += ["#{config.root}/lib/module"]
      config.active_record.raise_in_transactional_callbacks = true
+
   end
 end
