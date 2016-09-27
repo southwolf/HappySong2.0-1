@@ -29,7 +29,7 @@ set :rbenv_map_bins, %w{rake gem bundle ruby rails}
 set :rbenv_roles, :all # default value
 
 set :pty,  false
-set :sidekiq_config, "#{shared_path}/config/sidekqi.yml"
+set :sidekiq_config, "config/sidekqi.yml"
 namespace :deploy do
   desc "Start Application"
   task :start do
