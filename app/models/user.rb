@@ -160,7 +160,7 @@ class User < ActiveRecord::Base
       students += grade_team_class.user_count
       vip      += grade_team_class.vip_count
     end
-
+    return false if students == 0
     if vip.quo(students) >= (1/2)
       return true
     else
