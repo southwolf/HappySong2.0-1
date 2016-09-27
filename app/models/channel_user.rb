@@ -10,8 +10,8 @@ class ChannelUser < ActiveRecord::Base
   belongs_to :transfer, foreign_key: "collector_id"
   has_many :apply_cash_backs
 
-  has_many :channel_user_cash_backs
-  
+  has_one :channel_user_cash_backs
+
   validates :email,:phone, uniqueness: true
   before_create :set_token
 
