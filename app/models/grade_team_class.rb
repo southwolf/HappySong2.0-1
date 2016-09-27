@@ -15,4 +15,19 @@ class GradeTeamClass < ActiveRecord::Base
     end
   end
 
+  def vip_count
+    count = 0
+    self.try(:students).each do |student|
+      if student.vip?
+        count += 1
+      end
+    end
+    return count
+  end
+
+  def user_count
+    count = self.try(:students).size || 0
+    return count
+  end
+
 end

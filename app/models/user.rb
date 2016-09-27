@@ -46,6 +46,9 @@ class User < ActiveRecord::Base
   #返现
   has_one    :cash_back,     dependent: :destroy
   has_many   :cash_managers, dependent: :destroy
+
+  #申请提现
+  has_many   :withdraw_cashes, dependent: :destroy
   # 举报
   has_many   :reports, dependent: :destroy
 
@@ -150,7 +153,21 @@ class User < ActiveRecord::Base
     return false
   end
 
+  def can_inviter?
+    students = 0
+    vip      = 0
+    self.grade_team_classes.each do |grade_team_class|
+      students += grade_team_class.user_count
+      vip      += grade_team_class.vip_count
+    end
 
+    if vip.quo(students) >= (1/2)
+      return true
+    else
+      return false
+    end
+
+  end
   # 设置为会员
   def add_vip( day)
     if self.member.nil?

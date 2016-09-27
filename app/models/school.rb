@@ -15,6 +15,7 @@ class School < ActiveRecord::Base
     end
     return students
   end
+  
   def vip_count
     count = 0
     self.try(:grade_team_classes).each do |grade_team_class|
