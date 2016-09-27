@@ -1,6 +1,6 @@
 # config valid only for current version of Capistrano
 lock '3.6.0'
-require "whenever/capistrano"
+
 set :application, 'love_to_read_version2'
 set :user, 'deploy'
 
