@@ -309,6 +309,7 @@ module V1
         authenticate!
         invites_count = current_user.invites.count
         cash_backs    = current_user.try(:cash_back).try(:cash)
+        cash_backs = 0 if cash_backs.nil?
 
         present :invites_count, invites_count
         present :cash_backs, cash_backs
