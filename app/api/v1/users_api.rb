@@ -308,7 +308,7 @@ module V1
       get '/cash_data' do
         authenticate!
         invites_count = current_user.invites.count
-        cash_backs    = current_user.cash_back.cash
+        cash_backs    = current_user.try(:cash_back).try(:cash)
 
         present :invites_count, invites_count
         present :cash_backs, cash_backs
