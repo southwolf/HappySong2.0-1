@@ -2,9 +2,9 @@ module Entities
   class Record < Grape::Entity
     expose :id, :feeling, :style, :is_demo, :is_hot, :view_count, :comments_count, :likes_count, :created_at, :is_public
     expose (:file_url) {|object| ENV['QINIUPREFIX']+object.file_url}
-    # expose :user,     using: Entities::User
-    # expose :music,    using: Entities::Music
-    # expose :article,  using: Entities::Article
+    expose :user,     using: Entities::User
+    expose :music,    using: Entities::Music
+    expose :article,  using: Entities::Article
     expose (:share_url) {|object| ENV['SHARERECORD']+"/share_record/#{object.id}"}
     # expose :comments, using: Entities::CommentWithReply
   end
