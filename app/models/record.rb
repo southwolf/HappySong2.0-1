@@ -19,6 +19,7 @@ class Record < ActiveRecord::Base
 
   after_commit :async_create_record_notify, on: :create
 
+  scope :public, -> { where(:public => true)}
   def async_create_record_notify
     NotifyRecordJob.perform_later(id)
   end

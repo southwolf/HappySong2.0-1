@@ -49,7 +49,7 @@ module V1
       paginate per_page: 20
       get "/recent"do
         # update_hot
-        records = Record.where(:is_public => true ).order(:created_at => :DESC)
+        records = Record.public.order(:created_at => :DESC)
         present paginate(records), with: ::Entities::Record
       end
 
