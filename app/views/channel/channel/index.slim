@@ -1,6 +1,7 @@
 link rel="stylesheet" href="/css/lanrenzhijia.css" media="all"
 link rel="stylesheet" href="/css/welcome.css" media="all"
 script src="/js/jquery.min.js"
+= javascript_include_tag 'application', "data-turbolinks-track" => false
 javascript:
   jQuery(document).ready(function ($) {
       $('#tx').click(function () {
@@ -19,21 +20,25 @@ body style="border-top: 2px solid red;"
   p.top
     span.p1 渠道用户数据
     span.s2 = current_user.name
+    span.s1
+      =link_to "退出登录 ",channel_session_path,class:'s1', method: :delete, :confirm => "Are you sure ?"
+
     span.s1#tx
       | 申请提现&nbsp;&nbsp;&nbsp;|
     span.s1
-      | 学校报备&nbsp;&nbsp;&nbsp;|
+      = link_to "学校报备", new_channel_school_path
+      | &nbsp;&nbsp;&nbsp;|
     .clear
   div
     p.hc.l = current_user.name+", 您好"
     p.l style="margin-top:45px;margin-left:15px;"
-      sub
-        | 你一共报备了#{@schools.size}所学校，
+      sub style="width:250px;height:auto;display:block"
+        | 你一共报备了#{@schoolsCount}所学校，
         = link_to "添加新学校?", new_channel_school_path
     .clear
 
   div
-    .l style="width:630px;min-height:500px;padding-left:40px;"
+    .l style="width:630px;min-height:450px;padding-left:40px;"
       p.bao 你报备学校用户数据详情
       - @schools.each do |school|
         div.xl style="width:284px;height:69px;background:#f7f7f7;margin-bottom:20px;margin-top:20px;border-radius:3px"
@@ -48,7 +53,9 @@ body style="border-top: 2px solid red;"
           div style="width:76px;height:69px;float:right;"
             = link_to channel_school_path(school) do
               = image_tag "矩形 @2x.png", width:"76", height:"69"
-        .clear
+      .clear
+      div.railspage
+        =paginate @schools
     div style="float:left;height:400px;width:350px;margin-left:60px"
       p style="font-size:16px;" 快速查找你要查看的信息
       p style="font-size:12px;margin-top:15px" 根据地区,学校名称进行搜素，在文本框内输入信息
@@ -74,7 +81,7 @@ body style="border-top: 2px solid red;"
       p
         span.pf
           | 提&nbsp; 现&nbsp; 信&nbsp; 息:
-        input.money type="text" 元
+        span.money1 0元
         .ipf
           img src="imgs/tan.png"
       .zp

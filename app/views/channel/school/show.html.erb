@@ -1,0 +1,475 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <link rel="stylesheet" href="/css/lanrenzhijia.css" media="all">
+
+  <script src="/dist/js/jquery.min.js"></script>
+  <link rel="stylesheet" href="/dist/css/school_fufeixiangqing.css" media="all">
+  <!--<script src="//cdn.bootcss.com/jquery-json/2.6.0/jquery.json.min.js"></script>-->
+  <script>
+    jQuery(document).ready(function ($) {
+      $('#tx').click(function () {
+        console.log("ss")
+        $('.theme-popover-mask').fadeIn(100);
+        $('.theme-popover-tx').slideDown(200);
+      })
+      $('.theme-poptit .close').click(function () {
+        $('.theme-popover-mask').fadeOut(100);
+        $('.theme-popover-tx').slideUp(200);
+      })
+
+    });
+  </script>
+
+
+  <title>付费详情</title>
+
+</head>
+
+<body style='border-top:2px solid red;'>
+<p class='top'>
+  <span class='p1'><%= @school.fullname %></span>
+  <span class='s2'><%= current_user.name+", 您好" %></span>
+
+  <% if current_user.admin %>
+
+  <% else %>
+      <!--<span class='s1'>消息提醒&nbsp;&nbsp;&nbsp;|</span>-->
+      <span class='s1' id="tx">申请提现&nbsp;&nbsp;&nbsp;|</span>
+  <% end %>
+
+  <%= link_to "提现记录 ",channel_channel_user_apply_cash_backs_path(current_user), class: 's1' %>
+  <!--<%= link_to "退出登录 ", channel_session_path, class: 's1', method: :delete, :confirm => "Are you sure ?" %>-->
+  <div class='clear'></div>
+  </p>
+
+  <hr style='background:#f7f7f7;height:5px;opacity:0.8;border-top:none;margin:20px 0px'/>
+
+  <div style="padding-left:40px;">
+    <div style="width:908px;height:91px;line-height:45.5px;border:1px solid #f7f7f7;padding-left:10px;">
+      <p class="s16"><%= @school.fullname %></p>
+      <p class="s12">会员付费详细信息</p>
+    </div>
+
+    <div class="query">
+      <p class="year">
+        <i>年份:</i>
+        <span class="spf">2016</span> <span class="spf">2017</span> <span class="spf">2018</span>
+      </p>
+
+      <p class="month">
+        <i>月份:</i>
+        <span class="spf">1</span> <span class="spf">2</span> <span class="spf">3</span> <span class="spf">4</span>
+        <span class="spf">5</span> <span class="spf">6</span> <span class="spf">7</span> <span class="spf">8</span>
+        <span class="spf">9</span> <span class="spf">10</span> <span class="spf">11</span> <span class="spf">12</span>
+      </p>
+
+      <p class="type">
+        <i>状态:</i> <span class="spf selected">全部</span> <span class="spf">年费</span> <span
+      class="spf">月费</span>
+      </p>
+
+      <p class="condition">
+        <i>条件:</i>
+        <span id="cy" class="spf cy"><%= @year %><img class='conimg' src='/dist/close.png'></span>
+        <span id="cm" class="spf cy"><%= @month %><img class='conimg' src='/dist/close.png'></span>
+        <span id="ct" class="spf cy">全部<img class='conimg' src='/dist/close.png'></span>
+        <button id="shaixuan">筛选</button>
+      </p>
+
+    </div>
+
+    <div class="tuiguain">
+      <span class="tuiinfo">推广明细</span>
+      <p style='float:right;font-size:14px;'>注册总计: <span class="f13f4b" id="allcount"> </span> 付费: <span
+      class="f13f4b" id="vipcount"> </span></p>
+    </div>
+
+    <div class="reg">
+
+      <!--<div class='info'>-->
+      <!--<div class='lef'>-->
+      <!--<p class='school'>2016-10-25 20:21</p>-->
+      <!--<p class='city'>1345****16741</p>-->
+      <!--</div>-->
+
+      <!--<div class='infoicon'>-->
+      <!--<img src="/dist/vip.png"/>-->
+      <!--</div>-->
+      <!--</div>-->
+    </div>
+
+    <div class="page yahoo2" id="pager">
+
+    </div>
+
+  </div>
+
+  <div class="theme-popover-tx">
+    <div class="theme-poptit">
+      <a href="javascript:;" title="关闭" class="close">×</a>
+      <h3>提现</h3>
+    </div>
+    <div class="theme-popbod dform-tx">
+      <p>
+        <span class="pf">支付 宝 账号:</span>
+        <input type="text" id="alipay" class="acount">
+      </p>
+
+      <p style="margin-bottom:0px;">
+        <span class="pf">提&nbsp; 现&nbsp; 金&nbsp; 额:</span> <input class='money' id='money' type='text'> 元
+      <div class="info">可提现金额: <span class="f13f4b" id="cantx">
+
+        <% if @current_user.channel_user_cash_back %>
+           <%= @current_user.channel_user_cash_back.amount %>
+        <% else %>
+          0
+        <% end %>
+      </span>元
+      </div>
+      </p>
+
+      <p>
+        <span class="pf">提&nbsp; 现&nbsp; 信&nbsp; 息:</span> <span class='money1' id="txinfo">0元</span>
+      <div class="ipf" style="display:none"><img src="/dist/tan.png"></div>
+      </p>
+
+      <p class="zp">
+        <button class='z-btn'>提交申请</button>
+      </p>
+
+    </div>
+  </div>
+
+  <div class="theme-popover-mask"></div>
+
+
+  <script>
+
+
+    $('.z-btn').click(function () {
+
+
+      var cantx = parseFloat($('#cantx').text());
+      var willtx = parseFloat($(this).val());
+
+      if(cantx==0){
+        alert('暂无可提现金额!');
+        return false;
+      }
+
+      if ($('#alipay').val() == '') {
+        alert('请输入提现支付账号!');
+        return false;
+      }
+
+      if (willtx == '') {
+        alert('请输入提现金额!');
+        return false;
+      }
+
+
+
+      $.ajax({
+        url: "/channel/school/apply_cash_ajax",
+        data: {
+          amount: parseInt($('#money').val()),
+          alipay: $('#alipay').val()
+        },
+        type: 'post',
+        dateType: 'json',
+        success: function (data) {
+          if(data =='success'){
+            alert('申请成功!');
+            location.reload();
+          }
+
+          if(data == 'fail'){
+            alert('申请失败!请重新申请');
+            return false;
+          }
+        }
+
+      })
+
+    })
+
+
+    $("#money").blur(function () {
+
+      var cantx = parseFloat($('#cantx').text());
+
+      var willtx = parseFloat($(this).val());
+
+      if (isNaN(willtx)) {
+        alert("请输入0-" + cantx + '之间的数字')
+        $('#txinfo').text('0元')
+        return false;
+      }
+
+
+      $('#txinfo').text(willtx + '元')
+
+      if (willtx > cantx) {
+        $("#money").css("background-color", "#f13f4b").css('color', '#ffffff');
+        $('.ipf').show();
+      } else {
+        $("#money").css("background-color", "").css('color', '');
+        $('.ipf').hide();
+      }
+
+
+    });
+
+
+    PageClick = function (pageIndex, total, spanInteval, date, type, district) {
+      $.ajax({
+        url: "/channel/school/show_ajax",
+        data: {
+          pageIndex: pageIndex,
+          school_id: "<%= @school.id %>",
+          date: date,
+          type: type
+        },
+
+        type: 'post',
+        dateType: 'json',
+        success: function (data) {
+
+          var jsonObj = eval('(' + data + ')');
+
+          console.log(jsonObj)
+
+          var intPageIndex = parseInt(pageIndex) //索引从1开始
+
+          $('.reg').html('')
+          var con = ''
+          $.each(jsonObj, function (i, v) {
+            con += "<div class='info-ff'><div class='lef'><p class='school'>" + v.created_at.substring(0, 16).replace('T', ' ') + "</p><p class='city'>" + v.phone + "</p></div><div class='infoicon'><img src='/dist/" + v.type + ".png'/>" + "</div></div>"
+
+          })
+
+          $('.reg').append(con)
+
+          var pageS = total
+
+          if (pageS % 12 == 0)
+            pageS = pageS / 12
+          else
+            pageS = parseInt(total / 12) + 1
+
+          $pager = $('#pager')
+          $('#pager span').remove()
+          $('#pager a').remove()
+
+          if (intPageIndex == 1)
+            $pager.append("<span class='disabled'>第一页</span>");
+          else {
+            var first = $("<a href='javascript:void(0)' first='" + 1 + "'>第一页</a>").click(function () {
+              PageClick($(this).attr('first'), total, spanInteval, date, type);
+              return false;
+            });
+            $pager.append(first);
+          }
+
+          //添加上一页
+          if (intPageIndex == 1)
+            $pager.append("<span class='disabled'>上一页</span>");
+          else {
+            var pre = $("<a href='javascript:void(0)' pre='" + (intPageIndex - 1) + "'>上一页</a>").click(function () {
+              PageClick($(this).attr('pre'), total, spanInteval, date, type);
+              return false;
+            });
+            $pager.append(pre);
+          }
+
+          //设置分页的格式  这里可以根据需求完成自己想要的结果
+          var interval = spanInteval; //设置间隔
+          var start = Math.max(1, intPageIndex - interval); //设置起始页
+          var end = Math.min(intPageIndex + interval, pageS)//设置末页
+
+          if (intPageIndex < interval + 1) {
+            end = (2 * interval + 1) > pageS ? pageS : (2 * interval + 1);
+          }
+
+          if ((intPageIndex + interval) > pageS) {
+            start = (pageS - 2 * interval) < 1 ? 1 : (pageS - 2 * interval);
+
+          }
+
+          //生成页码
+          for (var j = start; j < end + 1; j++) {
+            if (j == intPageIndex) {
+              var spanSelectd = $("<span class='current'>" + j + "</span>");
+              $pager.append(spanSelectd);
+            } //if
+            else {
+              var a = $("<a href='javascript:void(0)'>" + j + "</a>").click(function () {
+                PageClick($(this).text(), total, spanInteval, date, type);
+                return false;
+              });
+              $pager.append(a);
+            } //else
+          } //for
+
+
+          //一页
+          if (intPageIndex == total) {
+            $pager.append("<span class='disabled'>下一页</span>");
+          } else {
+            var next = $("<a id='next' href='javascript:void(0)' next='" + (intPageIndex + 1) + "'>下一页</a>").click(function () {
+              PageClick($(this).attr("next"), total, spanInteval, date, type);
+              return false;
+            });
+            $pager.append(next);
+          }
+
+          if (intPageIndex == pageS) {
+            $pager.append("<span class='disabled'>最后一页</span>");
+            $('#next').hide()
+          } else {
+            var last = $("<a id='last' href='javascript:void(0)' last='" + pageS + "'>最后一页</a>").click(function () {
+              PageClick($(this).attr("last"), total, spanInteval, date, type);
+              return false;
+            });
+            $pager.append(last);
+          }
+
+        }
+      })
+    }
+
+
+    $('#shaixuan').click(function () {
+      $('#pager').show();
+      var year = $('.year > .selected').text();
+      var month = $('.month > .selected').text();
+      var date = year + '-' + month + '-1';
+      var tmp = $('.type > .selected').text();
+      if (tmp == '全部') {
+        type = 'all'
+      }
+
+      if (tmp == '年费') {
+        type = 'yearvip'
+      }
+
+      if (tmp == '月费') {
+        type = 'monthvip'
+      }
+
+      $.ajax({
+        url: "/channel/school/show_ajax",
+        data: {
+          school_id: "<%= @school.id %>",
+          date: date,
+          type: type
+        },
+        type: 'post',
+        dateType: 'json',
+        success: function (data) {
+          var countObj = eval('(' + data + ')');
+          var total = countObj.count
+
+          if (total == 0) {
+            $('.reg').html('<div class="noinfo">暂无相关信息</div>');
+            $('#allcount').text('0人');
+            $('#vipcount').text('0人');
+            $('#pager').hide();
+            return false;
+          }
+
+
+          var vipcount = countObj.vipCount;
+          $('#allcount').text(total + '人');
+
+          $('#vipcount').text(vipcount + '人');
+
+          PageClick(1, total, '|', date, type)
+        }
+      })
+
+
+    })
+
+    var thisyear = "<%= @year %>";
+    var thismonth = "<%= @month %>";
+
+    $('.year > span').each(function () {
+      if ($(this).text() == thisyear) {
+        $(this).addClass('selected')
+      }
+    })
+
+    $('.month > span').each(function () {
+      if ($(this).text() == thismonth) {
+        $(this).addClass('selected')
+      }
+    })
+
+    $('#shaixuan').trigger('click')
+
+  </script>
+
+
+  <script>
+
+
+    $('.year >span').click(function () {
+      $(this).addClass('selected').siblings().removeClass('selected');
+      var text = $(this).text();
+      getinfo(text, 'y');
+    })
+
+    $('.month >span').click(function () {
+      $(this).addClass('selected').siblings().removeClass('selected');
+      var text = $(this).text();
+      getinfo(text, 'm');
+
+    })
+
+    $('.type >span').click(function () {
+      $(this).addClass('selected').siblings().removeClass('selected');
+      var text = $(this).text();
+      getinfo(text, 't');
+
+    })
+
+    function getinfo(obj, who) {
+      if (who == 'y') {
+        condition('#cy', obj);
+      }
+
+      if (who == 'm') {
+        condition('#cm', obj);
+      }
+
+      if (who == 't') {
+        condition('#ct', obj);
+      }
+
+//    $('.conimg').click(function () {
+//      $(this).parent().hide();
+//    })
+
+    }
+
+    function condition(con, obj) {
+      $(con).html(obj);
+      $(con).addClass('cy');
+      $(con).append("<img class='conimg' src='/dist/close.png'>")
+      $(con).show();
+    }
+
+
+  </script>
+
+
+  <div class='footer'>
+    Copyright ©2016-2018 欢乐诵
+  </div>
+
+  </body>
+</html>

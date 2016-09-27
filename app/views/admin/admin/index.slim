@@ -9,27 +9,18 @@ html lang="en"
     link rel="stylesheet" href="/css/admin_channel.css" media="all"
 
     script src="/js/jquery.min.js" data-turbolinks-track="false",
-    javascript:
-      $(document).ready(function ($) {
-          $('#tx').click(function () {
-              $('.theme-popover-mask').fadeIn(100);
-              $('.theme-popover-tx').slideDown(200);
-          })
-          $('.theme-poptit .close').click(function () {
-              $('.theme-popover-mask').fadeOut(100);
-              $('.theme-popover-tx').slideUp(200);
-          })
-      })
+
+
   body style="border-top:2px solid red;"
   p.top
     span.p1 系统管理员
-    span.s2 = current_user.name
+    span.s2 = current_user.name+",您好"
+    span.s1
+      = link_to "添加渠道商 |",new_channel_channel_user_path, class: 's1'
     span.s1#tx
-      = link_to "退出登录 ",channel_session_path,class:'f13f4b', method: :delete, :confirm => "Are you sure ?"
-      ||
+      = link_to "退出登录 |",channel_session_path,class:'s1', method: :delete, :confirm => "Are you sure ?"
     span.s1 style="color:#ff5c5c"
-      = link_to "转账记录 ",channel_channel_user_transfers_path(current_user),class:'f13f4b'
-      span style='color:#666666' |
+      = link_to "转账记录 |",channel_channel_user_transfers_path(current_user),class:'s1'
     .clear
 
   hr.hr
@@ -37,43 +28,45 @@ html lang="en"
     p
       h3 = current_user.name+",您好"
       span
-        | 你有34条新消息未处理,
-        = link_to "立即处理?", "#", class:'f13f4b'
+        | 你有
+           #{@msgcount}
+            条新消息未处理,
+        = link_to "立即处理?", channel_message_admin_index_path, class:'f13f4b'
 
   div style="padding-left:40px;"
     .shai
       p.year
-        span 年份：
-        span 不限
-        - (2017..2020).to_a.each do |value|
+        i 年份：
+        span.selected 不限
+        - (2016..2020).to_a.each do |value|
           span = value
       p.month
-        span 月份：
-        span 不限
+        i 月份：
+        span.selected 不限
         - (1..12).to_a.each do |value|
           span  = value
       p.type
-        span 类型：
-        span 不限
+        i 类型：
+        span.selected 不限
         span 公司
-        span.selected 个人
+        span 个人
       p.district
         span 区域:
         = select_tag "province", options_from_collection_for_select(@provinces, "id", "name"), prompt: "选择省"
 
         select#city name="city"
-          option value= " " 市
+          option value= " " 选择市
         select#district name="district"
-          option value= "" 区(县)
-
+          option value= "" 选择区(县)
+        bottom.admin_shaixuan 筛选
     .tab
       .qd
         span style='dispaly:block;float:left;font-size:16px;color:#333333' 渠道用户数据
 
         p style='float:right'
           |渠道商:
-          span.f13f4b = @channel_users.size.to_s+"人"
-      table width="918" cellspacing="0" cellpadding="10"
+          span.f13f4b#channel_count = "0人"
+      table width="920" cellspacing="0" cellpadding="10"
         thead
           tr
             th 序号
@@ -85,21 +78,17 @@ html lang="en"
             th 注册用户
             th 开通会员
             th 详情
-        tbody
-          - @channel_users.each do |channel_user|
-            tr
-              td = channel_user.id
-              td = channel_user.name
-              td = channel_user.address
-              td = channel_user.company?? "公司" : "个人"
-              td = DateTime.parse(channel_user.created_at.to_s).strftime('%Y-%m-%d').to_s
-              td = channel_user.schools.size
-              td  1
-              td  2
-              td
-                = link_to "详情", channel_channel_user_path(current_user), class:"f13f4b"
-      = paginate @channel_users
+        tbody.con
+
+
+
+      div.page.yahoo2#pager
+
 .footer Copyright ©2016-2018 欢乐诵
+
+  <div class="page yahoo2" id="pager">
+
+  </div>
 
 javascript:
   var province = $("#province"),city = $("#city");
@@ -152,3 +141,230 @@ javascript:
     }
 
   });
+
+  $('.year >span').click(function () {
+    $(this).addClass('selected').siblings().removeClass('selected');
+  })
+
+  $('.month >span').click(function () {
+    $(this).addClass('selected').siblings().removeClass('selected');
+
+  })
+
+  $('.type >span').click(function () {
+    $(this).addClass('selected').siblings().removeClass('selected');
+  })
+
+  $('.admin_shaixuan').click(function(){
+    var year = $('.year > .selected').text();
+    var month = $('.month > .selected').text();
+    var type = $('.type > .selected').text();
+    var district = $('#district').val();
+
+
+    if(year == '不限'){
+      year = ''
+    }
+
+    if(month == '不限'){
+      month = ''
+    }
+
+    if(type=='不限'){
+      type = ''
+    }
+
+    if(type == '公司'){
+      type = 1
+    }
+
+    if (type == '个人'){
+      type = 0
+    }
+
+
+
+    $.ajax({
+      url: "/admin/admin/index_ajax",
+      data: {
+        years: year,
+        month: month,
+        type: type,
+        district: district
+      },
+      type: 'post',
+      dateType: 'json',
+      success: function (data) {
+        var dataObj = eval('(' + data + ')');
+        total = dataObj.length
+        $('#channel_count').html(total+'人')
+        PageClick(1, total, '|', year,month, type,district)
+
+
+      }
+    })
+  })
+
+  $('.admin_shaixuan').trigger('click')
+
+
+
+
+  PageClick = function (pageIndex, total, spanInteval, year, month, type,district) {
+    $('#pager').show();
+    $.ajax({
+      url: "/admin/admin/index_ajax",
+      data: {
+        pageIndex: pageIndex,
+        years: year,
+        month: month,
+        type: type,
+        district: district
+      },
+
+      type: 'post',
+      dateType: 'json',
+      success: function (data) {
+        $('.con').html('')
+        var intPageIndex = parseInt(pageIndex) //索引从1开始
+
+        var dataObj = eval('(' + data + ')');
+
+        if(dataObj.length == 0){
+          $('#pager').hide();
+          return false;
+        }
+
+
+        con = ''
+
+        $.each(dataObj, function (i, v) {
+          con += "<tr><td>" + parseInt(i + 1) + "</td><td>" + v.name + "</td><td>" + v.address + "</td><td>" + v.company + "</td><td>" + v.created_at + "</td>" + "<td>" + v.channel_size + "</td><td>" + v.channel_reg + "</td><td>" + v.channel_vip + "</td><td class='goinfo' id=" + v.id + ">详情</td></tr>";
+        })
+
+        $('.con').html(con)
+
+        goinfo();
+
+
+
+        var pageS = total
+
+
+        if (pageS % 10 == 0)
+          pageS = pageS / 10
+        else
+          pageS = parseInt(total / 10) + 1
+
+        $pager = $('#pager')
+        $('#pager span').remove()
+        $('#pager a').remove()
+
+        if (intPageIndex == 1)
+          $pager.append("<span class='disabled'>第一页</span>");
+        else {
+          var first = $("<a href='javascript:void(0)' first='" + 1 + "'>第一页</a>").click(function () {
+            PageClick($(this).attr('first'), total, spanInteval, year, month, type,district);
+            return false;
+          });
+          $pager.append(first);
+        }
+
+        //添加上一页
+        if (intPageIndex == 1)
+          $pager.append("<span class='disabled'>上一页</span>");
+        else {
+          var pre = $("<a href='javascript:void(0)' pre='" + (intPageIndex - 1) + "'>上一页</a>").click(function () {
+            PageClick($(this).attr('pre'), total, spanInteval, year, month, type,district);
+            return false;
+          });
+          $pager.append(pre);
+        }
+
+        //设置分页的格式  这里可以根据需求完成自己想要的结果
+        var interval = spanInteval; //设置间隔
+        var start = Math.max(1, intPageIndex - interval); //设置起始页
+        var end = Math.min(intPageIndex + interval, pageS)//设置末页
+
+        if (intPageIndex < interval + 1) {
+          end = (2 * interval + 1) > pageS ? pageS : (2 * interval + 1);
+        }
+
+        if ((intPageIndex + interval) > pageS) {
+          start = (pageS - 2 * interval) < 1 ? 1 : (pageS - 2 * interval);
+
+        }
+
+        //生成页码
+        for (var j = start; j < end + 1; j++) {
+          if (j == intPageIndex) {
+            var spanSelectd = $("<span class='current'>" + j + "</span>");
+            $pager.append(spanSelectd);
+          } //if
+          else {
+            var a = $("<a href='javascript:void(0)'>" + j + "</a>").click(function () {
+              PageClick($(this).text(), total, spanInteval, year, month, type,district);
+              return false;
+            });
+            $pager.append(a);
+          } //else
+        } //for
+
+
+        //一页
+        if (intPageIndex == total) {
+          $pager.append("<span class='disabled'>下一页</span>");
+        } else {
+          var next = $("<a id='next' href='javascript:void(0)' next='" + (intPageIndex + 1) + "'>下一页</a>").click(function () {
+            PageClick($(this).attr("next"), total, spanInteval, year, month, type,district);
+            return false;
+          });
+          $pager.append(next);
+        }
+
+        if (intPageIndex == pageS) {
+          $pager.append("<span class='disabled'>最后一页</span>");
+          $('#next').hide()
+        } else {
+          var last = $("<a id='last' href='javascript:void(0)' last='" + pageS + "'>最后一页</a>").click(function () {
+            PageClick($(this).attr("last"), total, spanInteval, year, month, type,district);
+            return false;
+          });
+          $pager.append(last);
+        }
+
+      }
+    })
+  }
+
+  function goinfo() {
+    $('.goinfo').click(function () {
+      var id = $(this).attr('id')
+      window.location.href='/channel/channel_users/'+id;
+    })
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

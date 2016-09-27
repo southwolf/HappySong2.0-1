@@ -56,6 +56,7 @@ css:
     height:69px;
     background:#f7f7f7;
     margin:22px;
+
     border-radius:3px;
   }
 
@@ -120,27 +121,29 @@ body
     div style="padding:11px 0px;height:170px;"
       div style="font-size:14px;color:#333333;float:left"
         p.comp
-          span 账号
-          span 326524898@qq.com
+          span 账号：
+          span =@channel_user.email
         p.comp
-          span 时间
-          span = DateTime.parse(@channel_user.created_at.to_s).strftime('%Y-%m-%d').to_s + "开通"
+          span 时间：
+          span = DateTime.parse(@channel_user.created_at.to_s).strftime('%Y-%m-%d').to_s + " 开通"
         p.comp
-          span 用户类型:
+          span 用户类型：
           span = @channel_user.user_type
         p.comp
           span 地址：
           span = @channel_user.address
         p.comp
-          span 余额:
+          span 余额：
           span style="color:#f13f4b"
-            | ￥54221.00
-      div style="float:left;margin-left:450px"
-        p
-          button style="width:70px;color:#fce3e4;font-size:16px;height:32px;border-radius:3px;background:#f13f4b;border:1px solid #f13f4b;margin-bottom:15px;"
-            | 转账
-        p
-            = link_to "转账记录 ",channel_channel_user_transfers_path(@channel_user),style:'font-size:14px;color:#89b550;'
+            | ￥
+            = @channel_user.channel_user_cash_back.amount
+      - if @current_user.admin?
+        div#whide style="float:left;margin-left:450px"
+          p
+            button style="width:70px;color:#fce3e4;font-size:16px;height:32px;border-radius:3px;background:#f13f4b;border:1px solid #f13f4b;margin-bottom:15px;"
+              | 转账
+          p
+              = link_to "转账记录 ",channel_channel_user_transfers_path(@channel_user),style:'font-size:14px;color:#89b550;'
 
   div style="clear:both"
 
@@ -155,19 +158,24 @@ body
         span style="color:#f13f4b"
           | #{@channel_user.user_count}人
     div
-      .l style="height:400px;"
+      .l style="height:340px;"
         - @schools.each do |school|
           .info
             .l
-              p.school = school.fullname
-              p.city = school.address
+              p.school = school.school.fullname
+              p.city = school.school.address
             .l
-              .number = school.vip_count
+              .number = school.school.vip_count
               .reg
-                | 已注册: #{school.user_count}
+                | 已注册: #{school.school.user_count}
             .infoicon
               = link_to channel_school_path(school) do
                 = image_tag "矩形 @2x.png", width:"76", height:"69"
       div style='clear:both'
+      div.railspage
+        = paginate @schools
+
+
   .footer
     | Copyright ©2016-2018 欢乐诵
+

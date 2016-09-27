@@ -2,9 +2,19 @@ module Admin
   class AdminController < ::Channel::ChannelAdminController
     def index
       redirect_to new_channel_session_path if current_user.nil?
+      msgbb=ChannelSchool.where(:passed => false).count()
+      msgtx=ApplyCashBack.where(:passed => false).count()
+
+      @msgcount=msgbb+msgtx
+
+      @provinces = Province.all
+    end
+
+    def index_ajax
+      redirect_to new_channel_session_path if current_user.nil?
       years = params[:years]
       month = params[:month]
-      type  = params[:type]
+      type = params[:type]
       district = params[:district]
 
       hash = {}
@@ -18,6 +28,7 @@ module Admin
       end
       @channel_users = ChannelUser.channels.where(hash)
 
+
       if years.present?
         @channel_users = @channel_users.where("year(created_at) = ?", years)
         if month.present?
@@ -26,8 +37,13 @@ module Admin
       elsif month.present?
         @channel_users = @channel_users.where("month(created_at)=?", month)
       end
-      @channel_users = @channel_users.page(params[:page]).per(1)
-      @provinces = Province.all
+      if params[:pageIndex]
+        @channel_users = @channel_users.page(params[:pageIndex]).per(10)
+      else
+        @channel_users = @channel_users
+      end
+
     end
+
   end
 end

@@ -1,0 +1,193 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    border-top: 2px solid red;
+    height:auto;
+}
+
+.top {
+    heigth: 30px;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.p1 {
+    color: #ff5c5c;
+    font-size: 20px;
+    float: left;
+    padding-left: 40px;
+}
+
+.s1 {
+    font-size: 14px;
+    display: block;
+    color: #333333;
+    width: 100px;
+    height: 30px;
+    line-height: 30px;
+    float: right;
+
+}
+
+.s2 {
+    display: block;
+    width: 150px;
+    height: 30px;
+    line-height: 30px;
+    font-size: 14px;
+    color: #f13f4b;
+    float: right;
+}
+
+.clear {
+    clear: both;
+}
+
+.footer {
+    width: 100%;
+    height: 73px;
+    color: #ffffff;
+    font-size: 12px;
+    line-height: 73px;
+    text-align: center;
+    background-color: #f13f4b;
+}
+
+.search {
+    width: 918px;
+    height: 210px;
+}
+
+.first {
+
+    height: 70px;
+    line-height: 40px;
+    width: 100%;
+    border: 1px solid #f7f7f7;
+    padding-left: 10px;
+    padding-top: 30px;
+}
+
+.end {
+    height: 82px;
+    width: 100%;
+    border: 1px solid #f7f7f7;
+    line-height: 82px;
+    padding-left: 10px;
+
+}
+
+.sch {
+    margin-top: 25px;
+    width: 918px;
+    min-height: 180px;
+    border: 1px solid #f7f7f7;
+    padding: 10px;
+    padding-right:0px;
+    font-size: 16px;
+    color: #333333;
+}
+
+.baobei {
+    width: 918px;
+    height: 49px;
+    line-height: 49px;
+    border: 1px solid #f7f7f7;
+    padding-left: 10px;
+}
+
+select {
+    /*Chrome和Firefox里面的边框是不一样的，所以复写了一下*/
+    border: solid 1px #666666;
+
+    /*很关键：将默认的select选择框样式清除*/
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+
+    /*在选择框的最右侧中间显示小箭头图片*/
+    background: url("http://ourjs.github.io/static/2015/arrow.png") no-repeat scroll right center transparent;
+
+    /*为下拉小箭头留出一点位置，避免被文字覆盖*/
+    padding-rght: 10px;
+    padding-left: 4px;
+    width: 75px;
+    height: 28px;
+    font-size: 12px;
+    border-radius: 5px;
+
+}
+
+/*清除ie的默认选择框样式清除，隐藏下拉箭头*/
+select::-ms-expand {
+    display: none;
+}
+
+.submit {
+    color: #f13f4b;
+    font-size: 16px;
+    text-align: right;
+    width: 918px;
+    height: 35px;
+    line-height: 35px;
+    margin-bottom: 30px;
+    font-weight: bold;
+}
+
+.add {
+    height: 30px;
+    line-height: 30px;
+    color: #333333;
+    font-size: 14px;
+
+}
+
+li {
+    list-style: none;
+    width: auto;
+    float: left;
+    padding: 0px 4px;
+    border: 1px solid #f13f4b;
+    margin: 10px;
+}
+
+.addschool {
+    margin-right: 20px;
+}
+
+.conimg {
+    margin-left: 5px;
+    display: inline-block;
+    line-height: 30px;
+    position: relative;
+    bottom: -4px;
+}
+
+.subbot {
+    width: 50px;
+    height: 30px;
+    margin-left: 10px;
+    border-radius: 3px;
+    background: #f13f4b;
+    color: #ffffff;
+
+}
+
+.hr {
+    background: #f7f7f7;
+    height: 5px;
+    opacity: 0.8;
+    border-top: none;
+    margin: 20px 0px;
+}
+
+.noschool {
+    font-size: 20px;
+    height: 35px;
+    display: inline-block;
+    line-height: 35px;
+    margin-right: 10px;
+}

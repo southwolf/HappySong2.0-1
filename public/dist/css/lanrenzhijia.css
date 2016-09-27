@@ -259,7 +259,6 @@ input.btn {
 
 .dform-tx p{
 	margin:10px;
-	margin-bottom:0px;
 }
 
 
@@ -349,15 +348,6 @@ input.btn {
 	height:28px;
 	border-radius:2px;
 	padding-left:15px;
-
-}
-
-.money1{
-	width:100px;
-	height:28px;
-	border:none;
-	display:inline-block;
-	line-height:33px;
 
 }
 

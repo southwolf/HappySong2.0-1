@@ -79,6 +79,45 @@ css:
     text-align:center;
     background-color:#f13f4b;
   }
+
+  .railspage {
+    width: 400px;
+    height: 25px;
+    padding-top: 10px;
+  }
+
+  .railspage .pagination span {
+    font-size: 12px;
+    color: #999;
+    line-height: 23px;
+    float: right;
+    margin-left: 5px;
+  }
+
+  .railspage .pagination span {
+    width: 63px;
+    text-align: center;
+    border: 1px solid #999;
+    cursor: pointer;
+  }
+
+  .railspage .pagination span.on {
+    color: #fff;
+    background: #f13f4b;
+    border: 1px solid #3c90d9;
+  }
+
+  .railspage .pagination span a {
+    width: 63px;
+    display: block;
+    background: #f13f4b;
+    color: #ffffff;
+    cursor: pointer;
+  }
+
+
+
+
 body style="border-top:2px solid red;"
   p.top
     span.p1
@@ -97,7 +136,8 @@ body style="border-top:2px solid red;"
         tr
           th width="45" 序号
           th width="110" 转账时间
-          th width="155" 名称
+          th width="110" 转账人
+          th width="155" 收款人姓名
           th width="150" 地区
           th width="150" 公司/个人
           th witdh="150" 转账金额
@@ -107,7 +147,11 @@ body style="border-top:2px solid red;"
           tr
             td = transfer.id
             td = DateTime.parse(transfer.created_at.to_s).strftime('%Y-%m-%d').to_s
+            td = transfer.transfer_user.try(:name)
             td = transfer.collector.name
             td = transfer.collector.address
-            td = transfer.user_type
+            td = transfer.transfer_user.user_type
+            td = transfer.amount
             td  详情
+    div.railspage
+      = paginate @transfers
