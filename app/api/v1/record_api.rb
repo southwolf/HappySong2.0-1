@@ -48,7 +48,7 @@ module V1
       desc "最新朗读"
       paginate per_page: 20
       get "/recent"do
-        update_hot
+        # update_hot
         records = Record.where(:is_public => true ).order(:created_at => :DESC)
         present paginate(records), with: ::Entities::Record
       end
