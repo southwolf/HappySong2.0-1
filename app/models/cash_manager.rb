@@ -2,6 +2,7 @@ class CashManager < ActiveRecord::Base
   belongs_to :user
   belongs_to :target_user, class_name:"User"
 
+# 更新返现的金额
   after_commit :update_cash_back
 
   def update_cash_back

@@ -5,7 +5,7 @@ class CreateApplyCashBacks < ActiveRecord::Migration
       t.integer :amount
       t.string  :alipay
       #是否通过申请
-      t.boolean :passed
+      t.boolean :passed, default: false
 
       t.timestamps
     end
