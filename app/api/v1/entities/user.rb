@@ -46,9 +46,9 @@ module Entities
         ""
       end
     end
-    expose :can_inviter,if: ->(object, options){ object.try(:role).try(:name) =="teacher" } do |object, options|
-      object.can_inviter?
-    end
+    # expose :can_inviter, if: ->(object, options){ object.try(:role).try(:name) =="teacher" } do |object, options|
+    #   object.can_inviter?
+    # end
     # expose :grade_team_classes, if: ->(user, options) { user.role.name == "teacher"}, using: Entities::GradeTeamClass
     #学生的学校全名
     expose :school_full_name, if: ->(object, options) { object.try(:role).try(:name) == "student"} do |object, options|
