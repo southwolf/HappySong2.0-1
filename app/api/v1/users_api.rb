@@ -331,6 +331,17 @@ module V1
         present :cash_managers, cash_managers, with: ::Entities::CashManager
       end
 
+      desc "查询返现的年月【教师】"
+      params do
+        requires :token, type: String, desc: "用户访问令牌"
+      end
+      get '/time' do
+        authenticate!
+        times = current_user.cash_managers.select(:created_at).distinct.to_a
+        result = times.map { |time| time.created_at.strftime("%Y-%m") }
+
+        present result
+      end
       #
       # desc "查询返现数据"
       # params do

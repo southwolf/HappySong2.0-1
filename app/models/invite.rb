@@ -7,7 +7,7 @@ class Invite < ActiveRecord::Base
   def inset_data
     if self.user.try(:role).try(:name) == 'teacher'
       self.user.cash_managers.create(target_user: self.target_user)
-    else
+    elsif self.user.try(:role).try(:name) == 'parent'
     end
 
   end

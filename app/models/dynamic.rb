@@ -2,7 +2,7 @@ class Dynamic < ActiveRecord::Base
   belongs_to :user
   has_many   :taggings
   has_many   :tags, through: :taggings
-  has_many   :attachments
+  has_many   :attachments,       dependent: :destroy
 
   has_many   :dynamics,          foreign_key: 'original_dynamic_id'
   belongs_to :original_dynamic,  class_name:  'Dynamic'
@@ -10,12 +10,12 @@ class Dynamic < ActiveRecord::Base
   has_many   :ref_dynamics,      foreign_key: 'root_dynamic_id', class_name: "Dynamic"
   belongs_to :root_dynamic,      class_name: "Dynamic"
 
-  has_many   :comments,   as: :commentable
+  has_many   :comments,   as: :commentable, dependent: :destroy
 
-  has_many   :likes,      as: :likeable
+  has_many   :likes,      as: :likeable,    dependent: :destroy
   has_many   :like_users, through: :likes
 
-  has_many   :reports,    as: :reportable
+  has_many   :reports,    as: :reportable,  dependent: :destroy
 
   # has_many   :notifications, as: :targetable
 

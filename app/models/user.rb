@@ -78,6 +78,12 @@ class User < ActiveRecord::Base
   has_many   :push_actions, through: :notify_configs
   # has_sms_verification
 
+
+  def add_a_month_vip
+    start_time  = Time.now.to_i
+    expire_time = (Time.now + 31.day).to_i
+    Member.create(user: self, member_type: 'month',start_time: start_time, expire_time: expire_time)
+  end
   def reset_auth_token!
     create_auth_token
     save

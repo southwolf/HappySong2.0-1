@@ -17,20 +17,13 @@ module V1
         authenticate!
         content      = params[:content]
         address      = params[:address]
-        # picture_keys = params[:picture_keys]
         video_key    = params[:video_key]
         tags         = params[:tags]
         dynamic      = current_user.dynamics.build( :content => content,
                                                     :address => address)
         if dynamic.save
           dynamic.update( :original_dynamic_id => dynamic.id)
-          # if picture_keys.present?
-          #   # 添加附件
-          #   picture_keys.each do |picture_key|
-          #     dynamic.attachments.create(:file_url => picture_key,
-          #                                :is_video => false)
-          #   end
-          # end
+
           unless video_key.nil?
             dynamic.attachments.create( :file_url => video_key,
                                         :is_video => true)
@@ -50,24 +43,6 @@ module V1
 
       end
 
-      # desc "用动态ID设置Tags"
-      # params do
-      #   requires :token, type: String, desc: "用户访问令牌"
-      #   requires :dynamic_id, type: Integer, desc: "动态Id"
-      #   requires :tag,   type: String, desc: "图片key"
-      # end
-      # post '/set_tag' do
-      #   authenticate!
-      #   tag  = params[:tag]
-      #   dynamic_id = params[:dynamic_id]
-      #   dynamic = Dynamic.find(dynamic_id)
-      #
-      #   if dynamic.addTag(tag)
-      #      present :message, "成功"
-      #    else
-      #      present :message, "失败"
-      #   end
-      # end
       desc "用动态ID上传该动态的图片附件"
       params do
         requires :token, type: String, desc: "用户访问令牌"
