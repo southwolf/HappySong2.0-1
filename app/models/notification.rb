@@ -51,7 +51,7 @@ class Notification < ActiveRecord::Base
     elsif notice_type == 'follow'
       "#{self.actor.name}关注了你"
     elsif notice_type == 'reply'
-      "#{self.actor.name}回复了#{user_show}的评论#{self.targetable.content}"
+      "#{self.actor.name}回复了#{user_show}的评论#{self.second_targetable.content}"
     elsif notice_type == 'announce'
        "#{self.targetable.content}"
     else
@@ -59,7 +59,7 @@ class Notification < ActiveRecord::Base
   end
 
   def user_show
-    self.user.id == self.targetable.id ? "你" : self.targetable.user.name
+    self.user.id == self.targetable.user.id ? "你" : self.targetable.user.name
   end
 
   def nest_notity
