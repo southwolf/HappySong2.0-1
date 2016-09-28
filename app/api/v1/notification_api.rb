@@ -22,7 +22,7 @@ module V1
           badge_work:    badge_work
         }
 
-        present :result, result
+        present  result
       end
       desc "构建消息ID取消息信息"
       params do
