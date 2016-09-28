@@ -55,7 +55,6 @@ class Notification < ActiveRecord::Base
     elsif notice_type == 'announce'
        "#{self.targetable.content}"
     else
-      'sad'
     end
   end
 
