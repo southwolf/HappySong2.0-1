@@ -24,17 +24,16 @@ class Comment < ActiveRecord::Base
     comment = Comment.find(id)
     comment_user = comment.user
     return  if comment.nil?
-    
+
     follower_ids = comment_user.follower_ids
 
     if comment.is_reply?
 
       c       = comment.top_comment
       user    = comment.root.user
-      puts "Commme" + comment.id.to_s
-      if comment.user != user
-        Notification.new(
-          :notice_type => 'reply',
+      unless comment.user == user
+        Notification.create(
+          :notice_type       => 'reply',
           :actor_id          => comment.user.id,
           :user              => user,
           :targetable        => c,
