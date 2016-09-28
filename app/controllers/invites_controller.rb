@@ -9,7 +9,7 @@ class InvitesController < ApplicationController
     user = User.new(params.permit(:phone))
     if user.save
       invite_user = User.find(params[:user_id])
-      invite = invite_user.invites.new(target_user: user)
+      invite = invite_user.invites.new(target_user_id: user.id)
       respond_to do |format|
         if invite.save
           format.json { render :json => { code: 1, :message =>"success"}}
