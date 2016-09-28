@@ -43,7 +43,7 @@ module V1
       get '/follow' do
         authenticate!
         notifications = Notification.where(user: current_user, notice_type: "follow").order( created_at: :DESC)
-        present paginate(notifications), ::Entities::Notification
+        present paginate(notifications), with: ::Entities::Notification
         notifications.each do |notification|
           notification.update(unread: false)
         end
