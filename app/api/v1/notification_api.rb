@@ -4,6 +4,26 @@ module V1
     paginate per_page: 20
     resources :notifications do
 
+      desc "消息未读数"
+      params do
+        requires :token, type: String, desc: "用户令牌"
+      end
+      get '/unread' do
+        authenticate!
+        badge_follow  = Notification.unread_notify(current_user).where(notice_type: "follow").size
+        badge_like    = Notification.unread_notify(current_user).where(notice_type: "like").size
+        badge_comment = Notification.unread_notify(current_user).where(notice_type: "comment").size
+        badge_work    = Notification.unread_notify(current_user).where(notice_type: "work").size
+
+        result = {
+          badge_follow:  badge_follow,
+          badge_like:    badge_like,
+          badge_comment: badge_comment,
+          badge_work:    badge_work
+        }
+
+        present :result, result
+      end
       desc "构建消息ID取消息信息"
       params do
         requires :id, type: Integer, desc: "信息ID"

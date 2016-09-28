@@ -1,6 +1,7 @@
 module Channel
   class MessageController < ChannelAdminController
     before_action :authenticate!
+    before_action :isadmin?
 
     def admin_index
       @apply_cash_backs = ApplyCashBack.order('id desc').page(params[:page]).per(10)

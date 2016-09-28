@@ -9,7 +9,6 @@ class InvitesController < ApplicationController
     user = User.new(params.permit(:phone))
     if user.save
       invite_user = User.find(params[:user_id])
-      p "User"+ user.inspect
       invite = invite_user.invites.new(target_user: user)
       respond_to do |format|
         if invite.save

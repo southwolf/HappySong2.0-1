@@ -1,6 +1,7 @@
 module Channel
   class ApplyCashBacksController < ChannelAdminController
     before_action :authenticate!
+    before_action :ischannel?
 
     def index
       channel_user = ChannelUser.find(params[:channel_user_id])

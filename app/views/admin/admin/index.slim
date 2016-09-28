@@ -21,6 +21,8 @@ html lang="en"
       = link_to "退出登录 |",channel_session_path,class:'s1', method: :delete, :confirm => "Are you sure ?"
     span.s1 style="color:#ff5c5c"
       = link_to "转账记录 |",channel_channel_user_transfers_path(current_user),class:'s1'
+    span.s1 style="color:#ff5c5c"
+      = link_to "首页|",admin_root_path, class: 's1'
     .clear
 
   hr.hr

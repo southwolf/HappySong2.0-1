@@ -3,7 +3,7 @@ json.array! @channel_users do |user|
   json.name user.name
   json.address user.address
   json.created_at user.created_at.strftime('%Y-%m-%d')
-  json.channel_size user.schools.size
+  json.channel_size user.channel_schools.where(passed: true).size
 
   studentscount=[]
 

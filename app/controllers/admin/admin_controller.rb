@@ -1,5 +1,7 @@
 module Admin
   class AdminController < ::Channel::ChannelAdminController
+    before_action :isadmin?
+
     def index
       redirect_to new_channel_session_path if current_user.nil?
       msgbb=ChannelSchool.where(:passed => false).count()

@@ -15,7 +15,7 @@ html lang="en"
         = text_field_tag :email, '',placeholder:'Account or Email'
 
       p
-        = password_field_tag :password,'',placeholder:'Passwordaa'
+        = password_field_tag :password,'',placeholder:'Password'
 
       p
         = text_field_tag :phone,'',placeholder:'Phone number'
@@ -59,7 +59,27 @@ javascript:
     }
 
   $("#send_verify").click(function(event){
-    var phone = $("#phone").val();
+
+    var email=$('#email').val();
+    var phone=$('#phone').val();
+    var password=$('#password').val();
+
+    if($.trim(email) == ''){
+      alert('请填写邮箱');
+      return false;
+    }
+
+    if ($.trim(email) == '') {
+      alert('请填写密码');
+      return false;
+    }
+
+    if ($.trim(phone) == '') {
+      alert('请填写手机号');
+      return false;
+    }
+
+
     var data = {
       phone: phone
     }

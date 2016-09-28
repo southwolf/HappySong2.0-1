@@ -1,0 +1,185 @@
+/*渠道商欢迎界面css*/
+* {
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+    color: #333333;
+}
+
+.top {
+    height: 30px;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.p1 {
+    color: #ff5c5c;
+    font-size: 20px;
+    float: left;
+    padding-left: 40px;
+}
+
+.s1 {
+    font-size: 14px;
+    display: block;
+    color: #333333;
+    width: 100px;
+    height: 30px;
+    line-height: 30px;
+    float: right;
+
+}
+
+.s2 {
+    display: block;
+    width: 150px;
+    height: 30px;
+    line-height: 30px;
+    font-size: 14px;
+    color: #f13f4b;
+    float: right;
+}
+
+.clear {
+    clear: both;
+}
+
+.hc {
+    font-size: 30px;
+    color: #333333;
+    padding-left: 40px;
+    height: 120px;
+    padding-top: 20px;
+}
+
+.l {
+    display: block;
+    float: left;
+}
+
+.bao {
+    font-size: 16px;
+    color: #333333;
+}
+
+.xl {
+    float: left;
+    margin-right: 30px;
+}
+
+.xr {
+    margin-right: 30px;
+    float: right;
+}
+
+.footer {
+    width: 100%;
+    height: 73px;
+    color: #ffffff;
+    font-size: 12px;
+    line-height: 73px;
+    text-align: center;
+    background-color: #f13f4b;
+}
+
+.f13f4b {
+    color: #f13f4b;
+    margin-right: 10px;
+}
+
+.minfo {
+
+    height: 38px;
+    line-height: 38px;
+    font-size: 14px;
+    color: #333333;
+    margin-bottom: 86px;
+    padding-left: 40px;
+
+}
+
+.w_info {
+    width: 76px;
+    height: 69px;
+    float: right
+}
+
+.w_reg {
+    font-size: 12px;
+    padding: 0px 6px;
+    color: #666666
+}
+
+.w_num {
+    font-size: 36px;
+    font-weight: bold;
+    padding: 6px 6px
+}
+
+.w_dist {
+    font-size: 12px;
+    color: #666666;
+    padding: 11px 6px;
+}
+
+.w_school {
+    font-size: 14px;
+    color: #666666;
+    padding: 11px 6px;
+}
+
+.w_search {
+    width: 290px;
+    height: 38px;
+    border: 1px solid #ccc;
+    border-radius: 7px;
+    margin-top: 23px;
+}
+
+.w_bb {
+    width: 284px;
+    height: 69px;
+    background: #f7f7f7;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    border-radius: 3px;
+}
+
+.railspage {
+    width: 400px;
+    height: 25px;
+    margin: 0px auto;
+    padding-top: 10px;
+}
+
+.railspage .pagination span {
+    font-size: 12px;
+    color: #999;
+    line-height: 23px;
+    float: right;
+    margin-left: 5px;
+}
+
+.railspage .pagination span {
+    width: 63px;
+    text-align: center;
+    border: 1px solid #999;
+    cursor: pointer;
+}
+
+.railspage .pagination span.on {
+    color: #fff;
+    background: #f13f4b;
+    border: 1px solid #3c90d9;
+}
+
+.railspage .pagination span a {
+    width: 63px;
+    display: block;
+    background: #f13f4b;
+    color: #ffffff;
+    cursor: pointer;
+}

@@ -4,25 +4,10 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <link rel="stylesheet" href="/css/lanrenzhijia.css" media="all">
-
   <script src="/dist/js/jquery.min.js"></script>
-  <link rel="stylesheet" href="/dist/css/school_fufeixiangqing.css" media="all">
+  <link rel="stylesheet" href="/css/school_fufeixiangqing.css" media="all">
+
   <!--<script src="//cdn.bootcss.com/jquery-json/2.6.0/jquery.json.min.js"></script>-->
-  <script>
-    jQuery(document).ready(function ($) {
-      $('#tx').click(function () {
-        console.log("ss")
-        $('.theme-popover-mask').fadeIn(100);
-        $('.theme-popover-tx').slideDown(200);
-      })
-      $('.theme-poptit .close').click(function () {
-        $('.theme-popover-mask').fadeOut(100);
-        $('.theme-popover-tx').slideUp(200);
-      })
-
-    });
-  </script>
-
 
   <title>付费详情</title>
 
@@ -31,19 +16,22 @@
 <body style='border-top:2px solid red;'>
 <p class='top'>
   <span class='p1'><%= @school.fullname %></span>
-  <span class='s2'><%= current_user.name+", 您好" %></span>
+  <span class='s2'><%= current_user.name %></span>
 
   <% if current_user.admin %>
-
+      <%= link_to "首页|",admin_root_path, class: 's1' %>
   <% else %>
-      <!--<span class='s1'>消息提醒&nbsp;&nbsp;&nbsp;|</span>-->
-      <span class='s1' id="tx">申请提现&nbsp;&nbsp;&nbsp;|</span>
-  <% end %>
+      <%= link_to "提现记录|",channel_channel_user_apply_cash_backs_path(current_user), class: 's1' %>
+      <span class='s1' id="tx">申请提现|</span>
+      <span class='s1'> <%= link_to "学校报备|", new_channel_school_path %></span>
+      <%= link_to "首页|",channel_root_path, class: 's1' %>
 
-  <%= link_to "提现记录 ",channel_channel_user_apply_cash_backs_path(current_user), class: 's1' %>
-  <!--<%= link_to "退出登录 ", channel_session_path, class: 's1', method: :delete, :confirm => "Are you sure ?" %>-->
+<% end %>
+
   <div class='clear'></div>
   </p>
+
+
 
   <hr style='background:#f7f7f7;height:5px;opacity:0.8;border-top:none;margin:20px 0px'/>
 
@@ -72,7 +60,7 @@
       </p>
 
       <p class="condition">
-        <i>条件:</i>
+        <i style="margin-right:10px">条件:</i>
         <span id="cy" class="spf cy"><%= @year %><img class='conimg' src='/dist/close.png'></span>
         <span id="cm" class="spf cy"><%= @month %><img class='conimg' src='/dist/close.png'></span>
         <span id="ct" class="spf cy">全部<img class='conimg' src='/dist/close.png'></span>
@@ -121,9 +109,8 @@
       <p style="margin-bottom:0px;">
         <span class="pf">提&nbsp; 现&nbsp; 金&nbsp; 额:</span> <input class='money' id='money' type='text'> 元
       <div class="info">可提现金额: <span class="f13f4b" id="cantx">
-
-        <% if @current_user.channel_user_cash_back %>
-           <%= @current_user.channel_user_cash_back.amount %>
+        <% if @current_user.try(:channel_user_cash_back) %>
+         <%= @current_user.try(:channel_user_cash_back).try(:amount)%>
         <% else %>
           0
         <% end %>
@@ -148,80 +135,6 @@
 
   <script>
 
-
-    $('.z-btn').click(function () {
-
-
-      var cantx = parseFloat($('#cantx').text());
-      var willtx = parseFloat($(this).val());
-
-      if(cantx==0){
-        alert('暂无可提现金额!');
-        return false;
-      }
-
-      if ($('#alipay').val() == '') {
-        alert('请输入提现支付账号!');
-        return false;
-      }
-
-      if (willtx == '') {
-        alert('请输入提现金额!');
-        return false;
-      }
-
-
-
-      $.ajax({
-        url: "/channel/school/apply_cash_ajax",
-        data: {
-          amount: parseInt($('#money').val()),
-          alipay: $('#alipay').val()
-        },
-        type: 'post',
-        dateType: 'json',
-        success: function (data) {
-          if(data =='success'){
-            alert('申请成功!');
-            location.reload();
-          }
-
-          if(data == 'fail'){
-            alert('申请失败!请重新申请');
-            return false;
-          }
-        }
-
-      })
-
-    })
-
-
-    $("#money").blur(function () {
-
-      var cantx = parseFloat($('#cantx').text());
-
-      var willtx = parseFloat($(this).val());
-
-      if (isNaN(willtx)) {
-        alert("请输入0-" + cantx + '之间的数字')
-        $('#txinfo').text('0元')
-        return false;
-      }
-
-
-      $('#txinfo').text(willtx + '元')
-
-      if (willtx > cantx) {
-        $("#money").css("background-color", "#f13f4b").css('color', '#ffffff');
-        $('.ipf').show();
-      } else {
-        $("#money").css("background-color", "").css('color', '');
-        $('.ipf').hide();
-      }
-
-
-    });
 
 
     PageClick = function (pageIndex, total, spanInteval, date, type, district) {
@@ -371,6 +284,9 @@
         dateType: 'json',
         success: function (data) {
           var countObj = eval('(' + data + ')');
+
+          console.log(countObj)
+
           var total = countObj.count
 
           if (total == 0) {
@@ -466,6 +382,7 @@
 
   </script>
 
+  <script src="/dist/js/tx.js"></script>
 
   <div class='footer'>
     Copyright ©2016-2018 欢乐诵

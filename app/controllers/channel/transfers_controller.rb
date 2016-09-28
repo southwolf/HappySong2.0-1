@@ -3,7 +3,7 @@ module Channel
     before_action :authenticate!
     def index
       channel_user = ChannelUser.find(params[:channel_user_id])
-      @transfers = channel_user.transfers.page(params[:page]).per(10)
+      @transfers = Transfer.page(params[:page]).per(10)
     end
   end
 end

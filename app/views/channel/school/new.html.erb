@@ -4,35 +4,33 @@
   <title>Untitled Document</title>
   <%= javascript_include_tag 'application', "data-turbolinks-track" => false %>
   <link rel="stylesheet" href="/css/lanrenzhijia.css" media="all">
-  <link rel="stylesheet" href="/dist/css/school_baobei.css" media="all">
+  <link rel="stylesheet" href="/css/school_baobei.css" media="all">
   <script src="/dist/js/jquery.min.js"></script>
   <script src="//cdn.bootcss.com/jquery-json/2.6.0/jquery.json.min.js"></script>
   <script>
     jQuery(document).ready(function ($) {
-      $('#tx').click(function () {
-        console.log("ss")
+      $('.theme-login-z').click(function () {
         $('.theme-popover-mask').fadeIn(100);
-        $('.theme-popover-tx').slideDown(200);
+        $('.theme-popover').slideDown(200);
       })
       $('.theme-poptit .close').click(function () {
         $('.theme-popover-mask').fadeOut(100);
-        $('.theme-popover-tx').slideUp(200);
+        $('.theme-popover').slideUp(200);
       })
-
-    });
+    })
   </script>
 </head>
 
 <body>
 <p class='top'>
   <span class='p1'>渠道用户数据</span>
-
-  <span class='s2'>Vicent</span>
-  <%= link_to "退出登录 ",channel_session_path,class:'s1', method: :delete, :confirm => "Are you sure ?" %>
-  <span class='s1' id="tx">申请提现&nbsp;&nbsp;&nbsp;|</span>
-  <span class='s1' style='color:#ff5c5c'>学校报备&nbsp;&nbsp;&nbsp;<span style='color:#666666'>|</span>  </span>
+  <span class='s2'><%= current_user.name%></span>
+  <span class='s1'><%=link_to "退出登录|",channel_session_path,class:'s1', method: :delete, :confirm => "Are you sure ?" %></span>
+  <span class='s1'>  <%= link_to "提现记录|",channel_channel_user_apply_cash_backs_path(current_user), class: 's1' %></span>
+  <span class='s1' id='tx'>申请提现|</span>
+  <span class='s1'> <%= link_to "学校报备|", new_channel_school_path %></span>
+  <%= link_to "首页|",channel_root_path, class: 's1' %>
 <div class='clear'></div>
-</p>
 
 <hr class="hr">
 
@@ -82,9 +80,7 @@
 
 </div>
 
-<!---begin--->
-
-
+<!---学校报备 提现  弹框--->
 <div class="theme-popover">
   <div class="theme-poptit">
     <a href="javascript:;" title="关闭" class="close">×</a>
@@ -109,7 +105,7 @@
     </p>
 
     <p class="zp">
-      <button class='z-btn' id="subinfo" onclick="sadd()">提交信息</button>
+      <button class='z-btn-bb' id="subinfo" onclick="sadd()">提交信息</button>
     </p>
 
   </div>
@@ -122,17 +118,25 @@
   <div class="theme-popbod dform-tx">
     <p>
       <span class="pf">支付 宝 账号:</span>
-      <input type="text" class="acount">
+      <input type="text" id="alipay" class="acount">
     </p>
 
     <p style="margin-bottom:0px;">
-      <span class="pf">提&nbsp; 现&nbsp; 金&nbsp; 额:</span> <input class='money' type='text'> 元
-    <div class="info">可提现金额: <span class="f13f4b">1352.00元</span></div>
+      <span class="pf">提&nbsp; 现&nbsp; 金&nbsp; 额:</span> <input class='money' id='money' type='text'> 元
+    <div class="info">可提现金额: <span class="f13f4b" id="cantx">
+
+        <% if @current_user.try(:channel_user_cash_back) %>
+           <%= @current_user.try(:channel_user_cash_back).try(:amount)%>
+        <% else %>
+          0
+        <% end %>
+      </span>元
+    </div>
     </p>
 
     <p>
-      <span class="pf">提&nbsp; 现&nbsp; 信&nbsp; 息:</span> <span class='money1'>0元</span>
-    <div class="ipf"><img src="/dist/tan.png"></div>
+      <span class="pf">提&nbsp; 现&nbsp; 信&nbsp; 息:</span> <span class='money1' id="txinfo">0元</span>
+    <div class="ipf" style="display:none"><img src="/dist/tan.png"></div>
     </p>
 
     <p class="zp">
@@ -142,8 +146,6 @@
   </div>
 </div>
 <div class="theme-popover-mask"></div>
-
-
 <!---end--->
 
 <div class='footer'>
@@ -151,19 +153,6 @@
 </div>
 
 <script>
-
-  jQuery(document).ready(function ($) {
-    $('.theme-login').click(function () {
-      $('.theme-popover-mask').fadeIn(100);
-      $('.theme-popover').slideDown(200);
-    })
-    $('.theme-poptit .close').click(function () {
-      $('.theme-popover-mask').fadeOut(100);
-      $('.theme-popover').slideUp(200);
-    })
-
-  })
-
 
   //添加新学校
   function sadd() {
@@ -319,7 +308,7 @@
     }
 
     if (!checkSchool(s_id)) {
-      alert('该学校已经报备,请联系管理员');
+      alert('该学校已经报备,或正在审核中,请联系管理员');
       return false;
     }
 
@@ -458,5 +447,6 @@
 
 </script>
 
+<script src="/dist/js/tx.js"></script>
 </body>
 </html>

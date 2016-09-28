@@ -1,6 +1,7 @@
 module Channel
   class SchoolController < ChannelAdminController
     before_action :authenticate!
+    #before_action :ischannel?
 
     def new
 
