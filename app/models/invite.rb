@@ -2,7 +2,7 @@ class Invite < ActiveRecord::Base
   belongs_to :user
   belongs_to :target_user, class_name: 'User'
 
-  after_action :inset_data, only: [:create]
+  after_commit :inset_data
 
   def inset_data
     if self.user.try(:role).try(:name) == 'teacher'

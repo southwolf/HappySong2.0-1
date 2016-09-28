@@ -7,16 +7,17 @@ module V1
       desc "新建动态"
       params do
         requires :token,        type: String,       desc: '用户访问令牌'
-        requires :content,      type: String,        desc: '内容'
-        requires :address,      type: String,        desc: '地理位置'
-        # optional :picture_keys, type: Array[String], desc: '图片集合'
+        requires :content,      type: String,       desc: '内容'
+        requires :address,      type: String,       desc: '地理位置'
+        optional :picture_keys, type: String,       desc: '图片集合'
         optional :video_key,    type: String
-        optional :tags,         type: String, desc: '标签集合用空格隔开'
+        optional :tags,         type: String,       desc: '标签集合用空格隔开'
       end
       post "/create" do
         authenticate!
         content      = params[:content]
         address      = params[:address]
+        picture_keys = params[:picture_keys]
         video_key    = params[:video_key]
         tags         = params[:tags]
         dynamic      = current_user.dynamics.build( :content => content,
@@ -24,6 +25,12 @@ module V1
         if dynamic.save
           dynamic.update( :original_dynamic_id => dynamic.id)
 
+          unless picture_keys.nil?
+            picture_keys.split.each do |picture_key|
+              dynamic.attachments.create( :file_url => picture_key,
+                                          :is_video => false)
+            end
+          end
           unless video_key.nil?
             dynamic.attachments.create( :file_url => video_key,
                                         :is_video => true)
@@ -43,26 +50,26 @@ module V1
 
       end
 
-      desc "用动态ID上传该动态的图片附件"
-      params do
-        requires :token, type: String, desc: "用户访问令牌"
-        requires :dynamic_id, type: Integer, desc: "动态Id"
-        requires :key,   type: String, desc: "图片key"
-      end
-
-      post '/upload_attachment' do
-        authenticate!
-        key = params[:key]
-        dynamic_id = params[:dynamic_id]
-        dynamic = Dynamic.find(dynamic_id)
-
-        if dynamic.attachments.create(:file_url => key,
-                                      :is_video => false)
-          present :message, '成功'
-        else
-          error!({error: '上传失败'}, 500)
-        end
-      end
+      # desc "用动态ID上传该动态的图片附件"
+      # params do
+      #   requires :token, type: String, desc: "用户访问令牌"
+      #   requires :dynamic_id, type: Integer, desc: "动态Id"
+      #   requires :key,   type: String, desc: "图片key"
+      # end
+      #
+      # post '/upload_attachment' do
+      #   authenticate!
+      #   key = params[:key]
+      #   dynamic_id = params[:dynamic_id]
+      #   dynamic = Dynamic.find(dynamic_id)
+      #
+      #   if dynamic.attachments.create(:file_url => key,
+      #                                 :is_video => false)
+      #     present :message, '成功'
+      #   else
+      #     error!({error: '上传失败'}, 500)
+      #   end
+      # end
 
       desc "转发动态"
       params do

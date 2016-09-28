@@ -140,7 +140,7 @@ module Entities
     expose (:share_url) {|object| ENV['SHARERECORD']+"/share_profile/#{object.id}"}
     #分享链接
     expose :invite_url do |object|
-      "http://120.26.118.28/invites?code=#{object.code}"
+       ENV['SHARERECORD']+"invites?code=#{object.code}"
     end
 
     expose(:avatar) { |user| ENV['QINIUPREFIX']+user.avatar}
@@ -151,7 +151,7 @@ module Entities
     # 老师的班级数量
     expose :grade_team_classes_count, if: ->(user, options){ user.role.name="teacher"} { |user| user.grade_team_classes.size}
   end
-  
+
   class HashUser < Grape::Entity
     expose (:time) { |object| object[0]}
     expose (:size) { |object| object[1].size}
