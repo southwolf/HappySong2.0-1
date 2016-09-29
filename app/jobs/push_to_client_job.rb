@@ -5,6 +5,10 @@ class PushToClientJob < ActiveJob::Base
     app_key       = 'e83807dedab1e27198297a43'
     master_secret = 'b7f3d205505764f6b6ec815b'
     jpush         = JPush::Client.new(app_key, master_secret)
+
+    aliases = jpush.aliases
+
+    return if aliases.show(user_id.to_s).body.first[1].blank?
     user = User.find(user_id)
     # badge = 1
     badge_follow  = Notification.unread_notify(user).where(notice_type: "follow").size
