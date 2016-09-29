@@ -111,7 +111,7 @@ module V1
       get '/notify' do
         authenticate!
         notifications = Notification.where(user:current_user).order( created_at: :DESC)
-        notifications.reject!{ |notification| notification.user == notification.targetable.user}
+        notifications.select!{ |notification| notification.user != notification.targetable.user}
         # notifications.select{|notify| notify.targetable.user != current_user}
         present paginate(Kaminari.paginate_array(notifications)), with: ::Entities::Notification
       end
