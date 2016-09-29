@@ -19,5 +19,8 @@ module Entities
     expose :article, if: ->(object, option) { object.respond_to?(:article)}, using: ::Entities::Article do |object|
       object.article
     end
+    expose :top_comment_id, if: ->(object, option) { object.respond_to?(:top_comment_id)} do |object|
+      object.top_comment_id
+    end
   end
 end
