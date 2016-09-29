@@ -54,7 +54,7 @@ module V1
           present :user, user, with: ::Entities::User
           present :message, "登陆成功"
         else
-          error!({message: "验证码错误"},500)
+          error!({message: "验证码错误"},401)
         end
       end
 
