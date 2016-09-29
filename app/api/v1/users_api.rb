@@ -211,7 +211,7 @@ module V1
         # if user.blank?
         # error!({message:"没有查到对应用户"},404)
         # else
-        present :user, user, with: ::Entities::SimpleUser
+        present :user, user, with: ::Entities::User
         # end
       end
 
