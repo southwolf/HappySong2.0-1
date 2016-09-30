@@ -274,8 +274,8 @@ module V1
       paginate per_page: 20
       get '/followers' do
         authenticate!
-        followers = current_user.followers
-        present paginate(followers), with: ::Entities::User
+        followings = current_user.followings
+        present paginate(followings), with: ::Entities::User
       end
 
       desc "获取关注我的用户"
@@ -285,8 +285,8 @@ module V1
       paginate per_page: 20
       get '/followings' do
         authenticate!
-        followings = current_user.followings
-        present paginate(followings), with: ::Entities::User
+        followers = current_user.followers
+        present paginate(followers), with: ::Entities::User
       end
 
       desc "子女查家长"
@@ -342,21 +342,7 @@ module V1
 
         present :times, result
       end
-      #
-      # desc "查询返现数据"
-      # params do
-      #   requires :token, type: String, desc: "用户访问令牌"
-      #   requires :years, type: Integer, desc: "年"
-      #   requires :month, type: Integer, desc: "月"
-      # end
-      # get '/cash_back_count' do
-      #   authenticate!
-      #   years = params[:years]
-      #   month = params[:month]
-      #   cash_managers = current_user.cash_managers.where("year(created_at) = ?", years)
-      #                                             .where("year(created_at) = ?", month).count(:amount)
-      #   present cash_managers, with: ::Entities::CashManager
-      # end
+
 
       desc "测试"
       paginate per_page: 10
