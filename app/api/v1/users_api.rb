@@ -225,6 +225,31 @@ module V1
         present :user, current_user, with: ::Entities::MyProfile
       end
 
+      desc "进他人个人中心"
+      params do
+        requires :token, type: String, desc: "token"
+        requires :user_id, type: Integer, desc: "用户ID"
+      end
+      get '/other_profile' do
+        if params[:token].present?
+          current_user = User.find_by(:auth_token => params[:token])
+        else
+        end
+         user = User.find(params[:user_id])
+         present :user, user, with: ::Entities::MyProfile
+      end
+
+
+      desc "myclassmate"
+      params do
+        requires :token,    type: String, desc: '用户访问令牌'
+      end
+      get '/my_classmate' do
+        authenticate!
+        myclassmates = current_user.classmates
+        present myclassmates,  with: ::Entities::User
+      end
+
       desc "父母关联子女"
       params do
         requires :token,    type: String, desc: '用户访问令牌'
