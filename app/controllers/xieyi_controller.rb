@@ -1,4 +1,4 @@
-class XieyiController < ActiveRecod::Base
+class XieyiController < ApplicationController
   def xieyi
     render layout: false
   end
