@@ -33,11 +33,7 @@ module V1
       get 'byschool' do
         shool = School.find(params[:school_id])
         grades = shool.grades
-        if grades.empty?
-          present :message, "没有找到数据"
-        else
-          present grades, with: ::Entities::Grade
-        end
+        present grades, with: ::Entities::Grade
       end
     end
 
@@ -49,11 +45,7 @@ module V1
       get 'byschool' do
         shool = School.find(params[:school_id])
         team_classes = shool.team_classes
-        if team_classes.blank?
-          present :message, "没有找到数据"
-        else
-          present team_classes, with: ::Entities::TeamClass
-        end
+        present team_classes, with: ::Entities::TeamClass
       end
     end
   end
