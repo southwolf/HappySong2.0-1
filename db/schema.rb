@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160927062939) do
+ActiveRecord::Schema.define(version: 20160930070251) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "name",            limit: 255
@@ -149,7 +149,7 @@ ActiveRecord::Schema.define(version: 20160927062939) do
   create_table "channel_user_cash_backs", force: :cascade do |t|
     t.integer  "channel_user_id", limit: 4
     t.integer  "amount",          limit: 4, default: 0
-    t.integer  "userd",           limit: 4, default: 0
+    t.integer  "used",            limit: 4, default: 0
     t.datetime "created_at",                            null: false
     t.datetime "updated_at",                            null: false
   end
@@ -201,6 +201,7 @@ ActiveRecord::Schema.define(version: 20160927062939) do
     t.integer  "used",       limit: 4, default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "user_id",    limit: 4
   end
 
   create_table "districts", force: :cascade do |t|

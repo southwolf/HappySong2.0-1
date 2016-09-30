@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
 
-  before_create :create_auth_token, :set_code, :set_id_code
+  before_create :create_auth_token, :set_code, :set_id_code, :add_a_month_vip
   validates :phone, uniqueness: true
   # validates :phone, format: { with: /\d{11}/,
   #                             message: "手机号格式不对"}
@@ -54,8 +54,8 @@ class User < ActiveRecord::Base
 
   # 子女
   has_many   :children, class_name: 'User',
-                        foreign_key: 'parent_id',
-                        dependent: :destroy
+                        foreign_key: 'parent_id'
+
   belongs_to :parent,   class_name: 'User'
 
   #会员
@@ -87,7 +87,7 @@ class User < ActiveRecord::Base
                     start_time: start_time, expire_time: expire_time)
     end
   end
-  
+
   def reset_auth_token!
     create_auth_token
     save

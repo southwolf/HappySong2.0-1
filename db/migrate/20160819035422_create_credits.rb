@@ -3,7 +3,6 @@ class CreateCredits < ActiveRecord::Migration
     create_table :credits do |t|
       t.integer :point, default: 0
       t.integer :used,  default: 0
-      t.belongs_to :user
       t.timestamps
     end
   end
