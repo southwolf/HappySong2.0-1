@@ -1,6 +1,6 @@
 module Entities
   class User < Grape::Entity
-    expose :id, :uid, :phone, :code, :auth_token
+    expose :id, :uid, :phone, :code, :auth_token, :is_first
     # expose (:vip) {|object| object.vip? }
     expose (:avatar) { |object| ENV['QINIUPREFIX']+object.avatar}
     expose (:vip) { |object| object.vip?}
@@ -69,12 +69,12 @@ module Entities
   end
 
   class SimpleUser < Grape::Entity
-    expose :id, :uid,:phone, :name
+    expose :id, :uid,:phone, :name,:is_first
     expose (:avatar) { |object| ENV['QINIUPREFIX']+object.avatar}
   end
 
   class MyProfile < Grape::Entity
-    expose :id, :uid, :phone, :name, :sex, :age, :desc
+    expose :id, :uid, :phone, :name, :sex, :age, :desc,:is_first
     expose (:vip) { |object| object.vip?}
     # expose (:children), using: Entities::User, if: -> (parent, options){ parent.role.try(:name) == "parent"}
 
