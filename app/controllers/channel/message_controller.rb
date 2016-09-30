@@ -35,5 +35,9 @@ module Channel
         render(:json => 'fail', :layout => false)
       end
     end
+
+    def xieyi
+      render layout: false
+    end
   end
 end

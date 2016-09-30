@@ -34,7 +34,7 @@ class PushToClientJob < ActiveJob::Base
     notification = JPush::Push::Notification.new
     notification.set_android(
       alert: notice,
-      title: notice,
+      title: "欢乐诵",
       extras: extras
     ).set_ios(
       alert: notice,

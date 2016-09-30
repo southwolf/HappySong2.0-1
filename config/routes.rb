@@ -27,7 +27,7 @@ Rails.application.routes.draw do
     #转账pass
     get 'message/pass_tx' => 'message/pass_tx'
 
-
+    get 'message/xieyi'    => 'message/xieyi'
     #添加新学校
     post 'school/schoolAdd' => 'school/schoolAdd'
 
@@ -39,6 +39,8 @@ Rails.application.routes.draw do
 
     #根据学校id查看用户注册信息
     post 'school/show_ajax' => 'school/show_ajax'
+
+
 
     resources :school, only: [:show,:new, :create]
 
