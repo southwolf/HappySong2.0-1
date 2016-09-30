@@ -62,15 +62,15 @@ module V1
       end
 
 
-      desc "根据文章标题或作者姓名获取朗读结果"
+      desc "作者姓名获取朗读结果"
       params do
         optional :q, type: String, desc: "查询参数"
       end
       get '/search' do
         q = params[:q]
+        users = User.where("name like ?", "#{q}%")
         records     = Record.all.order(created_at: :DESC) if q.nil?
-        article_ids = Article.where("title=? OR author=?", q, q).pluck(:id)
-        records     = Record.where(:article_id => article_ids)
+        records     = Record.where(user: users).order(created_at: :DESC)
         #if records.blank?
          # error!({message: "没有找到对应朗读!"}, 404)
         #else
