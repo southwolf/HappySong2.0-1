@@ -240,15 +240,6 @@ module V1
       end
 
 
-      desc "myclassmate"
-      params do
-        requires :token,    type: String, desc: '用户访问令牌'
-      end
-      get '/my_classmate' do
-        authenticate!
-        myclassmates = current_user.classmates
-        present myclassmates,  with: ::Entities::User
-      end
 
       desc "父母关联子女"
       params do
@@ -312,6 +303,16 @@ module V1
         authenticate!
         followers = current_user.followers
         present paginate(followers), with: ::Entities::User
+      end
+
+      desc "获取我的同学"
+      params do
+        requires :token,    type: String, desc: '用户访问令牌'
+      end
+      get '/my_classmate' do
+        authenticate!
+        myclassmates = current_user.classmates
+        present  paginate(myclassmates),  with: ::Entities::User
       end
 
       desc "子女查家长"
