@@ -74,7 +74,20 @@ module Entities
   end
 
   class MyProfile < Grape::Entity
-    expose :id, :uid, :phone, :name, :sex, :age, :desc,:is_first
+    expose :id, :uid, :phone,:desc,:is_first
+    expose(:name) do |object|
+      object.try(:name) || ""
+    end
+    expose(:age) do |object|
+      object.try(:age) || ""
+    end
+    expose(:desc) do |object|
+      object.try(:desc) || ""
+    end
+
+    expose(:sex) do |object|
+    object.try(:sex) || ""
+    end
     expose (:vip) { |object| object.vip?}
     # expose (:children), using: Entities::User, if: -> (parent, options){ parent.role.try(:name) == "parent"}
 
