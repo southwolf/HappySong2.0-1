@@ -309,6 +309,7 @@ module V1
       params do
         requires :token,    type: String, desc: '用户访问令牌'
       end
+      paginate per_page: 20
       get '/my_classmate' do
         authenticate!
         myclassmates = current_user.classmates
