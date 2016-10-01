@@ -227,7 +227,7 @@ module V1
 
       desc "进他人个人中心"
       params do
-        requires :token, type: String, desc: "token"
+        optional :token, type: String, desc: "token"
         requires :user_id, type: Integer, desc: "用户ID"
       end
       get '/other_profile' do
