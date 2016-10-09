@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160930082400) do
+ActiveRecord::Schema.define(version: 20161009015505) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "name",            limit: 255
@@ -67,7 +67,7 @@ ActiveRecord::Schema.define(version: 20160930082400) do
     t.integer  "unit_id",          limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "author",           limit: 255
+    t.string   "author",           limit: 255,   default: "佚名"
     t.integer  "records_count",    limit: 4,     default: 0
     t.boolean  "has_demo",                       default: false
     t.boolean  "is_hot",                         default: false
@@ -150,7 +150,7 @@ ActiveRecord::Schema.define(version: 20160930082400) do
   create_table "channel_user_cash_backs", force: :cascade do |t|
     t.integer  "channel_user_id", limit: 4
     t.integer  "amount",          limit: 4, default: 0
-    t.integer  "used",            limit: 4, default: 0
+    t.integer  "userd",           limit: 4, default: 0
     t.datetime "created_at",                            null: false
     t.datetime "updated_at",                            null: false
   end
@@ -189,10 +189,9 @@ ActiveRecord::Schema.define(version: 20160930082400) do
   end
 
   create_table "credit_managers", force: :cascade do |t|
-    t.integer  "user_id",    limit: 4
-    t.string   "reson",      limit: 255
-    t.string   "type",       limit: 255
-    t.integer  "point",      limit: 4
+    t.integer  "user_id",        limit: 4
+    t.integer  "target_user_id", limit: 4
+    t.integer  "point",          limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -378,6 +377,7 @@ ActiveRecord::Schema.define(version: 20160930082400) do
     t.integer  "district_id", limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "verify",                  default: false
   end
 
   create_table "schools_team_classes", id: false, force: :cascade do |t|

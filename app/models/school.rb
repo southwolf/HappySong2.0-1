@@ -6,7 +6,7 @@ class School < ActiveRecord::Base
 
   has_many :channel_schools
   has_many :channel_users, :through => :channel_schools
-
+  scope :verify_school, ->{where(verify: true)}
 
   def students
     students = []
@@ -15,7 +15,7 @@ class School < ActiveRecord::Base
     end
     return students
   end
-  
+
   def vip_count
     count = 0
     self.try(:grade_team_classes).each do |grade_team_class|
