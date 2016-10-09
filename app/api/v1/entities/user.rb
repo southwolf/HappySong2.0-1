@@ -39,7 +39,6 @@ module Entities
       school   = object.grade_team_classes.first.try(:school)
       district = school.try(:district)
       city     = district.try(:city)
-
       if school.present? && district.present? && city.present?
         "#{city.try(:name)}#{district.try(:name)}#{school.try(:name)}"
       else
