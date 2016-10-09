@@ -365,7 +365,7 @@ module V1
       get '/time' do
         authenticate!
         times = current_user.cash_managers.select(:created_at).distinct.to_a
-        result = times.map { |time| time.created_at.strftime("%Y-%m") }.uniq
+        result = times.map { |time| time.created_at.strftime("%Y-%m") }.sort.uniq
 
         present :times, result
       end
