@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
 
   before_create :create_auth_token, :set_code, :set_id_code
-  after_commit :add_a_month_vip, only: [:creare]
+  after_commit :add_a_month_vip, only: [:create]
   validates :phone, uniqueness: true
   # validates :phone, format: { with: /\d{11}/,
   #                             message: "手机号格式不对"}
@@ -81,7 +81,7 @@ class User < ActiveRecord::Base
 
 
   def add_a_month_vip
-    if self.role.name == 'student'
+    if self.try(:role).try(:name) == 'student'
       start_time  = Time.now.to_i
       expire_time = (Time.now + 31.day).to_i
       Member.create(user: self, member_type: 'month',
