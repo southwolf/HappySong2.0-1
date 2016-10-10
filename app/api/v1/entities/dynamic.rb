@@ -20,7 +20,7 @@ module Entities
     expose (:original_dynamic_user), using: Entities::SimpleUser do |object|
       object.original_dynamic.try(:user)
     end
-    expose :tags,                     using: Entities::Tag
+    expose :tags,                     using: Entities::ShowTag
     expose (:share_url) {|object| ENV['SHARERECORD']+"/share_dynamic/#{object.id}"}
     expose :is_liked do |object, option|
       current_user = option[:current_user]
