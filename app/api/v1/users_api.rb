@@ -335,8 +335,7 @@ module V1
       get '/cash_data' do
         authenticate!
         invites_count = current_user.invites.count
-        cash_backs    = current_user.try(:cash_back).try(:cash)
-        cash_backs = 0 if cash_backs.nil?
+        cash_backs    = current_user.try(:cash_back).try(:cash) || 0
 
         present :invites_count, invites_count
         present :cash_backs, cash_backs
@@ -370,66 +369,106 @@ module V1
         present result
       end
 
-
-      desc "测试"
-      paginate per_page: 10
-      get '/all' do
-        users = User.all.group_by{|user| DateTime.parse(user.created_at.to_s).strftime('%Y-%-m')}.to_a
-        # users.each do |key, value|
-          # present :"#{key}", value, with: ::Entities::User
-        # end
-        present paginate(Kaminari.paginate_array(users)), with: ::Entities::HashUser
-      end
-
-    end
-
-    resources :advise do
-      desc '用户建议'
+      desc "查询返现积分总数据【家长】"
       params do
-        requires :token,   type: String,  desc: "token"
-        requires :content, type: String,  desc: "建议内容"
-        requires :contact, type: String,  desc: "联系方式"
+        requires :token, type: String, desc: "用户访问令牌"
       end
-      post do
+      get '/credit_data' do
         authenticate!
-        content = params[:content]
-        contact = params[:contact]
-        advise = current_user.advises.new(:content => content, :contact => contact)
-        if advise.save
-          present :message, "感谢你的反馈！"
-        else
-          error!({ error: "提交失败"}, 503)
+        invites_count = current_user.invites.count
+        credit_back   = current_user.try(:credit).try(:point) || 0
+
+        present :invites_count, invites_count
+        present :credit_back,   credit_back
+      end
+
+      desc "查询返现积分数据【家长】"
+      params do
+        requires :token, type: String, desc: "用户访问令牌"
+        requires :years, type: Integer, desc: "年"
+        requires :month, type: Integer, desc: "月"
+      end
+      get '/credit_back' do
+        authenticate!
+        years = params[:years]
+        month = params[:month]
+        credit_managers = current_user.credit_managers.where("year(created_at)=?", years)
+                                                     .where("month(created_at)=?", month)
+        present :count_amount, credit_managers.sum(:point)
+        present :credit_managers, credit_managers, with: ::Entities::CreditManager
+      end
+
+
+      desc "查询返现积分年月【家长】"
+      params do
+        requires :token, type: String, desc: "用户访问令牌"
+      end
+      get '/time_parent' do
+        authenticate!
+        times = current_user.credit_managers.select(:created_at).distinct.to_a
+        result = times.map { |time| time.created_at.strftime("%Y-%m") }.sort.reverse.uniq
+
+        present result
+      end
+    end
+      # desc "测试"
+      # paginate per_page: 10
+      # get '/all' do
+      #   users = User.all.group_by{|user| DateTime.parse(user.created_at.to_s).strftime('%Y-%-m')}.to_a
+      #   # users.each do |key, value|
+      #     # present :"#{key}", value, with: ::Entities::User
+      #   # end
+      #   present paginate(Kaminari.paginate_array(users)), with: ::Entities::HashUser
+      # end
+
+
+      resources :advise do
+        desc '用户建议'
+        params do
+          requires :token,   type: String,  desc: "token"
+          requires :content, type: String,  desc: "建议内容"
+          requires :contact, type: String,  desc: "联系方式"
+        end
+        post do
+          authenticate!
+          content = params[:content]
+          contact = params[:contact]
+          advise = current_user.advises.new(:content => content, :contact => contact)
+          if advise.save
+            present :message, "感谢你的反馈！"
+          else
+            error!({ error: "提交失败"}, 503)
+          end
         end
       end
-    end
 
-    resources :albums do
-      desc '上传图片到相册'
-      params do
-        requires :token,    type: String,    desc: '用户令牌'
-        requires :file_key, type: String,    desc: '图片名'
-      end
+      resources :albums do
+        desc '上传图片到相册'
+        params do
+          requires :token,    type: String,    desc: '用户令牌'
+          requires :file_key, type: String,    desc: '图片名'
+        end
 
-      post '/upload' do
-        authenticate!
-        file_key = params[:file_key]
-        album = current_user.albums.build( :file_url => file_key )
-        if album.save!
-          present message: "上传成功"
-        else
-          error!({ error: "上传失败"} , 500)
+        post '/upload' do
+          authenticate!
+          file_key = params[:file_key]
+          album = current_user.albums.build( :file_url => file_key )
+          if album.save!
+            present message: "上传成功"
+          else
+            error!({ error: "上传失败"} , 500)
+          end
+        end
+
+        desc '取我的相册'
+        params do
+          requires :token, type: String, desc: '用户访问令牌'
+        end
+        get '/my_albums' do
+          authenticate!
+          albums = current_user.albums
+          present albums, with: ::Entities::Album
         end
       end
-
-      desc '取我的相册'
-      params do
-        requires :token, type: String, desc: '用户访问令牌'
-      end
-      get '/my_albums' do
-        authenticate!
-        albums = current_user.albums
-        present albums, with: ::Entities::Album
-      end
-    end
   end
 end

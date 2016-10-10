@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
 
   before_create :create_auth_token, :set_code, :set_id_code
-  after_commit :add_a_month_vip, only: [:create]
+  after_create :add_a_month_vip
   validates :phone, uniqueness: true
   # validates :phone, format: { with: /\d{11}/,
   #                             message: "手机号格式不对"}
@@ -77,8 +77,11 @@ class User < ActiveRecord::Base
 
   has_many   :notify_configs, dependent: :destroy
   has_many   :push_actions, through: :notify_configs
-  # has_sms_verification
 
+  #申报学校
+  has_many   :schools
+  # has_sms_verification
+  scope :students, ->{where(role_id: 1)}
 
   def add_a_month_vip
     if self.try(:role).try(:name) == 'student'

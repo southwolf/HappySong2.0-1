@@ -23,6 +23,15 @@ module V1
         schools = School.where("name LIKE '%#{params[:q]}%'")
         present schools, with: ::Entities::School
       end
+
+      desc "申报学校"
+      params do
+        requires :auth_token, type: String, desc: "token"
+      end
+
+      post '/report_school' do
+        authenticate!
+      end
     end
 
     resources :grade do

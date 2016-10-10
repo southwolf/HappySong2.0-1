@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161009015505) do
+ActiveRecord::Schema.define(version: 20161010022853) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "name",            limit: 255
@@ -191,7 +191,7 @@ ActiveRecord::Schema.define(version: 20161009015505) do
   create_table "credit_managers", force: :cascade do |t|
     t.integer  "user_id",        limit: 4
     t.integer  "target_user_id", limit: 4
-    t.integer  "point",          limit: 4
+    t.integer  "point",          limit: 4, default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -378,6 +378,7 @@ ActiveRecord::Schema.define(version: 20161009015505) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "verify",                  default: false
+    t.integer  "user_id",     limit: 4
   end
 
   create_table "schools_team_classes", id: false, force: :cascade do |t|
@@ -405,6 +406,7 @@ ActiveRecord::Schema.define(version: 20161009015505) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "recommend",              default: false
+    t.string   "cover_img",  limit: 255
   end
 
   create_table "team_classes", force: :cascade do |t|

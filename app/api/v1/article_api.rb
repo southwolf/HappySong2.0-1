@@ -67,7 +67,7 @@ module V1
         if article.nil?
           error!("没找到",404)
         else
-          present article, with: ::Entities::Article
+          present article, with: ::Entities::FullArticle
         end
       end
     end

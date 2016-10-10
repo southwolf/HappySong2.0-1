@@ -46,7 +46,7 @@ class Dynamic < ActiveRecord::Base
   def addTag tag_name
     tag = Tag.find_by_name(tag_name)
     if tag.nil?
-      tag = Tag.create(:name => tag_name)
+      tag = Tag.create(:name => tag_name, :cover_img => self.attachments.first.file_url)
       self.tags << tag
     else
       self.tags << tag
