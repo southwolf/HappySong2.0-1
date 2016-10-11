@@ -10,7 +10,7 @@ class Record < ActiveRecord::Base
   has_many   :viewers, through: :views
 
   #banner
-  has_many   :banners, as: :targetable
+  has_many   :banners, as: :targetable, dependent: :destroy
 
   validates :file_url, :style, presence: true
 

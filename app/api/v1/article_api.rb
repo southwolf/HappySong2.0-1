@@ -32,9 +32,9 @@ module V1
       get :category do
         cate_item_id = params[:cate_item_id]
         cate_item    = CateItem.find cate_item_id
-        articles     = cate_item.articles.order(:records_count => :DESC)
+        articles     = cate_item.articles.order(:records_count => :DESC).includes(:records)
 
-        present paginate(articles), with: ::Entities::Article
+        present paginate(articles), with: ::Entities::FullArticle
 
       end
 
@@ -46,13 +46,13 @@ module V1
 
       get '/search' do
         q = params[:q]
-        articles = Article.all.order(:records_count => :DESC) if q.nil?
-        articles = Article.where(:title => q).order(:records_count => :DESC)
+        articles = Article.all.order(:records_count => :DESC).includes(:records) if q.nil?
+        articles = Article.where(:title => q).order(:records_count => :DESC).includes(:records)
 
         # if article.blank?
           # error!("没有找到符合的文章", 404)
         # else
-        present  articles, with: ::Entities::Article
+        present  articles, with: ::Entities::FullArticle
 
         # end
       end

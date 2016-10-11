@@ -8,9 +8,9 @@ module V1
       get do
         district_id = params[:district_id].to_i
         if district_id.nil?
-          schools = School.all
+          schools = School.verify_school
         else
-          schools = School.where(district_id: district_id)
+          schools = School.verify_school.where(district_id: district_id)
         end
         present  schools, with: ::Entities::School
       end
@@ -20,17 +20,32 @@ module V1
         requires :q, type: String, desc: "查询标示"
       end
       get '/by_q'do
-        schools = School.where("name LIKE '%#{params[:q]}%'")
+        schools = School.verify_school.where("name LIKE '%#{params[:q]}%'")
         present schools, with: ::Entities::School
       end
 
       desc "申报学校"
       params do
-        requires :auth_token, type: String, desc: "token"
+        requires :auth_token, type: String,   desc: "token"
+        requires :name,       type: String,   desc:"学校名称"
+        requires :district_id, type: Integer, desc:"区ID"
       end
 
       post '/report_school' do
         authenticate!
+        name = params[:name]
+        district_id = params[:district_id]
+        if Scholl.where(district_id: district_id,name: name).blank?
+          school = current_user.schools.new(district_id: district_id, name: name, verify: false)
+          if school.save
+            present :message, "申报成功"
+          else
+            present :message, "申报失败，请重试"
+          end
+        else
+          present :message, "学校已经存在！"
+        end
+
       end
     end
 

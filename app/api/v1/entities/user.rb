@@ -20,8 +20,12 @@ module Entities
     end
     expose :role, using: ::Entities::Role
 
-    expose (:points) do |object|
-      0
+    expose :points, if: ->(user,options){ user.try(:role).try(:name) =="parent"} do |object|
+      if object.try(:credit).nil?
+        "0"
+      else
+        object.try(:credit).try(:point) - object.try(:credit).try(:point)
+      end
     end
     #学生的班级
     expose :grade_team_classes, if: ->(user,options){ user.try(:role).try(:name) =="student"} do |user|

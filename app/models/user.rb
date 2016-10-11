@@ -80,6 +80,13 @@ class User < ActiveRecord::Base
 
   #申报学校
   has_many   :schools
+
+  has_many   :works, -> {where(role_id: 2)}
+
+  has_many   :work_to_students, -> { where(role_id: 1)}
+  has_many   :my_works, -> { where(role_id: 1) },  class_name: "Work",
+                                                  through: :work_to_students,
+                                                  foreign_key: "student_id"
   # has_sms_verification
   scope :students, ->{where(role_id: 1)}
 

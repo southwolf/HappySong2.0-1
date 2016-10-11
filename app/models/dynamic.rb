@@ -45,8 +45,13 @@ class Dynamic < ActiveRecord::Base
 
   def addTag tag_name
     tag = Tag.find_by_name(tag_name)
+    if self.attachments.is_video?
+      cover_img = self.attachments.first.file_url+"?vframe/png/offset/1/w/1280/h/720/rotate/auto"
+    else
+      cover_img = self.attachments.file_url
+    end
     if tag.nil?
-      tag = Tag.create(:name => tag_name, :cover_img => self.attachments.first.file_url)
+      tag = Tag.create(:name => tag_name, :cover_img => cover_img)
       self.tags << tag
     else
       self.tags << tag

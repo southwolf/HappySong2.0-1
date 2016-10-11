@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161010022853) do
+ActiveRecord::Schema.define(version: 20161011032851) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "name",            limit: 255
@@ -465,6 +465,29 @@ ActiveRecord::Schema.define(version: 20161010022853) do
     t.boolean  "passed",                 default: false
     t.datetime "created_at",                             null: false
     t.datetime "updated_at",                             null: false
+  end
+
+  create_table "work_to_students", force: :cascade do |t|
+    t.integer  "work_id",    limit: 4
+    t.integer  "student_id", limit: 4
+    t.boolean  "complete",             default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "work_to_teams", force: :cascade do |t|
+    t.integer  "work_id",             limit: 4
+    t.integer  "grade_team_class_id", limit: 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "works", force: :cascade do |t|
+    t.integer "user_id", limit: 4
+    t.string  "content", limit: 255
+    t.string  "style",   limit: 255
+    t.time    "start"
+    t.time    "end"
   end
 
 end

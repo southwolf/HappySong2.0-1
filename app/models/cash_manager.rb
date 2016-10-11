@@ -7,7 +7,10 @@ class CashManager < ActiveRecord::Base
 
   def update_cash_back
     return if self.amount == 0
-    cash_back = CashBack.find_or_create_by(user: self.user)
-    cash_back.update(cash: self.amount)
+    CashBack.transaction do
+      cash_back = CashBack.find_or_create_by(user: self.user)
+      cash_back.cash += self.amount
+      cash_back.save!
+    end
   end
 end
