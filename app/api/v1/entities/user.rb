@@ -73,6 +73,7 @@ module Entities
 
   class SimpleUser < Grape::Entity
     expose :id, :uid,:phone, :name,:is_first
+    expose :role, using: ::Entities::Role
     expose (:avatar) { |object| ENV['QINIUPREFIX']+object.avatar}
   end
 
