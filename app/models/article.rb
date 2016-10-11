@@ -8,4 +8,7 @@ class Article < ActiveRecord::Base
 
   has_many   :banners, as: :targetable
   # has_many   :reports, as: :reportable
+
+  has_many   :work_to_articles
+  has_many   :work, through: :work_to_articles
 end

@@ -6,4 +6,11 @@ class Work < ActiveRecord::Base
   has_many   :work_to_students
   has_many   :students, class_name: "User",
                         through: :work_to_students
+
+  has_many   :work_to_articles
+  has_many   :articles, through: :work_to_articles
+
+  has_many  :work_attachments
+
+  has_many  :complete_work, class_name: "Record"
 end

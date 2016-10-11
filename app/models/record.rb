@@ -15,6 +15,11 @@ class Record < ActiveRecord::Base
   validates :file_url, :style, presence: true
 
   has_many  :reports, as: :reportable
+
+  #到此朗读时学生作业时
+  belongs_to :work, ->(){ where(is_work: true) }
+
+
   # has_many  :notifications, as: :targetable
 
   after_commit :async_create_record_notify, on: :create

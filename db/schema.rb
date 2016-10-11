@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161011032851) do
+ActiveRecord::Schema.define(version: 20161011082907) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "name",            limit: 255
@@ -345,6 +345,8 @@ ActiveRecord::Schema.define(version: 20161011032851) do
     t.boolean  "is_demo",                    default: false
     t.boolean  "is_hot",                     default: false
     t.integer  "comments_count", limit: 4,   default: 0
+    t.boolean  "is_work",                    default: false
+    t.integer  "work_id",        limit: 4
   end
 
   create_table "relationships", force: :cascade do |t|
@@ -465,6 +467,19 @@ ActiveRecord::Schema.define(version: 20161011032851) do
     t.boolean  "passed",                 default: false
     t.datetime "created_at",                             null: false
     t.datetime "updated_at",                             null: false
+  end
+
+  create_table "work_attachments", force: :cascade do |t|
+    t.integer  "work_id",    limit: 4
+    t.boolean  "is_video"
+    t.string   "file_url",   limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "work_to_articles", force: :cascade do |t|
+    t.integer "article_id", limit: 4
+    t.integer "work_id",    limit: 4
   end
 
   create_table "work_to_students", force: :cascade do |t|

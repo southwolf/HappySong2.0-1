@@ -47,7 +47,7 @@ module V1
       get '/search' do
         q = params[:q]
         articles = Article.all.order(:records_count => :DESC).includes(:records) if q.nil?
-        articles = Article.where(:title => q).order(:records_count => :DESC).includes(:records)
+        articles = Article.where("title like ?", "#{q}%").order(:records_count => :DESC).includes(:records).includes(:records, records: [:user, user:[:role,:grade_team_class]])
 
         # if article.blank?
           # error!("没有找到符合的文章", 404)
