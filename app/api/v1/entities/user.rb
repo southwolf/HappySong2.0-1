@@ -78,7 +78,7 @@ module Entities
   end
 
   class MyProfile < Grape::Entity
-    expose :id, :uid, :phone,:desc,:is_first
+    expose :id, :uid, :phone,:desc,:is_first,:auth_token
     expose(:name) do |object|
       object.try(:name) || ""
     end
