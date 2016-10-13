@@ -174,6 +174,26 @@ module V1
 
         present result, with: ::Entities::WorkToStudent
       end
+
+
+      desc "家长查看子女未完成作业情况"
+
+      params do
+        requires :token, type: String, desc: '用户访问令牌'
+      end
+
+      get '/child_uncomplete_work_infos' do
+        authenticate!
+        current_user.children.each do |child|
+          result += WorkToStudent.where(complete: false, user: child)
+                                 .order(:created_at => :desc)
+                                 .includes(:user, :work)
+        end
+
+        present result, with: ::Entities::WorkToStudent
+      end
+
+      
     end
   end
 end

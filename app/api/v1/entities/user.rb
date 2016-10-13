@@ -105,7 +105,6 @@ module Entities
 
   class MyProfile < Grape::Entity
     expose :id, :uid, :phone,:desc,:is_first,:auth_token
-    expose :role, using: ::Entities::Role
     expose(:name) do |object|
       object.try(:name) || ""
     end
@@ -115,14 +114,11 @@ module Entities
     expose(:desc) do |object|
       object.try(:desc) || ""
     end
-
     expose(:sex) do |object|
-    object.try(:sex) || ""
+      object.try(:sex) || ""
     end
-    expose (:vip) { |object| object.vip?}
-    # expose (:children), using: Entities::User, if: -> (parent, options){ parent.role.try(:name) == "parent"}
 
-    # expose (:parent),   using: Entities::User, if: -> (child, options) { child.role.try(:name) == "student" }
+    expose (:vip) { |object| object.vip?}
 
     #背景图片
     expose (:bg_image) { |object| ENV['QINIUPREFIX']+object.bg_image_url }
@@ -131,9 +127,6 @@ module Entities
     expose (:points) do |object|
       0
     end
-    #老师的年级班级
-    # expose :grade_team_classes, if: ->(user, options) { user.role.name == "teacher"}, using: Entities::GradeTeamClass
-
     # 学生的年级班级
     expose :grade_team_classes, if: ->(user, options) {user.try(:role).try(:name) =="student"}do |user|
       grade_team_class = user.try(:grade_team_class)
@@ -159,8 +152,7 @@ module Entities
       end
     end
 
-    # expose :grade_team_classes, if: ->(user, options) { user.role.name == "teacher"}, using: Entities::GradeTeamClass
-    #学生的学校全名
+
     expose :school_full_name, if: ->(object, options){ object.try(:role).try(:name) == "student"} do |object, options|
       school = object.grade_team_class.try(:school)
       district = school.try(:district)
@@ -191,17 +183,20 @@ module Entities
     expose (:followers_count)  { |user| user.followers.size }
     expose (:followings_count) { |user| user.followings.size }
     #学生的同学数量
-    expose :classmates_count, if: ->(user, options){user.role.name=="student"} do |user|
-      if user.classmates.nil?
-        "0"
-      else
-        user.classmates.size
-      end
-    end
-    # 老师的班级数量
-    expose :grade_team_classes_count, if: ->(user, options){ user.role.name="teacher"} { |user| user.grade_team_classes.size}
+    # expose :classmates_count, if: ->(user, options){user.role.name=="student"} do |user|
+    #   if user.classmates.nil?
+    #     "0"
+    #   else
+    #     user.classmates.size
+    #   end
+    # end
+    # # 老师的班级数量
+    # expose :grade_team_classes_count, if: ->(user, options){ user.role.name="teacher"} { |user| user.grade_team_classes.size}
   end
 
+  class MyProfileAddRole < MyProfile
+    expose :role, using: ::Entities::Role
+  end
   class HashUser < Grape::Entity
     expose (:time) { |object| object[0]}
     expose (:size) { |object| object[1].size}

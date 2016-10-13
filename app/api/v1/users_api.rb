@@ -221,8 +221,7 @@ module V1
       end
       get '/profile' do
         authenticate!
-        puts current_user.name
-        present :user, current_user, with: ::Entities::MyProfile
+        present :user, current_user, with: ::Entities::MyProfileAddRole
       end
 
       desc "进他人个人中心"
@@ -236,7 +235,7 @@ module V1
         else
         end
          user = User.find(params[:user_id])
-         present :user, user, with: ::Entities::MyProfile
+         present :user, user, with: ::Entities::MyProfileAddRole
       end
 
 
