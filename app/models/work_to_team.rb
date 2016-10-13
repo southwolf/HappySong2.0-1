@@ -1,5 +1,5 @@
 class WorkToTeam < ActiveRecord::Base
-  belongs_to :student, class_name: "User"
+  belongs_to :work
   belongs_to :grade_team_class
 
   after_create :work_to_students

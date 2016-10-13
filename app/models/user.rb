@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
   belongs_to :role
 
   scope :teacher_users,   ->{ where(role_id: 1)}
-  scope :parent_users,    ->{where(role_id: 2)}
+  scope :parent_users,    ->{ where(role_id: 2)}
   #建议
   has_many   :advises,               dependent: :destroy
   has_many   :relationships,         foreign_key: 'follower_id',
@@ -81,12 +81,11 @@ class User < ActiveRecord::Base
   #申报学校
   has_many   :schools
 
-  has_many   :works, -> {where(role_id: 2)}
+  has_many   :works
 
-  has_many   :work_to_students, -> { where(role_id: 1)}
-  has_many   :my_works, -> { where(role_id: 1) },  class_name: "Work",
-                                                  through: :work_to_students,
-                                                  foreign_key: "student_id"
+  has_many   :work_to_students, foreign_key: "student_id"
+  has_many   :my_works, class_name: "Work",
+                        through: :work_to_students
   # has_sms_verification
   scope :students, ->{where(role_id: 1)}
 
@@ -145,7 +144,7 @@ class User < ActiveRecord::Base
   # 我的同学【学生】
   def classmates
     grade_team_class = self.grade_team_class
-    return [] if grade_team_class.nil?
+    return nil if grade_team_class.nil?
     grade_team_class.students
   end
 

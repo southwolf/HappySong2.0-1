@@ -478,8 +478,10 @@ ActiveRecord::Schema.define(version: 20161011082907) do
   end
 
   create_table "work_to_articles", force: :cascade do |t|
-    t.integer "article_id", limit: 4
-    t.integer "work_id",    limit: 4
+    t.integer  "article_id", limit: 4
+    t.integer  "work_id",    limit: 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "work_to_students", force: :cascade do |t|
@@ -498,11 +500,12 @@ ActiveRecord::Schema.define(version: 20161011082907) do
   end
 
   create_table "works", force: :cascade do |t|
-    t.integer "user_id", limit: 4
-    t.string  "content", limit: 255
-    t.string  "style",   limit: 255
-    t.time    "start"
-    t.time    "end"
+    t.integer  "user_id",       limit: 4
+    t.string   "content",       limit: 255
+    t.string   "style",         limit: 255
+    t.integer  "comment_count", limit: 4
+    t.datetime "start_time"
+    t.datetime "end_time"
   end
 
 end

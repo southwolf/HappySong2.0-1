@@ -10,4 +10,5 @@ module Entities
     expose :students, using: Entities::User
     expose :team_class, using: Entities::TeamClass
   end
+
 end
