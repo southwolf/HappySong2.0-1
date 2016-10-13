@@ -314,7 +314,7 @@ module V1
         authenticate!
         myclassmates = current_user.classmates
         if myclassmates.nil?
-          present  myclassmates,  with: ::Entities::User
+          present  :message, "没有同学！请加入班级",  with: ::Entities::User
         else
           present  paginate(myclassmates),  with: ::Entities::User
         end
