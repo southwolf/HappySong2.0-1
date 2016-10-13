@@ -12,6 +12,7 @@ class Like < ActiveRecord::Base
     like_user = like.like_user
     follower_ids = like_user.follower_ids
     return if like_user.nil?
+
     if like.like_user_id != like.likeable.user.id
       Notification.create(
         :actor_id => like.like_user_id,
