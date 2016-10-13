@@ -22,6 +22,8 @@ class Like < ActiveRecord::Base
       )
     end
     return if follower_ids.empty?
+
+    #排除用户关注列表中包含了被关注物件的所有人【防止重复推送】
     follower_ids.reject!{|follower_id| follower_id == like.likeable.user_id}
     follower_ids.each do |follower_id|
       Notification.create(
