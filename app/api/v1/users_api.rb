@@ -122,6 +122,7 @@ module V1
         desc      = params[:desc].to_s || ""
         if current_user.update(name: name, sex: sex, desc: desc) && current_user.set_role( role_id )
           current_user.update(:is_first => false)
+          current_user.add_a_month_vip
           present current_user, with: ::Entities::User
         else
           error!( {error: '更新失败'}, 500)

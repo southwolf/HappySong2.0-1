@@ -189,11 +189,10 @@ module V1
                                  .order(:created_at => :desc)
                                  .includes(:user, :work)
         end
-
         present result, with: ::Entities::WorkToStudent
       end
 
-      
+
     end
   end
 end

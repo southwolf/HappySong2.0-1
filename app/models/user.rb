@@ -1,7 +1,8 @@
 class User < ActiveRecord::Base
 
   before_create :create_auth_token, :set_code, :set_id_code
-  after_create :add_a_month_vip
+
+  # after_create :add_a_month_vip
   validates :phone, uniqueness: true
   # validates :phone, format: { with: /\d{11}/,
   #                             message: "手机号格式不对"}
