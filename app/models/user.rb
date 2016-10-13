@@ -78,8 +78,6 @@ class User < ActiveRecord::Base
   has_many   :notify_configs, dependent: :destroy
   has_many   :push_actions, through: :notify_configs
 
-  #申报学校
-  has_many   :schools
 
   has_many   :works
 

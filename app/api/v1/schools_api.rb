@@ -36,7 +36,7 @@ module V1
         name = params[:name]
         district_id = params[:district_id]
         if School.where(district_id: district_id,name: name).blank?
-          school = current_user.schools.new(district_id: district_id, name: name)
+          school = School.new(district_id: district_id, name: name)
           if school.save
             present school, with: ::Entities::School
           else
