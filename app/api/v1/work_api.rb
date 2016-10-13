@@ -96,12 +96,12 @@ module V1
         work_id = params[:work_id]
         grade_team_class_id = params[:grade_team_class_id]
         grade_team_class = GradeTeamClass.find(grade_team_class_id)
-        complete_student = WorkToStudent.where    (work_id: work_id, complete: true).includes(:student, student:[:role,:grade_team_class])
-                                        .select   { |work_to_student| work_to_student.student.grade_team_class == grade_team_class}
-                                        .map      { |work_to_student| work_to_student.student  }
-        uncomplete_student = WorkToStudent.where  (work_id: work_id, complete: false).includes(:student, student:[:role,:grade_team_class])
+        complete_student = WorkToStudent.where(work_id: work_id, complete: true).includes(:student, student:[:role,:grade_team_class])
+                                        .select { |work_to_student| work_to_student.student.grade_team_class == grade_team_class}
+                                        .map { |work_to_student| work_to_student.student  }
+        uncomplete_student = WorkToStudent.where(work_id: work_id, complete: false).includes(:student, student:[:role,:grade_team_class])
                                           .select { |work_to_student| work_to_student.student.grade_team_class == grade_team_class}
-                                          .map    { |work_to_student| work_to_student.student  }
+                                          .map { |work_to_student| work_to_student.student  }
         present :complete_student,   complete_student, with: ::Entities::SimpleUser
         present :uncomplete_student, uncomplete_student, with: ::Entities::SimpleUser
 
@@ -119,8 +119,6 @@ module V1
 
         present paginate(comments), with: ::Entities::Comment
       end
-
-
     end
   end
 end
