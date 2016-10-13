@@ -266,8 +266,8 @@ module V1
       get '/mylikes' do
         authenticate!
 
-        liked_records  = current_user.like_records.group_by { |record| DateTime.parse(record.created_at.to_s).strftime('%Y-%-m')}.to_a
-        liked_dynamics = current_user.like_dynamics.group_by{ |dynamic| DateTime.parse(dynamic.created_at.to_s).strftime('%Y-%-m')}.to_a
+        liked_records  = current_user.order(created_at: :desc).like_records.group_by { |record| DateTime.parse(record.created_at.to_s).strftime('%Y-%-m')}.to_a
+        liked_dynamics = current_user.order(created_at: :desc).like_dynamics.group_by{ |dynamic| DateTime.parse(dynamic.created_at.to_s).strftime('%Y-%-m')}.to_a
         present :like_records,   paginate(Kaminari.paginate_array(liked_records)),  with: ::Entities::HashRecord
         present :liked_dynamics, paginate(Kaminari.paginate_array(liked_dynamics)), with: ::Entities::HashDynamic
       end
