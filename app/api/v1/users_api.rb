@@ -313,7 +313,11 @@ module V1
       get '/my_classmate' do
         authenticate!
         myclassmates = current_user.classmates
-        present  paginate(myclassmates),  with: ::Entities::User
+        if myclassmates.nil?
+          present  myclassmates,  with: ::Entities::User
+        else
+          present  paginate(myclassmates),  with: ::Entities::User
+        end
       end
 
       desc "子女查家长"
