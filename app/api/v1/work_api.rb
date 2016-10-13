@@ -167,8 +167,12 @@ module V1
       get '/child_work_infos' do
         authenticate!
         current_user.children.each do |child|
-          result = WorkToStudent.where(complete: true, user: child)
+          result += WorkToStudent.where(complete: true, user: child)
+                                 .order(:created_at => :desc)
+                                 .includes(:user, :work)
         end
+
+        present result, with: ::Entities::WorkToStudent
       end
     end
   end
