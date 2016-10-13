@@ -17,7 +17,7 @@ class Record < ActiveRecord::Base
   has_many  :reports, as: :reportable
 
   #到此朗读时学生作业时
-  belongs_to :work, ->(){ where(is_work: true) }
+  belongs_to :work, ->(){ where(style: "record_work") }
 
 
   # has_many  :notifications, as: :targetable

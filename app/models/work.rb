@@ -13,8 +13,11 @@ class Work < ActiveRecord::Base
 
   has_many  :work_attachments
 
-  has_many  :complete_work, class_name: "Record"
+  #朗读作业
+  has_many  :complete_record_works,   class_name: "Record"
 
+  #创作作业
+  has_many  :complete_creative_works, class_name: "Dynamic"
   has_many  :comments, as: :commentable
 
 

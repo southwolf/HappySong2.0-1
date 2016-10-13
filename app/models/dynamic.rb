@@ -17,6 +17,7 @@ class Dynamic < ActiveRecord::Base
 
   has_many   :reports,    as: :reportable,  dependent: :destroy
 
+  belongs_to :work, ->(){ where(style: "record_work")}
   # has_many   :notifications, as: :targetable
 
   after_commit :async_create_dynamic_notify, on: :create

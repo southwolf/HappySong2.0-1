@@ -6,4 +6,12 @@ module Entities
     expose :articles,              using: ::Entities::SimpleArticle
     expose :work_attachments,      using: ::Entities::Attachment
   end
+
+  class HashWork < Grape::Entity
+    expose (:time) { |object| object[0] }
+    expose (:size) { |object| object[1].size}
+    expose :records, using: Entities::Work do |object|
+        object[1]
+      end
+  end
 end

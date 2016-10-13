@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161011082907) do
+ActiveRecord::Schema.define(version: 20161013065059) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "name",            limit: 255
@@ -222,6 +222,8 @@ ActiveRecord::Schema.define(version: 20161011082907) do
     t.datetime "updated_at"
     t.integer  "likes_count",         limit: 4,   default: 0
     t.integer  "comments_count",      limit: 4,   default: 0
+    t.boolean  "is_work"
+    t.boolean  "work_id"
   end
 
   create_table "editions", force: :cascade do |t|
@@ -379,8 +381,6 @@ ActiveRecord::Schema.define(version: 20161011082907) do
     t.integer  "district_id", limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "verify",                  default: false
-    t.integer  "user_id",     limit: 4
   end
 
   create_table "schools_team_classes", id: false, force: :cascade do |t|

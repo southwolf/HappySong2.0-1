@@ -1,11 +1,11 @@
 module Entities
   class SimpleDynamic < Grape::Entity
-    expose :id, :content, :address, :likes_count
+    expose :id, :content, :address, :likes_count, :is_work
     expose :attachments, using: Entities::Attachment
   end
 
   class Dynamic < SimpleDynamic
-    expose :is_relay, :comments_count, :created_at
+    expose :is_relay, :comments_count, :created_at, :is_work
     expose :user,                    using: Entities::User
     # expose :attachments,             using: Entities::Attachment
     expose :root_dynamic,            using: Entities::SimpleDynamic, if: lambda { |object, options| object.root_dynamic.present?}

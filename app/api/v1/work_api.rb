@@ -38,10 +38,10 @@ module V1
 
       desc "老师发布创作作业要求"
       params do
-        requires :token,                type: String, desc: '用户访问令牌'
-        requires :content,              type: String,   desc: "作业详细要求"
-        optional :picture_keys,         type: String, desc: "图片集合用空格隔开"
-        optional :video_key,            type: String, desc: "视频url"
+        requires :token,                type: String,     desc: '用户访问令牌'
+        requires :content,              type: String,     desc: "作业详细要求"
+        optional :picture_keys,         type: String,     desc: "图片集合用空格隔开"
+        optional :video_key,            type: String,     desc: "视频url"
         requires :start_time,           type: DateTime,   desc: "开始时间"
         requires :end_time,             type: DateTime,   desc: "结束时间"
       end
@@ -57,7 +57,7 @@ module V1
           work = current_user.works.create!( content: content,
                                              start_time:start_time,
                                              end_time: end_time,
-                                             style: "creative")
+                                             style: "creative_work")
           if picture_keys.present?
             picture_keys.split.each do |picture_key|
               work.work_attachments.create(is_video: false, file_url: picture_key)
@@ -75,15 +75,37 @@ module V1
       end
       get '/record_works' do
         authenticate!
-        works = current_user.works.where(style: "record")
+        works = current_user.works.where(style: "record_work")
                                   .includes( :teacher,
                                              :grade_team_classes, :students,
                                              :articles,:work_attachments,
                                              teacher:[:role,:member], students:[:role,:member],
                                              grade_team_classes:[:teacher,:school,:grade,:students, :team_class])
+                                  .reverse
+                                  .group_by{ |work| DateTime.parse(work.created_at.to_s).strftime('%Y-%-m')}.to_a
 
-       present paginate(works), with: ::Entities::Work
+       present paginate(Kaminari.paginate_array(works)), with: ::Entities::HashWork
       end
+
+
+      desc '显示本人发布的创作作业'
+      params do
+        requires :token, type: String, desc: '用户访问令牌'
+      end
+      get '/creative_works' do
+        authenticate!
+        works = current_user.works.where(style: "creative_work")
+                                  .includes( :teacher,
+                                             :grade_team_classes, :students,
+                                             :articles,:work_attachments,
+                                             teacher:[:role,:member], students:[:role,:member],
+                                             grade_team_classes:[:teacher,:school,:grade,:students, :team_class])
+                                  .reverse
+                                  .group_by{ |work| DateTime.parse(work.created_at.to_s).strftime('%Y-%-m')}.to_a
+        present paginate(Kaminari.paginate_array(works)), with: ::Entities::HashWork
+
+      end
+
 
       desc "根据给定班级显示班级学生完成作业情况"
       params do
@@ -107,7 +129,6 @@ module V1
 
       end
 
-
       desc "获取作业的评论列表"
       params do
         requires :work_id, type: Integer, desc: "作业的ID"
@@ -118,6 +139,36 @@ module V1
         comments = work.comments.includes(:own_replys, :user)
 
         present paginate(comments), with: ::Entities::Comment
+      end
+
+      desc "根据用户ID查询用户完成的当前作业"
+      params do
+        requires :user_id, type: Integer, desc: "用户ID"
+        requires :work_id, type: Integer, desc: "作业ID"
+      end
+      get '/complete_work_info' do
+        work = Work.find(params[:work_id])
+        user = User.find(params[:user_id])
+        if work.style == "record_work"
+          result = Record.where(user: user, work: work)
+          present result, with: ::Entities::Record
+        else
+          result = Dynamic.where(user: user, work: work)
+          present result, with: ::Entities::Dynamic
+        end
+      end
+
+
+      desc "家长查看子女已经完成作业情况"
+      params do
+        requires :token, type: String, desc: '用户访问令牌'
+      end
+
+      get '/child_work_infos' do
+        authenticate!
+        current_user.children.each do |child|
+          result = WorkToStudent.where(complete: true, user: child)
+        end
       end
     end
   end

@@ -36,9 +36,9 @@ module V1
         name = params[:name]
         district_id = params[:district_id]
         if School.where(district_id: district_id,name: name).blank?
-          school = current_user.schools.new(district_id: district_id, name: name, verify: false)
+          school = current_user.schools.new(district_id: district_id, name: name)
           if school.save
-            present :message, "申报成功"
+            present school, with: ::Entities::School
           else
             present :message, "申报失败，请重试"
           end
