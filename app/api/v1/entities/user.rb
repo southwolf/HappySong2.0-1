@@ -165,7 +165,7 @@ module Entities
     expose (:followings_count) { |user| user.followings.size }
     #学生的同学数量
     expose :classmates_count, if: ->(user, options){user.role.name=="student"} do |user|
-      if user.classmates.nil
+      if user.classmates.nil?
         "0"
       else
         user.classmates.size
