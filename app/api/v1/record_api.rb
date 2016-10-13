@@ -95,7 +95,8 @@ module V1
           error!("没有找到", 404)
         else
           record.view_count += 1
-          save
+          record.save
+          puts "+1了"
           if current_user
             record.views.create(:viewer_id => current_user.id)
           else
