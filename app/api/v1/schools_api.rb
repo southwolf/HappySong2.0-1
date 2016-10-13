@@ -26,7 +26,7 @@ module V1
 
       desc "申报学校"
       params do
-        requires :auth_token, type: String,   desc: "token"
+        requires :token, type: String,   desc: "token"
         requires :name,       type: String,   desc:"学校名称"
         requires :district_id, type: Integer, desc:"区ID"
       end
