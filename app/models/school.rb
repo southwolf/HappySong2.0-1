@@ -7,7 +7,6 @@ class School < ActiveRecord::Base
 
   has_many :channel_schools
   has_many :channel_users, :through => :channel_schools
-  scope :verify_school, ->{where(verify: true)}
 
   def students
     students = []

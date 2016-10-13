@@ -8,9 +8,9 @@ module V1
       get do
         district_id = params[:district_id].to_i
         if district_id.nil?
-          schools = School.verify_school
+          schools = School
         else
-          schools = School.verify_school.where(district_id: district_id)
+          schools = School.where(district_id: district_id)
         end
         present  schools, with: ::Entities::School
       end
@@ -20,7 +20,7 @@ module V1
         requires :q, type: String, desc: "查询标示"
       end
       get '/by_q'do
-        schools = School.verify_school.where("name LIKE '%#{params[:q]}%'")
+        schools = School.where("name LIKE '%#{params[:q]}%'")
         present schools, with: ::Entities::School
       end
 
