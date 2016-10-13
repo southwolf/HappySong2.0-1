@@ -26,7 +26,7 @@ module V1
 
       desc "申报学校"
       params do
-        requires :token, type: String,   desc: "token"
+        requires :token,      type: String,   desc: "token"
         requires :name,       type: String,   desc:"学校名称"
         requires :district_id, type: Integer, desc:"区ID"
       end
@@ -35,7 +35,7 @@ module V1
         authenticate!
         name = params[:name]
         district_id = params[:district_id]
-        if Scholl.where(district_id: district_id,name: name).blank?
+        if School.where(district_id: district_id,name: name).blank?
           school = current_user.schools.new(district_id: district_id, name: name, verify: false)
           if school.save
             present :message, "申报成功"
