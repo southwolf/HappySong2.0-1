@@ -75,7 +75,7 @@ module Entities
     expose :id, :uid,:phone, :name,:is_first
     expose :role, using: ::Entities::Role
     expose (:avatar) { |object| ENV['QINIUPREFIX']+object.avatar}
-    
+
     expose :school_full_name, if: ->(object, options){ object.try(:role).try(:name) =="teacher" } do |object, options|
       school   = object.grade_team_classes.first.try(:school)
       district = school.try(:district)
@@ -105,6 +105,7 @@ module Entities
 
   class MyProfile < Grape::Entity
     expose :id, :uid, :phone,:desc,:is_first,:auth_token
+    expose :role, using: ::Entities::Role
     expose(:name) do |object|
       object.try(:name) || ""
     end
