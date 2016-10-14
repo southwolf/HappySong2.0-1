@@ -276,6 +276,17 @@ module V1
         present paginate(Kaminari.paginate_array(dynamics)), with: ::Entities::HashDynamic
       end
 
+
+      desc "按月分组取他人动态"
+      params do
+        requires :id, type: Integer, desc: "用户id"
+      end
+      get '/group' do
+        user = User.find(params[:id])
+        dynamics = user.dynamics.order(created_at: :desc).group_by{|dynamic| DateTime.parse(dynamic.created_at.to_s).strftime('%Y-%-m')}.to_a
+
+        present paginate(Kaminari.paginate_array(dynamics)), with: ::Entities::HashDynamic
+      end
       desc "获取好友动态"
       params do
         requires :token, type: String, desc: "用户访问令牌"
