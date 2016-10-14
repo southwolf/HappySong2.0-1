@@ -77,6 +77,7 @@ module V1
        authenticate!
        grade_team_class_id = params[:grade_team_class_id]
        if current_user.update(grade_team_class_id: grade_team_class_id)
+         current_user.invite_user = grade_team_class_id.teacher
          present :message, "加入班级成功！"
        else
          error!({ error: "失败"}, 500)

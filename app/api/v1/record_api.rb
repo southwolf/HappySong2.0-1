@@ -29,6 +29,22 @@ module V1
         end
       end
 
+      desc "更新朗读"
+      params do
+        requires :token,      type: String,  desc: "token"
+        requires :record_id,  type: Integer, desc: "朗读ID"
+        requires :is_public,  type: Boolean, desc: "是否公开"
+        optional :felling,    type: String,  desc: "感想"
+      end
+
+      post '/update_record' do
+        record = Record.find(params[:record_id])
+        is_public = params[:is_public]
+        felling   = params[:felling]
+        record.update( :is_public => is_public,
+                       :felling   => felling)
+      end
+
       desc "举报动态"
       params do
         requires :token,      type: String,  desc: "用户访问令牌"
@@ -220,6 +236,16 @@ module V1
         present paginate(Kaminari.paginate_array(records)), with: ::Entities::HashRecord
       end
 
+      desc "按月分组取个人公开朗读"
+      params do
+        # requires :token, type: String, desc: "用户访问令牌"
+        requires :id, type: Integer, desc: "用户Id"
+      end
+      get '/other_records' do
+        user = User.find(params[:id])
+        records = user.records.where(is_public: true).reverse.group_by{ |record| DateTime.parse(record.created_at.to_s).strftime('%Y-%-m')}.to_a
+        present paginate(Kaminari.paginate_array(records)), with: ::Entities::HashRecord
+      end
       desc "获取教师朗读总篇数"
       params do
         requires :teacher_id, type: Integer, desc: "教师ID"

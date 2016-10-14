@@ -30,14 +30,26 @@ class PingsController < ApplicationController
             bill = Bill.find_by(order_no: order_no)
             # bill.update(:complete => true)
             #完成支付
-            bill.complete
+            if bill.complete
+              #成功就向推荐用户加n个返现计数
+              invite = bill.target_user.one_invite
+              return if invite.nil?
+              invite.cash_back_count += 12
+              invite.save
+            end
             #月费
           elsif event['data']['object']['amount'] == 100
             puts "月费"
             order_no = event['data']['object']['order_no']
             bill = Bill.find_by(order_no: order_no)
             # bill.update(:complete => true)
-            bill.complete
+            if bill.complete
+              invite = bill.target_user.one_invite
+              return if invite.nil?
+              invite.cash_back_count += 1
+              invite.save
+            end
+
           else
             puts "支付失败"
           end

@@ -1,6 +1,7 @@
 class Invite < ActiveRecord::Base
-  belongs_to :user
-  belongs_to :target_user, class_name: 'User'
+
+  belongs_to :target_invite_users, class_name: 'User', foreign_key: 'target_user_id'
+  belongs_to :invite_user, class_name: 'User', foreign_key: 'user_id'
 
   after_commit :inset_data, only: [:create]
 

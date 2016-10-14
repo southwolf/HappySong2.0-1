@@ -70,12 +70,15 @@ class User < ActiveRecord::Base
   has_many   :bills, dependent: :destroy
   has_one    :target_bill, foreign_key: :target_user_id, class_name:'Bill'
 
-  #推荐
-  has_many   :invites, dependent: :destroy
-  has_one    :target_invite, foreign_key: :target_user_id, class_name: 'Invite'
+  #我推荐的人的集合
+  has_many   :invites
+  has_many   :target_invite_users, through: :invites, class_name: 'User'
+
+  #推荐我的人
+  has_one    :one_invite,  class_name: 'Invite', foreign_key: 'target_user_id'
+  has_one    :invite_user, through: :one_invite, class_name: 'User'
 
   #推送通知设置
-
   has_many   :notify_configs, dependent: :destroy
   has_many   :push_actions, through: :notify_configs
 
@@ -92,7 +95,7 @@ class User < ActiveRecord::Base
     if self.try(:role).try(:name) == 'student'
       start_time  = Time.now.to_i
       expire_time = (Time.now + 31.day).to_i
-      Member.create(user: self, member_type: 'month',
+      Member.create(user: self, member_type: 'present',
                     start_time: start_time, expire_time: expire_time)
     end
   end
