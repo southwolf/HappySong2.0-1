@@ -42,7 +42,7 @@ module V1
         is_public = params[:is_public]
         felling   = params[:felling]
         record.update( :is_public => is_public,
-                       :felling   => felling)
+                       :feeling   => felling)
       end
 
       desc "举报动态"
