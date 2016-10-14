@@ -313,11 +313,12 @@ module V1
       paginate per_page: 20
       get '/my_classmate' do
         authenticate!
-        myclassmates = current_user.classmates.reject { |classmate| classmate == current_user  }
+        myclassmates = current_user.classmates
         if myclassmates.nil?
           present  :message, "没有同学！请加入班级"
         else
-          present  paginate(Kaminari.paginate_array(myclassmates)),  with: ::Entities::User
+          result = myclassmates.reject { |classmate| classmate == current_user  }
+          present  paginate(Kaminari.paginate_array(result)),  with: ::Entities::User
         end
       end
 
