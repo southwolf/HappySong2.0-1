@@ -21,7 +21,8 @@ module V1
       get do
         subject_id = params[:subject_id]
         edition_id = params[:edition_id]
-        articles = Article.where(:subject_id => subject_id, :edition_id => edition_id)
+        article_grape_id = params[:article_grape_id]
+        articles = Article.where(:subject_id => subject_id, :edition_id => edition_id,:article_grape_id => article_grape_id)
                           .order(:records_count => :DESC)
         present paginate(articles), with: ::Entities::Article
 
