@@ -183,15 +183,15 @@ module Entities
     expose (:followers_count)  { |user| user.followers.size }
     expose (:followings_count) { |user| user.followings.size }
     #学生的同学数量
-    # expose :classmates_count, if: ->(user, options){user.role.name=="student"} do |user|
-    #   if user.classmates.nil?
-    #     "0"
-    #   else
-    #     user.classmates.size
-    #   end
-    # end
-    # # 老师的班级数量
-    # expose :grade_team_classes_count, if: ->(user, options){ user.role.name="teacher"} { |user| user.grade_team_classes.size}
+    expose :classmates_count, if: ->(user, options){user.role.name=="student"} do |user|
+      if user.classmates.nil?
+        "0"
+      else
+        user.classmates.size
+      end
+    end
+    # 老师的班级数量
+    expose :grade_team_classes_count, if: ->(user, options){ user.role.name="teacher"} { |user| user.grade_team_classes.size}
   end
 
   class MyProfileAddRole < MyProfile

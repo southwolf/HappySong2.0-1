@@ -81,8 +81,7 @@ module V1
       get '/records_info' do
         id = params[:id]
         article = Article.find(id)
-        records = article.records
-
+        records = article.records.includes(:user, :music, :article, user:[:role])
         present paginate(records), with: ::Entities::Record
       end
     end
