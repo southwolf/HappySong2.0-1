@@ -16,12 +16,12 @@ module V1
       params do
         requires :subject_id,       type: Integer, desc:"科目ID"
         requires :edition_id,       type: Integer, desc:"版本ID"
-        requires :article_grape_id, type: Integer, desc: "文章班级ID"
+        requires :article_grade_id, type: Integer, desc: "文章班级ID"
       end
       get do
         subject_id = params[:subject_id]
         edition_id = params[:edition_id]
-        article_grape_id = params[:article_grape_id]
+        article_grade_id = params[:article_grade_id]
         articles = Article.where(:subject_id => subject_id, :edition_id => edition_id,:article_grade_id => article_grade_id)
                           .order(:records_count => :DESC)
         present paginate(articles), with: ::Entities::Article
