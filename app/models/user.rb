@@ -144,7 +144,7 @@ class User < ActiveRecord::Base
   def classmates
     grade_team_class = self.grade_team_class
     return nil if grade_team_class.nil?
-    grade_team_class.students
+    grade_team_class.students.reject { |student| student == self  }
   end
 
   def show_phone
