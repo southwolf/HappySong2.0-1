@@ -72,6 +72,19 @@ module V1
           present article, with: ::Entities::FullArticle
         end
       end
+
+      desc "根据文章ID查看文章的所有朗读作品"
+      paginate per_page: 20
+      params do
+        requires :id, type: Integer, desc: '文章ID'
+      end
+      get '/records_info' do
+        id = params[:id]
+        article = Article.find(id)
+        records = article.records
+
+        present paginate(records), with: ::Entities::Record
+      end
     end
   end
 end
