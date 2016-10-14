@@ -281,7 +281,7 @@ module V1
       params do
         requires :id, type: Integer, desc: "用户id"
       end
-      get '/group' do
+      get '/other_group' do
         user = User.find(params[:id])
         dynamics = user.dynamics.order(created_at: :desc).group_by{|dynamic| DateTime.parse(dynamic.created_at.to_s).strftime('%Y-%-m')}.to_a
 
