@@ -315,7 +315,7 @@ module V1
         authenticate!
         myclassmates = current_user.classmates
         if myclassmates.nil?
-          present  :message, "没有同学！请加入班级"
+          present  myclassmates
         else
           result = myclassmates.reject { |classmate| classmate == current_user  }
           present  paginate(Kaminari.paginate_array(result)),  with: ::Entities::User
