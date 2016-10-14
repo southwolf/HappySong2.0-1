@@ -52,13 +52,10 @@ class Dynamic < ActiveRecord::Base
     tag = Tag.find_by_name(tag_name)
     if self.attachments.nil?
       cover_img = self.user.avatar
-      break
     elsif self.attachments.first.is_video
       cover_img = self.attachments.first.file_url+"?vframe/png/offset/1/w/1280/h/720/rotate/auto"
-      break
     else
       cover_img = self.attachments.first.file_url
-      break
     end
     if tag.nil?
       tag = Tag.create(:name => tag_name, :cover_img => cover_img)
