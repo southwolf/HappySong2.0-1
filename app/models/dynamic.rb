@@ -21,7 +21,11 @@ class Dynamic < ActiveRecord::Base
   # has_many   :notifications, as: :targetable
 
   after_commit :async_create_dynamic_notify, on: :create
+  after_destroy :delete_notification
 
+  def delete_notification
+    Notification.where(targetable: self).destroy_all
+  end
   # 非转发的动态
   scope :not_relay, ->{ where(is_relay: false)}
 

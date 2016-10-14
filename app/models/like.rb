@@ -3,7 +3,7 @@ class Like < ActiveRecord::Base
   belongs_to :like_user, class_name: 'User'
 
   after_commit :async_create_like_notify, on: :create
-
+  
   def async_create_like_notify
     NotifyLikeJob.perform_later(id)
   end

@@ -23,7 +23,11 @@ class Record < ActiveRecord::Base
   # has_many  :notifications, as: :targetable
 
   after_commit :async_create_record_notify, on: :create
+  after_destroy :delete_notification
 
+  def delete_notification
+    Notification.where(targetable: self).destroy_all
+  end
   scope :public_record, -> { where(:is_public => true)}
   def async_create_record_notify
     NotifyRecordJob.perform_later(id)
