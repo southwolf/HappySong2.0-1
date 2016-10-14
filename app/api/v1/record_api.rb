@@ -41,8 +41,12 @@ module V1
         record = Record.find(params[:record_id])
         is_public = params[:is_public]
         felling   = params[:felling]
-        record.update( :is_public => is_public,
+        if record.update( :is_public => is_public,
                        :feeling   => felling)
+          present :message, "更新成功"
+        else
+          present :message, "更新失败"
+        end
       end
 
       desc "举报动态"
