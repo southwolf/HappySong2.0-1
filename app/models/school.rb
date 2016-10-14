@@ -7,6 +7,15 @@ class School < ActiveRecord::Base
   has_many :channel_schools
   has_many :channel_users, :through => :channel_schools
 
+  after_create :update_info
+
+  def update_info
+    grades = Grade.all
+    team_classes = TeamClass.all
+    self.grades << grades
+    self.team_classes << team_classes
+  end
+
   def students
     students = []
     grade_team_classes.each do |grade_team_class|

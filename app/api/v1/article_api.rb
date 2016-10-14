@@ -81,8 +81,10 @@ module V1
       get '/records_info' do
         id = params[:id]
         article = Article.find(id)
-        records = article.records.includes(:user, :music, :article, user:[:role])
-        present paginate(records), with: ::Entities::Record
+        normal_records = article.records.where(:is_demo => true).reverse.includes(:user, :music, :article, user:[:role])
+        demo_records   = article.records.where(:is_demo => true).reverse.includes(:user, :music, :article, user:[:role])
+        records = demo_records + normal_records
+        present paginate(Kaminari.paginate_array(records)), with: ::Entities::Record
       end
     end
   end
