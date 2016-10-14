@@ -42,7 +42,6 @@ module V1
       end
 
       desc "根据文章标题查询文章"
-      paginate per_page: 20
       params do
         optional :q, type: String, desc: "查询标识"
       end
