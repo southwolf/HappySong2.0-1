@@ -95,7 +95,7 @@ class User < ActiveRecord::Base
     if self.try(:role).try(:name) == 'student'
       start_time  = Time.now.to_i
       expire_time = (Time.now + 31.day).to_i
-      Member.create(user: self, member_type: 'present',
+      Member.create(user: self, member_type: 'month',
                     start_time: start_time, expire_time: expire_time)
     end
   end
