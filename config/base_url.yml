@@ -3,4 +3,4 @@ development:
 test:
   shared_url: 'http://localhost:3000/'
 production:
-  shared_url: 'http://120.26.118.28/'
+  shared_url: 'http://abc.happysong.com.cn/'
