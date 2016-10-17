@@ -34,23 +34,38 @@ class Dynamic < ActiveRecord::Base
   end
   def self.push_dynamic_notify(id)
     dynamic = Dynamic.find(id)
-    follower_ids = dynamic.user.follower_ids
-
-    return if dynamic.nil?
-    return if follower_ids.empty?
-    follower_ids.each do |follower_id|
-      Notification.create(
-        user_id: follower_id,
-        actor_id: dynamic.user_id,
-        targetable: dynamic,
-        notice_type: 'dynamic'
+    if dynamic.is_work
+      #完成作业推送通知到老师
+      dynamic.work.teacher.notifications.create(
+        notice_type: 'work_complete',
+        actor:       dynamic.user,
+        targetable: dynamic
       )
+      #推送给家长
+      dynamic.user.parent.notifications.create(
+        notice_type: 'work_complete',
+        actor: dynamic.user,
+        targetable: dynamic
+      )
+    else
+      follower_ids = dynamic.user.follower_ids
+
+      return if dynamic.nil?
+      return if follower_ids.empty?
+      follower_ids.each do |follower_id|
+        Notification.create(
+          user_id: follower_id,
+          actor_id: dynamic.user_id,
+          targetable: dynamic,
+          notice_type: 'dynamic'
+        )
+      end
     end
   end
 
   def addTag tag_name
     tag = Tag.find_by_name(tag_name)
-  
+
     if self.attachments.first.is_video
       cover_img = self.attachments.first.file_url+"?vframe/png/offset/1/w/1280/h/720/rotate/auto"
     else

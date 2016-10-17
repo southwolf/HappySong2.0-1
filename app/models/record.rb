@@ -35,21 +35,36 @@ class Record < ActiveRecord::Base
 
   def self.push_record_notify(id)
     record = Record.find(id)
-    user = record.user
-    follower_ids = user.follower_ids
-    puts record
-    puts follower_ids.to_s
-    return if record.nil?
-    return if follower_ids.empty?
-    return if record.is_public == false
-    follower_ids.each do |follower_id|
-      puts "join"
-      Notification.create(
-        actor_id: record.user_id,
-        user_id:  follower_id,
-        targetable: record,
-        notice_type: "record"
+    if record.is_work
+      #完成作业推送通知到老师
+      record.work.teacher.notifications.create(
+        notice_type: 'work_complete',
+        actor:       record.user,
+        targetable: record
       )
+      #推送给家长
+      record.user.parent.notifications.create(
+        notice_type: 'work_complete',
+        actor: record.user,
+        targetable: record
+      )
+    else
+      user = record.user
+      follower_ids = user.follower_ids
+      puts record
+      puts follower_ids.to_s
+      return if record.nil?
+      return if follower_ids.empty?
+      return if record.is_public == false
+      follower_ids.each do |follower_id|
+        puts "join"
+        Notification.create(
+          actor_id: record.user_id,
+          user_id:  follower_id,
+          targetable: record,
+          notice_type: "record"
+        )
+      end
     end
   end
 end

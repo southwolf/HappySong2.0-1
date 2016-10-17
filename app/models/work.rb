@@ -34,9 +34,9 @@ class Work < ActiveRecord::Base
     #向所布置班级的学生推送作业发布通知
     students.each do |student|
       student.notifications.create(
-        actor: self.user,
+        actor: work.user,
         notice_type: 'work',
-        targetable: self
+        targetable: work
       )
     end
   end
