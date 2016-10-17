@@ -25,18 +25,18 @@ module V1
         end
       end
 
-      # desc "check用户是否注册"
-      # params do
-      #   requires :phone, type: String, desc: "手机号"
-      # end
-      # get '/check' do
-      #   user = User.find_by(phone: params[:phone])
-      #   if user.role.nil?
-      #     present :message, false
-      #   else
-      #     present :message, true
-      #   end
-      # end
+      desc "check用户是否注册"
+      params do
+        requires :phone, type: String, desc: "手机号"
+      end
+      get '/check' do
+        user = User.find_by(phone: params[:phone])
+        if user.role.nil?
+          present :message, false
+        else
+          present :message, true
+        end
+      end
       # 登陆接口
       # http://host/api/v1/users/login?phone=?&&code=?
       # 返回用户信息

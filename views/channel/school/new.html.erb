@@ -1,0 +1,455 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <title>欢乐诵渠道管理系统</title>
+  <%= javascript_include_tag 'application', "data-turbolinks-track" => false %>
+  <link rel="stylesheet" href="/css/lanrenzhijia.css" media="all">
+  <link rel="stylesheet" href="/css/school_baobei.css" media="all">
+  <script src="/dist/js/jquery.min.js"></script>
+  <script src="//cdn.bootcss.com/jquery-json/2.6.0/jquery.json.min.js"></script>
+  <script>
+    jQuery(document).ready(function ($) {
+      $('.theme-login-z').click(function () {
+        $('.theme-popover-mask').fadeIn(100);
+        $('.theme-popover').slideDown(200);
+      })
+      $('.theme-poptit .close').click(function () {
+        $('.theme-popover-mask').fadeOut(100);
+        $('.theme-popover').slideUp(200);
+      })
+    })
+  </script>
+</head>
+
+<body>
+<p class='top'>
+  <span class='p1'>渠道用户数据</span>
+  <span class='s2'><%= current_user.name%>,您好</span>
+  <span class='s1'><%=link_to "退出登录|",channel_session_path,class:'s1', method: :delete, :confirm => "Are you sure ?" %></span>
+  <span class='s1'>  <%= link_to "提现记录|",channel_channel_user_apply_cash_backs_path(current_user), class: 's1' %></span>
+  <span class='s1' id='tx'>申请提现|</span>
+  <%= link_to "学校报备|", new_channel_school_path, class: 's1' %>
+  <%= link_to "个人中心 |",admin_admin_show_path(:id => current_user.id), class: 's1'%>
+  <%= link_to "首页|",channel_root_path, class: 's1' %>
+<div class='clear'></div>
+
+<hr class="hr">
+
+<div style="padding-left:40px;">
+  <div class="search">
+    <div class="first">
+      <span class="noschool">没有想要的学校?</span>
+      <button class='theme-login-z theme-login'>添加学校</button>
+      <a href='/channel/message/channel_baobei' style='margin-left:100px;color:#f14f4b;text-decoration:underline;'>查看报备记录</a>
+
+    </div>
+    <div class="end">
+      筛选:
+
+      <%= select_tag "province", options_from_collection_for_select(Province.all, "id", "name"), prompt: "选择省" %>
+
+      <select id="city">
+        <option>选择市</option>
+      </select>
+
+      <select id="district">
+        <option>选择区(县)</option>
+      </select>
+
+      <select id="school">
+        <option value="">选择学校</option>
+      </select>
+
+      <button class="subbot">
+        确定
+      </button>
+    </div>
+  </div>
+
+  <div class="clear"></div>
+
+  <div class="baobei">
+    报备学校
+  </div>
+
+  <div class="sch">
+    <ul class="preadd">
+    </ul>
+  </div>
+
+  <div class="clear"></div>
+  <div class="submit" id="subapply">提交申请</div>
+  <div class="clear"></div>
+
+</div>
+
+
+<div class="theme-popover">
+  <div class="theme-poptit">
+    <a href="javascript:;" title="关闭" class="close">×</a>
+    <h3>填写信息</h3>
+  </div>
+  <div class="theme-popbod dform">
+    <p>
+      地区:
+      <%= select_tag "p1", options_from_collection_for_select(Province.all, "id", "name"), prompt: "选择省" %>
+
+      <select id="c1">
+        <option>选择市</option>
+      </select>
+
+      <select id="d1">
+        <option value="">选择区(县)</option>
+      </select>
+    </p>
+
+    <p>
+      学校: <input class='inp' id='sname' type='text'>
+    </p>
+
+    <p class="zp">
+      <button class='z-btn-bb' id="subinfo" onclick="sadd()">提交信息</button>
+    </p>
+
+  </div>
+</div>
+<div class="theme-popover-tx">
+  <div class="theme-poptit">
+    <a href="javascript:;" title="关闭" class="close">×</a>
+    <h3>提现</h3>
+  </div>
+  <div class="theme-popbod dform-tx">
+    <p>
+      <span class="pf">支付 宝 账号:</span>
+      <input type="text" id="alipay" class="acount">
+    </p>
+
+    <p style="margin-bottom:0px;">
+      <span class="pf">提&nbsp; 现&nbsp; 金&nbsp; 额:</span> <input class='money' id='money' type='text'> 元
+    <div class="info">可提现金额: <span class="f13f4b" id="cantx">
+
+        <% if @current_user.try(:channel_user_cash_back) %>
+           <%= @current_user.try(:channel_user_cash_back).try(:amount)%>
+        <% else %>
+          0
+        <% end %>
+      </span>元
+    </div>
+    </p>
+
+    <p>
+      <span class="pf">提&nbsp; 现&nbsp; 信&nbsp; 息:</span> <span class='money1' id="txinfo">0元</span>
+    <div class="ipf" style="display:none"><img src="/dist/tan.png"></div>
+    </p>
+
+    <p class="zp">
+      <button class='z-btn'>提交申请</button>
+    </p>
+
+  </div>
+</div>
+<div class="theme-popover-mask"></div>
+
+
+<div class='footer'>
+  Copyright ©2016-2018 欢乐诵
+</div>
+
+<script>
+
+  //添加新学校
+  function sadd() {
+
+    var d1_name = $('#d1').val();
+
+    if (d1_name == '') {
+      alert('请先选择区域');
+      return false;
+    }
+
+
+    if ($.trim($('#sname').val()) == '') {
+      alert('请输入学校');
+      return false;
+    }
+
+    //获取省市区学校的名字
+    var p1_name = $("#p1").find("option:selected").text()
+    var c1_name = $('#c1').find("option:selected").text()
+    var d1_name = $('#d1').find("option:selected").text()
+    var s1_name = $('#sname').val();
+    var info1 = p1_name + c1_name + d1_name;
+    var dist_id = $('#d1').val();
+
+    $.ajax({
+      type: "post",
+      url: '/channel/school/schoolAdd',
+      dataType: 'text',
+      data: {name: s1_name, district_id: dist_id},
+      success: function (msg) {
+
+        if (msg == 'token') {
+          alert('该学校已经存在');
+          return false;
+        }
+
+        if (msg == 'fail') {
+          alert('失败,请重试');
+          return false;
+        }
+
+        var con = "<li class='add'><span class='addschool' id='" + msg + "'>" + s1_name + "</span><span>" + info1 + "</span><span><img class='conimg' src='/dist/close.png'></span></li>";
+        $('.preadd').append(con);
+        $('.conimg').click(function () {
+          $(this).parent().parent().remove();
+        })
+      }
+    });
+  }
+
+  //省市区学校
+  $(function () {
+
+    var province = $('#province');
+
+    var city = $('#city');
+
+    var district = $('#district');
+
+    province.change(function (event) {
+      var province_id = province.val();
+
+      if (province_id == " ") {
+        return false;
+      }
+
+      $.ajax({
+        url: '/api/v1/cities',
+        method: 'GET',
+        data: {province_id: province_id},
+        dataType: "json",
+        success: function (data) {
+          var city = $("#city");
+          city.empty();
+          var dom = '<option value="">选择市</option>';
+          $.each(data, function (k, v) {
+            dom += "<option value=" + v.id + ">" + v.name + "</option>";
+          });
+
+          city.append(dom);
+        }
+      })
+
+    });
+
+    city.change(function (event) {
+      console.log("city change")
+      var city_id = city.val();
+      if (city_id == " ")
+        return
+      else {
+        $.ajax({
+          url: '/api/v1/districts',
+          method: 'GET',
+          data: {city_id: city_id},
+          dataType: "json",
+          success: function (data) {
+            var district = $("#district");
+            district.empty();
+            var dom = '<option value="">选择区(县)</option>';
+            $.each(data, function (k, v) {
+              dom += "<option value=" + v.id + ">" + v.name + "</option>";
+            });
+
+            district.append(dom);
+          }
+        })
+      }
+
+    });
+
+    district.change(function (event) {
+      console.log("city change")
+      var district_id = district.val();
+      if (district_id == " ")
+        return
+      else {
+        $.ajax({
+          url: '/api/v1/school_manager/school/search',
+          method: 'GET',
+          data: {district_id: district_id},
+          dataType: "json",
+          success: function (data) {
+            var school = $("#school");
+            school.empty();
+            var dom = '<option value="">选择学校</option>';
+            $.each(data, function (k, v) {
+              dom += "<option value=" + v.id + ">" + v.name + "</option>";
+            });
+
+            school.append(dom);
+          }
+        })
+      }
+
+    });
+  })
+
+  //append 将要报备的信息到下边的框框中
+  $('.subbot').click(function () {
+
+    if($('#school').val() == ''){
+      alert('请选择学校,若没有该学校,请点击上方的添加学校');
+      return false;
+    }
+
+    //学校的id
+    var s_id = $('#school').val();
+
+    if ($("#" + s_id).length > 0) {
+      return false;
+    }
+
+    if (!checkSchool(s_id)) {
+      alert('该学校已经报备,或正在审核中,请联系管理员');
+      return false;
+    }
+
+    //获取省市区学校的名字
+    var p_name = $("#province").find("option:selected").text()
+    var c_name = $('#city').find("option:selected").text()
+    var d_name = $('#district').find("option:selected").text()
+    var s_name = $('#school').find("option:selected").text()
+
+    if (s_name == '选择学校') {
+      return false;
+    }
+
+    var info = p_name + c_name + d_name;
+
+    var con = "<li class='add'><span class='addschool' id='" + s_id + "'>" + s_name + "</span><span>" + info + "</span><span><img class='conimg' src='/dist/close.png'></span></li>";
+    $('.preadd').append(con);
+
+    $('.conimg').click(function () {
+      $(this).parent().parent().remove();
+    })
+
+  })
+
+  //开始插入数据库
+  $('#subapply').click(function () {
+
+    var ids = [];
+
+    $('.addschool').each(function () {
+      ids.push($(this).attr('id'));
+    })
+
+    if (ids.length == 0) {
+      alert('请先添加学校');
+      return false;
+    }
+
+    $.ajax({
+      type: "post",
+      url: '/channel/school/addSchool',
+      dataType: 'text',
+      data: {ids: $.toJSON(ids)},
+      success: function () {
+        alert('申请成功,等待管理员审核,谢谢');
+        window.location.reload()
+      }
+    });
+
+  })
+
+  //check学校是否已经报备  return true or false
+  function checkSchool(obj) {
+    var result = false;
+    $.ajax({
+      type: "post",
+      url: '/channel/school/checkSchool',
+      async: false,
+      dataType: 'text',
+      data: {school_id: obj},
+      success: function (date) {
+        if (date == 'yes') {
+          result = false;
+        } else {
+          result = true;
+        }
+      }
+    });
+
+    return result;
+
+  }
+
+  //弹出框 省市区
+  $(function () {
+
+    var p1 = $('#p1');
+
+    var c1 = $('#c1');
+
+    var d1 = $('#d1');
+
+    p1.change(function (event) {
+      var province_id = p1.val();
+
+      if (province_id == " ") {
+        return false;
+      }
+
+      $.ajax({
+        url: '/api/v1/cities',
+        method: 'GET',
+        data: {province_id: province_id},
+        dataType: "json",
+        success: function (data) {
+          var c1 = $("#c1");
+          c1.empty();
+          var dom = '<option value="">选择市</option>';
+          $.each(data, function (k, v) {
+            dom += "<option value=" + v.id + ">" + v.name + "</option>";
+          });
+
+          c1.append(dom);
+        }
+      })
+
+    });
+
+    c1.change(function (event) {
+      console.log("city change")
+      var city_id = c1.val();
+      if (city_id == " ")
+        return
+      else {
+        $.ajax({
+          url: '/api/v1/districts',
+          method: 'GET',
+          data: {city_id: city_id},
+          dataType: "json",
+          success: function (data) {
+            var d1 = $("#d1");
+            d1.empty();
+            var dom = '<option value="">选择区(县)</option>';
+            $.each(data, function (k, v) {
+              dom += "<option value=" + v.id + ">" + v.name + "</option>";
+            });
+
+            d1.append(dom);
+          }
+        })
+      }
+
+    });
+
+  })
+
+</script>
+
+<script src="/dist/js/tx.js"></script>
+</body>
+</html>

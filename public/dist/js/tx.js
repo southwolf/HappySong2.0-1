@@ -58,7 +58,9 @@ jQuery(document).ready(function ($) {
             },
             type: 'post',
             dateType: 'json',
-            success: function (data) {
+            success: function(data){
+
+                console.log(data == 'success')
                 if(data =='success'){
                     alert('申请成功!');
                     location.reload();
@@ -68,6 +70,9 @@ jQuery(document).ready(function ($) {
                     alert('申请失败!请重新申请');
                     return false;
                 }
+            },
+            error: function(){
+                alert('网络错误')
             }
 
         })
@@ -75,17 +80,16 @@ jQuery(document).ready(function ($) {
     })
 
 
-    $("#money").blur(function () {
+    $("#money").keyup(function () {
 
         var cantx = parseFloat($('#cantx').text());
 
         var willtx = parseFloat($(this).val());
 
         if (isNaN(willtx)) {
-            alert("请输入1-" + cantx + '之间的数字')
+           $('#txinfo').text('0元')
             return false;
         }
-
 
         $('#txinfo').text(willtx + '元')
 

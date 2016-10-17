@@ -3,8 +3,11 @@
     padding: 0;
 }
 
+a{
+    text-decoration: none;
+}
 .top {
-    heigth: 30px;
+    height: 30px;
     width: 100%;
     margin-top: 20px;
 }
@@ -20,7 +23,7 @@
     font-size: 14px;
     display: block;
     color: #333333;
-    width: 100px;
+    width: 80px;
     height: 30px;
     line-height: 30px;
     float: right;

@@ -1,0 +1,130 @@
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <title>欢乐诵渠道管理系统</title>
+  <!--提现的样式-->
+  <link rel="stylesheet" href="/css/lanrenzhijia.css" media="all">
+  <link rel="stylesheet" href="/css/qd_welcome.css" media="all">
+  <script src="/dist/js/jquery.min.js"></script>
+  <%= javascript_include_tag 'application', "data-turbolinks-track" => false %>
+
+</head>
+
+<body style='border-top:2px solid red;'>
+<p class='top'>
+  <span class='p1'>渠道用户数据</span>
+  <span class='s2'><%= current_user.name%>,您好</span>
+  <span class='s1'><%=link_to "退出登录|",channel_session_path,class:'s1', method: :delete, :confirm => "Are you sure ?" %></span>
+  <span class='s1'>  <%= link_to "提现记录|",channel_channel_user_apply_cash_backs_path(current_user), class: 's1' %></span>
+  <span class='s1' id='tx'>申请提现|</span>
+  <span class='s1'> <%= link_to "学校报备|", new_channel_school_path %></span>
+  <%= link_to "个人中心 |",admin_admin_show_path(:id => current_user.id), class: 's1' %>
+  <%= link_to "首页|",channel_root_path, class: 's1' %>
+<div class='clear'></div>
+</p>
+<div>
+  <p class='hc l'><%= current_user.name %>, 您好</p>
+  <p class='l' style='margin-top:45px;margin-left:15px;'>
+    <sub style="width:250px;height:auto;display:block">你一共报备了<%= @schoolsCount %>
+      所学校，<%= link_to "添加新学校?", new_channel_school_path %></sub></p>
+  <div class='clear'></div>
+</div>
+
+<div>
+  <div class='l' style='width:630px;min-height:430px;padding-left:40px;'>
+    <p class='bao'>您报备的学校用用户数据详情</p>
+    <div style="min-height:340px">
+      <% @schools.each do |school| %>
+          <a href="付费详情界面.html">
+            <div class='xl w_bb'>
+              <div class='l' style=''>
+                <p class="w_school"><%= school.school.try(:district).try(:name)+school.school.name %></p>
+                <p class="w_dist"><%= school.school.try(:district).try(:city).try(:name) + school.school.try(:district).try(:name) %></p>
+              </div>
+
+              <div class='l' ;>
+                <p class="w_num"><%= school.school.vip_count %></p>
+                <p class="w_reg">已注册: <%= school.school.user_count %></p>
+              </div>
+
+              <div class="w_info">
+                <%= link_to channel_school_path(school.school_id) do %>
+                    <img src="/dist/info.png" width="76" height="69"/>
+                <% end %>
+              </div>
+            </div>
+          </a>
+
+      <% end %>
+    </div>
+    <div class='clear'></div>
+    <div class='railspage'>
+      <%= paginate @schools %>
+    </div>
+  </div>
+
+<!-- 
+  搜索
+  <div style='float:left;min-height:200px;width:350px;margin-left:60px'>
+    <p style='font-size:16px;'>快速查找你要查看的信息</p>
+    <p style='font-size:12px;margin-top:15px'>根据地区,学校名称进行搜素，在文本框内输入信息</p>
+    <p>
+      <input class="w_search">
+      <button style='width:45px;height:35px;background:url(./dist/search.png) no-repeat;border:none;border-radius:3px;position:relative;left:-52px;top:0.5px;'>
+        &nbsp;</button>
+    </p>
+  </div>
+ -->
+  <div class='clear'></div>
+</div>
+
+<div class='minfo'>
+  注册总计: <span class='f13f4b'><%= current_user.user_count%>人</span> 总收益: <span class='f13f4b'>￥<%= @totalAmount%></span> 可提现: <span class='f13f4b'>￥<%= @canApply%></span>
+</div>
+
+<!---begin提现-->
+<div class="theme-popover-tx">
+  <div class="theme-poptit">
+    <a href="javascript:;" title="关闭" class="close">×</a>
+    <h3>提现</h3>
+  </div>
+  <div class="theme-popbod dform-tx">
+    <p>
+      <span class="pf">支付 宝 账号:</span>
+      <input type="text" id="alipay" class="acount">
+    </p>
+
+    <p style="margin-bottom:0px;">
+      <span class="pf">提&nbsp; 现&nbsp; 金&nbsp; 额:</span> <input class='money' id='money' type='text'> 元
+    <div class="info">可提现金额: <span class="f13f4b" id="cantx">
+
+        <% if @current_user.try(:channel_user_cash_back) %>
+           <%= @current_user.try(:channel_user_cash_back).try(:amount) || 0 %>
+        <% else %>
+          0
+        <% end %>
+      </span>元
+    </div>
+    </p>
+
+    <p>
+      <span class="pf">提&nbsp; 现&nbsp; 信&nbsp; 息:</span> <span class='money1' id="txinfo">0元</span>
+    <div class="ipf" style="display:none"><img src="/dist/tan.png"></div>
+    </p>
+
+    <p class="zp">
+      <button class='z-btn'>提交申请</button>
+    </p>
+
+  </div>
+</div>
+<div class="theme-popover-mask"></div>
+<!---end-->
+
+<div class='footer'>
+  Copyright ©2016-2018 欢乐诵
+</div>
+
+<script src="/dist/js/tx.js"></script>
+
+</body>
+</html>

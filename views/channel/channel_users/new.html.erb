@@ -1,0 +1,229 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <link rel="stylesheet" href="/css/lanrenzhijia.css" media="all">
+  <script src="/dist/js/jquery.min.js"></script>
+  <%= javascript_include_tag 'application', "data-turbolinks-track" => false %>
+  <link rel="stylesheet" href="/css/school_fufeixiangqing.css" media="all">
+  <style>
+
+
+
+
+
+    h1 {
+      font-size: 18px;
+      color: #666666;
+      text-align: left;
+      margin: 40px;
+    }
+
+    div {
+      margin-left: 40px;
+    }
+
+    select {
+      /*Chrome和Firefox里面的边框是不一样的，所以复写了一下*/
+
+      /*很关键：将默认的select选择框样式清除*/
+      appearance: none;
+      -moz-appearance: none;
+      -webkit-appearance: none;
+
+      /*为下拉小箭头留出一点位置，避免被文字覆盖*/
+      margin-right: 15px;
+
+      width: 100px;
+      height: 35px;
+      margin-bottom:4px;
+      padding: 0 15px;
+      border-radius: 0px;
+      background: #ffffff;
+      border: 1px solid rgb(238, 238, 238);
+
+
+    }
+
+    .inp {
+      width: 200px;
+      height: 35px;
+      padding-left: 10px;
+      margin:5px;
+      margin-left:20px;
+      border-radius:1px;
+      border:1px solid #f1f1f1;
+    }
+
+    .btn {
+      width: 70px;
+      height: 35px;
+      line-height: 35px;
+      background: #f2f2f2;
+      color: #666666;
+      border-radius:2px;
+      text-align:center;
+      font-size:14px;
+      border:1px solid #f1f1f1;
+      margin-top:30px;
+
+    }
+
+      form{
+        margin-left:40px;
+      }
+
+      .s1{
+        width:90px;
+      }
+  </style>
+
+  <title>欢乐诵渠道管理系统</title>
+
+</head>
+
+<body style='border-top:2px solid red;'>
+
+<p class="top">
+  <span class="p1">系统管理员</span>
+  <span class="s2"><%= current_user.name %>,您好</span>
+  <span class="s1"><%= link_to "添加渠道商 |", new_channel_channel_user_path, class: 's1' %></a>
+  </span><span class="s1"><%= link_to "退出登录 |", channel_session_path, class: 's1', method: :delete, :confirm => "Are you sure ?" %></span>
+  <span class="s1" style="color:#ff5c5c"> <%= link_to "转账记录 |", channel_channel_user_transfers_path(current_user), class: 's1' %></span>
+  <%= link_to "首页|",admin_root_path, class: 's1' %>
+  <div class='clear'></div>
+</p>
+
+
+<hr style='background:#f7f7f7;height:5px;opacity:0.8;border-top:none;margin:20px 0px'/>
+
+<div class="page-container">
+  <h1>添加渠道商</h1>
+  <% if :nocice %>
+      <p class="breadcrumb" style="margin-left:40px;"><%= notice %></p>
+  <% end %>
+  <form action="/channel/channel_users/create" method="post">
+    姓名: <input type="text" name="name" id='name' class="inp" ><br/>
+    邮箱: <input type="text" name="email" id='email' class="inp" ><br/>
+    手机: <input type="text" name="phone" id='phone' class="inp" ><br/>
+    密码: <input type="password" name="password" id='password' class="inp" ><br/>
+    类型:
+    <select name="type" id="company">
+      <option value="1">公司</option>
+      <option value="0">个人</option>
+    </select>
+    <br/>
+    区域:
+
+    <%= select_tag "province", options_from_collection_for_select(Province.all, "id", "name"), prompt: "选择省" %>
+
+
+    <select name="city" id="city">
+      <option value="">选择市</option>
+    </select>
+
+    <select name="district" id="district">
+      <option value="">选择区(县)</option>
+    </select>
+
+    <br/>
+
+
+    <button type="submit" id="sub" class="btn">添加</button>
+
+  </form>
+</div>
+
+<script>
+
+  $('#province, #company').css('margin-left','20px')
+
+
+  $('#sub').click(function () {
+    if ($.trim($("#name").val()) == '') {
+      alert('请填写姓名!')
+      return false;
+    }
+
+    if ($.trim($("#email").val()) == '') {
+      alert('请填写邮箱!')
+      return false;
+    }
+
+    if ($.trim($("#phone").val()) == '') {
+      alert('请填写手机号!')
+      return false;
+    }
+
+    if ($.trim($("#password").val()) == '') {
+      alert('请填写密码!')
+      return false;
+    }
+
+    if ($.trim($("#district").val()) == '') {
+      alert('请选择区域!')
+      return false;
+    }
+
+
+
+  })
+
+</script>
+
+
+<script>
+
+  var province = $("#province"),city = $("#city");
+  province.change(function(event){
+    var province_id = province.val();
+    if (province_id == " ")
+      return
+    else{
+      $.ajax({
+        url: '/api/v1/cities',
+        method:'GET',
+        data: { province_id: province_id},
+        dataType: "json",
+        success: function(data){
+          var city = $("#city");
+          city.empty();
+          var dom = '<option value="">选择市</option>';
+          $.each(data, function(k, v){
+            dom += "<option value=" + v.id + ">" + v.name +"</option>";
+          });
+          city.append(dom);
+        }
+      })
+    }
+  });
+
+  city.change(function(event){
+    console.log("city change")
+    var city_id = city.val();
+    if (city_id == " ")
+      return
+    else{
+      $.ajax({
+        url:'/api/v1/districts',
+        method: 'GET',
+        data: { city_id : city_id},
+        dataType: "json",
+        success: function(data){
+          var district = $("#district");
+          district.empty();
+          var dom ='<option value="">选择区(县)</option>';
+          $.each(data, function(k, v){
+            dom += "<option value="+ v.id + ">" + v.name + "</option>";
+          });
+          district.append(dom);
+        }
+      })
+    }
+
+  });
+
+
+</script>
+
+</body>
+</html>

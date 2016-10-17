@@ -1,0 +1,293 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<script src="/dist/js/jquery.min.js"></script>
+<title>渠道用户注册</title>
+<style type="text/css">
+.h1 {
+	font-size: 34px;
+	color: #ff5c5c;
+	text-align:center
+}
+.p {
+	color: #333333;
+}
+#form1 p {
+	text-align: center;
+}
+
+#form1 p input, .type{
+	width:300px;
+	height:40px;
+	border-radius:1px;
+	padding-left:5px;
+
+}
+
+.type{
+  width:310px;
+  height:37px;
+}
+
+.p span {
+	font-size: 20px;
+}
+
+#submit{
+	background: #ff5c5c;
+	color:#FFF;
+	font-size:20px;
+	border-radius:1px;
+}
+
+a{
+	font-size:16px;
+	text-decoration:none;
+	color:#666666
+}
+
+input{
+  border:1px solid #f1f1f1;
+}
+
+select {
+    /*Chrome和Firefox里面的边框是不一样的，所以复写了一下*/
+    border: solid 1px #666666;
+
+    /*很关键：将默认的select选择框样式清除*/
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+
+    /*在选择框的最右侧中间显示小箭头图片*/
+    background: url("http://ourjs.github.io/static/2015/arrow.png") no-repeat scroll right center transparent;
+
+    /*为下拉小箭头留出一点位置，避免被文字覆盖*/
+    padding-right: 10px;
+    padding-left: 10px;
+    width: 100px;
+    height: 37px;
+    font-size: 12px;
+    border-radius: 2px;
+    border:1px solid #F1F1F1;
+
+
+}
+
+.info{
+	font-size:14px;
+	color:#f13f4b;
+	font-weight:bold;
+	
+}
+
+.re-info{
+	font-size:14px;
+	color:#f13f4b;
+	font-weight:bold;
+	
+}
+
+
+</style>
+</head>
+
+<body>
+<hr align="center" size='3' style="background:#ff5c5c;margin-bottom:70px"/>
+<h2 class="h1" >欢乐诵渠道管理平台</h2>
+<p align='center' class="p"><span>注册</span></p>
+<p align='center' class="info" style='display:none'>密码不能为空</p>
+<% if :notice && notice=='success' %>
+	<script>
+		alert('注册成功，现在去登录！');
+		location.href='/channel/session/new';
+	</script>
+<% end %>
+
+<% if :notice %>
+	<p align='center' class="re-info"><%= notice %></p>
+<% end %>
+<form id="form1" action="/channel/sessions/doreg" name="form1" method="post" action="">
+  <p>
+    <input type="text" name="name" id="name" placeholder='请输入姓名' />
+  </p>
+
+  <p>
+    <input type="text" name="email" id="email" placeholder='请输入邮箱' />
+  </p>
+
+   <p>
+    <input type="text" name="phone" id="phone" placeholder='请输入手机号' />
+  </p>
+
+
+  <p>
+    <input type="password" name="password" id="password" placeholder='请输入密码'/>
+  </p>
+  
+  <p>
+      <%= select_tag "province", options_from_collection_for_select(Province.all, "id", "name"), prompt: "选择省" %>
+      <select id="city">
+        <option>选择市</option>
+      </select>
+
+      <select id="district" name='district'>
+        <option>选择区(县)</option>
+      </select>
+  </p>
+
+  <p>
+    <select name="type" id="company" class='type'>
+      <option value=''>选择类型</option>
+      <option value="1">公司</option>
+      <option value="0">个人</option>
+    </select>
+  </p>
+
+  <p>
+    <input type="submit" style='width:310px' name="submit" id="submit" value="注册" />
+  </p>
+  <p>
+  	<a href='/channel/session/new'>登录？</a>
+  </p>
+</form>
+
+
+<script type="text/javascript">
+	//省市区学校
+  $(function () {
+
+    var province = $('#province');
+
+    var city = $('#city');
+
+    var district = $('#district');
+
+    province.change(function (event) {
+      var province_id = province.val();
+
+      if (province_id == " ") {
+        return false;
+      }
+
+      $.ajax({
+        url: '/api/v1/cities',
+        method: 'GET',
+        data: {province_id: province_id},
+        dataType: "json",
+        success: function (data) {
+          var city = $("#city");
+          city.empty();
+          var dom = '<option value="">选择市</option>';
+          $.each(data, function (k, v) {
+            dom += "<option value=" + v.id + ">" + v.name + "</option>";
+          });
+
+          city.append(dom);
+        }
+      })
+
+    });
+
+    city.change(function (event) {
+      console.log("city change")
+      var city_id = city.val();
+      if (city_id == " ")
+        return
+      else {
+        $.ajax({
+          url: '/api/v1/districts',
+          method: 'GET',
+          data: {city_id: city_id},
+          dataType: "json",
+          success: function (data) {
+            var district = $("#district");
+            district.empty();
+            var dom = '<option value="">选择区(县)</option>';
+            $.each(data, function (k, v) {
+              dom += "<option value=" + v.id + ">" + v.name + "</option>";
+            });
+
+            district.append(dom);
+          }
+        })
+      }
+
+    });
+
+    district.change(function (event) {
+      console.log("city change")
+      var district_id = district.val();
+      if (district_id == " ")
+        return
+      else {
+        $.ajax({
+          url: '/api/v1/school_manager/school/search',
+          method: 'GET',
+          data: {district_id: district_id},
+          dataType: "json",
+          success: function (data) {
+            var school = $("#school");
+            school.empty();
+            var dom = '<option value="">选择学校</option>';
+            $.each(data, function (k, v) {
+              dom += "<option value=" + v.id + ">" + v.name + "</option>";
+            });
+
+            school.append(dom);
+          }
+        })
+      }
+
+    });
+  })
+</script>
+
+<script type="text/javascript">
+	$('#submit').click(function(){
+		var name=$('#name').val();
+		var email=$('#email').val();
+		var phone=$('#phone').val();
+		var password=$('#password').val();
+		var type=$('#company').val();
+		var district_id=$('#district').val();
+
+		if($.trim(name)==''){
+			$('.info').html('请输入姓名').fadeIn(2000).hide(2000)
+			return false;
+		}
+
+		var reg = /\w+[@]{1}\w+[.]\w+/;
+	    if(!reg.test(email)){
+	    	$('.info').html('请输入正确的Email地址').fadeIn(2000).hide(2000)
+	    	return false;
+	    }
+
+		if($.trim(phone)==''){
+			$('.info').html('请输入手机号').fadeIn(2000).hide(2000)
+			return false;
+		}
+
+		if($.trim(password)=='' || password.length < 6){
+			$('.info').html('请输入至少6位的密码').fadeIn(2000).hide(2000)
+			return false;
+		}
+
+		if($.trim(type)==''){
+			$('.info').html('请选择类型').fadeIn(1000).hide(2000)
+			return false;
+		}
+
+		if(district_id=='选择区(县)'){
+			$('.info').html('请选择区域').fadeIn(1000).hide(2000)
+			return false;
+		}
+
+		
+	})
+</script>
+
+</body>
+</html>

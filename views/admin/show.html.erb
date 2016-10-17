@@ -1,0 +1,290 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <script src="/dist/js/jquery.min.js"></script>
+  <%= javascript_include_tag 'application', "data-turbolinks-track" => false %>
+  <link rel="stylesheet" href="/css/school_fufeixiangqing.css" media="all">
+  <style>
+
+
+    h1 {
+      font-size: 18px;
+      color: #666666;
+      text-align: left;
+      margin: 40px;
+    }
+
+    div {
+      margin-left: 40px;
+    }
+
+    select {
+      /*Chrome和Firefox里面的边框是不一样的，所以复写了一下*/
+
+      /*很关键：将默认的select选择框样式清除*/
+      appearance: none;
+      -moz-appearance: none;
+      -webkit-appearance: none;
+
+      /*为下拉小箭头留出一点位置，避免被文字覆盖*/
+      margin-right: 15px;
+
+      width: 200px;
+      height: 35px;
+      padding: 0 15px;
+      -moz-border-radius: 6px;
+      -webkit-border-radius: 6px;
+      border-radius: 0px;
+      background: #ffffff;
+      border: 1px solid rgb(238, 238, 238);
+      margin-left: 20px;
+
+    }
+
+    .inp {
+      width: 200px;
+      height: 35px;
+      margin-left: 20px;
+      padding-left: 10px;
+    }
+
+    .delbtn {
+      width: 100px;
+      height: 35px;
+      line-height: 35px;
+      background: #f13f4b;
+      color: #ffffff;
+      border-radius: 5px;
+      text-align: center;
+      margin-top: 25px;
+      font-size: 14px;
+      border: 1px solid #f1f1f1;
+      float: right;
+    }
+
+    .btn {
+      width: 70px;
+      height: 35px;
+      line-height: 35px;
+      background: #f2f2f2;
+      color: #666666;
+      border-radius: 2px;
+      text-align: center;
+      margin-top: 25px;
+      font-size: 14px;
+      border: 1px solid #f1f1f1;
+    }
+
+      .topdiv{
+        width:80%;
+        height:40px;
+        margin:0px;
+      }
+
+      .s1{
+        width:90px;
+      }
+  </style>
+
+  <title>欢乐诵渠道管理系统</title>
+
+</head>
+
+<body style='border-top:2px solid red;height:auto'>
+
+<% if current_user.admin? %>
+  <p class="top">
+    <span class="p1">修改信息</span>
+    <span class="s2"><%= current_user.name %>,您好</span>
+    <span class="s1"><%= link_to "添加渠道商 |", new_channel_channel_user_path, class: 's1' %></a>
+    </span><span class="s1"><%= link_to "退出登录 |", channel_session_path, class: 's1', method: :delete, :confirm => "Are you sure ?" %></span>
+    <span class="s1" style="color:#ff5c5c"> <%= link_to "转账记录 |", channel_channel_user_transfers_path(current_user), class: 's1' %></span>
+    <%= link_to "首页|", admin_root_path, class: 's1' %>
+  <div class='clear'></div>
+  </p>
+<% else %>
+  <p class='top'>
+  <span class='p1'>渠道用户数据</span>
+  <span class='s2'><%= current_user.name%>,您好</span>
+  <span class='s1'><%=link_to "退出登录|",channel_session_path,class:'s1', method: :delete, :confirm => "Are you sure ?" %></span>
+  <span class='s1'>  <%= link_to "提现记录|",channel_channel_user_apply_cash_backs_path(current_user), class: 's1' %></span>
+ 
+ <%= link_to "学校报备|", new_channel_school_path, class: 's1' %>
+  <%= link_to "个人中心 |",admin_admin_show_path, class: 's1' %>
+  <%= link_to "首页|",channel_root_path, class: 's1' %>
+  <div class='clear'></div>
+<% end %>
+
+
+<hr style='background:#f7f7f7;height:5px;opacity:0.8;border-top:none;margin:20px 0px'/>
+
+<div class="topdiv">
+  <h1>修改基本商信息</h1>
+  <% if current_user.admin? %>
+      <button class="delbtn">删除该渠道商</button>
+  <% end %>
+</div>
+
+<% if :notice %>
+    <p style="margin:40px;color:#f13f4b"><%= notice %></p>
+<% end %>
+
+<div>
+  <%= form_for(@channel_user, url: admin_admin_update_path(:id => @channel_user.id)) do |f| %>
+
+      <p>
+        <%= f.label '名称:' %>
+        <%= f.text_field :name, class: 'inp' %>
+      </p>
+
+      <p>
+        <%= f.label '邮箱:' %>
+        <%= f.text_field :email, class: 'inp' %>
+      </p>
+
+
+      <p>
+        <%= f.label '手机:' %>
+        <%= f.text_field :phone, class: 'inp' %>
+      </p>
+
+      <p>
+        <%= f.label '类型:' %>
+        <%= f.select :company, @com %>
+      </p>
+
+      <p>
+        <%= f.label '密码:' %>
+        <%= f.password_field :password, class: 'inp' %>
+      </p>
+
+      <p>
+        <%= f.submit '修改', class: 'btn' %>
+      </p>
+  <% end %>
+</div>
+
+<h1>修改渠道商所在区域</h1>
+
+<p style="margin:40px;color:#f13f4b" id="info"></p>
+
+<div style="margin-left:20px">
+  <%= select_tag "province", options_from_collection_for_select(Province.all, "id", "name"), prompt: "选择省" %>
+
+  <br/>
+  <select name="city" id="city">
+    <option value="">选择市</option>
+  </select>
+  <br/>
+  <select name="district" id="district">
+    <option value="">选择区(县)</option>
+  </select>
+
+
+</div>
+<button class="btn qysub" style="margin-left:40px;margin-bottom: 150px">修改</button>
+
+<script>
+
+  var province = $("#province"), city = $("#city");
+  province.change(function (event) {
+    var province_id = province.val();
+    if (province_id == " ")
+      return
+    else {
+      $.ajax({
+        url: '/api/v1/cities',
+        method: 'GET',
+        data: {province_id: province_id},
+        dataType: "json",
+        success: function (data) {
+          var city = $("#city");
+          city.empty();
+          var dom = '<option value="">选择市</option>';
+          $.each(data, function (k, v) {
+            dom += "<option value=" + v.id + ">" + v.name + "</option>";
+          });
+          city.append(dom);
+        }
+      })
+    }
+  });
+
+  city.change(function (event) {
+    console.log("city change")
+    var city_id = city.val();
+    if (city_id == " ")
+      return
+    else {
+      $.ajax({
+        url: '/api/v1/districts',
+        method: 'GET',
+        data: {city_id: city_id},
+        dataType: "json",
+        success: function (data) {
+          var district = $("#district");
+          district.empty();
+          var dom = '<option value="">选择区(县)</option>';
+          $.each(data, function (k, v) {
+            dom += "<option value=" + v.id + ">" + v.name + "</option>";
+          });
+          district.append(dom);
+        }
+      })
+    }
+
+  });
+
+
+</script>
+
+<script>
+  $('.qysub').click(function () {
+
+    if ($('#district').val() == '') {
+      $('#info').html('请先选择区域').show(300).delay(3000).hide(300);
+      return false;
+    }
+
+    $.ajax({
+      url: '/admin/admin/changedistrict',
+      method: 'GET',
+      data: {
+        district_id: $('#district').val(),
+        channel_user_id: "<%= @channel_user.id %>"
+      },
+      dataType: "text",
+      success: function (data1) {
+        if (data1 == 'success') {
+          $('#info').html('修改区域成功').fadeIn(300).delay(3000).fadeOut(300);
+        } else {
+          $('#info').html('修改区域失败').show(300).delay(3000).hide(300);
+        }
+      }
+    })
+  })
+
+    $('.delbtn').click(function(){
+      if(confirm("确定要删除该渠道商吗")){
+        $.ajax({
+          url:'/admin/admin/delchannel',
+          method: 'GET',
+          data: {
+            id : "<%= @channel_user_id %>"
+          },
+          dataType: "text",
+          success: function(data){
+            if(data== 'success'){
+              alert('删除渠道商成功!');
+              window.location.href='/admin'
+            }else{
+              alert('删除渠道商成功!')
+            }
+          }
+        })
+      }
+    })
+</script>
+
+</body>
+</html>
