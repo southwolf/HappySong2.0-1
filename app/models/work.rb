@@ -28,10 +28,10 @@ class Work < ActiveRecord::Base
   def self.push_work_notify(id)
     work = Work.find(id)
     result = []
-    students = work.grade_team_classes.includes(:students).each do |grade_team_class|
-      result += grade_team_class.students
+    work.grade_team_classes.includes(:students).each do |grade_team_class|
+       result +=grade_team_class.students
     end
-    students.each do |student|
+    result.each do |student|
       Notification.create(
         user:  student,
         actor: work.teacher,
