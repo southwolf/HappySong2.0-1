@@ -43,7 +43,7 @@ class Notification < ActiveRecord::Base
     elsif notice_type == 'dynamic'
       "#{self.actor.name}发布一篇动态"
     elsif notice_type == 'work'
-      "#{self.actor.name}发布了新的朗读作业"
+      "#{self.actor.name}发布了新的作业"
     elsif notice_type == 'complete_work'
       "#{self.actor.name}完成了朗读作业"
     elsif notice_type == 'like'

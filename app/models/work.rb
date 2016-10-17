@@ -19,6 +19,25 @@ class Work < ActiveRecord::Base
   #创作作业
   has_many  :complete_creative_works, class_name: "Dynamic"
   has_many  :comments, as: :commentable
+  after_commit :async_create_work_notify, on: :create
 
+  def async_create_work_notify
+    NotifyWorkJob.perform_later(id)
+  end
 
+  def push_work_notify(id)
+    work = Work.find(id)
+    students = work.grade_team_classe.includes(:students).each do |grade_team_class|
+      result += grade_team_class.students
+    end
+
+    #向所布置班级的学生推送作业发布通知
+    students.each do |student|
+      student.notifications.create(
+        actor: self.user,
+        notice_type: 'work',
+        targetable: self
+      )
+    end
+  end
 end

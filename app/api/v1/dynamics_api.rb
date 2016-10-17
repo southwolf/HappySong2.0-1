@@ -331,20 +331,20 @@ module V1
 
       desc "根据时间查动态"
       params do
-        requires :token,   type: String,  desc: "用户访问令牌"
+        optional :token,   type: String,  desc: "用户访问令牌"
         optional :user_id, type: Integer, desc: "用户ID"
         requires :time,    type: String,  desc: "时间"
       end
       get '/time_dynamics' do
-        authenticate!
         user_id = params[:user_id]
         time    = params[:time]
         if user_id.nil?
-          dynamics = current_user.dynamics.select {|dynamic| DateTime.parse(dynamic.created_at.to_s).strftime('%Y-%-m') == time }
+          authenticate!
+          dynamics = current_user.dynamics.order_by(:created_at => :desc).select {|dynamic| DateTime.parse(dynamic.created_at.to_s).strftime('%Y-%-m') == time }
           present paginate(Kaminari.paginate_array(dynamics)), with: ::Entities::Dynamic
         else
           user = User.find(user_id)
-          dynamics = user.dynamics.reject { |dynamic| DateTime.parse(dynamic.created_at.to_s).strftime('%Y-%-m') != time}
+          dynamics = user.dynamics.order_by(:created_at => :desc).reject { |dynamic| DateTime.parse(dynamic.created_at.to_s).strftime('%Y-%-m') != time}
           present paginate(Kaminari.paginate_array(dynamics)), with: ::Entities::Dynamic
         end
       end
