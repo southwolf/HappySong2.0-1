@@ -37,13 +37,15 @@ class Record < ActiveRecord::Base
     record = Record.find(id)
     if record.is_work
       #完成作业推送通知到老师
-      record.work.teacher.notifications.create(
+      Notification.create(
+        user: record.work.teacher
         notice_type: 'work_complete',
         actor:       record.user,
         targetable: record
       )
       #推送给家长
-      record.user.parent.notifications.create(
+       Notification.create(
+        user:   record.user.parent,
         notice_type: 'work_complete',
         actor: record.user,
         targetable: record
