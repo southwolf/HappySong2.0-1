@@ -67,6 +67,8 @@ module V1
             work.work_attachments.create(is_video: true, file_url: video_key)
           end
         end
+
+        present :message, "成功"
       end
 
       desc "显示本人发布的朗读作业"
@@ -203,7 +205,7 @@ module V1
         present articles, with: ::Entities::Article
       end
 
-      
+
 
     end
   end

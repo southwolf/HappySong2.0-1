@@ -27,17 +27,17 @@ class Work < ActiveRecord::Base
 
   def self.push_work_notify(id)
     work = Work.find(id)
-    students = work.grade_team_classes.includes(:students).each do |grade_team_class|
-      result += grade_team_class.students
+    work.grade_team_classes.includes(:students).each do |grade_team_class|
+       grade_team_class.students.each do |student|
+          student.notifications.create(
+            actor: work.user,
+            notice_type: 'work',
+            targetable: work
+          )
+      end
     end
 
     #向所布置班级的学生推送作业发布通知
-    students.each do |student|
-      student.notifications.create(
-        actor: work.user,
-        notice_type: 'work',
-        targetable: work
-      )
-    end
+
   end
 end
