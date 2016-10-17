@@ -241,13 +241,13 @@ module V1
       end
 
 
-      desc "根据时间查动态"
+      desc "根据时间查朗读"
       params do
         optional :token,   type: String,  desc: "用户访问令牌"
         optional :user_id, type: Integer, desc: "用户ID"
         requires :time,    type: String,  desc: "时间"
       end
-      get '/time_dynamics' do
+      get '/time_records' do
         user_id = params[:user_id]
         time    = params[:time]
         if user_id.nil?
