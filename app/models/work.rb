@@ -31,13 +31,16 @@ class Work < ActiveRecord::Base
     work.grade_team_classes.includes(:students).each do |grade_team_class|
        result +=grade_team_class.students
     end
-    result.each do |student|
-      Notification.create(
-        user:  student,
-        actor: work.teacher,
-        notice_type: 'work',
-        targetable: work
-      )
+    Notification.bulk_insert(set_size: 100) do |woker|
+      result.each do |student|
+        woker.add(
+          { user_id: student.id,
+            actor_id:   work.teacher.id,
+            notice_type: 'work',
+            targetable_type: work.class,
+            targetable_id: work.id
+           })
+      end
     end
 
 
