@@ -256,7 +256,7 @@ module V1
           present paginate(Kaminari.paginate_array(records)), with: ::Entities::Record
         else
           user = User.find(user_id)
-          records = user.records.order(:created_at => :desc).reject { |dynamic| DateTime.parse(dynamic.created_at.to_s).strftime('%Y-%-m') != time}
+          records = user.records.where(:is_public => true).order(:created_at => :desc).reject { |dynamic| DateTime.parse(dynamic.created_at.to_s).strftime('%Y-%-m') != time}
           present paginate(Kaminari.paginate_array(records)), with: ::Entities::Record
         end
       end
