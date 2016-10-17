@@ -57,7 +57,8 @@ module V1
       get '/like' do
         authenticate!
         notifications = Notification.where(user: current_user, notice_type: "like").order( created_at: :DESC)
-        present paginate(notifications), with: ::Entities::Notification
+        notifications = notifications.select { |notification| notification.targetable.user == current_user}
+        present paginate(Kaminari.paginate_array(notifications)), with: ::Entities::Notification
         notifications.each do |notification|
           notification.update(unread: false)
         end
@@ -71,7 +72,8 @@ module V1
       get '/comment' do
         authenticate!
         notifications = Notification.where(user: current_user, notice_type: "comment").order( created_at: :DESC)
-        present paginate(notifications), with: ::Entities::Notification
+        notifications = notifications.select { |notification| notification.targetable.user == current_user}
+        present paginate(Kaminari.paginate_array(notifications)), with: ::Entities::Notification
         notifications.each do |notification|
           notification.update(unread: false)
         end
@@ -85,7 +87,8 @@ module V1
       get '/work' do
         authenticate!
         notifications = Notification.where(user: user, notice_type: "work").order( created_at: :DESC)
-        present paginate(notifications), with: ::Entities::Notification
+        notifications = notifications.select { |notification| notification.targetable.user == current_user}
+        present paginate(Kaminari.paginate_array(notifications)), with: ::Entities::Notification
         notifications.each do |notification|
           notification.update(unread: false)
         end
