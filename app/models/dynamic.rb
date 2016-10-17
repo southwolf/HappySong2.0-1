@@ -37,7 +37,7 @@ class Dynamic < ActiveRecord::Base
     if dynamic.is_work
       #完成作业推送通知到老师
       Notification.create(
-        user:  dynamic.work.teacher
+        user:  dynamic.work.teacher,
         notice_type: 'work_complete',
         actor:       dynamic.user,
         targetable: dynamic

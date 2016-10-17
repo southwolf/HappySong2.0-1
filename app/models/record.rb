@@ -38,7 +38,7 @@ class Record < ActiveRecord::Base
     if record.is_work
       #完成作业推送通知到老师
       Notification.create(
-        user: record.work.teacher
+        user: record.work.teacher,
         notice_type: 'work_complete',
         actor:       record.user,
         targetable: record
