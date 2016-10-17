@@ -271,7 +271,7 @@ module V1
       end
       get '/group' do
         authenticate!
-        dynamics = current_user.dynamics.order(created_at: :desc).group_by{|dynamic| DateTime.parse(dynamic.created_at.to_s).strftime('%Y-%-m')}.to_a
+        dynamics = current_user.dynamics.order(created_at: :desc).group_by{|dynamic| DateTime.parse(dynamic.created_at.to_s).strftime('%Y-%-m')}.to_a.reverse
 
         present paginate(Kaminari.paginate_array(dynamics)), with: ::Entities::HashDynamic
       end
@@ -283,7 +283,7 @@ module V1
       end
       get '/other_group' do
         user = User.find(params[:id])
-        dynamics = user.dynamics.order(created_at: :desc).group_by{|dynamic| DateTime.parse(dynamic.created_at.to_s).strftime('%Y-%-m')}.to_a
+        dynamics = user.dynamics.order(created_at: :desc).group_by{|dynamic| DateTime.parse(dynamic.created_at.to_s).strftime('%Y-%-m')}.to_a.reverse
 
         present paginate(Kaminari.paginate_array(dynamics)), with: ::Entities::HashDynamic
       end
