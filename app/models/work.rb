@@ -27,7 +27,7 @@ class Work < ActiveRecord::Base
 
   def self.push_work_notify(id)
     work = Work.find(id)
-    students = work.grade_team_classe.includes(:students).each do |grade_team_class|
+    students = work.grade_team_classes.includes(:students).each do |grade_team_class|
       result += grade_team_class.students
     end
 
