@@ -2,7 +2,7 @@ module Entities
   class SimpleDynamic < Grape::Entity
     expose :id, :content,  :likes_count, :is_work
     expose :address do |object|
-      if object.address.nil
+      if object.address.nil?
         ""
       else
         address
