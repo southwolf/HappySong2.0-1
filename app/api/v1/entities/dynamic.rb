@@ -5,7 +5,7 @@ module Entities
       if object.address.nil?
         ""
       else
-        address
+        object.address
       end
     end
     expose :attachments, using: Entities::Attachment
