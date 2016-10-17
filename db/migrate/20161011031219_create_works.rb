@@ -7,6 +7,8 @@ class CreateWorks < ActiveRecord::Migration
       t.integer    :comment_count
       t.datetime   :start_time
       t.datetime   :end_time
+
+      t.timestamps
     end
   end
 end

@@ -19,6 +19,8 @@ ActiveRecord::Schema.define(version: 20161013065059) do
     t.string   "remember_token",  limit: 255
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
+    t.string   "email",           limit: 255
+    t.string   "phone",           limit: 20
   end
 
   create_table "advises", force: :cascade do |t|
@@ -191,7 +193,7 @@ ActiveRecord::Schema.define(version: 20161013065059) do
   create_table "credit_managers", force: :cascade do |t|
     t.integer  "user_id",        limit: 4
     t.integer  "target_user_id", limit: 4
-    t.integer  "point",          limit: 4, default: 0
+    t.integer  "point",          limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -506,6 +508,8 @@ ActiveRecord::Schema.define(version: 20161013065059) do
     t.integer  "comment_count", limit: 4
     t.datetime "start_time"
     t.datetime "end_time"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end
