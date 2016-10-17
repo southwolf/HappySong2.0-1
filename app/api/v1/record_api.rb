@@ -256,7 +256,7 @@ module V1
           present paginate(Kaminari.paginate_array(dynamics)), with: ::Entities::Dynamic
         else
           user = User.find(user_id)
-          dynamics = user.records.order:created_at => :desc).reject { |dynamic| DateTime.parse(dynamic.created_at.to_s).strftime('%Y-%-m') != time}
+          dynamics = user.records.order(:created_at => :desc).reject { |dynamic| DateTime.parse(dynamic.created_at.to_s).strftime('%Y-%-m') != time}
           present paginate(Kaminari.paginate_array(dynamics)), with: ::Entities::Dynamic
         end
       end
