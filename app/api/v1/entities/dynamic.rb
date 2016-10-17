@@ -1,6 +1,13 @@
 module Entities
   class SimpleDynamic < Grape::Entity
-    expose :id, :content, :address, :likes_count, :is_work
+    expose :id, :content,  :likes_count, :is_work
+    expose :address do |object|
+      if address.nil
+        ""
+      else
+        address
+      end
+    end
     expose :attachments, using: Entities::Attachment
   end
 
