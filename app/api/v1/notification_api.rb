@@ -11,8 +11,8 @@ module V1
       get '/unread' do
         authenticate!
         badge_follow  = Notification.unread_notify(current_user).where(notice_type: "follow").size
-        badge_like    = Notification.unread_notify(current_user).select { |notification| notification.targetable.user == current_user}.where(notice_type: "like").size
-        badge_comment = Notification.unread_notify(current_user).select { |notification| notification.targetable.user == current_user}.where(notice_type: "comment").size
+        badge_like    = Notification.unread_notify(current_user).where(notice_type: "like").select { |notification| notification.targetable.user == current_user}.size
+        badge_comment = Notification.unread_notify(current_user).where(notice_type: "comment").select { |notification| notification.targetable.user == current_user}.size
         badge_work    = Notification.unread_notify(current_user).where(notice_type: "work").size
 
         result = {
