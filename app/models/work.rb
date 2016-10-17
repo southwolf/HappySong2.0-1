@@ -25,7 +25,7 @@ class Work < ActiveRecord::Base
     NotifyWorkJob.perform_later(id)
   end
 
-  def push_work_notify(id)
+  def self.push_work_notify(id)
     work = Work.find(id)
     students = work.grade_team_classe.includes(:students).each do |grade_team_class|
       result += grade_team_class.students
