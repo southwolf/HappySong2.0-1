@@ -252,12 +252,12 @@ module V1
         time    = params[:time]
         if user_id.nil?
           authenticate!
-          dynamics = current_user.records.order(:created_at => :desc).select {|dynamic| DateTime.parse(dynamic.created_at.to_s).strftime('%Y-%-m') == time }
-          present paginate(Kaminari.paginate_array(dynamics)), with: ::Entities::Dynamic
+          records = current_user.records.order(:created_at => :desc).select {|dynamic| DateTime.parse(dynamic.created_at.to_s).strftime('%Y-%-m') == time }
+          present paginate(Kaminari.paginate_array(records)), with: ::Entities::Record
         else
           user = User.find(user_id)
-          dynamics = user.records.order(:created_at => :desc).reject { |dynamic| DateTime.parse(dynamic.created_at.to_s).strftime('%Y-%-m') != time}
-          present paginate(Kaminari.paginate_array(dynamics)), with: ::Entities::Dynamic
+          records = user.records.order(:created_at => :desc).reject { |dynamic| DateTime.parse(dynamic.created_at.to_s).strftime('%Y-%-m') != time}
+          present paginate(Kaminari.paginate_array(records)), with: ::Entities::Record
         end
       end
 
