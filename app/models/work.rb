@@ -29,7 +29,8 @@ class Work < ActiveRecord::Base
     work = Work.find(id)
     work.grade_team_classes.includes(:students).each do |grade_team_class|
        grade_team_class.students.each do |student|
-          student.notifications.create(
+          Notification.create(
+            user:  student
             actor: work.user,
             notice_type: 'work',
             targetable: work

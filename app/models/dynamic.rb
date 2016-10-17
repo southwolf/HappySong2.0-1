@@ -36,13 +36,15 @@ class Dynamic < ActiveRecord::Base
     dynamic = Dynamic.find(id)
     if dynamic.is_work
       #完成作业推送通知到老师
-      dynamic.work.teacher.notifications.create(
+      Notification.create(
+        user:  dynamic.work.teacher
         notice_type: 'work_complete',
         actor:       dynamic.user,
         targetable: dynamic
       )
       #推送给家长
-      dynamic.user.parent.notifications.create(
+      Notification.create(
+        user:  dynamic.user.parent
         notice_type: 'work_complete',
         actor: dynamic.user,
         targetable: dynamic
