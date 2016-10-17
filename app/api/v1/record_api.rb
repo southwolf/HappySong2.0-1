@@ -236,7 +236,7 @@ module V1
       end
       get '/my_records' do
         authenticate!
-        records = current_user.records.reverse.group_by{ |record| DateTime.parse(record.created_at.to_s).strftime('%Y-%-m')}.to_a
+        records = current_user.records.order(:created_at => :desc).group_by{ |record| DateTime.parse(record.created_at.to_s).strftime('%Y-%-m')}.to_a
         present paginate(Kaminari.paginate_array(records)), with: ::Entities::HashRecord
       end
 
@@ -247,7 +247,7 @@ module V1
       end
       get '/other_records' do
         user = User.find(params[:id])
-        records = user.records.where(is_public: true).reverse.group_by{ |record| DateTime.parse(record.created_at.to_s).strftime('%Y-%-m')}.to_a
+        records = user.records.where(is_public: true).order(:created_at => :desc).group_by{ |record| DateTime.parse(record.created_at.to_s).strftime('%Y-%-m')}.to_a
         present paginate(Kaminari.paginate_array(records)), with: ::Entities::HashRecord
       end
       desc "获取教师朗读总篇数"
