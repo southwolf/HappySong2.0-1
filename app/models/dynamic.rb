@@ -39,7 +39,7 @@ class Dynamic < ActiveRecord::Base
       Notification.create(
         user:  dynamic.work.teacher,
         notice_type: 'work_complete',
-        actor:       dynamic.user,
+        actor:    dynamic.user,
         targetable: dynamic
       )
       #推送给家长

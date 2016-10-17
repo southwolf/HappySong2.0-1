@@ -30,7 +30,7 @@ class Work < ActiveRecord::Base
     work.grade_team_classes.includes(:students).each do |grade_team_class|
        grade_team_class.students.each do |student|
           Notification.create(
-            user:  student
+            user:  student,
             actor: work.user,
             notice_type: 'work',
             targetable: work
