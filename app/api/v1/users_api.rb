@@ -31,7 +31,7 @@ module V1
       end
       get '/check' do
         user = User.find_by(phone: params[:phone])
-        if user.role.nil?
+        if user.nil?
           present :message, false
         else
           present :message, true
