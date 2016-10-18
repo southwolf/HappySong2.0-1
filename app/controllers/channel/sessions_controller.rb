@@ -14,9 +14,36 @@ class Channel::SessionsController < Channel::ChannelAdminController
         redirect_to channel_root_url
       end
     else
+      puts 'error'
       render :new, layout: false
     end
   end
+
+  def register
+    
+  end
+
+  #处理添加渠道商
+  def doreg
+      @channel_user = ChannelUser.new()
+      @channel_user.name=params[:name]
+      @channel_user.email=params[:email]
+      @channel_user.phone=params[:phone]
+      @channel_user.password=params[:password]
+      @channel_user.district_id=params[:district]
+      @channel_user.company=params[:type]
+
+      if ChannelUser.find_by(phone: params[:phone]) || ChannelUser.find_by(email: params[:email])
+        redirect_to :back, :notice => "邮箱或手机号已存在!"
+        return false;
+      end
+
+      if @channel_user.save
+        redirect_to :back, :notice => 'success'
+      else
+        redirect_to :back, :notice => '注册失败,请重新注册'
+      end
+    end
 
   def destroy
     cookies.delete(:token)

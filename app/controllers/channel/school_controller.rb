@@ -8,10 +8,33 @@ module Channel
     end
 
     def show
+
+      if @current_user.admin
+        @school = School.find(params[:id])
+        @year=Time.new.year
+        @month=Time.new.month
+        return false;
+      end
+
+
+      arr=[]
+
+      @current_user.channel_schools.each do |school|
+        arr.push(school.school.id)
+      end
+
+      if !arr.include?(params[:id].to_i)
+        redirect_to channel_root_path
+        return false
+      end
+
       @school = School.find(params[:id])
+
       @year=Time.new.year
       @month=Time.new.month
     end
+
+
 
     def show_ajax
       @date = params[:date]
@@ -38,7 +61,8 @@ module Channel
     #学校是否已报备
     def checkSchool
       school_id=params[:school_id]
-      if ChannelSchool.find_by(school_id: school_id)
+      channel_school = ChannelSchool.find_by(school_id: school_id)
+      if channel_school && channel_school.passed
         render(:json => 'yes', :layout => false)
       else
         render(:json => 'no', :layout => false)
@@ -74,9 +98,9 @@ module Channel
         @cash.amount  -= amount
         @cash.used  += amount
         @cash.save
-        render(:json => 'success', :layout => false)
+        render(:text => 'success', :layout => false)
       else
-        render(:json => 'fail', :layout => false)
+        render(:text => 'fail', :layout => false)
       end
     end
   end

@@ -1,7 +1,7 @@
 module Channel
   class MessageController < ChannelAdminController
-    before_action :authenticate!
-    before_action :isadmin?
+    before_action :authenticate! 
+    before_action :isadmin?, only: [:admin_index, :pass_school, :nopass_school, :pass_tx]
 
     def admin_index
       @apply_cash_backs = ApplyCashBack.order('id desc').page(params[:page]).per(10)
@@ -14,6 +14,19 @@ module Channel
       school_id=params[:id]
       channel_school=ChannelSchool.find(school_id)
       channel_school.passed=true
+      if channel_school.save
+        render(:json => 'success', :layout => false)
+      else
+        render(:json => 'fail', :layout => false)
+      end
+    end
+
+    #报备不通过
+    def nopass_school
+      school_id=params[:id]
+      channel_school=ChannelSchool.find(school_id)
+      channel_school.passed=2
+      channel_school.reason=params[:reason]
       if channel_school.save
         render(:json => 'success', :layout => false)
       else
@@ -34,6 +47,12 @@ module Channel
       else
         render(:json => 'fail', :layout => false)
       end
+    end
+
+    #渠道商报备记录
+
+    def channel_baobei
+      @schools=@current_user.channel_schools.page(params[:page]).per(10)
     end
 
     def xieyi

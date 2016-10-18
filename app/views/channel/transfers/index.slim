@@ -26,7 +26,7 @@ css:
     font-size: 14px;
     display: block;
     color: #333333;
-    width: 100px;
+    width: 90px;
     height: 30px;
     line-height: 30px;
     float: right;
@@ -152,9 +152,9 @@ body style="border-top:2px solid red;"
             td = transfer.id
             td = DateTime.parse(transfer.created_at.to_s).strftime('%Y-%m-%d').to_s
             td = transfer.transfer_user.try(:name)
-            td = transfer.collector.name
-            td = transfer.collector.address
-            td = transfer.transfer_user.user_type
+            td = transfer.collector.try(:name)
+            td = transfer.collector.try(:address)
+            td = transfer.transfer_user.try(:user_type)
             td = transfer.amount
             td  详情
     div.railspage
