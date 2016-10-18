@@ -25,11 +25,15 @@ Rails.application.routes.draw do
 
     #报备pass
     get 'message/pass_school' => 'message/pass_school'
+    #报备申请 失败
+    get 'message/nopass_school' => 'message/nopass_school'
 
     #转账pass
     get 'message/pass_tx' => 'message/pass_tx'
 
-
+    #渠道商报备记录
+    get 'message/channel_baobei' => 'message/channel_baobei'
+    
     #添加新学校
     post 'school/schoolAdd' => 'school/schoolAdd'
 
@@ -42,7 +46,10 @@ Rails.application.routes.draw do
     #根据学校id查看用户注册信息
     post 'school/show_ajax' => 'school/show_ajax'
 
+    #用户注册
+    get 'sessions/register' => 'sessions/register', as: :register
 
+    post 'sessions/doreg' => 'sessions/doreg'
 
     resources :school, only: [:show,:new, :create]
 
@@ -52,6 +59,12 @@ Rails.application.routes.draw do
   namespace :admin do
     root "admin#index"
     post 'admin/index_ajax' => 'admin/index_ajax'
+    get 'admin/show' => 'admin/show'
+    patch 'admin/update' => 'admin/update'
+    get 'admin/changedistrict' => 'admin/changedistrict'
+    get 'admin/changepwd' => 'admin/changepwd'
+    get 'admin/dochangepwd' => 'admin/dochangepwd'
+    get 'admin/delchannel' => 'admin/delchannel'
   end
 
 
