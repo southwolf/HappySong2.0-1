@@ -65,7 +65,7 @@ module V1
             grade_team_class = GradeTeamClass.find(grade_team_class_id)
             work.grade_team_classes << grade_team_class
           end
-          
+
           if picture_keys.present?
             picture_keys.split.each do |picture_key|
               work.work_attachments.create(is_video: false, file_url: picture_key)
@@ -200,6 +200,8 @@ module V1
       end
 
 
+
+
       desc "获取此朗读的目标文章"
       params do
         requires :work_id, type: Integer, desc: '作品ID'
@@ -211,7 +213,59 @@ module V1
         present articles, with: ::Entities::Article
       end
 
+      desc "检查是否朗读了此作业的指定文章"
+      params do
+        requires :token,      type: String,  desc: "令牌"
+        requires :work_id,    type: Integer, desc: "作业要求ID"
+        requires :article_id, type: Integer, desc: "文章ID"
+      end
+      get '/check_complete_article' do
+        authenticate!
+        work = Work.find(params[:work_id])
+        article = Article.find(params[:article_id])
+        if Record.where(work: work, article: article).nil?
+          present :message, false
+        else
+          present :message, true
+        end
+      end
 
+      desc "上传朗读作业"
+      params do
+        requires :token,      type: String,  desc: "令牌"
+        requires :file_url,   type: String,  desc: "文件URL"
+        requires :article_id, type: Integer, desc: "文章ID"
+        requires :music_id,   type: Integer, desc: "音乐ID"
+        requires :style,      type: String,  desc: "朗读类型【video,media】"
+        requires :is_public,  type: Boolean, desc: "是否公开"
+        optional :felling,    type: String,  desc: "感谢"
+        requires :work_id,    type: Integer, desc: "作业ID"
+      end
+      post '/upload_record_work' do
+        authenticate!
+        file_url   = params[:file_url]
+        article_id = params[:article_id]
+        music_id   = params[:music_id]
+        style      = params[:stype]
+        is_public  = params[:is_public]
+        felling    = params[:felling]
+        record = current_user.records.new(
+          file_url: file_url,
+          article_id: article_id,
+          music_id: music_id,
+          style:    style,
+          is_public: is_public,
+          feeling:   felling
+        )
+        if record.save
+          present :message, "成功"
+        else
+          present :message, "失败"
+        end
+      end
+
+
+      desc "上传创作作业"
     end
   end
 end

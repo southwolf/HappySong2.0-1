@@ -20,7 +20,7 @@ class Dynamic < ActiveRecord::Base
   belongs_to :work, ->(){ where(style: "record_work")}
   # has_many   :notifications, as: :targetable
 
-  after_commit :async_create_dynamic_notify, on: :create
+  after_commit :async_create_dynamic_notify,on: :create
   after_destroy :delete_notification
 
   def delete_notification
@@ -64,6 +64,7 @@ class Dynamic < ActiveRecord::Base
       end
     end
   end
+
 
   def addTag tag_name
     tag = Tag.find_by_name(tag_name)
