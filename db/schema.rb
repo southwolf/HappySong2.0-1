@@ -19,8 +19,6 @@ ActiveRecord::Schema.define(version: 20161018024421) do
     t.string   "remember_token",  limit: 255
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
-    t.string   "email",           limit: 255
-    t.string   "phone",           limit: 20
   end
 
   create_table "advises", force: :cascade do |t|
@@ -506,7 +504,7 @@ ActiveRecord::Schema.define(version: 20161018024421) do
     t.integer  "user_id",       limit: 4
     t.string   "content",       limit: 255
     t.string   "style",         limit: 255
-    t.integer  "comment_count", limit: 4
+    t.integer  "comment_count", limit: 4,   default: 0
     t.datetime "start_time"
     t.datetime "end_time"
     t.datetime "created_at"

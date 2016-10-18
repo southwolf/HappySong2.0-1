@@ -10,7 +10,7 @@ module Entities
   class HashWork < Grape::Entity
     expose (:time) { |object| object[0] }
     expose (:size) { |object| object[1].size}
-    expose :records, using: Entities::Work do |object|
+    expose :works, using: Entities::Work do |object|
         object[1]
       end
   end

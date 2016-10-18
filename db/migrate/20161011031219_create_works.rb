@@ -4,7 +4,7 @@ class CreateWorks < ActiveRecord::Migration
       t.belongs_to :user
       t.string     :content
       t.string     :style
-      t.integer    :comment_count
+      t.integer    :comment_count, default: 0
       t.datetime   :start_time
       t.datetime   :end_time
 
