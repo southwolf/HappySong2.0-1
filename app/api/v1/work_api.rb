@@ -273,7 +273,7 @@ module V1
         requires :content,      type: String,       desc: '内容'
         requires :address,      type: String,       desc: '地理位置'
         optional :picture_keys, type: String,       desc: '图片集合'
-        optional :video_key,    type: String，      desc: '视频'
+        optional :video_key,    type: String,      desc: '视频'
         optional :tags,         type: String,       desc: '标签集合用空格隔开'
         requires :work_id,    type: Integer, desc: "作业ID"
       end
@@ -310,10 +310,9 @@ module V1
               dynamic.addTag(tag)
             end
           end
-          present dynamic, with: ::Entities::Dynamic,
-                           current_user: current_user
+          present :message, "成功"
         else
-          error!("失败", 400)
+          present :message, "失败"
         end
       end
     end
