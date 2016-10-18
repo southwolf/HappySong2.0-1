@@ -16,7 +16,7 @@ module Entities
   class HashRecord < Grape::Entity
     expose (:time) { |object| object[0] }
     expose (:size) { |object| object[1].size}
-    expose :records, using: Entities::Work do |object|
+    expose :records, using: Entities::Record do |object|
       object[1]
     end
   end
