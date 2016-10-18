@@ -23,23 +23,25 @@ module V1
         dynamic      = current_user.dynamics.build( :content => content,
                                                     :address => address)
         if dynamic.save
-          dynamic.update( :original_dynamic_id => dynamic.id)
+          Dynamic.transaction do
+            dynamic.update( :original_dynamic_id => dynamic.id)
 
-          unless picture_keys.nil?
-            picture_keys.split.each do |picture_key|
-              dynamic.attachments.create( :file_url => picture_key,
-                                          :is_video => false)
+            unless picture_keys.nil?
+              picture_keys.split.each do |picture_key|
+                dynamic.attachments.create( :file_url => picture_key,
+                                            :is_video => false)
+              end
             end
-          end
-          unless video_key.nil?
-            dynamic.attachments.create( :file_url => video_key,
-                                        :is_video => true)
-          end
+            unless video_key.nil?
+              dynamic.attachments.create( :file_url => video_key,
+                                          :is_video => true)
+            end
 
-          if tags.present?
-            # 添加标签
-            tags.split.each do |tag|
-              dynamic.addTag(tag)
+            if tags.present?
+              # 添加标签
+              tags.split.each do |tag|
+                dynamic.addTag(tag)
+              end
             end
           end
           present dynamic, with: ::Entities::Dynamic,

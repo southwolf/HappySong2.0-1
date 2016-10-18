@@ -71,6 +71,8 @@ class Dynamic < ActiveRecord::Base
       WorkToStudent.find_by(work_id: self.work_id, student: self.user).update(complete: true)
     end
   end
+
+  
   def addTag tag_name
     tag = Tag.find_by_name(tag_name)
     if self.is_relay
