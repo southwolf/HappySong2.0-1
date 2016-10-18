@@ -21,7 +21,7 @@ module V1
         end_time             = params[:end_time]
 
         Work.transaction do
-          work = current_user.works.new( content: content, start_time: start_time, end_time: end_time, style: "record")
+          work = current_user.works.new( content: content, start_time: start_time, end_time: end_time, style: "record_work")
           if work.save!
             article_ids.split.each do |article_id|
               article = Article.find(article_id)
