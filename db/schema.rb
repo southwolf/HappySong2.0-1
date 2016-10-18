@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161013065059) do
+ActiveRecord::Schema.define(version: 20161018024421) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "name",            limit: 255
@@ -146,7 +146,8 @@ ActiveRecord::Schema.define(version: 20161013065059) do
     t.integer  "school_id",       limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "passed",                    default: false
+    t.boolean  "passed",                      default: false
+    t.string   "reason",          limit: 255
   end
 
   create_table "channel_user_cash_backs", force: :cascade do |t|
