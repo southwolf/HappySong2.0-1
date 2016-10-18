@@ -201,7 +201,6 @@ module V1
 
 
 
-
       desc "获取此朗读的目标文章"
       params do
         requires :work_id, type: Integer, desc: '作品ID'
@@ -249,13 +248,16 @@ module V1
         style      = params[:stype]
         is_public  = params[:is_public]
         felling    = params[:felling]
+        work_id    = params[:work_id]
         record = current_user.records.new(
           file_url: file_url,
           article_id: article_id,
           music_id: music_id,
           style:    style,
           is_public: is_public,
-          feeling:   felling
+          feeling:   felling,
+          work_id: work_id,
+          is_work: true
         )
         if record.save
           present :message, "成功"
@@ -266,6 +268,54 @@ module V1
 
 
       desc "上传创作作业"
+      params do
+        requires :token,        type: String,       desc: '用户访问令牌'
+        requires :content,      type: String,       desc: '内容'
+        requires :address,      type: String,       desc: '地理位置'
+        optional :picture_keys, type: String,       desc: '图片集合'
+        optional :video_key,    type: String，      desc: '视频'
+        optional :tags,         type: String,       desc: '标签集合用空格隔开'
+        requires :work_id,    type: Integer, desc: "作业ID"
+      end
+
+      post '/upload_creative_word' do
+        authenticate!
+        content      = params[:content]
+        address      = params[:address]
+        picture_keys = params[:picture_keys]
+        video_key    = params[:video_key]
+        tags         = params[:tags]
+        work_id      = params[:work_id]
+        dynamic      = current_user.dynamics.build( :content => content,
+                                                    :address => address,
+                                                    :work_id => work_id,
+                                                    :is_work => true)
+        if dynamic.save
+          dynamic.update( :original_dynamic_id => dynamic.id)
+
+          unless picture_keys.nil?
+            picture_keys.split.each do |picture_key|
+              dynamic.attachments.create( :file_url => picture_key,
+                                          :is_video => false)
+            end
+          end
+          unless video_key.nil?
+            dynamic.attachments.create( :file_url => video_key,
+                                        :is_video => true)
+          end
+
+          if tags.present?
+            # 添加标签
+            tags.split.each do |tag|
+              dynamic.addTag(tag)
+            end
+          end
+          present dynamic, with: ::Entities::Dynamic,
+                           current_user: current_user
+        else
+          error!("失败", 400)
+        end
+      end
     end
   end
 end

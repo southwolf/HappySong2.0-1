@@ -4,4 +4,5 @@ class ChannelSchool < ActiveRecord::Base
 
   #已经通过报备的学校
   scope :passed_school, -> { where(passed: true)}
+  scope :message, -> { where("reason IS NULL")}
 end
