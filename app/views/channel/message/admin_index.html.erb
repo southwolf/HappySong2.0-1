@@ -236,7 +236,7 @@
     <table width="90%" border="1" cellpadding="10">
       <% @channel_schools.each do |school| %>
           <tr>
-            <td class='pad'><%= school.channel_user.name %>申请报备学校 <%= school.school.fullname %></td>
+            <td class='pad'><%= school.channel_user.name %>申请报备学校 <%= school.try(:school).try(:fullname) %></td>
             <td class='padm'><%= school.try(:created_at) %></td>
             <td class='padm'>
               <% if school.passed %>
@@ -254,7 +254,7 @@
             <td class='padm' width='200px'>
               <% if !school.passed && school.reason %>
                   原因:<%= school.try(:reason) %>
-              <% end %> 
+              <% end %>
             </td>
             <td class='padr'>
               <a href="/channel/channel_users/<%= school.channel_user.id %>">查看详情</a>

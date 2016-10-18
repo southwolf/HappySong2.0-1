@@ -277,7 +277,6 @@ module V1
         optional :tags,         type: String,       desc: '标签集合用空格隔开'
         requires :work_id,    type: Integer, desc: "作业ID"
       end
-
       post '/upload_creative_word' do
         authenticate!
         content      = params[:content]
@@ -315,6 +314,9 @@ module V1
           present :message, "失败"
         end
       end
+
+      
+
     end
   end
 end
