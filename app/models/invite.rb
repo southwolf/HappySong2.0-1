@@ -6,11 +6,11 @@ class Invite < ActiveRecord::Base
   after_commit :inset_data, only: [:create]
 
   def inset_data
-    if self.user.try(:role).try(:name) == 'teacher'
+    if self.invite_user.try(:role).try(:name) == 'teacher'
       #如果推荐人是教师则给老师的返现记录添加一条但是金额为0,仅仅为了客户端显示
-      self.user.cash_managers.create(target_user: self.target_user)
-    elsif self.user.try(:role).try(:name) == 'parent'
-      self.user.credit_managers.create(target_user: self.target_user)
+      self.invite_user.cash_managers.create(target_user: self.target_invite_users)
+    elsif self.invite_user.try(:role).try(:name) == 'parent'
+      self.invite_user.credit_managers.create(target_user: self.target_invite_users)
     end
 
   end
