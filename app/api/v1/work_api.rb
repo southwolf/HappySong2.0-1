@@ -5,10 +5,10 @@ module V1
     resources :works do
       desc "老师发布朗读作业要求"
       params do
-        requires :token,                type: String, desc: '用户访问令牌'
-        requires :content,              type: String,   desc: "作业详细要求"
-        requires :article_ids,          type: String, desc: "文章ID集合用空格隔开当作业类型为【朗读】时才有这个参数"
-        requires :grade_team_class_ids, type: String, desc: "班级ID集合用空格隔开"
+        requires :token,                type: String,     desc: '用户访问令牌'
+        requires :content,              type: String,     desc: "作业详细要求"
+        requires :article_ids,          type: String,     desc: "文章ID集合用空格隔开当作业类型为【朗读】时才有这个参数"
+        requires :grade_team_class_ids, type: String,     desc: "班级ID集合用空格隔开"
         requires :start_time,           type: DateTime,   desc: "开始时间"
         requires :end_time,             type: DateTime,   desc: "结束时间"
       end
@@ -42,6 +42,7 @@ module V1
         requires :content,              type: String,     desc: "作业详细要求"
         optional :picture_keys,         type: String,     desc: "图片集合用空格隔开"
         optional :video_key,            type: String,     desc: "视频url"
+        requires :grade_team_class_ids, type: String,     desc: "班级ID集合用空格隔开"
         requires :start_time,           type: DateTime,   desc: "开始时间"
         requires :end_time,             type: DateTime,   desc: "结束时间"
       end
@@ -50,6 +51,7 @@ module V1
         content     = params[:content]
         picture_keys = params[:picture_keys]
         video_key   = params[:video_key]
+        grade_team_class_ids = params[:grade_team_class_ids]
         start_time  = params[:start_time]
         end_time    = params[:end_time]
 
@@ -58,6 +60,12 @@ module V1
                                              start_time:start_time,
                                              end_time: end_time,
                                              style: "creative_work")
+
+          grade_team_class_ids.split.each do |grade_team_class_id|
+            grade_team_class = GradeTeamClass.find(grade_team_class_id)
+            work.grade_team_classes << grade_team_class
+          end
+          
           if picture_keys.present?
             picture_keys.split.each do |picture_key|
               work.work_attachments.create(is_video: false, file_url: picture_key)
@@ -203,7 +211,7 @@ module V1
         present articles, with: ::Entities::Article
       end
 
-      
+
     end
   end
 end
