@@ -168,12 +168,12 @@ body
         - @schools.each do |school|
           .info
             .l
-              p.school = school.school.fullname
-              p.city = school.school.address
+              p.school = school.school.try(:fullname)
+              p.city = school.school.try(:address)
             .l
-              .number = school.school.vip_count
+              .number = school.school.try(:vip_count)
               .reg
-                | 已注册: #{school.school.user_count}
+                | 已注册: #{school.school.try(:user_count)}
             .infoicon
               = link_to channel_school_path(school.school_id) do
                 = image_tag "矩形 @2x.png", width:"76", height:"69"

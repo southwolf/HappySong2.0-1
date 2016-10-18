@@ -7,15 +7,15 @@ json.array! @channel_users do |user|
 
   studentscount=[]
 
-  user.channel_schools.where(passed: true).each do |school|
-    studentscount << school.school.user_count
+  user.try(:channel_schools).where(passed: true).each do |school|
+    studentscount << school.try(:school).try(:user_count)
   end
 
   json.channel_reg studentscount.sum
 
   vipcount=[]
-  user.channel_schools.where(passed: true).each do |s|
-    vipcount << s.school.vip_count
+  user.try(:channel_schools).where(passed: true).each do |s|
+    vipcount << s.try(:school).try(:vip_count)
   end
 
   json.channel_vip vipcount.sum
