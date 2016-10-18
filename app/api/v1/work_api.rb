@@ -165,7 +165,6 @@ module V1
       params do
         requires :token, type: String, desc: '用户访问令牌'
       end
-
       get '/child_work_infos' do
         authenticate!
         current_user.children.each do |child|
@@ -197,7 +196,6 @@ module V1
       params do
         requires :work_id, type: Integer, desc: '作品ID'
       end
-
       get '/target_articles' do
         work = Work.find(params[:work_id])
         articles = work.articles
@@ -205,8 +203,7 @@ module V1
         present articles, with: ::Entities::Article
       end
 
-
-
+      
     end
   end
 end
