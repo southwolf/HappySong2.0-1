@@ -192,7 +192,7 @@ module V1
         authenticate!
         result = []
         current_user.children.each do |child|
-          result += WorkToStudent.where(complete: true, user: child)
+          result += WorkToStudent.where(complete: true, student: child)
                                  .order(:created_at => :desc)
                                  .includes(:user, :work)
         end
@@ -209,7 +209,7 @@ module V1
         authenticate!
         result = []
         current_user.children.each do |child|
-          result += WorkToStudent.where(complete: false, user: child)
+          result += WorkToStudent.where(complete: false, student: child)
                                  .order(:created_at => :desc)
                                  .includes(:user, :work)
         end
