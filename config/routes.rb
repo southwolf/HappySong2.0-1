@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   mount API => '/'
   mount GrapeSwaggerRails::Engine => '/swagger_doc'
 
+  root "welcome#index"
   get 'xieyi/xieyi'    => 'xieyi#xieyi'
   get '/zhifu' => 'zhifu#zhifu'
   namespace :channel do
