@@ -5,12 +5,14 @@ class Work < ActiveRecord::Base
   has_many   :grade_team_classes, through: :work_to_teams
 
   has_many   :work_to_students
+  has_many   :work_complete_students, ->(){where(complete: true)}, class_name: "WorkToStudent"
+  has_many   :work_uncomplete_studens,  ->(){where(complete: false)}, class_name: "WorkToStudent"
   has_many   :students, class_name: "User",
                         through: :work_to_students
-  # has_many   :complete_students, class_name: "User",
-  #                       through: :work_to_students, scope: ->(){where(complete: true)}
-  # has_many   :complete_students, class_name: "User",
-  #                       through: :work_to_students, scope: ->(){where(complete: false)}
+  has_many   :complete_students, class_name: "User",
+                        through: :work_complete_students
+  has_many   :complete_students, class_name: "User",
+                        through: :work_uncomplete_studens
 
 
   has_many   :work_to_articles

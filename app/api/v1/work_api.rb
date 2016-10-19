@@ -349,7 +349,7 @@ module V1
       end
       get '/complete_work_users' do
         work = Work.find(params[work])
-        # students = work.complete_students
+        students = work.complete_students
         present paginate(students), ::Entities::User
       end
 
@@ -361,7 +361,7 @@ module V1
 
       get '/uncomplete_work_users' do
         work = Work.find(params[work])
-        # students = work.complete_students
+        students = work.complete_students
         present paginate(students), ::Entities::User
       end
 
