@@ -364,6 +364,26 @@ module V1
         students = work.complete_students
         present paginate(students), ::Entities::User
       end
+
+      desc "评论作业"
+      params do
+        requires :token,      type: String,  desc: '用户访问令牌'
+        requires :work_id,    type: Integer, desc: '动态ID'
+        requires :content,    type: String,  desc: '评论内容'
+      end
+      post '/comment' do
+        authenticate!
+        work_id = params[:work_id]
+        content    = params[:content]
+        work    = Work.find(work_id)
+        comment    = work.comments.build( :user_id => current_user.id,
+                                          :content => content)
+        if comment.save
+          present message: "评论成功"
+        else
+          error!({error: "评论失败"}, 500)
+        end
+      end
     end
   end
 end
