@@ -1,6 +1,6 @@
 module Entities
   class Work < Grape::Entity
-    expose :id, :content, :style, :comment_count,:start_time, :end_time
+    expose :id, :content, :style, :comments_count,:start_time, :end_time
     expose :teacher,   :students,  using: ::Entities::User
     expose :grade_team_classes,    using: ::Entities::GradeTeamClass
     expose :articles,              using: ::Entities::SimpleArticle
