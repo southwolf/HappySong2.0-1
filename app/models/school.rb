@@ -5,7 +5,7 @@ class School < ActiveRecord::Base
   has_many :grade_team_classes
 
   has_many :channel_schools,  dependent: :destroy
-  has_many :channel_users, :through => :channel_schools
+  has_many :channel_users,    :through => :channel_schools
 
   after_create :update_info
 
