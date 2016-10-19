@@ -4,6 +4,6 @@ module Entities
   end
   class WorkToStudent < WorkToStudentOnlyStudent
     expose :my_work, using: ::Entities::Work
-    expose :complete, :created_at
+    expose :complete, :created_at, :updated_at
   end
 end

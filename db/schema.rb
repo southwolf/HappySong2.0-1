@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161018024421) do
+ActiveRecord::Schema.define(version: 20161019063112) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "name",            limit: 255
@@ -187,6 +187,12 @@ ActiveRecord::Schema.define(version: 20161018024421) do
     t.integer  "user_id",          limit: 4
     t.integer  "top_comment_id",   limit: 4
     t.boolean  "is_reply",                     default: false
+  end
+
+  create_table "configs", force: :cascade do |t|
+    t.integer  "num",        limit: 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "credit_managers", force: :cascade do |t|
