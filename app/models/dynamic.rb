@@ -72,7 +72,7 @@ class Dynamic < ActiveRecord::Base
     end
   end
 
-  
+
   def addTag tag_name
     tag = Tag.find_by_name(tag_name)
     if self.is_relay

@@ -284,13 +284,13 @@ module V1
 
       desc "上传创作作业"
       params do
-        requires :token,        type: String,       desc: '用户访问令牌'
-        requires :content,      type: String,       desc: '内容'
-        requires :address,      type: String,       desc: '地理位置'
-        optional :picture_keys, type: String,       desc: '图片集合'
-        optional :video_key,    type: String,      desc: '视频'
-        optional :tags,         type: String,       desc: '标签集合用空格隔开'
-        requires :work_id,    type: Integer, desc: "作业ID"
+        requires :token,        type: String,  desc: '用户访问令牌'
+        requires :content,      type: String,  desc: '内容'
+        requires :address,      type: String,  desc: '地理位置'
+        optional :picture_keys, type: String,  desc: '图片集合'
+        optional :video_key,    type: String,  desc: '视频'
+        optional :tags,         type: String,  desc: '标签集合用空格隔开'
+        requires :work_id,      type: Integer, desc: "作业ID"
       end
       post '/upload_creative_word' do
         authenticate!
@@ -330,7 +330,14 @@ module V1
         end
       end
 
+      desc "学生查看自己作业完成情况"
+      params do
+        requires :token, type: String,  desc: '用户访问令牌'
+      end
 
+      get '/work_info_student' do
+        
+      end
 
     end
   end

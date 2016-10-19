@@ -192,11 +192,15 @@ module Entities
     end
     # 老师的班级数量
     expose :grade_team_classes_count, if: ->(user, options){ user.role.name="teacher"} { |user| user.grade_team_classes.size}
+
+    expose :child_count, if: ->(user, options){ user.role.name="parent"} { |user| user.children.size}
   end
 
   class MyProfileAddRole < MyProfile
     expose :role, using: ::Entities::Role
   end
+
+
   class HashUser < Grape::Entity
     expose (:time) { |object| object[0]}
     expose (:size) { |object| object[1].size}
