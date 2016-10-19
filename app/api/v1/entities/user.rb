@@ -197,8 +197,15 @@ module Entities
   end
 
   class MyProfileAddRole < MyProfile
-    expose (:role), using: ::Entities::Role do |object|
-      Role.find(object.role_id)
+    expose (:role) do |object|
+      case object.role_id
+      when 1
+        "student"
+      when 2
+        "teacher"
+      when 3
+        "parent"
+      end
     end
   end
 
