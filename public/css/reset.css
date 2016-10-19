@@ -147,11 +147,9 @@ input{
 }
 
 .top {
-    width: 29.2rem;
-    height: 30.5rem;
+    width: 100%;
+    height: auto;
     margin: 0 auto;
-    padding-top: 3rem;
-    margin-bottom: 1.5rem;
 }
 
 .cen {
@@ -204,6 +202,3 @@ textarea::-webkit-input-placeholder {
     text-align:center;
 
 }
-
-
-

@@ -1,1 +1,175 @@
-<h1>支付</h1>
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-touch-fullscreen" content="yes"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>欢乐诵</title>
+    <link rel="stylesheet" type="text/css" href="/css/reset.css">
+    <script src="//cdn.bootcss.com/jquery/2.2.0/jquery.min.js"></script>
+    <style media="screen">
+
+
+      .kaitong{
+        width:6rem;
+        height:3rem;
+        background:#f13f4b;
+        color:#ffffff;
+        border:1px solid #f13f4b;
+        border-radius:4px;
+        font-size:18px;
+      }
+
+      .left{
+        float:left;
+      }
+
+      .left p{
+          margin-bottom:10px;
+      }
+
+      .left .info{
+        font-size:12px;
+        color:#999999;
+      }
+
+      .right{
+        float:right;
+        width:auto;
+        height:3rem;
+        line-height:3rem;
+      }
+
+      .clear{
+        clear:both
+      }
+
+      .month{
+        font-size:20px;
+        color:#333333;
+        width:80px;
+        height:20px;
+        display:inline-block;;
+      }
+
+      .money{
+        color:#f13f4b;
+        font-size:20px;
+      }
+
+      .section{
+        border:1px solid #f1f1f1;
+        padding:40px;
+        padding-left:0px;
+      }
+
+      .pay{
+        width:80%;
+        height:4rem;
+        background:#2ca0e5;
+        border-radius:4px;
+        color:#FFFFFF;
+        font-size:16px;
+        border:none;
+        margin:10px 0px;
+      }
+
+      .demo{
+        position: absolute;
+        top: 25%;
+        left: 15%;
+        width: 50%;
+      }
+
+
+
+
+    </style>
+
+
+</head>
+<body style="background:#ffffff">
+<div>
+    <div  sytle="height:100%;width:100%;">
+        <div class="top">
+            <img src="/imgs/demo.png">
+        </div>
+
+        <div style='width:100%;text-align:center'>
+          <div class='section'>
+            <div class='left'>
+              <p><span class='month'>1个月</span><span class='money'>￥10</span></p>
+              <p class='info'>1个月，每月10元</p>
+            </div>
+
+            <div class='right'>
+                <button class='kaitong'>开通</button>
+            </div>
+            <div class='clear'></div>
+          </div>
+        </div>
+
+        <div style='width:100%;text-align:center;'>
+          <div class='section' style='border-top:0px;'>
+            <div class='left'>
+              <p><span class='month'>1年</span><span class='money'>￥100</span></p>
+              <p class='info'>12个月，每月8.3元</p>
+            </div>
+
+            <div class='right'>
+                <button class='kaitong'>开通</button>
+            </div>
+            <div class='clear'></div>
+          </div>
+        </div>
+    </div>
+
+
+
+    <div style="width:280px;border:1px solid #f1f1f1;border-radius:10px;margin: 0 auto;background:#f1f1f1;display:none" class='demo'>
+        <p>
+          <h3 style='text-align:center;font-size:26px;margin:10px 0px;color:#333333 '>欢乐诵会员</h3>
+          <span style='float:right;position:absolute;right:10px;top:10px;font-size:20px;' id='close'>x</span>
+        </p>
+        <div>
+          <p style='border:1px solid #f1f1f1;'>
+            <img src='/imgs/alipay.png' style='float:left;width:230px;'><input type='radio' name='check' style='float:right;margin-top:25px;margin-right:20px;'>
+          </p>
+
+            <p style='border:1px solid #f1f1f1;'>
+              <img src='/imgs/weixin.png' style='float:left;width:230px;' ><input type='radio' name='check' style='float:right;margin-top:25px;margin-right:20px;'>
+            </p>
+
+
+            <div class='clear'>
+            <p style='width:100%;text-align:center;'>
+              <button type="button" class='pay'>立即支付</button>
+            </p>
+        </div>
+   </div>
+
+   <div style='wdith:100%;height:100px;background:#999999;opacity:0.1;  position: absolute;'>
+
+   </div>
+
+</div>
+</body>
+
+
+<script>
+  $('.kaitong').click(function(){
+    $('.demo').show();
+  })
+
+  $('img').click(function(){
+    $(this).next().prop("checked",1);
+  })
+
+$('#close').click(function(){
+  $('.demo').hide()
+})
+
+
+</script>
