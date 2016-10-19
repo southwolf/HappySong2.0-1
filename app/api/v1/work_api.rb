@@ -190,13 +190,14 @@ module V1
       end
       get '/child_work_infos' do
         authenticate!
+        result = []
         current_user.children.each do |child|
           result += WorkToStudent.where(complete: true, user: child)
                                  .order(:created_at => :desc)
                                  .includes(:user, :work)
         end
 
-        present result, with: ::Entities::WorkToStudent
+        present paginate(Kaminari.paginate_array(result)), with: ::Entities::WorkToStudent
       end
 
 
@@ -206,12 +207,13 @@ module V1
       end
       get '/child_uncomplete_work_infos' do
         authenticate!
+        result = []
         current_user.children.each do |child|
           result += WorkToStudent.where(complete: false, user: child)
                                  .order(:created_at => :desc)
                                  .includes(:user, :work)
         end
-        present result, with: ::Entities::WorkToStudent
+        present paginate(Kaminari.paginate_array(result)), with: ::Entities::WorkToStudent
       end
 
 
