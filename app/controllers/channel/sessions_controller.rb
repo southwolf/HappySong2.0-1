@@ -5,20 +5,45 @@ class Channel::SessionsController < Channel::ChannelAdminController
 
   def create
     user = ChannelUser.find_by_email(params[:email])
-    puts user
-    if user && user.authenticate(params[:password]) && YunPian.verify(user.phone, params[:code])
-      cookies.permanent[:token] = user.token
-      if user.admin?
-        redirect_to admin_root_url
-      else
-        redirect_to channel_root_url
-      end
+    
+    cookies.permanent[:token] = user.token
+    if user.admin?
+      redirect_to admin_root_url
     else
-      puts 'error'
-      render :new, layout: false
+      redirect_to channel_root_url
     end
+
   end
 
+  #登录check
+  def checklogin
+    user = ChannelUser.find_by_email(params[:email])
+
+    if user.nil? || !user.authenticate(params[:password])
+      render(:text => '账号或密码错误', :layout => false)
+      return false;
+    end
+
+    if user.phone != params[:phone]
+      render(:text => '手机号不存在', :layout => false)
+      return false
+    end
+
+    if user.status == 'no'
+      render(:text => '您的账号存在异常,请联系渠道管理员呀 021-61521541', :layout => false)
+      return false
+    end
+
+    if !YunPian.verify(user.phone,params[:code])
+      render(:text => '验证码错误', :layout => false)
+      return false
+    end
+
+    render(:text => 'success', :layout => false)
+     
+  end
+
+  #注册
   def register
     
   end

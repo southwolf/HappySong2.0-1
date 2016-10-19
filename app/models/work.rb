@@ -7,6 +7,11 @@ class Work < ActiveRecord::Base
   has_many   :work_to_students
   has_many   :students, class_name: "User",
                         through: :work_to_students
+  has_many   :complete_students, class_name: "User",
+                        through: :work_to_students, scope: ->(){where(complete: true)}
+  has_many   :complete_students, class_name: "User",
+                        through: :work_to_students, scope: ->(){where(complete: false)}
+
 
   has_many   :work_to_articles
   has_many   :articles, through: :work_to_articles

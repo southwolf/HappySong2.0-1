@@ -56,7 +56,7 @@
         <option>选择区(县)</option>
       </select>
 
-      <select id="school">
+      <select id="school" style='width:110px'>
         <option value="">选择学校</option>
       </select>
 
@@ -104,7 +104,7 @@
     </p>
 
     <p>
-      学校: <input class='inp' id='sname' type='text'>
+      学校: <input class='inp' id='sname' type='text' style='width:100px'>
     </p>
 
     <p class="zp">
@@ -150,6 +150,9 @@
 </div>
 <div class="theme-popover-mask"></div>
 
+<!-- 下面是 用户报备学校的数量     和    后台设置的要求数量   -->
+<input type='hidden' id='channel_schools_count' value="<%= @channel_schools_count%>">
+<input type='hidden' id='num' value="<%= @num%>">
 
 <div class='footer'>
   Copyright ©2016-2018 欢乐诵
@@ -225,7 +228,7 @@
 
       $.ajax({
         url: '/api/v1/cities',
-        method: 'GET',
+        type: 'GET',
         data: {province_id: province_id},
         dataType: "json",
         success: function (data) {
@@ -276,7 +279,7 @@
       else {
         $.ajax({
           url: '/api/v1/school_manager/school/search',
-          method: 'GET',
+          type: 'GET',
           data: {district_id: district_id},
           dataType: "json",
           success: function (data) {
@@ -345,10 +348,33 @@
       ids.push($(this).attr('id'));
     })
 
+
+
     if (ids.length == 0) {
       alert('请先添加学校');
       return false;
     }
+
+
+    //如果是第一次报备 必须满足后台设置的数量 
+    var num = $('#num').val();
+    var channel_schools_count=$('#channel_schools_count').val()
+
+   
+    console.log(num)
+    console.log(channel_schools_count)
+    console.log(ids.length)
+    console.log(channel_schools_count==0)
+    console.log(ids.length < num)
+   
+   
+    if(channel_schools_count==0){
+      if(ids.length < num){
+        alert('第一次申请报备必须满足'+num+'所学校的要求');
+        return false;
+      }
+    }
+    
 
     $.ajax({
       type: "post",

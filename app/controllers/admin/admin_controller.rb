@@ -57,6 +57,8 @@ module Admin
         @com=[['个人', false], ['公司', true]]
         @channel_user_id=params[:id]
       end
+
+      @status =@channel_user.status
     end
 
 
@@ -93,9 +95,32 @@ module Admin
       end
     end
 
+
+    #删除渠道用户
     def delchannel
       channel_user=ChannelUser.find(params[:id])
       if channel_user.destroy
+        render(:json => 'success', :layout => false)
+      else
+        render(:json => 'error', :layout => false)
+      end
+    end
+
+    #禁用去到用户
+    def forbidden
+      channel_user=ChannelUser.find(params[:id])
+      puts channel_user.phone
+      if !channel_user.status  || channel_user.status == 'yes'
+         channel_user.status = 'no'
+      else
+         channel_user.status = 'yes'
+      end
+
+     
+     
+
+     
+      if channel_user.save
         render(:json => 'success', :layout => false)
       else
         render(:json => 'error', :layout => false)

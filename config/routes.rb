@@ -49,6 +49,9 @@ Rails.application.routes.draw do
     #用户注册
     get 'sessions/register' => 'sessions/register', as: :register
 
+    #登录
+    post 'sessions/checklogin' => 'sessions/checklogin'
+
     post 'sessions/doreg' => 'sessions/doreg'
 
     resources :school, only: [:show,:new, :create]
@@ -65,6 +68,7 @@ Rails.application.routes.draw do
     get 'admin/changepwd' => 'admin/changepwd'
     get 'admin/dochangepwd' => 'admin/dochangepwd'
     get 'admin/delchannel' => 'admin/delchannel'
+    post 'admin/forbidden' => 'admin/forbidden'
   end
 
 

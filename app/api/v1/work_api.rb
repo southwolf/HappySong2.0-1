@@ -343,6 +343,27 @@ module V1
         present works, with: ::Entities::WorkToStudent
       end
 
+      desc "查看完成作业的人"
+      params do
+        requires :work_id, type: Integer, desc: "作业ID"
+      end
+      get '/complete_work_users' do
+        work = Work.find(params[work])
+        students = work.complete_students
+        present paginate(students), ::Entities::User
+      end
+
+
+      desc "查看没有完成作业的人"
+      params do
+        requires :work_id, type: Integer, desc: "作业ID"
+      end
+
+      get '/uncomplete_work_users' do
+        work = Work.find(params[work])
+        students = work.complete_students
+        present paginate(students), ::Entities::User
+      end
     end
   end
 end

@@ -4,7 +4,8 @@ module Channel
     #before_action :ischannel?
 
     def new
-
+      @channel_schools_count=current_user.channel_schools.count
+      @num = Config.first.num
     end
 
     def show
@@ -86,6 +87,7 @@ module Channel
       end
 
     end
+
 
     #申请提现
     def apply_cash_ajax

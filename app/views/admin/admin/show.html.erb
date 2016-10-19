@@ -62,6 +62,21 @@
       float: right;
     }
 
+    .forbidden{
+      width: 100px;
+      height: 35px;
+      line-height: 35px;
+      background: #f13f4b;
+      color: #ffffff;
+      border-radius: 5px;
+      text-align: center;
+      margin-top: 25px;
+      font-size: 14px;
+      border: 1px solid #f1f1f1;
+      float: right;
+      margin-right:10px;
+    }
+
     .btn {
       width: 70px;
       height: 35px;
@@ -122,6 +137,15 @@
   <h1>修改基本商信息</h1>
   <% if current_user.admin? %>
       <button class="delbtn">删除该渠道商</button>
+      <% if @status == 'yes' %>
+        <button class="forbidden">
+          禁用
+        </button>
+      <% else %>
+        <button class="forbidden">
+          启用
+        </button>
+      <% end %>
   <% end %>
 </div>
 
@@ -194,7 +218,7 @@
     else {
       $.ajax({
         url: '/api/v1/cities',
-        method: 'GET',
+        type: 'get',
         data: {province_id: province_id},
         dataType: "json",
         success: function (data) {
@@ -218,7 +242,7 @@
     else {
       $.ajax({
         url: '/api/v1/districts',
-        method: 'GET',
+        type: 'get',
         data: {city_id: city_id},
         dataType: "json",
         success: function (data) {
@@ -248,7 +272,7 @@
 
     $.ajax({
       url: '/admin/admin/changedistrict',
-      method: 'GET',
+      type: 'get',
       data: {
         district_id: $('#district').val(),
         channel_user_id: "<%= @channel_user.id %>"
@@ -278,12 +302,46 @@
               alert('删除渠道商成功!');
               window.location.href='/admin'
             }else{
-              alert('删除渠道商成功!')
+              alert('删除渠道商失败!')
             }
           }
         })
       }
     })
+
+     $('.forbidden').click(function(){
+      if(confirm("确定要操作？")){
+        $.ajax({
+          url:'/admin/admin/forbidden',
+          type: 'post',
+          data: {
+            id : "<%= @channel_user_id %>"
+          },
+    
+          dataType: "text",
+          success: function(data){
+            if(data== 'success'){
+
+               var con = $.trim($('.forbidden').text());
+             
+              if(con == '禁用'){
+                $('.forbidden').text('启用')
+              }
+
+              if(con == '启用'){
+                $('.forbidden').text('禁用')
+              }
+
+
+            }else{
+              return false
+            }
+          }
+        })
+      }
+      
+    })
+
 </script>
 
 </body>
