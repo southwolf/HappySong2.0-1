@@ -4,8 +4,8 @@ Rails.application.routes.draw do
   mount API => '/'
   mount GrapeSwaggerRails::Engine => '/swagger_doc'
 
-  get 'xieyi/xieyi'    => 'xieyi/xieyi'
-  
+  get 'xieyi/xieyi'    => 'xieyi#xieyi'
+  get '/zhifu' => 'zhifu#zhifu'
   namespace :channel do
     root "channel#index"
     resources :channel_users do
@@ -33,7 +33,7 @@ Rails.application.routes.draw do
 
     #渠道商报备记录
     get 'message/channel_baobei' => 'message/channel_baobei'
-    
+
     #添加新学校
     post 'school/schoolAdd' => 'school/schoolAdd'
 

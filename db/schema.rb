@@ -11,7 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161010022853) do
+ActiveRecord::Schema.define(version: 20161019063112) do
+
+  create_table "admins", force: :cascade do |t|
+    t.string   "name",            limit: 255
+    t.string   "password_digest", limit: 255
+    t.string   "remember_token",  limit: 255
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+  end
 
   create_table "advises", force: :cascade do |t|
     t.string   "content",    limit: 255
@@ -32,6 +40,15 @@ ActiveRecord::Schema.define(version: 20161010022853) do
     t.string   "content",    limit: 255
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+  end
+
+  create_table "apply_cash_backs", force: :cascade do |t|
+    t.integer  "channel_user_id", limit: 4
+    t.integer  "amount",          limit: 4
+    t.string   "alipay",          limit: 255
+    t.boolean  "passed",                      default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "article_grades", force: :cascade do |t|
@@ -77,6 +94,7 @@ ActiveRecord::Schema.define(version: 20161010022853) do
     t.string   "targetable_type", limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "link_url",        limit: 255
   end
 
   create_table "bills", force: :cascade do |t|
@@ -88,6 +106,24 @@ ActiveRecord::Schema.define(version: 20161010022853) do
     t.datetime "updated_at"
     t.boolean  "complete",                   default: false
     t.string   "order_no",       limit: 255
+    t.string   "channel",        limit: 255
+    t.string   "client_ip",      limit: 255
+  end
+
+  create_table "cash_backs", force: :cascade do |t|
+    t.integer  "cash",       limit: 4, default: 0
+    t.integer  "used",       limit: 4, default: 0
+    t.integer  "user_id",    limit: 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "cash_managers", force: :cascade do |t|
+    t.integer  "amount",         limit: 4, default: 0
+    t.integer  "user_id",        limit: 4
+    t.integer  "target_user_id", limit: 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "cate_items", force: :cascade do |t|
@@ -101,6 +137,37 @@ ActiveRecord::Schema.define(version: 20161010022853) do
     t.string   "name",       limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "channel_schools", force: :cascade do |t|
+    t.integer  "channel_user_id", limit: 4
+    t.integer  "school_id",       limit: 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "passed",                      default: false
+    t.string   "reason",          limit: 255
+  end
+
+  create_table "channel_user_cash_backs", force: :cascade do |t|
+    t.integer  "channel_user_id", limit: 4
+    t.integer  "amount",          limit: 4, default: 0
+    t.integer  "userd",           limit: 4, default: 0
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+  end
+
+  create_table "channel_users", force: :cascade do |t|
+    t.string   "email",           limit: 255
+    t.string   "name",            limit: 255
+    t.string   "password_digest", limit: 255
+    t.boolean  "company",                     default: false
+    t.string   "phone",           limit: 255
+    t.string   "token",           limit: 255
+    t.boolean  "admin",                       default: false
+    t.integer  "district_id",     limit: 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "alipay",          limit: 255
   end
 
   create_table "cities", force: :cascade do |t|
@@ -142,6 +209,7 @@ ActiveRecord::Schema.define(version: 20161010022853) do
     t.integer  "used",       limit: 4, default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "user_id",    limit: 4
   end
 
   create_table "districts", force: :cascade do |t|
@@ -162,6 +230,8 @@ ActiveRecord::Schema.define(version: 20161010022853) do
     t.datetime "updated_at"
     t.integer  "likes_count",         limit: 4,   default: 0
     t.integer  "comments_count",      limit: 4,   default: 0
+    t.boolean  "is_work"
+    t.boolean  "work_id"
   end
 
   create_table "editions", force: :cascade do |t|
@@ -251,8 +321,21 @@ ActiveRecord::Schema.define(version: 20161010022853) do
     t.datetime "updated_at"
   end
 
+  create_table "notify_configs", force: :cascade do |t|
+    t.integer  "user_id",        limit: 4
+    t.integer  "push_action_id", limit: 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "provinces", force: :cascade do |t|
     t.string   "name",       limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "push_actions", force: :cascade do |t|
+    t.string   "action",     limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -272,6 +355,8 @@ ActiveRecord::Schema.define(version: 20161010022853) do
     t.boolean  "is_demo",                    default: false
     t.boolean  "is_hot",                     default: false
     t.integer  "comments_count", limit: 4,   default: 0
+    t.boolean  "is_work",                    default: false
+    t.integer  "work_id",        limit: 4
   end
 
   create_table "relationships", force: :cascade do |t|
@@ -331,12 +416,21 @@ ActiveRecord::Schema.define(version: 20161010022853) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "recommend",              default: false
+    t.string   "cover_img",  limit: 255
   end
 
   create_table "team_classes", force: :cascade do |t|
     t.string   "name",       limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "transfers", force: :cascade do |t|
+    t.integer  "transfer_user_id", limit: 4
+    t.integer  "collector_id",     limit: 4
+    t.string   "amount",           limit: 255
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
   end
 
   create_table "units", force: :cascade do |t|
@@ -363,12 +457,63 @@ ActiveRecord::Schema.define(version: 20161010022853) do
     t.integer  "grade_team_class_id", limit: 4
     t.integer  "credit_id",           limit: 4
     t.integer  "parent_id",           limit: 4
+    t.string   "bg_image_url",        limit: 255, default: "bg_image.png"
   end
 
   create_table "views", force: :cascade do |t|
     t.integer  "viewer_id",      limit: 4
     t.integer  "view_record_id", limit: 4
     t.integer  "num",            limit: 4, default: 1
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "withdraw_cashes", force: :cascade do |t|
+    t.integer  "user_id",    limit: 4
+    t.string   "alipay",     limit: 255
+    t.integer  "amount",     limit: 4
+    t.boolean  "passed",                 default: false
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+  end
+
+  create_table "work_attachments", force: :cascade do |t|
+    t.integer  "work_id",    limit: 4
+    t.boolean  "is_video"
+    t.string   "file_url",   limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "work_to_articles", force: :cascade do |t|
+    t.integer  "article_id", limit: 4
+    t.integer  "work_id",    limit: 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "work_to_students", force: :cascade do |t|
+    t.integer  "work_id",    limit: 4
+    t.integer  "student_id", limit: 4
+    t.boolean  "complete",             default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "work_to_teams", force: :cascade do |t|
+    t.integer  "work_id",             limit: 4
+    t.integer  "grade_team_class_id", limit: 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "works", force: :cascade do |t|
+    t.integer  "user_id",        limit: 4
+    t.string   "content",        limit: 255
+    t.string   "style",          limit: 255
+    t.integer  "comments_count", limit: 4,   default: 0
+    t.datetime "start_time"
+    t.datetime "end_time"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
