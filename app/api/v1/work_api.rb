@@ -194,7 +194,7 @@ module V1
         current_user.children.each do |child|
           result += WorkToStudent.where(complete: true, student: child)
                                  .order(:created_at => :desc)
-                                 .includes(:user, :work)
+                                 .includes(:student, :work)
         end
 
         present paginate(Kaminari.paginate_array(result)), with: ::Entities::WorkToStudent
@@ -211,7 +211,7 @@ module V1
         current_user.children.each do |child|
           result += WorkToStudent.where(complete: false, student: child)
                                  .order(:created_at => :desc)
-                                 .includes(:user, :work)
+                                 .includes(:student, :work)
         end
         present paginate(Kaminari.paginate_array(result)), with: ::Entities::WorkToStudent
       end
