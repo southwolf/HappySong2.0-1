@@ -336,7 +336,9 @@ module V1
       end
 
       get '/work_info_student' do
-        
+        authenticate!
+        works = current_user.work_to_students
+        present works, with: ::Entities::WorkToStudent
       end
 
     end
