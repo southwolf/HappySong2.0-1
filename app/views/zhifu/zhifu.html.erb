@@ -7,23 +7,31 @@
     <meta name="format-detection" content="telephone=no"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <title>欢乐诵</title>
-    <link rel="stylesheet" type="text/css" href="/css/reset.css">
+    <link rel="stylesheet" type="text/css" href="css/zhifu/zhifu.css">
     <script src="//cdn.bootcss.com/jquery/2.2.0/jquery.min.js"></script>
+
+    <link href="/css/zhifu/all.css" rel="stylesheet">
+
+    <script src="/js/icheck.js?v=1.0.2"></script>
+
+
     <style media="screen">
 
 
       .kaitong{
-        width:6rem;
+        width:80px;
         height:3rem;
         background:#f13f4b;
         color:#ffffff;
         border:1px solid #f13f4b;
         border-radius:4px;
         font-size:18px;
+        margin-left:20%;
       }
 
       .left{
-        float:left;
+          float:left;
+          width:130px;
       }
 
       .left p{
@@ -49,7 +57,7 @@
       .month{
         font-size:20px;
         color:#333333;
-        width:80px;
+        width:70px;
         height:20px;
         display:inline-block;;
       }
@@ -57,12 +65,14 @@
       .money{
         color:#f13f4b;
         font-size:20px;
+        width:70px;
       }
 
       .section{
         border:1px solid #f1f1f1;
-        padding:40px;
+        padding:20px;
         padding-left:0px;
+
       }
 
       .pay{
@@ -78,13 +88,17 @@
 
       .demo{
         position: absolute;
-        top: 25%;
-        left: 15%;
-        width: 50%;
+        top: 35%;
+        left: 10%;
       }
 
+      .iradio_square-blue{
+        margin-top:18px;
+      }
 
-
+      a{
+        color:blue;
+      }
 
     </style>
 
@@ -94,8 +108,24 @@
 <div>
     <div  sytle="height:100%;width:100%;">
         <div class="top">
-            <img src="/imgs/demo.png">
+            <img src="/imgs/top-pro.png">
         </div>
+        <div style='padding-left:10px;font-size:12px;color:#999999;margin-bottom:10px;margin-top:10px'>
+          <h3 style=''>产品介绍<span style='font-size:14px'>(<a href='http://v7.rabbitpre.com/m/7IRInVRAm'>点击查看更多</a>)</span></h3>
+        </div>
+         <div class="top">
+            <img src="/imgs/top-info.png">
+        </div>
+
+        <div class="top">
+            <img src="/imgs/vipinfo.png">
+        </div>
+
+        <div class="top">
+            <img src="/imgs/vip.png">
+        </div>
+
+
 
         <div style='width:100%;text-align:center'>
           <div class='section'>
@@ -104,8 +134,9 @@
               <p class='info'>1个月，每月10元</p>
             </div>
 
-            <div class='right'>
-                <button class='kaitong'>开通</button>
+
+            <div class=''>
+                <button class='kaitong' data-money='10'>开通</button>
             </div>
             <div class='clear'></div>
           </div>
@@ -118,8 +149,8 @@
               <p class='info'>12个月，每月8.3元</p>
             </div>
 
-            <div class='right'>
-                <button class='kaitong'>开通</button>
+            <div class=''>
+                <button class='kaitong' data-money='100'>开通</button>
             </div>
             <div class='clear'></div>
           </div>
@@ -128,18 +159,22 @@
 
 
 
-    <div style="width:280px;border:1px solid #f1f1f1;border-radius:10px;margin: 0 auto;background:#f1f1f1;display:none" class='demo'>
+    <div style="width:280px;border:1px solid #f1f1f1;border-radius:10px;margin: 0 auto;background:#f1f1f1;display:none" class='demo demo-list'>
         <p>
-          <h3 style='text-align:center;font-size:26px;margin:10px 0px;color:#333333 '>欢乐诵会员</h3>
-          <span style='float:right;position:absolute;right:10px;top:10px;font-size:20px;' id='close'>x</span>
+          <h3 style='text-align:center;font-size:22px;margin:10px 0px;color:#333333;margin-top:16px;'>欢乐诵会员</h3>
+          <span style='float:right;position:absolute;right:10px;top:10px;font-size:20px;' id='close'><img src='/imgs/close.png' width='20px'></span>
+
         </p>
+        <p style='margin-left:50%;color:#ff7800' id='money-will'></p>
         <div>
           <p style='border:1px solid #f1f1f1;'>
-            <img src='/imgs/alipay.png' style='float:left;width:230px;'><input type='radio' name='check' style='float:right;margin-top:25px;margin-right:20px;'>
+            <img src='/imgs/alipay.png' style='float:left;width:230px;margin-left:10px'><input type='radio' name='check' checked style='float:right;margin-top:25px;margin-right:20px;'>
+            <div class='clear'></div>
           </p>
 
             <p style='border:1px solid #f1f1f1;'>
-              <img src='/imgs/weixin.png' style='float:left;width:230px;' ><input type='radio' name='check' style='float:right;margin-top:25px;margin-right:20px;'>
+              <img src='/imgs/weixin.png' style='float:left;width:230px;margin-left:10px;' ><input type='radio' name='check' style='float:right;margin-top:25px;margin-right:20px;'>
+              <div class='clear'></div>
             </p>
 
 
@@ -150,21 +185,33 @@
         </div>
    </div>
 
-   <div style='wdith:100%;height:100px;background:#999999;opacity:0.1;  position: absolute;'>
 
-   </div>
 
 </div>
 </body>
 
 
 <script>
+$(document).ready(function(){
+
+  $('.demo-list input').iCheck({
+    checkboxClass: 'icheckbox_square-blue',
+    radioClass: 'iradio_square-blue',
+    increaseArea: '20%'
+  });
+});
+</script>
+
+
+
+<script>
   $('.kaitong').click(function(){
     $('.demo').show();
+    $('#money-will').text('￥'+$(this).attr('data-money')+'.00')
   })
 
   $('img').click(function(){
-    $(this).next().prop("checked",1);
+    $(this).next().trigger('click')
   })
 
 $('#close').click(function(){
