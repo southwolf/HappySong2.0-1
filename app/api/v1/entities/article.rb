@@ -1,7 +1,7 @@
 module Entities
 
   class SimpleArticle < Grape::Entity
-    expose :id, :title, :author
+    expose :id, :title, :author,:has_demo,:is_hot
     expose (:content) {|object| object.content}
     expose (:cover_img) {|object| ENV['QINIUPREFIX']+object.cover_img }
   end

@@ -69,6 +69,7 @@ module Entities
     expose :invite_url do |object|
        ENV['SHARERECORD']+"invites?code=#{object.code}"
     end
+    
   end
 
   class SimpleUser < Grape::Entity
