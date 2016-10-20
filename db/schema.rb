@@ -151,7 +151,7 @@ ActiveRecord::Schema.define(version: 20161019063112) do
   create_table "channel_user_cash_backs", force: :cascade do |t|
     t.integer  "channel_user_id", limit: 4
     t.integer  "amount",          limit: 4, default: 0
-    t.integer  "userd",           limit: 4, default: 0
+    t.integer  "used",            limit: 4, default: 0
     t.datetime "created_at",                            null: false
     t.datetime "updated_at",                            null: false
   end

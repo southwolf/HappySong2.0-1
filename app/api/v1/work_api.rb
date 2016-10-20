@@ -351,7 +351,7 @@ module V1
         work_id = params[:work_id]
         work = Work.find(work_id)
         result = work.complete_users
-        present paginate(Kaminari.paginate_array(result)), ::Entities::User
+        present  paginate(Kaminari.paginate_array(result)), with: ::Entities::User
       end
 
 
@@ -364,7 +364,7 @@ module V1
         work_id = params[:work_id]
         work = Work.find(work_id)
         result = work.uncomplete_users
-        present paginate(Kaminari.paginate_array(result)), ::Entities::User
+        present  paginate(Kaminari.paginate_array(result)), with: ::Entities::User
       end
 
       desc "评论作业"
