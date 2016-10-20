@@ -350,8 +350,8 @@ module V1
       get '/complete_work_users' do
         work_id = params[:work_id]
         work = Work.find(work_id)
-        students = work.complete_students
-        present paginate(students), ::Entities::User
+        result = work.complete_users
+        present paginate(Kaminari.paginate_array(result)), ::Entities::User
       end
 
 
@@ -363,8 +363,8 @@ module V1
       get '/uncomplete_work_users' do
         work_id = params[:work_id]
         work = Work.find(work_id)
-        students = work.complete_students
-        present paginate(students), ::Entities::User
+        result = work.uncomplete_users
+        present paginate(Kaminari.paginate_array(result)), ::Entities::User
       end
 
       desc "评论作业"

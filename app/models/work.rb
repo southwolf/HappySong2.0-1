@@ -5,16 +5,12 @@ class Work < ActiveRecord::Base
   has_many   :grade_team_classes, through: :work_to_teams
 
   has_many   :work_to_students
-  has_many   :work_complete_students, ->(){where(complete: true)}, class_name: "WorkToStudent"
-  has_many   :work_uncomplete_students,  ->(){where(complete: false)}, class_name: "WorkToStudent"
+  has_many   :complete_works,   ->(){where(complete: true)},  class_name: "WorkToStudent"
+  has_many   :uncomplete_works, ->(){where(complete: false)}, class_name: "WorkToStudent"
   has_many   :students, class_name: "User",
                         through: :work_to_students
-  has_many   :complete_students, class_name: "User",
-                        through: :work_complete_students,
-                        source: "WorkToStudent"
-  has_many   :uncomplete_students, class_name: "User",
-                        through: :work_uncomplete_students,
-                        source: "WorkToStudent"
+
+
 
 
   has_many   :work_to_articles
@@ -55,5 +51,21 @@ class Work < ActiveRecord::Base
 
     #向所布置班级的学生推送作业发布通知
 
+  end
+
+  def complete_users
+    result = []
+    self.complete_works.includes(:student).each do |complete_work|
+      result.push complete_work.student
+    end
+    return result
+  end
+
+  def uncomplete_users
+    result = []
+    self.uncomplete_works.includes(:student).each do |uncomplete_work|
+      result.push uncomplete_work.student
+    end
+    return result
   end
 end
