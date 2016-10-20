@@ -1,5 +1,5 @@
 class Work < ActiveRecord::Base
-  belongs_to :teacher, class_name: "User", foreign_key: "user_id"
+  belongs_to :user, class_name: "User", foreign_key: "user_id"
 
   has_many   :work_to_teams
   has_many   :grade_team_classes, through: :work_to_teams
@@ -42,7 +42,7 @@ class Work < ActiveRecord::Base
       result.each do |student|
         woker.add(
           { user_id: student.id,
-            actor_id:   work.teacher.id,
+            actor_id:   work.user.id,
             notice_type: 'work',
             targetable_type: work.class,
             targetable_id: work.id
