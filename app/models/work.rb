@@ -11,7 +11,7 @@ class Work < ActiveRecord::Base
                         through: :work_to_students
   has_many   :complete_students, class_name: "User",
                         through: :work_complete_students
-  has_many   :complete_students, class_name: "User",
+  has_many   :uncomplete_students, class_name: "User",
                         through: :work_uncomplete_studens
 
 
