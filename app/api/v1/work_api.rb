@@ -127,7 +127,7 @@ module V1
         requires :work_id, type: Integer, desc: "作业ID"
         requires :grade_team_class_id, type: Integer, desc: "班级ID"
       end
-      get '/complete_work_info' do
+      get '/complete_work_infos' do
         authenticate!
         work_id = params[:work_id]
         grade_team_class_id = params[:grade_team_class_id]
@@ -146,7 +146,7 @@ module V1
         requires :work_id, type: Integer, desc: "作业ID"
         requires :grade_team_class_id, type: Integer, desc: "班级ID"
       end
-      get '/uncomplete_work_info' do
+      get '/uncomplete_work_infos' do
         authenticate!
         work_id = params[:work_id]
         grade_team_class_id = params[:grade_team_class_id]
