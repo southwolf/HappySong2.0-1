@@ -348,7 +348,7 @@ module V1
         requires :work_id, type: Integer, desc: "作业ID"
       end
       get '/complete_work_users' do
-        work_id = params[work_id]
+        work_id = params[:work_id]
         work = Work.find(work_id)
         students = work.complete_students
         present paginate(students), ::Entities::User
@@ -361,7 +361,7 @@ module V1
       end
 
       get '/uncomplete_work_users' do
-        work_id = params[work_id]
+        work_id = params[:work_id]
         work = Work.find(work_id)
         students = work.complete_students
         present paginate(students), ::Entities::User
