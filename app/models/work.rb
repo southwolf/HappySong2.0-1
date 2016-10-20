@@ -6,13 +6,15 @@ class Work < ActiveRecord::Base
 
   has_many   :work_to_students
   has_many   :work_complete_students, ->(){where(complete: true)}, class_name: "WorkToStudent"
-  has_many   :work_uncomplete_studens,  ->(){where(complete: false)}, class_name: "WorkToStudent"
+  has_many   :work_uncomplete_students,  ->(){where(complete: false)}, class_name: "WorkToStudent"
   has_many   :students, class_name: "User",
                         through: :work_to_students
   has_many   :complete_students, class_name: "User",
-                        through: :work_complete_students
+                        through: :work_complete_students,
+                        source: "WorkToStudent"
   has_many   :uncomplete_students, class_name: "User",
-                        through: :work_uncomplete_studens
+                        through: :work_uncomplete_students,
+                        source: "WorkToStudent"
 
 
   has_many   :work_to_articles
