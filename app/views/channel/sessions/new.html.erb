@@ -1,0 +1,218 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<script src="/dist/js/jquery.min.js"></script>
+<title>欢乐诵渠道管理平台</title>
+<style type="text/css">
+.h1 {
+	font-size: 36px;
+	color: #ff5c5c;
+	text-align:center
+}
+.p {
+	color: #333333;
+}
+#form1 p {
+	text-align: center;
+}
+
+#form1 p input{
+	width:300px;
+	height:50px;
+	border-radius:1px;
+	padding-left:5px;
+	border: 1px solid #f1f1f1;
+
+}
+
+.p span {
+	font-size: 22px;
+}
+
+#submit{
+	background: #ff5c5c;
+	color:#FFF;
+	font-size:20px;
+	border-radius:1px;
+}
+
+a{
+	font-size:16px;
+	text-decoration:none;
+	color:#666666
+}
+
+.info{
+	font-size:14px;
+	color:#f13f4b;
+	font-weight:bold;
+	
+}
+
+
+.send_verify{
+	width:124px;
+	height:54px;
+	display:inline-block;
+}
+
+.re-info{
+	font-size:14px;
+	color:#f13f4b;
+	font-weight:bold;
+	
+}
+
+
+</style>
+</head>
+
+<body>
+<hr align="center" size='3' style="background:#ff5c5c;margin-bottom:125px"/>
+<h2 class="h1" >欢乐诵渠道管理平台</h2>
+<p align='center' class="p"><span>登录</span></p>
+<p align='center' class="info" style='display:none'>密码不能为空</p>
+<% if :notice %>
+	<p align='center' class="re-info"><%= notice %></p>
+<% end %>
+<form id="form1" action="/channel/session"  method="post">
+  <p>
+    <input type="text" name="email" id="email" placeholder='登录账户邮箱' />
+  </p>
+  <p>
+    <input type="password"  name="password" id="password" placeholder='密码'/>
+  </p>
+  <p>
+    <input type="text" name="phone" id="phone" placeholder='手机号' />
+  </p>
+  <p>
+    <label for="code"></label>
+    <input type="text" name="code" id="code" style='width:173px;height:50px;'/>
+    <button id="send_verify" name="send_verify" class='send_verify'>获取验证码</button>
+  </p>
+  <p>
+    <input type="submit" style='width:310px' name="submit" id="submit" value="登录" />
+  </p>
+  <p>
+  	<a href='/channel/sessions/register'>注册成渠道商？</a>
+  </p>
+
+  <input type='hidden' id='tmp' value=''>
+</form>
+
+
+</body>
+</html>
+
+<script type="text/javascript">
+
+  $(document).keyup(function(event){
+    if(event.keyCode ==13){
+      $("#submit").trigger("click");
+    }
+  });
+
+  var countdown=60;
+  function settime(obj) {
+      if (countdown == 0) {
+          obj.removeAttr("disabled");
+          obj.css({"background-color":"#ef4141", "color": "#FFFFFF"});
+          obj.text("获取验证码");
+          countdown = 60;
+          return;
+      } else {
+          obj.attr("disabled", "disabled");
+          obj.css({"background-color": "#f13f4b",'color':'#FFFFFF'})
+          console.log('aaa');
+          obj.text("重新发送(" + countdown + ")");
+          countdown--;
+    }
+      setTimeout(function() {
+        settime(obj) }
+        ,1000)
+    }
+
+  $("#send_verify").click(function(event){
+
+   
+    var phone=$('#phone').val();
+    
+    if ($.trim(phone) == '') {
+       $('.info').html('请填写手机号').fadeIn(2000).hide(2000)
+      return false;
+    }
+
+
+    var data = {
+      phone: phone
+    }
+    $.ajax({
+      url: '/api/v1/channel_users/getcode',
+      method: "GET",
+      dataType: "json",
+      data: data,
+      success: function(data){
+        console.log(data.message);
+      }
+    })
+    settime($("#send_verify"));
+    event.preventDefault();
+
+  });
+
+
+  $('#submit').click(function(){
+  	var password=$('#password').val();
+  	var email=$('#email').val();
+  	var code=$('#code').val();
+  	var phone=$('#phone').val();
+
+  	if($.trim(email) == ''){
+     $('.info').html('请填写登录账户邮箱').fadeIn(2000).hide(2000)
+      return false;
+    }
+
+    if ($.trim(password) == '') {
+      $('.info').html('请填写密码').fadeIn(2000).hide(2000)
+      return false;
+    }
+
+    if ($.trim(code) == '') {
+      $('.info').html('请填写验证码').fadeIn(2000).hide(2000)
+      return false;
+    }
+
+  
+
+    $.ajax({
+      url: '/channel/sessions/checklogin',
+      type: "post",
+      dataType: "text",
+      async: false,
+      data: {email: email, password: password, phone: phone, code: code},
+      success: function(message){
+      	
+      	if (message == 'success'){
+      		tmp = 'ok'
+      		console.log('a')
+   
+      	}else{
+      		tmp ='no'
+        	$('.info').html(message).fadeIn(2000).hide(2000)
+      	}
+
+      	
+      }
+    })
+
+    if (tmp == 'no'){
+    	return false;
+    }
+   
+
+  })
+
+
+
+</script>

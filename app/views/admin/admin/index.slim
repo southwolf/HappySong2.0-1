@@ -22,6 +22,8 @@ html lang="en"
     span.s1 style="color:#ff5c5c"
       = link_to "转账记录 |",channel_channel_user_transfers_path(current_user),class:'s1'
     span.s1 style="color:#ff5c5c"
+      = link_to "修改密码 |",admin_admin_changepwd_path, class: 's1'
+    span.s1 style="color:#ff5c5c"
       = link_to "首页|",admin_root_path, class: 's1'
     .clear
 
@@ -241,7 +243,7 @@ javascript:
         con = ''
 
         $.each(dataObj, function (i, v) {
-          con += "<tr><td>" + parseInt(i + 1) + "</td><td>" + v.name + "</td><td>" + v.address + "</td><td>" + v.company + "</td><td>" + v.created_at + "</td>" + "<td>" + v.channel_size + "</td><td>" + v.channel_reg + "</td><td>" + v.channel_vip + "</td><td class='goinfo' id=" + v.id + ">详情</td></tr>";
+          con += "<tr><td>" + parseInt(i + 1) + "</td><td><a href='/admin/admin/show?id="+v.id+"'>"+v.name + "</a></td><td>" + v.address + "</td><td>" + v.company + "</td><td>" + v.created_at + "</td>" + "<td>" + v.channel_size + "</td><td>" + v.channel_reg + "</td><td>" + v.channel_vip + "</td><td class='goinfo' id=" + v.id + ">详情</td></tr>";
         })
 
         $('.con').html(con)
