@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-  <title>欢乐诵渠道管理系统</title>
+  <title>Untitled Document</title>
   <%= javascript_include_tag 'application', "data-turbolinks-track" => false %>
   <script src="/dist/js/jquery.min.js"></script>
   <style type="text/css">
@@ -117,7 +117,7 @@
       background: #f7f7f7;
     }
 
-    .pass, .nopass{
+    .pass {
       width: 65px;
       height: 30px;
       line-height: 30px;
@@ -233,34 +233,22 @@
   </div>
 
   <div id="bbdiv" style="display:none">
-    <table width="90%" border="1" cellpadding="10">
+    <table width="830" border="1" cellpadding="10">
       <% @channel_schools.each do |school| %>
           <tr>
-            <td class='pad'><%= school.channel_user.name %>申请报备学校 <%= school.try(:school).try(:fullname) %></td>
+            <td class='pad'><%= school.channel_user.name %>申请报备学校 <%= school.school.fullname %></td>
             <td class='padm'><%= school.try(:created_at) %></td>
             <td class='padm'>
               <% if school.passed %>
                   <b style="color:#f13f4b">报备成功</b>
-              <% end %>
-
-              <% if !school.passed && school.reason %>
-                  <b style="color:#f13f4b">审核不通过</b>
-              <% end %>
-
-              <% if !school.passed && !school.reason %>
-                  <b style="color:#f13f4b">处理中</b>
-              <% end %>
-            </td>
-            <td class='padm' width='200px'>
-              <% if !school.passed && school.reason %>
-                  原因:<%= school.try(:reason) %>
+              <% else %>
+                  处理中
               <% end %>
             </td>
             <td class='padr'>
               <a href="/channel/channel_users/<%= school.channel_user.id %>">查看详情</a>
-              <% if !school.passed && !school.reason%>
+              <% if !school.passed %>
                   <button class="pass" data-id="<%= school.id %>">申请通过</button>
-                  <button class="nopass" data-id="<%= school.id %>">申请不通过</button>
               <% end %>
 
             </td>
@@ -302,8 +290,7 @@
       dataType: "text",
       success: function (data) {
         if (data == 'success') {
-          that.next().remove();
-          that.parent().prev().prev().html('<b style="color:#f13f4b">报备成功</b>')
+          that.parent().prev().html('<b style="color:#f13f4b">报备成功</b>')
           that.remove();
 
         }
@@ -335,34 +322,4 @@
     })
 
   })
-
-
-  $('.nopass').click(function(){
-     var reason=prompt("请填写不通过的理由！","");
-      if(reason){
-            var sid = $(this).attr('data-id')
-            var that = $(this)
-            $.ajax({
-              url: '/channel/message/nopass_school',
-              method: 'get',
-              data: {id: sid, reason: reason},
-              dataType: "text",
-              success: function (data) {
-                if (data == 'success') {
-                  that.parent().prev().html('原因:'+reason)
-                  that.prev().remove();
-                  that.parent().prev().prev().html('<b style="color:#f13f4b">审核不通过</b>')
-                  that.remove();
-                }
-                if (data == 'fail') {
-                  alert('失败,请重新操作')
-                }
-              }
-            })
-      }
-  })
-
-
-
-
 </script>

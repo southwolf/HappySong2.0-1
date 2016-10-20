@@ -8,22 +8,82 @@
   <style>
 
 
-
-
-
-    h1 {
-      font-size: 18px;
-      color: #666666;
-      text-align: left;
-      margin: 40px;
+    body {
+      background: #f8f8f8;
+      text-align: center;
+      color: #fff;
+      font-family: Microsoft YaHei, Segoe UI, Tahoma, Arial, Verdana, sans-serif;
     }
 
-    div {
-      margin-left: 40px;
+    .page-container {
+      width: 350px;
+      height: auto;
+      margin: 0px auto 0 auto;
+    }
+
+    h1 {
+      font-size: 30px;
+      font-weight: 700;
+      color: #f13f4b;
+    }
+
+    form {
+      position: relative;
+      width: 350px;
+      margin: 15px auto 0 auto;
+      text-align: center;
+    }
+
+    input {
+      width: 270px;
+      height: 42px;
+      margin-top: 25px;
+      padding: 0 15px;
+      background: #ff5c5c;
+      -moz-border-radius: 6px;
+      -webkit-border-radius: 6px;
+      border-radius: 6px;
+
+      border: 1px solid rgba(255, 255, 255, .15);
+      -moz-box-shadow: 0 2px 3px 0 rgba(0, 0, 0, .1) inset;
+      -webkit-box-shadow: 0 2px 3px 0 rgba(0, 0, 0, .1) inset;
+      box-shadow: 0 2px 3px 0 rgba(0, 0, 0, .1) inset;
+      font-family: 'PT Sans', Helvetica, Arial, sans-serif;
+      font-size: 14px;
+      color: #fff;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, .1);
+      -o-transition: all .2s;
+      -moz-transition: all .2s;
+      -webkit-transition: all .2s;
+      -ms-transition: all .2s;
+    }
+
+    button {
+      cursor: pointer;
+      width: 300px;
+      height: 44px;
+      margin-top: 25px;
+      padding: 0;
+      background: #ef4300;
+      -moz-border-radius: 6px;
+      -webkit-border-radius: 6px;
+      border-radius: 6px;
+      border: 1px solid #ff730e;
+      font-family: 'PT Sans', Helvetica, Arial, sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #fff;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, .1);
+    }
+
+    .breadcrumb {
+      color: black;
+      size: 18px;
     }
 
     select {
       /*Chrome和Firefox里面的边框是不一样的，所以复写了一下*/
+      border: solid 1px #333333;
 
       /*很关键：将默认的select选择框样式清除*/
       appearance: none;
@@ -33,51 +93,47 @@
       /*为下拉小箭头留出一点位置，避免被文字覆盖*/
       margin-right: 15px;
 
-      width: 100px;
-      height: 35px;
-      margin-bottom:4px;
+      width: 350px;
+      height: 42px;
+      margin-top: 25px;
       padding: 0 15px;
-      border-radius: 0px;
-      background: #ffffff;
-      border: 1px solid rgb(238, 238, 238);
+      background: #ff5c5c;
+      -moz-border-radius: 6px;
+      -webkit-border-radius: 6px;
+      border-radius: 6px;
 
-
-    }
-
-    .inp {
-      width: 200px;
-      height: 35px;
-      padding-left: 10px;
-      margin:5px;
-      margin-left:20px;
-      border-radius:1px;
-      border:1px solid #f1f1f1;
-    }
-
-    .btn {
-      width: 70px;
-      height: 35px;
-      line-height: 35px;
-      background: #f2f2f2;
-      color: #666666;
-      border-radius:2px;
-      text-align:center;
-      font-size:14px;
-      border:1px solid #f1f1f1;
-      margin-top:30px;
+      border: 1px solid rgba(255, 255, 255, .15);
+      -moz-box-shadow: 0 2px 3px 0 rgba(0, 0, 0, .1) inset;
+      -webkit-box-shadow: 0 2px 3px 0 rgba(0, 0, 0, .1) inset;
+      box-shadow: 0 2px 3px 0 rgba(0, 0, 0, .1) inset;
+      font-family: 'PT Sans', Helvetica, Arial, sans-serif;
+      font-size: 14px;
+      color: #fff;
 
     }
 
-      form{
-        margin-left:40px;
-      }
+    /*－－－增加部份的CSS－－－*/
+    form, input, button {
+      font-family: Microsoft YaHei, Segoe UI, Tahoma, Arial, Verdana, sans-serif;
+      text-decoration: none;
+      width: 100%;
+    }
 
-      .s1{
-        width:90px;
-      }
+    button.submit_button {
+      font-size: 24px;
+      width: 130px;
+      background: #ff5c5c
+    }
+
+    input.Captcha {
+      width: 130px;
+      float: left;
+    }
+
+
   </style>
 
-  <title>欢乐诵渠道管理系统</title>
+  <title>添加渠道商</title>
 
 </head>
 
@@ -85,7 +141,7 @@
 
 <p class="top">
   <span class="p1">系统管理员</span>
-  <span class="s2"><%= current_user.name %>,您好</span>
+  <span class="s2"><%= current_user.name %></span>
   <span class="s1"><%= link_to "添加渠道商 |", new_channel_channel_user_path, class: 's1' %></a>
   </span><span class="s1"><%= link_to "退出登录 |", channel_session_path, class: 's1', method: :delete, :confirm => "Are you sure ?" %></span>
   <span class="s1" style="color:#ff5c5c"> <%= link_to "转账记录 |", channel_channel_user_transfers_path(current_user), class: 's1' %></span>
@@ -99,48 +155,29 @@
 <div class="page-container">
   <h1>添加渠道商</h1>
   <% if :nocice %>
-      <p class="breadcrumb" style="margin-left:40px;"><%= notice %></p>
+      <p class="breadcrumb"><%= notice %></p>
   <% end %>
   <form action="/channel/channel_users/create" method="post">
-    姓名: <input type="text" name="name" id='name' class="inp" ><br/>
-    邮箱: <input type="text" name="email" id='email' class="inp" ><br/>
-    手机: <input type="text" name="phone" id='phone' class="inp" ><br/>
-    密码: <input type="password" name="password" id='password' class="inp" ><br/>
-    类型:
-    <select name="type" id="company">
-      <option value="1">公司</option>
-      <option value="0">个人</option>
+    <input type="text" name="name" id='name' class="username" placeholder="姓名">
+    <input type="text" name="email" id='email' class="password" placeholder="邮箱">
+    <input type="text" name="phone" id='phone' class="password" placeholder="手机号">
+    <input type="text" name="password" id='password' class="password" placeholder="密码">
+    <%= select_tag "district", options_from_collection_for_select(District.all, "id", "name"), prompt: "选择区域" %>
+    <select name="type" id="type">
+      <option value="">选择类型</option>
+      <option value=0>个人</option>
+      <option value=1>公司</option>
     </select>
-    <br/>
-    区域:
-
-    <%= select_tag "province", options_from_collection_for_select(Province.all, "id", "name"), prompt: "选择省" %>
-
-
-    <select name="city" id="city">
-      <option value="">选择市</option>
-    </select>
-
-    <select name="district" id="district">
-      <option value="">选择区(县)</option>
-    </select>
-
-    <br/>
-
-
-    <button type="submit" id="sub" class="btn">添加</button>
-
+    <button type="submit" id="sub" class="submit_button">添加</button>
+    <div class="error"><span>+</span></div>
   </form>
 </div>
 
 <script>
 
-  $('#province, #company').css('margin-left','20px')
-
-
   $('#sub').click(function () {
     if ($.trim($("#name").val()) == '') {
-      alert('请填写姓名!')
+      alert('请填写密码!')
       return false;
     }
 
@@ -164,64 +201,11 @@
       return false;
     }
 
-
-
+    if ($.trim($("#type").val()) == '') {
+      alert('请选择类型')
+      return false;
+    }
   })
-
-</script>
-
-
-<script>
-
-  var province = $("#province"),city = $("#city");
-  province.change(function(event){
-    var province_id = province.val();
-    if (province_id == " ")
-      return
-    else{
-      $.ajax({
-        url: '/api/v1/cities',
-        method:'GET',
-        data: { province_id: province_id},
-        dataType: "json",
-        success: function(data){
-          var city = $("#city");
-          city.empty();
-          var dom = '<option value="">选择市</option>';
-          $.each(data, function(k, v){
-            dom += "<option value=" + v.id + ">" + v.name +"</option>";
-          });
-          city.append(dom);
-        }
-      })
-    }
-  });
-
-  city.change(function(event){
-    console.log("city change")
-    var city_id = city.val();
-    if (city_id == " ")
-      return
-    else{
-      $.ajax({
-        url:'/api/v1/districts',
-        method: 'GET',
-        data: { city_id : city_id},
-        dataType: "json",
-        success: function(data){
-          var district = $("#district");
-          district.empty();
-          var dom ='<option value="">选择区(县)</option>';
-          $.each(data, function(k, v){
-            dom += "<option value="+ v.id + ">" + v.name + "</option>";
-          });
-          district.append(dom);
-        }
-      })
-    }
-
-  });
-
 
 </script>
 

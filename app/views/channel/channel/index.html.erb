@@ -1,6 +1,6 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-  <title>欢乐诵渠道管理系统</title>
+  <title>渠道商欢迎界面</title>
   <!--提现的样式-->
   <link rel="stylesheet" href="/css/lanrenzhijia.css" media="all">
   <link rel="stylesheet" href="/css/qd_welcome.css" media="all">
@@ -12,12 +12,11 @@
 <body style='border-top:2px solid red;'>
 <p class='top'>
   <span class='p1'>渠道用户数据</span>
-  <span class='s2'><%= current_user.name%>,您好</span>
+  <span class='s2'><%= current_user.name%></span>
   <span class='s1'><%=link_to "退出登录|",channel_session_path,class:'s1', method: :delete, :confirm => "Are you sure ?" %></span>
   <span class='s1'>  <%= link_to "提现记录|",channel_channel_user_apply_cash_backs_path(current_user), class: 's1' %></span>
   <span class='s1' id='tx'>申请提现|</span>
   <span class='s1'> <%= link_to "学校报备|", new_channel_school_path %></span>
-  <%= link_to "个人中心 |",admin_admin_show_path(:id => current_user.id), class: 's1' %>
   <%= link_to "首页|",channel_root_path, class: 's1' %>
 <div class='clear'></div>
 </p>
@@ -47,7 +46,7 @@
               </div>
 
               <div class="w_info">
-                <%= link_to channel_school_path(school.school_id) do %>
+                <%= link_to channel_school_path(school) do %>
                     <img src="/dist/info.png" width="76" height="69"/>
                 <% end %>
               </div>
@@ -62,8 +61,6 @@
     </div>
   </div>
 
-<!-- 
-  搜索
   <div style='float:left;min-height:200px;width:350px;margin-left:60px'>
     <p style='font-size:16px;'>快速查找你要查看的信息</p>
     <p style='font-size:12px;margin-top:15px'>根据地区,学校名称进行搜素，在文本框内输入信息</p>
@@ -73,7 +70,6 @@
         &nbsp;</button>
     </p>
   </div>
- -->
   <div class='clear'></div>
 </div>
 
