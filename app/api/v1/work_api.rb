@@ -120,6 +120,7 @@ module V1
 
         present work, with: ::Entities::Work
       end
+
       desc "根据给定班级显示班级学生完成作业情况"
       params do
         requires :token, type: String, desc: '用户访问令牌'
@@ -131,16 +132,15 @@ module V1
         work_id = params[:work_id]
         grade_team_class_id = params[:grade_team_class_id]
         grade_team_class = GradeTeamClass.find(grade_team_class_id)
-        complete_students = WorkToStudent.where(work_id: work_id, complete: true).includes(:student, student:[:role,:grade_team_class])
-                                        .select { |work_to_student| work_to_student.student.grade_team_class == grade_team_class}
-                                        .map { |work_to_student| work_to_student.student  }
-
-        present :complete_student,   paginate(Kaminari.paginate_array(complete_students)), with: ::Entities::SimpleUser
+        uncomplete_students = WorkToStudent.where(work_id: work_id, complete: true).includes(:student, student:[:role,:grade_team_class])
+                                          .select { |work_to_student| work_to_student.student.grade_team_class == grade_team_class}
+                                          .map { |work_to_student| work_to_student.student  }
+        present paginate(Kaminari.paginate_array(uncomplete_students)), with: ::Entities::SimpleUser
 
       end
 
 
-      desc "根据给定班级显示班级学生完成作业情况"
+      desc "根据给定班级显示班级学生未完成作业情况"
       params do
         requires :token, type: String, desc: '用户访问令牌'
         requires :work_id, type: Integer, desc: "作业ID"
@@ -151,10 +151,10 @@ module V1
         work_id = params[:work_id]
         grade_team_class_id = params[:grade_team_class_id]
         grade_team_class = GradeTeamClass.find(grade_team_class_id)
-        uncomplete_students = WorkToStudent.where(work_id: work_id, complete: false).includes(:student, student:[:role,:grade_team_class])
+        complete_student = WorkToStudent.where(work_id: work_id, complete: false).includes(:student, student:[:role,:grade_team_class])
                                           .select { |work_to_student| work_to_student.student.grade_team_class == grade_team_class}
                                           .map { |work_to_student| work_to_student.student  }
-        present :uncomplete_student,  paginate(Kaminari.paginate_array(uncomplete_students)), with: ::Entities::SimpleUser
+        present paginate(Kaminari.paginate_array(complete_student)), with: ::Entities::SimpleUser
 
       end
       desc "获取作业的评论列表"
