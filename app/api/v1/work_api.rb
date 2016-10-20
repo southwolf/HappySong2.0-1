@@ -86,11 +86,7 @@ module V1
       get '/record_works' do
         authenticate!
         works = current_user.works.where(style: "record_work")
-                                  .includes( :teacher,
-                                             :grade_team_classes, :students,
-                                             :articles,:work_attachments,
-                                             teacher:[:role,:member], students:[:role,:member],
-                                             grade_team_classes:[:teacher,:school,:grade,:students, :team_class])
+                                  .includes(:articles,:work_attachments)
                                   .reverse
                                   .group_by{ |work| DateTime.parse(work.created_at.to_s).strftime('%Y-%-m')}.to_a
 
@@ -105,11 +101,7 @@ module V1
       get '/creative_works' do
         authenticate!
         works = current_user.works.where(style: "creative_work")
-                                  .includes( :teacher,
-                                             :grade_team_classes, :students,
-                                             :articles,:work_attachments,
-                                             teacher:[:role,:member], students:[:role,:member],
-                                             grade_team_classes:[:teacher,:school,:grade,:students, :team_class])
+                                  .includes(:articles,:work_attachments)
                                   .reverse
                                   .group_by{ |work| DateTime.parse(work.created_at.to_s).strftime('%Y-%-m')}.to_a
         present paginate(Kaminari.paginate_array(works)), with: ::Entities::HashWork
@@ -117,6 +109,17 @@ module V1
       end
 
 
+      desc "显示作业详情"
+      params do
+        requires :work_id, type: Integer, desc: "作业ID"
+      end
+
+      get '/show_work_info' do
+        work_id = params[:work_id]
+        work = Work.find(work_id)
+
+        present work, with: ::Entities::Work
+      end
       desc "根据给定班级显示班级学生完成作业情况"
       params do
         requires :token, type: String, desc: '用户访问令牌'

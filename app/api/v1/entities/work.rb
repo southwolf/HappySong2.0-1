@@ -7,10 +7,15 @@ module Entities
     expose :work_attachments,      using: ::Entities::Attachment
   end
 
+  class SimpleWork < Grape::Entity
+    expose :id, :content, :style, :comments_count,:start_time, :end_time
+    expose :articles,              using: ::Entities::SimpleArticle
+    expose :work_attachments,      using: ::Entities::Attachment
+  end
   class HashWork < Grape::Entity
     expose (:time) { |object| object[0] }
     expose (:size) { |object| object[1].size}
-    expose :works, using: Entities::Work do |object|
+    expose :works, using: Entities::SimpleWork do |object|
         object[1]
       end
   end
