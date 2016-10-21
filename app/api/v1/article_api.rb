@@ -11,6 +11,13 @@ module V1
         present paginate(articles), with: ::Entities::Article
       end
 
+
+      desc "获取文章的示范朗读"
+      paginate per_page: 20
+      get '/demo_records' do
+        demo_records = Article.records.where(:is_demo => true)
+        present paginate(demo_records), with: ::Entities::Record
+      end
       desc "根据科目条件取文章"
       paginate per_page: 20
       params do
