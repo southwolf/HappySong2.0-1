@@ -68,7 +68,8 @@ class Dynamic < ActiveRecord::Base
   #更新作业完成状态
   def update_work_status
     if self.is_work
-      WorkToStudent.find_by(work_id: self.work_id, student: self.user).update(complete: true)
+      WorkToStudent.find_by(work_id: self.work_id, student: self.user).update(complete: true).save
+
     end
   end
 
