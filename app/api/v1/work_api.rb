@@ -390,6 +390,29 @@ module V1
           error!({error: "评论失败"}, 500)
         end
       end
+
+
+      desc "判断这个文章作业是否读了"
+      params do
+        requires :token,      type: String,  desc: '用户访问令牌'
+        requires :work_id,    type: Integer, desc: '动态ID'
+        requires :article_id, type: Integer, desc: '文章ID'
+      end
+
+      get '/checkout' do
+        authenticate!
+        work_id = params[:work_id]
+        article_id = params[:article_id]
+
+        status = Record.where(is_work: true, work_id: work_id, article_id: article_id)
+
+        if status.present?
+          present :message, true
+        else
+          present :message, false
+        end
+
+      end
     end
   end
 end
