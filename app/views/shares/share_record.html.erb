@@ -37,20 +37,20 @@
 <section class="info">
   <div class="clearfix">
 
-    <a href="javascript:void(0)" class="left">
-      <img class="user-circle-img-zuoping" src="<%= ENV["QINIUPREFIX"]+ @record.user.avatar %>">
+    <a href="/share_profile/<%=@record.user.id%>" class="left">
+      <img class="user-circle-img-zuoping" style='border-radius:2.5rem;z-index:22201;position:relative;' src="<%= ENV["QINIUPREFIX"]+ @record.user.avatar %>">
     </a>
 
-    <div class="relative">
-      <span class="user-name">
+    <div class="relative" style='z-index:1000'>
+      <span class="user-name" style='margin-top:0.3rem;'>
         <%= @record.user.name %>
       </span>
 
-      <span class="listen-num-zuoping">
+      <span class="listen-num-zuoping" >
         <%= @record.created_at.strftime("%m-%d") %>
       </span>
 
-      <div class="user-school">
+      <div class="user-school" style='margin-top:0.3rem;'>
         <%= @record.user.try(:grade_team_class).try(:school).try(:name)%> <%= @record.user.try(:grade_team_class).try(:grade).try(:name)%>
       </div>
     </div>
@@ -193,7 +193,7 @@
            style="display:block;width:3.7rem;float:left;margin-left:1rem;margin-right:0.7rem;margin-top:0.6rem">
       <div style="float:left;margin-top:0.7rem;">
         <h3 style="font-size:1.4rem;margin-bottom:0.01rem;color:#fff">欢乐诵</h3>
-        <p style="font-size:1rem;color:#fff">注册立即送一个月会员</p>
+        <p style="font-size:1rem;color:#fff">注册立即送一个会月</p>
       </div>
       <div style="float:right;margin-right:1.1rem;margin-top:0.9rem">
         <button style="background:#f1404b;width:8.2rem;color:#fff;font-size:1.3rem;height:3.1rem;border-radius:4px;border-color:#f1404b;">
@@ -215,34 +215,48 @@
 
 <% if @record.style != 'video' %>
     <script>
+
+     
+
       var curIndex = 0;
       var timeInterval = 3000;
       var arr = new Array();
-      $.get("/api/v1/albums/my_albums", {token: "<%= @record.user.auth_token%>"}, function (data) {
-            $.each(data, function (i, v) {
-              arr.push("http://7xpl2d.com1.z0.glb.clouddn.com/" + v.file_url)
+    
+
+      $.ajax({
+        url: '/api/v1/albums/my_albums?token='+"<%= @record.user.auth_token%>",
+        type: 'get',
+        async: false,
+        date: "token="+"<%= @record.user.auth_token%>",
+        success: function(data){
+          $.each(data, function (i, v) {
+              arr.push(v.file_url)
             })
-          }
-      );
-
-
-     if(arr.length==0){
-        arr[]='http://7xpl2d.com1.z0.glb.clouddn.com/happysong/happysong_logo.jpg'
-     }
-
-      setInterval(changeImg, timeInterval);
-      function changeImg() {
-        $('#obj').fadeOut(800);
-        var obj = document.getElementById("obj");
-        if (curIndex == arr.length - 1) {
-          curIndex = 0;
         }
-        else {
-          curIndex += 1;
-        }
-        obj.src = arr[curIndex];
-        $('#obj').css('width', '100%');
-        $('#obj').fadeIn(800);
+      })
+
+      console.log(arr.length)
+
+
+     if(arr.length == 0){
+       
+     }else{
+        setInterval(changeImg, timeInterval);
+          function changeImg() {
+            $('#obj').fadeOut(800);
+            var obj = document.getElementById("obj");
+            if (curIndex == arr.length - 1) {
+              curIndex = 0;
+            }
+            else {
+              curIndex += 1;
+            }
+            obj.src = arr[curIndex];
+            $('#obj').css('width', '100%');
+            $('#obj').fadeIn(800);
+         }
+
+      
       }
     </script>
 <% end %>

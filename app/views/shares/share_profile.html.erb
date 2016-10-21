@@ -38,15 +38,11 @@
           </div>
 
       <% else %>
-
-          <% dynamic.attachments.each do |img| %>
-              <a href="/share_dynamic/<%= dynamic.id %>">
-                <div class="content-img">
-                  <img src="<%= ENV['QINIUPREFIX'] +img.file_url%>"/>
-                </div>
-              </a>
-          <% end %>
-
+          <a href="/share_dynamic/<%= dynamic.id %>">
+              <div class="content-img">
+                <img src="<%= ENV['QINIUPREFIX'] +dynamic.try(:attachments).first.file_url%>"/>
+              </div>
+          </a>
       <% end %>
 
       <div class="content-text">
@@ -64,17 +60,21 @@
 
 <% end %>
 
-<div>
-  <span style='border-top:1px solid #d5d5d5;display:block;width:11rem;position: relative;top:2.6rem;left:1.1rem;'></span>
-  <div class="wenzhang-more">
-    热门作品
-  </div>
-  <span style='border-top:1px solid #d5d5d5;display:block;width:11rem;position: relative;float:right;top:-2.5rem;right:1rem;'></span>
-</div>
+
 
 <!--最多显示5条 再加个查点更多的图片-->
 
-<section class="suggest-section">
+<% if @user.records.count > 1 %>
+
+  <div>
+    <span style='border-top:1px solid #d5d5d5;display:block;width:11rem;position: relative;top:2.6rem;left:1.1rem;'></span>
+    <div class="wenzhang-more">
+      热门作品
+    </div>
+    <span style='border-top:1px solid #d5d5d5;display:block;width:11rem;position: relative;float:right;top:-2.5rem;right:1rem;'></span>
+  </div>
+
+  <section class="suggest-section">
 
   <ul id="suggest-list" class="clearfix" style="margin-top:1rem;">
 
@@ -107,7 +107,9 @@
     <% end %>
   </ul>
 
-</section>
+  </section>
+
+<% end %>
 
 <div class="open-div">
   <a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.happysong.android">
@@ -116,7 +118,7 @@
            style="display:block;width:3.7rem;float:left;margin-left:1rem;margin-right:0.7rem;margin-top:0.6rem">
       <div style="float:left;margin-top:0.7rem;">
         <h3 style="font-size:1.4rem;margin-bottom:0.01rem;color:#fff">欢乐诵</h3>
-        <p style="font-size:1rem;color:#fff">注册立即送一个月会员</p>
+        <p style="font-size:1rem;color:#fff">注册立即送一个会月</p>
       </div>
       <div style="float:right;margin-right:1.1rem;margin-top:0.9rem">
         <button style="background:#f1404b;width:8.2rem;color:#fff;font-size:1.3rem;height:3.1rem;border-radius:4px;border-color:#f1404b;">

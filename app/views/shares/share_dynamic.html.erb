@@ -21,10 +21,12 @@
 
 <div class="header">
   <div style="width:100%;margin:0 auto;">
-    <img src="<%= ENV['QINIUPREFIX']+@dynamic.user.avatar%>" class='user-circle-img-dongtai') />
+    <a href="/share_profile/<%= @dynamic.user.id %>">
+      <img src="<%= ENV['QINIUPREFIX']+@dynamic.user.avatar%>" class='user-circle-img-dongtai') />
+    </a>
   </div>
-  <p class="user-name"><%= @dynamic.user.name %></p>
-  <p class="user-desc"><%= @dynamic.user.desc %></p>
+  <p class="user-name"><%= @dynamic.try(:user).try(:name) %></p>
+  <p class="user-desc"><%= @dynamic.try(:user).try(:desc) %></p>
   <hr class="header-hr">
 </div>
 
@@ -41,9 +43,15 @@
       </video>
 
   <% else %>
-      <div class="content-img">
-        <img src="<%= ENV["QINIUPREFIX"]+@dynamic.attachments.first.file_url%>" alt="" />
-      </div>
+
+      <% @dynamic.attachments.each do |img| %>
+
+          <div class="content-img">
+            <img src="<%= ENV["QINIUPREFIX"]+img.file_url%>" alt="" />
+          </div>
+
+      <% end %>
+
   <% end %>
 
 
@@ -86,16 +94,16 @@
 </section>
 
 <!--评论开始-->
-
+ 
 <% @dynamic.comments.each do |com| %>
 
     <section class="zuoping-talk">
       <div class="clearfix">
         <a href="javascript:void(0)" class="left">
-          <img src="<%= com.user.avatar %>",class: 'user-circle-img-zuoping' alt="" />
+          <img src="<%= ENV["QINIUPREFIX"]+com.user.avatar %>" style='border-radius:2.5rem;' class='user-circle-img-zuoping' alt="" />
         </a>
 
-        <div class="relative">
+        <div class="relative" style='padding-top:0.5rem;'>
           <span class="user-name-zuoping"><%= com.user.name %></span><span class="listen-num-zuoping"><%= com.created_at.strftime("%m-%d") %></span>
 
           <div class="user-title-zuoping">
@@ -180,7 +188,7 @@
            style="display:block;width:3.7rem;float:left;margin-left:1rem;margin-right:0.7rem;margin-top:0.6rem">
       <div style="float:left;margin-top:0.7rem;">
         <h3 style="font-size:1.4rem;margin-bottom:0.01rem;color:#fff">欢乐诵</h3>
-        <p style="font-size:1rem;color:#fff">注册立即送一个月会员</p>
+        <p style="font-size:1rem;color:#fff">注册立即送一个会月</p>
       </div>
       <div style="float:right;margin-right:1.1rem;margin-top:0.9rem">
         <button style="background:#f1404b;width:8.2rem;color:#fff;font-size:1.3rem;height:3.1rem;border-radius:4px;border-color:#f1404b;">
