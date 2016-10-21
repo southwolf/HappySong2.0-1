@@ -26,7 +26,7 @@ module Entities
       object.style
     end
 
-    expose :work_attachments,  if: ->(object, option) { object.respond_to?(:work_attachments)} do |object|
+    expose :work_attachments,  if: ->(object, option) { object.respond_to?(:work_attachments)}, using: ::Entities::WorkAttachment do |object|
       object.work_attachments
     end
   end
