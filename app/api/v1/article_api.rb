@@ -14,8 +14,12 @@ module V1
 
       desc "获取文章的示范朗读"
       paginate per_page: 20
+      params do
+        requires :article_id, type: Integer, desc: "文章ID"
+      end
       get '/demo_records' do
-        demo_records = Article.records.where(:is_demo => true)
+        article = Article.find(params[:article_id])
+        demo_records = article.records.where(:is_demo => true)
         present paginate(demo_records), with: ::Entities::Record
       end
       desc "根据科目条件取文章"
