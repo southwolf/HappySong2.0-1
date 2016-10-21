@@ -305,6 +305,7 @@ module V1
         video_key    = params[:video_key]
         tags         = params[:tags]
         work_id      = params[:work_id]
+        puts work_id
         dynamic      = current_user.dynamics.build( :content => content,
                                                     :address => address,
                                                     :work_id => work_id,
