@@ -343,8 +343,8 @@ module V1
 
       get '/work_info_student' do
         authenticate!
-        works = current_user.work_to_students
-        present works, with: ::Entities::WorkToStudent
+        works = current_user.work_to_students.includes(:my_work, :student, my_work:[:articles,:work_attachments])
+        present paginate(works), with: ::Entities::WorkToStudent
       end
 
       desc "查看完成作业的人"
