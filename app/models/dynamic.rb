@@ -17,7 +17,7 @@ class Dynamic < ActiveRecord::Base
 
   has_many   :reports,    as: :reportable,  dependent: :destroy
 
-  belongs_to :work, ->(){ where(style: "record_work")}
+  belongs_to :work, ->(){ where(style: "creative_work")}
   # has_many   :notifications, as: :targetable
 
   after_commit :async_create_dynamic_notify, :update_work_status, on: :create
@@ -37,7 +37,7 @@ class Dynamic < ActiveRecord::Base
     if dynamic.is_work
       #完成作业推送通知到老师
       Notification.create(
-        user:  dynamic.work.teacher,
+        user:  dynamic.work.user,
         notice_type: 'work_complete',
         actor:    dynamic.user,
         targetable: dynamic

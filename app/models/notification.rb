@@ -44,7 +44,7 @@ class Notification < ActiveRecord::Base
       "#{self.actor.name}发布一篇动态"
     elsif notice_type == 'work'
       "#{self.actor.name}发布了新的作业"
-    elsif notice_type == 'complete_work'
+    elsif notice_type == 'work_complete'
       "#{self.actor.name}完成了朗读作业"
     elsif notice_type == 'like'
       "#{self.actor.name}喜欢了#{user_show}的#{nest_notity}"

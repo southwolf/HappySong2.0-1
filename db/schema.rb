@@ -232,7 +232,7 @@ ActiveRecord::Schema.define(version: 20161020081430) do
     t.integer  "likes_count",         limit: 4,   default: 0
     t.integer  "comments_count",      limit: 4,   default: 0
     t.boolean  "is_work"
-    t.boolean  "work_id"
+    t.integer  "work_id",             limit: 4
   end
 
   create_table "editions", force: :cascade do |t|
