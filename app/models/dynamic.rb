@@ -23,6 +23,7 @@ class Dynamic < ActiveRecord::Base
   after_commit :async_create_dynamic_notify, :update_work_status, on: :create
   after_destroy :delete_notification
 
+  default_scope { where(is_work: false)}
   def delete_notification
     Notification.where(targetable: self).destroy_all
   end

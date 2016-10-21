@@ -178,10 +178,10 @@ module V1
         work = Work.find(params[:work_id])
         user = User.find(params[:user_id])
         if work.style == "record_work"
-          result = Record.where(user: user, work: work)
+          result = Record.unscoped.where(user: user, work: work)
           present result, with: ::Entities::Record
         else
-          result = Dynamic.where(user: user, work: work)
+          result = Dynamic.unscoped.where(user: user, work: work)
           present result, with: ::Entities::Dynamic
         end
       end
@@ -242,7 +242,7 @@ module V1
         authenticate!
         work = Work.find(params[:work_id])
         article = Article.find(params[:article_id])
-        if Record.where(work: work, article: article).nil?
+        if Record.unscoped.where(is_work: true, work: work, article: article).nil?
           present :message, false
         else
           present :message, true
@@ -392,27 +392,6 @@ module V1
       end
 
 
-      desc "判断这个文章作业是否读了"
-      params do
-        requires :token,      type: String,  desc: '用户访问令牌'
-        requires :work_id,    type: Integer, desc: '动态ID'
-        requires :article_id, type: Integer, desc: '文章ID'
-      end
-
-      get '/checkout' do
-        authenticate!
-        work_id = params[:work_id]
-        article_id = params[:article_id]
-
-        status = Record.where(is_work: true, work_id: work_id, article_id: article_id)
-
-        if status.present?
-          present :message, true
-        else
-          present :message, false
-        end
-
-      end
     end
   end
 end
