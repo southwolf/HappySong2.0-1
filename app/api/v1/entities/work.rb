@@ -14,7 +14,7 @@ module Entities
   end
 
   class FuckWork < Work
-    unexpose :articles,  :work_attachments,  :grade_team_classes
+    unexpose :grade_team_classes
   end
   class HashWork < Grape::Entity
     expose (:time) { |object| object[0] }
