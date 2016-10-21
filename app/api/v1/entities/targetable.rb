@@ -25,5 +25,9 @@ module Entities
     expose :style, if: ->(object, option) { object.respond_to?(:style)} do |object|
       object.style
     end
+
+    expose :work_attachments,  if: ->(object, option) { object.respond_to?(:work_attachments)} do |object|
+      object.work_attachments
+    end
   end
 end
