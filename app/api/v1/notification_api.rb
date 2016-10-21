@@ -87,7 +87,8 @@ module V1
       get '/work' do
         authenticate!
         notifications = Notification.where(user: current_user, notice_type: "work").order( created_at: :DESC)
-        present paginate(Kaminari.paginate_array(notifications)), with: ::Entities::NotificationWork
+                                    .includes(:targetable)
+        present paginate(notifications), with: ::Entities::NotificationWork
         notifications.each do |notification|
           notification.update(unread: false)
         end

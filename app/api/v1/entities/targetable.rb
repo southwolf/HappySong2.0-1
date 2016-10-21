@@ -22,5 +22,8 @@ module Entities
     expose :top_comment_id, if: ->(object, option) { object.respond_to?(:top_comment_id)} do |object|
       object.top_comment_id
     end
+    expose :style, if: ->(object, option) { object.respond_to?(:style)} do |object|
+      object.style
+    end
   end
 end

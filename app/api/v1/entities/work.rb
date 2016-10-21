@@ -12,6 +12,10 @@ module Entities
     expose :articles,              using: ::Entities::SimpleArticle
     expose :work_attachments,      using: ::Entities::Attachment
   end
+
+  class FuckWork < Work
+    unexpose :articles,  :work_attachments,  :grade_team_classes
+  end
   class HashWork < Grape::Entity
     expose (:time) { |object| object[0] }
     expose (:size) { |object| object[1].size}
