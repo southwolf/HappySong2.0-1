@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161020081430) do
+ActiveRecord::Schema.define(version: 20161024043838) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "name",            limit: 255
@@ -418,6 +418,7 @@ ActiveRecord::Schema.define(version: 20161020081430) do
     t.datetime "updated_at"
     t.boolean  "recommend",              default: false
     t.string   "cover_img",  limit: 255
+    t.integer  "tag_heat",   limit: 4,   default: 0
   end
 
   create_table "team_classes", force: :cascade do |t|
