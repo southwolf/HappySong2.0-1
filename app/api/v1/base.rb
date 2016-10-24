@@ -8,8 +8,6 @@ module V1
     rescue_from :all
 
     helpers BaseHelpers
-    helpers RecordHelpers
-    # helpers TimeHelpers
 
     mount V1::UsersApi
     mount V1::ProvincesApi

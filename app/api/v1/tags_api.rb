@@ -4,7 +4,7 @@ module V1
       desc "获取建议Tags"
       get '/tags' do
         tags = Tag.recommend
-        present tags, ::Entities::Tag
+        present tags, with: ::Entities::Tag
       end
     end
   end
