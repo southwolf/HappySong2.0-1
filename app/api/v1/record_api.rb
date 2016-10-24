@@ -17,10 +17,15 @@ module V1
 
       post do
         authenticate!
+        if current_user.role.name == "teacher"
+          is_demo = true
+        else
+          is_demo = false
+        end
         user_id = current_user.id
         record = Record.new( :user_id  => user_id,           :file_url   => params[:file_url],
                              :feeling  => params[:felling],  :article_id => params[:article_id],
-                             :style    => params[:style],
+                             :style    => params[:style],    :is_demo  => is_demo,
                              :music_id => params[:music_id], :is_public  => params[:is_public] )
         if record.save
           present  :message, "创建成功"

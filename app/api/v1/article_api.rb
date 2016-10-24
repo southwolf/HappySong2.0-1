@@ -22,6 +22,8 @@ module V1
         demo_records = article.records.where(:is_demo => true)
         present paginate(demo_records), with: ::Entities::Record
       end
+
+
       desc "根据科目条件取文章"
       paginate per_page: 20
       params do
