@@ -6,6 +6,17 @@ module V1
         tags = Tag.recommend
         present tags, with: ::Entities::Tag
       end
+
+      desc "搜索标签"
+
+      params do
+        requires :tag_name, type: String, desc: "标签名称"
+      end
+      get '/search_tags' do
+        tag_name = params[:tag_name]
+        tags = Tag.where(:recommend => false).where("name like ?", "#{tag_name}%").order(:created_at => :desc)
+        present tags, with: ::Entities::Tag
+      end
     end
   end
 end
