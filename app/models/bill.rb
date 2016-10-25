@@ -1,4 +1,5 @@
 class Bill < ActiveRecord::Base
+  #订单
   before_create :set_order_no
 
   belongs_to :user
