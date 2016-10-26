@@ -69,11 +69,11 @@ module Entities
     expose :invite_url do |object|
        ENV['SHARERECORD']+"invites?code=#{object.code}"
     end
-    
+
   end
 
   class SimpleUser < Grape::Entity
-    expose :id, :uid,:phone, :name,:is_first
+    expose :id, :uid,:phone, :name,:is_first,:auth_token
     expose :role, using: ::Entities::Role
     expose (:avatar) { |object| ENV['QINIUPREFIX']+object.avatar}
 
