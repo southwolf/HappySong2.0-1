@@ -273,6 +273,32 @@ module V1
         present :liked_dynamics, paginate(Kaminari.paginate_array(liked_dynamics)), with: ::Entities::HashDynamic
       end
 
+
+      desc "按时间查询我喜欢的朗读"
+      params do
+        requires :token,   type: String,  desc: "用户访问令牌"
+        requires :time,    type: String,  desc: "时间"
+      end
+      paginate per_page: 20
+      get '/my_like_records' do
+        authenticate!
+        time = params[:time]
+        result  = current_user.like_records.order(created_at: :desc).select {|dynamic| DateTime.parse(dynamic.created_at.to_s).strftime('%Y-%-m') == time }
+        present paginate(Kaminari.paginate_array(result)), with: ::Entities::Record
+      end
+
+      desc "按时间查询我喜欢的朗读"
+      params do
+        requires :token,   type: String,  desc: "用户访问令牌"
+        requires :time,    type: String,  desc: "时间"
+      end
+      paginate per_page: 20
+      get '/my_like_dynamics' do
+        authenticate!
+        time = params[:time]
+        result  = current_user.like_dynamics.order(created_at: :desc).select {|dynamic| DateTime.parse(dynamic.created_at.to_s).strftime('%Y-%-m') == time }
+        present paginate(Kaminari.paginate_array(result)), with: ::Entities::Dynamic
+      end
       desc "家长查询子女"
       params do
         requires :token, type: String, desc:"用户访问令牌"
