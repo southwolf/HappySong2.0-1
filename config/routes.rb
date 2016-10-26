@@ -7,6 +7,10 @@ Rails.application.routes.draw do
   root "welcome#index"
   get 'xieyi/xieyi'    => 'xieyi#xieyi'
   get '/zhifu' => 'zhifu#zhifu'
+
+  get 'web_pay/success' => 'web_pay#success'
+  get 'web_pay/cancel'  => 'web_pay#cancel'
+  
   namespace :channel do
     root "channel#index"
     resources :channel_users do
