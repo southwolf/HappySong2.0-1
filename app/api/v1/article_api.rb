@@ -95,7 +95,7 @@ module V1
       get '/records_info' do
         id = params[:id]
         article = Article.find(id)
-        records = article.records.order(:is_demo => :desc).order(:created_at => :desc).includes(:user, :music, :article, user:[:role])
+        records = article.public_records.order(:is_demo => :desc).order(:created_at => :desc).includes(:user, :music, :article, user:[:role])
         present paginate(records), with: ::Entities::Record
       end
     end

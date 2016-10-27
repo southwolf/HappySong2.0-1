@@ -7,9 +7,11 @@ module Entities
   end
 
   class Article < Grape::Entity
-    expose :id, :title, :author,  :records_count,:has_demo,:is_hot, :created_at
+    expose :id, :title, :author,:has_demo,:is_hot, :created_at
     expose (:content) {|object| object.content}
-    expose :records_count
+    expose :records_count do |object|
+      object.public_records.size
+    end
     expose :created_at
     expose (:cover_img) {|object| ENV['QINIUPREFIX']+object.cover_img }
     expose (:share_url) {|object| ENV['SHARERECORD']+"/share_article/#{object.id}"}
