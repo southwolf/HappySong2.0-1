@@ -195,6 +195,10 @@ module V1
         authenticate!
         user = User.find(params[:user_id])
         if current_user.unfollow(user)
+          Notification.find_by(:user_id => user.id,
+                               :actor_id => current_user.id,
+                               notice_type: "follow"
+                               ).destroy
           present :message, "取消关注成功"
           present :follow_size, user.followers.size
         else
