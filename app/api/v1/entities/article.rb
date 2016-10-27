@@ -16,7 +16,9 @@ module Entities
   end
 
   class FullArticle < Article
-    expose :records, using: Entities::SimpleRecord
+    expose :records, using: Entities::SimpleRecord do |object|
+      object.public_records
+    end
   end
 
 end

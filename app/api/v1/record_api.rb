@@ -73,7 +73,7 @@ module V1
       desc "最新朗读"
       paginate per_page: 20
       get "/recent"do
-        records = Record.public_record.order(:created_at => :DESC)
+        records = Record.public_records.order(:created_at => :DESC)
                                       .includes(:user,:music,
                                                 :article, user: [:role, :grade_team_classes, :grade_team_class])
         present paginate(records), with: ::Entities::Record

@@ -18,7 +18,7 @@ class Record < ActiveRecord::Base
 
   #到此朗读时学生作业时
   belongs_to :work, ->(){ where(style: "record_work") }
-
+  scope :public_records, -> { where(:is_public => true)}
   # default_scope { where(is_work: false)}
   # has_many  :notifications, as: :targetable
 
@@ -28,7 +28,7 @@ class Record < ActiveRecord::Base
   def delete_notification
     Notification.where(targetable: self).destroy_all
   end
-  scope :public_record, -> { where(:is_public => true)}
+
   def async_create_record_notify
     NotifyRecordJob.perform_later(id)
   end

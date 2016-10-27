@@ -5,7 +5,7 @@ class Article < ActiveRecord::Base
   belongs_to :article_grade #年级学期【一年级上学期】
   belongs_to :unit
   has_many   :records
-
+  has_many   :public_records, ->(){ where(is_public: true)},class_name: "Record"
   has_many   :banners, as: :targetable
   # has_many   :reports, as: :reportable
 
