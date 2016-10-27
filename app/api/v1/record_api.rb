@@ -95,7 +95,7 @@ module V1
         q = params[:q]
         users = User.where("name like ?", "#{q}%")
         records     = Record.all.order(created_at: :DESC).includes(:article, :music,:user, user:[:role]) if q.nil?
-        records     = Record.where(user: users).order(created_at: :DESC).includes(:article, :music,:user, user:[:role])
+        records     = Record.public_records.where(user: users).order(created_at: :DESC).includes(:article, :music,:user, user:[:role])
         #if records.blank?
          # error!({message: "没有找到对应朗读!"}, 404)
         #else
