@@ -8,9 +8,10 @@ Rails.application.routes.draw do
   get 'xieyi/xieyi'    => 'xieyi#xieyi'
   get '/zhifu' => 'zhifu#zhifu'
 
+  get 'web_pay/pay'     => 'web_pay#pay'
   get 'web_pay/success' => 'web_pay#success'
   get 'web_pay/cancel'  => 'web_pay#cancel'
-  
+
   namespace :channel do
     root "channel#index"
     resources :channel_users do
