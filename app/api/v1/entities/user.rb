@@ -1,7 +1,7 @@
 module Entities
   class User < Grape::Entity
     expose :id, :uid, :phone, :code, :auth_token, :is_first
-    expose :ios_pay_url do
+    expose :ios_pay_url do |object|
       "http://abc.happysong.com.cn/web_pay/pay"
     end
     # expose (:vip) {|object| object.vip? }
