@@ -19,7 +19,7 @@ module V1
       end
       get '/demo_records' do
         article = Article.find(params[:article_id])
-        demo_records = article.records.where(:is_demo => true)
+        demo_records = article.records.where(:is_demo => true, :is_public => true)
         present paginate(demo_records), with: ::Entities::Record
       end
 
