@@ -1,7 +1,7 @@
 class WebPayController < ApplicationController
 
   def pay
-    redirect_to "http://v6.rabbitpre.com/m/7IRInVRAm"
+    @user = User.find_by_auth_token(params[:token])
   end
   def success
 
