@@ -3,7 +3,7 @@ class CreateDynamics < ActiveRecord::Migration
     create_table :dynamics do |t|
       t.belongs_to :user
 
-      t.string     :content
+      t.text       :content
       t.string     :address
       t.boolean    :is_relay, default: false
 

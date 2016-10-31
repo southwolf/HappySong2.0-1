@@ -67,7 +67,7 @@ ActiveRecord::Schema.define(version: 20161027065312) do
     t.integer  "unit_id",          limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "author",           limit: 255,   default: "佚名"
+    t.string   "author",           limit: 255
     t.integer  "records_count",    limit: 4,     default: 0
     t.boolean  "has_demo",                       default: false
     t.boolean  "is_hot",                         default: false
@@ -151,7 +151,7 @@ ActiveRecord::Schema.define(version: 20161027065312) do
   create_table "channel_user_cash_backs", force: :cascade do |t|
     t.integer  "channel_user_id", limit: 4
     t.integer  "amount",          limit: 4, default: 0
-    t.integer  "used",            limit: 4, default: 0
+    t.integer  "userd",           limit: 4, default: 0
     t.datetime "created_at",                            null: false
     t.datetime "updated_at",                            null: false
   end
@@ -179,7 +179,7 @@ ActiveRecord::Schema.define(version: 20161027065312) do
   end
 
   create_table "comments", force: :cascade do |t|
-    t.string   "content",          limit: 255
+    t.text     "content",          limit: 65535
     t.integer  "commentable_id",   limit: 4
     t.string   "commentable_type", limit: 255
     t.datetime "created_at"
@@ -187,7 +187,7 @@ ActiveRecord::Schema.define(version: 20161027065312) do
     t.integer  "root_id",          limit: 4
     t.integer  "user_id",          limit: 4
     t.integer  "top_comment_id",   limit: 4
-    t.boolean  "is_reply",                     default: false
+    t.boolean  "is_reply",                       default: false
   end
 
   create_table "configs", force: :cascade do |t|
@@ -197,10 +197,9 @@ ActiveRecord::Schema.define(version: 20161027065312) do
   end
 
   create_table "credit_managers", force: :cascade do |t|
-    t.integer  "user_id",    limit: 4
-    t.string   "reson",      limit: 255
-    t.string   "type",       limit: 255
-    t.integer  "point",      limit: 4
+    t.integer  "user_id",        limit: 4
+    t.integer  "target_user_id", limit: 4
+    t.integer  "point",          limit: 4, default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -222,16 +221,16 @@ ActiveRecord::Schema.define(version: 20161027065312) do
 
   create_table "dynamics", force: :cascade do |t|
     t.integer  "user_id",             limit: 4
-    t.string   "content",             limit: 255
+    t.text     "content",             limit: 65535
     t.string   "address",             limit: 255
-    t.boolean  "is_relay",                        default: false
+    t.boolean  "is_relay",                          default: false
     t.integer  "original_dynamic_id", limit: 4
     t.integer  "root_dynamic_id",     limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "likes_count",         limit: 4,   default: 0
-    t.integer  "comments_count",      limit: 4,   default: 0
-    t.boolean  "is_work",                         default: false
+    t.integer  "likes_count",         limit: 4,     default: 0
+    t.integer  "comments_count",      limit: 4,     default: 0
+    t.boolean  "is_work",                           default: false
     t.integer  "work_id",             limit: 4
   end
 
@@ -346,20 +345,20 @@ ActiveRecord::Schema.define(version: 20161027065312) do
 
   create_table "records", force: :cascade do |t|
     t.string   "file_url",       limit: 255
-    t.string   "feeling",        limit: 255
+    t.text     "feeling",        limit: 65535
     t.string   "style",          limit: 255
     t.integer  "user_id",        limit: 4
     t.integer  "article_id",     limit: 4
     t.integer  "music_id",       limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "is_public",                  default: true
-    t.integer  "view_count",     limit: 4,   default: 0
-    t.integer  "likes_count",    limit: 4,   default: 0
-    t.boolean  "is_demo",                    default: false
-    t.boolean  "is_hot",                     default: false
-    t.integer  "comments_count", limit: 4,   default: 0
-    t.boolean  "is_work",                    default: false
+    t.boolean  "is_public",                    default: true
+    t.integer  "view_count",     limit: 4,     default: 0
+    t.integer  "likes_count",    limit: 4,     default: 0
+    t.boolean  "is_demo",                      default: false
+    t.boolean  "is_hot",                       default: false
+    t.integer  "comments_count", limit: 4,     default: 0
+    t.boolean  "is_work",                      default: false
     t.integer  "work_id",        limit: 4
   end
 
@@ -460,7 +459,6 @@ ActiveRecord::Schema.define(version: 20161027065312) do
     t.string   "auth_token",          limit: 255
     t.integer  "role_id",             limit: 4
     t.integer  "grade_team_class_id", limit: 4
-    t.integer  "credit_id",           limit: 4
     t.integer  "parent_id",           limit: 4
     t.string   "bg_image_url",        limit: 255, default: "bg_image.png"
   end

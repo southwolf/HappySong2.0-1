@@ -2,7 +2,7 @@ class CreateRecord < ActiveRecord::Migration
   def change
     create_table :records do |t|
       t.string :file_url
-      t.string :feeling
+      t.text   :feeling
       t.string :style
 
       t.belongs_to :user
