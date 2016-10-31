@@ -40,7 +40,7 @@ Do(function() {
 		});
 		$.ajax({
 			type:"post",
-			url:"http://121.41.104.215/api/v1/pay/web_pay",
+			url:"http://abc.happysong.com.cn/api/v1/pay/web_pay",
 			headers: {
         "Content-type": "text/html",
 				"charset":"utf-8"
