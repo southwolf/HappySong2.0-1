@@ -66,7 +66,7 @@ module V1
             when "comment","reply"
               result.merge!({comment: false})
             when "like"
-              result.merge!({comment: false})
+              result.merge!({like: false})
             end
           end
         end
