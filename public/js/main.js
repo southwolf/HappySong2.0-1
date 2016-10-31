@@ -52,9 +52,9 @@ Do(function() {
 				target_user_id:''
 			},
 			success:function (charge) {
-				console.log(charge);
-				layer.close(shade);
-				layer.alert('获取charge成功');
+				// console.log(charge);
+				// layer.close(shade);
+				// layer.alert('获取charge成功');
 				pingpp.createPayment(charge, function(result, error){
 					console.log(result,error)
 				    if (result == "success") {
