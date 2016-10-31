@@ -59,8 +59,7 @@ Do(function() {
 					console.log(result,error)
 				    if (result == "success") {
 				    	alert('支付成功');
-
-				        // 只有微信公众账号 wx_pub 支付成功的结果会在这里返回，其他的 wap 支付结果都是在 extra 中对应的 URL 跳转。
+				      // 只有微信公众账号 wx_pub 支付成功的结果会在这里返回，其他的 wap 支付结果都是在 extra 中对应的 URL 跳转。
 				    } else if (result == "fail") {
 				    	alert('支付失败');
 				        // charge 不正确或者微信公众账号支付失败时会在此处返回
