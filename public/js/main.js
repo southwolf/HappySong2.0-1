@@ -47,7 +47,7 @@ Do(function() {
 			},
 			data:{
 				channel:'alipay_wap',
-				amount: 1,//amount: parseInt($(".dialog-title").find("span").text().substring(1,$(".dialog-title").find("span").text().length)),
+			  amount: parseInt($(".dialog-title").find("span").text().substring(1,$(".dialog-title").find("span").text().length)),
 				token: token,
 				target_user_id:''
 			},
