@@ -46,7 +46,7 @@ Do(function() {
 				"charset":"utf-8"
 			},
 			data:{
-				channel:'alipay',
+				channel:'alipay_web',
 				amount: 100,
 				token: token,
 				target_user_id:''
