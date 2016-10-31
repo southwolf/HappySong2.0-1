@@ -77,9 +77,10 @@ module V1
         when "alipay_wap"
           extra = {
             # success_url 和 cancel_url 在本地测试不要写 localhost ，请写 127.0.0.1。URL 后面不要加自定义参数
+            :app_pay     => true,
             :success_url => "http://www.yourdomain.com/success",
-            :cancel_url  => "http://www.yourdomain.com/cancel",
-            :app_pay     => true
+            :cancel_url  => "http://www.yourdomain.com/cancel"
+
           }
         end
         bill = current_user.bills.create(
