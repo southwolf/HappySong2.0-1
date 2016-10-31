@@ -43,7 +43,7 @@ Do(function() {
 			url:"http://121.41.104.215/api/v1/pay/web_pay",
 			data:{
 				channel:'alipay_wap',
-				account:100,
+				amount: 100,
 				token: token,
 				target_user_id:''
 			},
