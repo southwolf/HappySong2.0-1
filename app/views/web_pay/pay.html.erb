@@ -21,7 +21,7 @@
             <div class="username"><%= @user.name%></div>
             <% if @user.vip?%>
               <div class="userdate">会员有效期至：
-                <span style="color:#f14048;"><%= Time.at(@user.member.expire_time)%></span>
+                <span style="color:#f14048;"><%= DateTime.parse(Time.at(@user.member.expire_time).to_s).strftime('%Y-%m-%d')%></span>
               </div>
             <% end %>
         </div>
