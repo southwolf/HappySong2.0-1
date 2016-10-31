@@ -46,27 +46,27 @@ module V1
 
 
 
-      desc "检查是否关闭指定消息"
+      desc "检查是否开启指定消息"
       params do
         requires :token,  type: String, desc: "用户登录令牌"
       end
       get '/check' do
         authenticate!
         result = {
-          follow: false,
-          comment: false,
-          like: false
+          follow: true,
+          comment: true,
+          like: true
         }
         if current_user.push_actions.present?
           current_user.push_actions.each do |push_action|
             puts push_action.action
             case push_action.action
             when "follow"
-              result.merge!({follow:true})
+              result.merge!({follow: false})
             when "comment","reply"
-              result.merge!({comment: true})
+              result.merge!({comment: false})
             when "like"
-              result.merge!({comment: true})
+              result.merge!({comment: false})
             end
           end
         end
