@@ -23,7 +23,7 @@ Do(function() {
 //
 //		$("#dialog1").show();
 //		$("#mask").show();
-		$(".dialog-title").find("span").text($(this).data("price"));
+		$(".dialog-title").find("span").text($(this)[0].dataset.price);
 
 
 	});
