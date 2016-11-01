@@ -88,6 +88,8 @@ class User < ActiveRecord::Base
   has_many   :work_to_students, foreign_key: "student_id"
   has_many   :my_works, class_name: "Work",
                         through: :work_to_students
+
+  after_destroy :delete_all_notifiaction
   # has_sms_verification
   scope :students, ->{where(role_id: 1)}
 
@@ -99,6 +101,11 @@ class User < ActiveRecord::Base
       Member.create(user: self, member_type: 'month',
                     start_time: start_time, expire_time: expire_time)
     end
+  end
+
+  def delete_all_notifiaction
+    Notification.where(user: self).destroy_all
+    Notification.where(actor: self).destroy_all
   end
 
   def reset_auth_token!
