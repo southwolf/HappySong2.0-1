@@ -75,7 +75,8 @@ class Comment < ActiveRecord::Base
             targetable_type: comment.commentable.class,
             targetable_id: comment.commentable.id,
             second_targetable_type: comment.class,
-            second_targetable_id: comment.id
+            second_targetable_id: comment.id,
+            notice_type: 'comment'
             })
         end
       end
