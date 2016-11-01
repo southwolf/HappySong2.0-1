@@ -55,13 +55,16 @@ class Dynamic < ActiveRecord::Base
 
       return if dynamic.nil?
       return if follower_ids.empty?
-      follower_ids.each do |follower_id|
-        Notification.create(
-          user_id: follower_id,
-          actor_id: dynamic.user_id,
-          targetable: dynamic,
-          notice_type: 'dynamic'
-        )
+      Notification.bulk_insert(set_size: 100) do |worker|
+        follower_ids.each do |follower_id|
+          worker.add({
+            user_id: follower_id,
+            actor_id: dynamic.user_id,
+            targetable_type: dynamic.type,
+            targetable_id: dynamic.id,
+            notice_type: 'dynamic'
+            })
+        end
       end
     end
   end

@@ -58,14 +58,16 @@ class Record < ActiveRecord::Base
       return if record.nil?
       return if follower_ids.empty?
       return if record.is_public == false
-      follower_ids.each do |follower_id|
-        puts "join"
-        Notification.create(
-          actor_id: record.user_id,
-          user_id:  follower_id,
-          targetable: record,
-          notice_type: "record"
-        )
+      Notification.bulk_insert(set_size: 100) do |worker|
+        follower_ids.each do |follower_id|
+          worker.add({
+            actor_id: record.user_id,
+            user_id:  follower_id,
+            targetable_type: record.class,
+            targetable_id: record.id,
+            notice_type: "record"
+            })
+        end
       end
     end
   end

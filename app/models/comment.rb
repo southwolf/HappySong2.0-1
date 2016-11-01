@@ -42,14 +42,18 @@ class Comment < ActiveRecord::Base
       end
       return  if follower_ids.empty?
       follower_ids.reject! {|follower_id| follower_id == user.id}
-      follower_ids.each do |follower_id|
-        Notification.create(
-          :notice_type => 'reply',
-          :actor_id    => comment.user.id,
-          :user_id     => follower_id,
-          :targetable  => c,
-          :second_targetable => comment
-        )
+      Notification.bulk_insert(set_size: 100) do |worker|
+        follower_ids.each do |follower_id|
+          worker.add({
+            actor_id: comment.user.id,
+            user_id: follower_id,
+            targetable_type: c.class,
+            targetable_id: c.id,
+            second_targetable_type: comment.class,
+            second_targetable_id: comment.id,
+            notice_type: 'reply'
+            })
+        end
       end
     else
       if comment.commentable.user.id != comment.user.id
@@ -63,14 +67,17 @@ class Comment < ActiveRecord::Base
       end
       return if follower_ids.empty?
       follower_ids.reject! { |follower_id| follower_id == comment.commentable.user.id }
-      follower_ids.each do |follower_id|
-        Notification.create(
-          :notice_type => 'comment',
-          :user_id     => follower_id,
-          :actor_id    => comment.user.id,
-          :targetable  => comment.commentable,
-          :second_targetable => comment
-        )
+      Notification.bulk_insert(set_size: 100 ) do |worker|
+        follower_ids.each do |follower_id|
+          worker.add({
+            user_id: follower_id,
+            actor_id: comment.user.id,
+            targetable_type: comment.commentable.class,
+            targetable_id: comment.commentable.id,
+            second_targetable_type: comment.class,
+            second_targetable_id: comment.id
+            })
+        end
       end
     end
   end

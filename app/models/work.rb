@@ -36,9 +36,9 @@ class Work < ActiveRecord::Base
     work.grade_team_classes.includes(:students).each do |grade_team_class|
        result +=grade_team_class.students
     end
-    Notification.bulk_insert(set_size: 100) do |woker|
+    Notification.bulk_insert(set_size: 100) do |worker|
       result.each do |student|
-        woker.add(
+        worker.add(
           { user_id: student.id,
             actor_id:   work.user.id,
             notice_type: 'work',
