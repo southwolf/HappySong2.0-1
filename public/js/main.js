@@ -17,7 +17,15 @@ Do(function() {
 			layer.msg('获取子女列表失败',{time: 1000});
     	}
     });
-
+$('.dialogbox').click(function(){
+	if ($(this).find('label').attr('name')=='vx') {
+		layer.alert('微信支付功能暂未开通');
+		return false;
+	}
+	var radioId = $(this).find('label').attr('name');
+	$('.dialogbox').find('label').removeAttr('class') && $(this).find('label').attr('class', 'checked');
+	$('.dialogbox').find('input[type="radio"]').removeAttr('checked') && $('#' + radioId).prop('checked', 'checked');
+});
 $(".button").click(function() {
   $("#dialog1").show();
   $("#mask").show();
