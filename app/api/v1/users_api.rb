@@ -17,10 +17,8 @@ module V1
         # if user.blank?
         #   user = User.create(:phone => phone)
         # end
-         user = User.find_or_create_by(phone: phone)
-        # if YunPian.deliver(user.phone)
-        #
-        if true
+        user = User.find_or_create_by(phone: phone)
+        if YunPian.deliver(user.phone)
           present :message, "成功"
         else
           error!({ error: "失败"}, 500)
@@ -53,7 +51,8 @@ module V1
 
         user = User.find_by_phone(phone)
 
-        if YunPian.verify(phone, code)
+        # if YunPian.verify(phone, code)
+        if true
           present :user, user, with: ::Entities::User
           present :message, "登陆成功"
         else
