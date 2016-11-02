@@ -24,7 +24,7 @@ config = {
 
     // 核心库
     //coreLib: ['http://t.douban.com/js/jquery.min.js'],
-    coreLib: [basedir + 'jquery.min.js'],
+    coreLib: [basedir + 'jquery.min2.js'],
 
     /* 模块依赖
      * {
@@ -38,8 +38,8 @@ config = {
     mods: {}
 },
 
-jsSelf = (function() { 
-  var files = doc.getElementsByTagName('script'); 
+jsSelf = (function() {
+  var files = doc.getElementsByTagName('script');
   return files[files.length - 1];
 })(),
 
@@ -55,18 +55,18 @@ readyList = [],
 // DOM Ready
 isReady = false,
 
-// 模块间的公共数据 
+// 模块间的公共数据
 publicData = {},
 
-// 公共数据回调堆栈 
+// 公共数据回调堆栈
 publicDataStack = {},
 
-isArray = function(e) { 
-  return e.constructor === Array; 
+isArray = function(e) {
+  return e.constructor === Array;
 },
 
 getMod = function(e) {
- var mods = config.mods, mod; 
+ var mods = config.mods, mod;
  if (typeof e === 'string') {
    mod = (mods[e])? mods[e] : { path: e };
  } else {
@@ -76,7 +76,7 @@ getMod = function(e) {
 },
 
 load = function(url, type, charset, cb) {
-    var wait, n, t, img, 
+    var wait, n, t, img,
 
     done = function() {
       loaded[url] = 1;
@@ -113,7 +113,7 @@ load = function(url, type, charset, cb) {
      */
       if (config.timeoutCallback) {
         try {
-          config.timeoutCallback(url); 
+          config.timeoutCallback(url);
         } catch(ex) {}
       }
     }, config.timeout);
@@ -172,7 +172,7 @@ load = function(url, type, charset, cb) {
 
   // 加载依赖论文件(顺序)
   loadDeps = function(deps, cb) {
-    var mods = config.mods, 
+    var mods = config.mods,
     id, m, mod, i = 0, len;
 
     id = deps.join('');
@@ -222,8 +222,8 @@ load = function(url, type, charset, cb) {
   // @win window reference
   // @fn function reference
   contentLoaded = function(fn) {
-    var done = false, top = true, 
-    doc = win.document, 
+    var done = false, top = true,
+    doc = win.document,
     root = doc.documentElement,
     add = doc.addEventListener ? 'addEventListener' : 'attachEvent',
     rem = doc.addEventListener ? 'removeEventListener' : 'detachEvent',
@@ -362,7 +362,7 @@ d.getData = d.getPublicData = function(prop, cb) {
   if (publicData[prop]) {
     cb(publicData[prop]);
     return;
-  } 
+  }
 
   if (!publicDataStack[prop]) {
     publicDataStack[prop] = [];
