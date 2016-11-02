@@ -242,7 +242,7 @@ module V1
         authenticate!
         work = Work.find(params[:work_id])
         article = Article.find(params[:article_id])
-        if Record.where(is_work: true, work: work, article: article).nil?
+        if Record.where(is_work: true, work: work, article: article).blank?
           present :message, false
         else
           present :message, true
