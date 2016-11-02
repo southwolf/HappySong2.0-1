@@ -83,7 +83,6 @@ Do(function() {
 				console.log(charge);
 				layer.close(shade);
 				layer.alert('获取charge成功');
-				return false;
 				pingpp.createPayment(charge, function(result, error){
 					console.log(result,error)
 				    if (result == "success") {
