@@ -85,10 +85,6 @@ Do(function() {
 		$.ajax({
 			type:"post",
 			url:"/api/v1/pay/web_pay",
-			headers: {
-        "Content-type": "text/html",
-				"charset":"utf-8"
-			},
 			data:{
 				channel:'alipay_wap',
 			  amount: parseInt($(".dialog-title").find("span").text().substring(1,$(".dialog-title").find("span").text().length)),
@@ -205,7 +201,7 @@ $("#topclosed1").click(function() {
     url:"/api/v1/pay/web_pay",
     data:{
       channel:'alipay_wap',
-      account:$('.price .zn-hover').data("price"),//价格
+      amount:$('.price .zn-hover').data("price"),//价格
       token: token,
       target_user_id:$('.zn .zn-hover').data("userid")//用户id
     },
