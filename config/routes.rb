@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   get '/zhifu' => 'zhifu#zhifu'
 
   get 'web_pay/pay'     => 'web_pay#pay'
+  get 'web_pay/other_pay' => 'web_pay#other_pay'
   get 'web_pay/success' => 'web_pay#success'
   get 'web_pay/cancel'  => 'web_pay#cancel'
 
