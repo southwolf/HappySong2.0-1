@@ -1,6 +1,4 @@
-
 Do(function() {
-
   var shade = layer.load(1, {shade: [0.3,'#000']});//转圈遮罩
   	var token = $('#token').val();
     //获取子女列表
@@ -19,8 +17,6 @@ Do(function() {
 			layer.msg('获取子女列表失败',{time: 1000});
     	}
     });
-
-
 
 $(".button").click(function() {
   $("#dialog1").show();
@@ -93,8 +89,6 @@ $("#topclosed1").click(function() {
 
 
   });
-
-
 
   function writeznlist(arr) {
     $('.zn').html('');
