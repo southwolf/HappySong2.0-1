@@ -75,7 +75,7 @@ Do(function() {
 			url:"/api/v1/pay/web_pay",
 			data:{
 				channel:'alipay_wap',
-				account:$('.price .zn-hover').data("price"),//价格
+				amount:$('.price .zn-hover').data("price"),//价格
 				token: token,
 				target_user_id:$('.zn .zn-hover').data("userid")//用户id
 			},
