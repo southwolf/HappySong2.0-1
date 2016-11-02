@@ -3,9 +3,9 @@ class GradeTeamClass < ActiveRecord::Base
   belongs_to :team_class
   belongs_to :school
   belongs_to :teacher,  class_name: 'User'
-  has_many   :students, class_name: 'User'
+  has_many   :students, class_name: 'User', dependent: :destroy
 
-  has_many   :work_to_teams
+  has_many   :work_to_teams, dependent: :destroy
   has_many   :works,       through: :work_to_teams
 
 

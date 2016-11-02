@@ -67,6 +67,23 @@ module V1
         end
       end
 
+      desc "解散班级【老师】"
+      params do
+        requires :token, type: String, desc: '访问令牌'
+        requires :class_id, type: Integer, desc: '老师班级ID'
+      end
+
+      post '/delete' do
+        authenticate!
+        class_id = params[:class_id]
+        if user.grade_team_classes.where(id: class_id).destroy
+          present :message, "成功"
+        else
+          present :message, "失败"
+        end
+      end
+
+
       desc "加入班级【学生】"
       params  do
         requires :token,               type: String,  desc: '访问token'

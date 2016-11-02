@@ -85,7 +85,7 @@ class User < ActiveRecord::Base
 
   has_many   :works
 
-  has_many   :work_to_students, foreign_key: "student_id"
+  has_many   :work_to_students, foreign_key: "student_id", dependent: :destroy
   has_many   :my_works, class_name: "Work",
                         through: :work_to_students
 
