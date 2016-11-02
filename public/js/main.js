@@ -11,6 +11,7 @@ Do(function() {
         token: token
       },
     	success:function (res) {
+        layer.close(shade);
     		writeznlist(res);//这边使用真数据调用方法
     	},
     	error:function () {
