@@ -213,7 +213,7 @@ module V1
       get '/find'do
         q = params[:q]
         user = User.all.take(10) if q.nil?
-        user = User.where("name=? OR uid=?", q, q)
+        user = User.where("name like ? OR uid like ?", "#{q}%", "#{q}%")
         # if user.blank?
         # error!({message:"没有查到对应用户"},404)
         # else
