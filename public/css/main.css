@@ -252,14 +252,14 @@ label {
 	display: inline-block;
 	padding-left: 30px;
 	cursor: pointer;
-	background: url(../images/iconfont-zhengquehui.png) no-repeat;
+	background: url(/imgs/iconfont-zhengquehui.png) no-repeat;
 	background-size: 100% 100%;
 	float: right;
 }
 label.checked {
  width:.65rem;
  height: .65rem;
-	background: url(../images/iconfont-zhengque.png) no-repeat;
+	background: url(/imgs/iconfont-zhengque.png) no-repeat;
 	background-size: 100% 100%;
 	display: inline-block;
 }
@@ -307,14 +307,14 @@ margin-right:.25rem;
 border-radius:.1rem;
 border:1px solid #f14048!important;
 color:#f14048!important;
-background: url(../images/choose.png) right bottom no-repeat!important;
+background: url(/imgs/choose.png) right bottom no-repeat!important;
 overflow:hidden;
 }
 .zn dd p{
 	padding:.3rem;
 font-size:.3rem;
-	
-	
+
+
 }
 .price dd{
 	width: 27%;
