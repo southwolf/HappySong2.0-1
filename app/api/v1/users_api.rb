@@ -17,8 +17,10 @@ module V1
         # if user.blank?
         #   user = User.create(:phone => phone)
         # end
-        user = User.find_or_create_by(phone: phone)
-        if YunPian.deliver(user.phone)
+         user = User.find_or_create_by(phone: phone)
+        # if YunPian.deliver(user.phone)
+        #
+        if true
           present :message, "成功"
         else
           error!({ error: "失败"}, 500)
