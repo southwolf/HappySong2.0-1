@@ -6,10 +6,8 @@ class WorkToTeam < ActiveRecord::Base
 
   def work_to_students
     self.grade_team_class.students.each do |student|
-      #如果学生是vip就将作业任务加入表中
-      if student.vip?
-        student.my_works << self.work
-      end
+      #将班级里的学生作业任务加入表中
+      student.my_works << self.work
     end
   end
 end
