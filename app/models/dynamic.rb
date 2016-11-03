@@ -61,7 +61,7 @@ class Dynamic < ActiveRecord::Base
           worker.add({
             user_id: follower_id,
             actor_id: dynamic.user_id,
-            targetable_type: dynamic.type,
+            targetable_type: dynamic.class,
             targetable_id: dynamic.id,
             notice_type: 'dynamic'
             })
