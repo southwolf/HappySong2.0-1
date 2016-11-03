@@ -3,7 +3,7 @@ module V1
     resources :tags do
       desc "获取建议Tags"
       get '/tags' do
-        tags = Tag.recommend
+        tags = Tag.recommend.order(:tag_heat => :desc)
         present tags, with: ::Entities::Tag
       end
 
