@@ -93,7 +93,7 @@ class User < ActiveRecord::Base
   # has_sms_verification
   scope :students, ->{where(role_id: 1)}
 
-  
+
   def add_a_month_vip
     if self.try(:role).try(:name) == 'student'
       start_time  = Time.now.to_i

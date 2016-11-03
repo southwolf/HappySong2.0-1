@@ -96,6 +96,9 @@ module V1
        grade_team_class = GradeTeamClass.find(grade_team_class_id)
        if current_user.update(grade_team_class_id: grade_team_class_id)
          current_user.invite_user = grade_team_class.teacher
+
+         #将用户作业更新
+         
          present :message, "加入班级成功！"
        else
          error!({ error: "失败"}, 500)
