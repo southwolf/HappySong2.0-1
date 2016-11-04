@@ -118,8 +118,8 @@ module V1
       get '/show_work_info' do
         authenticate!
         work_id = params[:work_id]
-        work = Work.find(work_id).includes(:students, :grade_team_classes,
-                                           :articles, :work_attachments)
+        work = Work.includes(:students, :grade_team_classes,
+                                           :articles, :work_attachments).find(work_id)
         work_complete = "dont'use"
         if current_user.try(:role).try(:name) == "student"
           work_complete = WorkToStudent.find_by(work_id: work.id, student: current_user).complete
