@@ -265,7 +265,7 @@ module V1
         file_url   = params[:file_url]
         article_id = params[:article_id]
         music_id   = params[:music_id]
-        style      = params[:stype]
+        style      = params[:style]
         is_public  = params[:is_public]
         felling    = params[:felling]
         work_id    = params[:work_id]
@@ -279,7 +279,7 @@ module V1
           work_id: work_id,
           is_work: true
         )
-        if record.save
+        if record.save!
           present :message, "成功"
         else
           present :message, "失败"
