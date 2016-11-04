@@ -22,7 +22,7 @@ class Record < ActiveRecord::Base
   # default_scope { where(is_work: false)}
   # has_many  :notifications, as: :targetable
 
-  after_commit :async_create_record_notify, :update_work_complete_status, on: :create
+  after_create  :async_create_record_notify, :update_work_complete_status
   after_destroy :delete_notification
 
   def delete_notification
@@ -79,7 +79,7 @@ class Record < ActiveRecord::Base
 
       #如果完成的和布置的数目一致，将状态更新成完成状态
       if complete_size  == work_article_size
-        self.work.work_to_students.find_by( work: self.work, student: self.user)
+        self.work.work_to_students.find_by( work_id: self.work.id, student: self.user)
                                   .update(  complete: true)
       end
     end

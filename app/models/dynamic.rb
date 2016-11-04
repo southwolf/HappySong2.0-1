@@ -20,7 +20,7 @@ class Dynamic < ActiveRecord::Base
   belongs_to :work, ->(){ where(style: "creative_work")}
   # has_many   :notifications, as: :targetable
 
-  after_commit :async_create_dynamic_notify, :update_work_status, on: :create
+  after_create :async_create_dynamic_notify, :update_work_status
 
   after_destroy :delete_notification
 
