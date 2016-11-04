@@ -15,7 +15,7 @@
   <span class='s2'><%= current_user.name%>,您好</span>
   <span class='s1'><%=link_to "退出登录|",channel_session_path,class:'s1', method: :delete, :confirm => "Are you sure ?" %></span>
   <span class='s1'>  <%= link_to "提现记录|",channel_channel_user_apply_cash_backs_path(current_user), class: 's1' %></span>
-  <span class='s1' id='tx'>申请提现|</span>
+  <!-- <span class='s1' id='tx'>申请提现|</span> -->
   <span class='s1'> <%= link_to "学校报备|", new_channel_school_path %></span>
   <%= link_to "个人中心 |",admin_admin_show_path(:id => current_user.id), class: 's1' %>
   <%= link_to "首页|",channel_root_path, class: 's1' %>
@@ -62,7 +62,7 @@
     </div>
   </div>
 
-<!-- 
+<!--
   搜索
   <div style='float:left;min-height:200px;width:350px;margin-left:60px'>
     <p style='font-size:16px;'>快速查找你要查看的信息</p>
@@ -78,7 +78,8 @@
 </div>
 
 <div class='minfo'>
-  注册总计: <span class='f13f4b'><%= current_user.user_count%>人</span> 总收益: <span class='f13f4b'>￥<%= @totalAmount%></span> 可提现: <span class='f13f4b'>￥<%= @canApply%></span>
+  注册总计: <span class='f13f4b'><%= current_user.user_count%>人</span>
+  <!-- 总收益: <span class='f13f4b'>￥<%= @totalAmount%></span> 可提现: <span class='f13f4b'>￥<%= @canApply%></span> -->
 </div>
 
 <!---begin提现-->
