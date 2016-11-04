@@ -50,7 +50,7 @@ module V1
         code  = params[:code].to_s
 
         user = User.find_by_phone(phone)
-
+        puts user.inspect
         # if YunPian.verify(phone, code)
         if true
           present :user, user, with: ::Entities::User
