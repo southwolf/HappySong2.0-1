@@ -120,7 +120,7 @@ module V1
         work_id = params[:work_id]
         work = Work.find(work_id)
         if current_user.try(:role).try(:name) == "student"
-          work_complete = WorkToStudent.find_by(work: work, student: current_user).complete
+          work_complete = WorkToStudent.find_by(work_id: work.id, student: current_user).complete
           present work, with: ::Entities::Work,
                               work_complete: work_complete
         else
