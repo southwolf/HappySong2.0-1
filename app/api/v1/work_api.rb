@@ -124,9 +124,11 @@ module V1
         if current_user.try(:role).try(:name) == "student"
           work_complete = WorkToStudent.find_by(work_id: work.id, student: current_user).complete
           present work, with: ::Entities::Work,
-                              work_complete: work_complete
+                              work_complete: work_complete,
+                              current_user: current_user
         else
-          present work, with: ::Entities::Work
+          present work, with: ::Entities::Work,
+                        current_user: current_user
         end
       end
 
