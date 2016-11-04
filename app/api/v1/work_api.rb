@@ -111,14 +111,21 @@ module V1
 
       desc "显示作业详情"
       params do
+        requires :token, type: String, desc: '用户访问令牌'
         requires :work_id, type: Integer, desc: "作业ID"
       end
 
       get '/show_work_info' do
+        authenticate!
         work_id = params[:work_id]
         work = Work.find(work_id)
-
-        present work, with: ::Entities::Work
+        if current_user.try(:role).try(:name) == "student"
+          work_complete = WorkToStudent.find_by(work: work, student: current_user).complete
+          present work, with: ::Entities::Work,
+                              work_complete: work_complete
+        else
+          present work, with: ::Entities::Work
+        end
       end
 
       desc "根据给定班级显示班级学生完成作业情况"

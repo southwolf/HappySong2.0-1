@@ -5,6 +5,9 @@ module Entities
     expose :grade_team_classes,    using: ::Entities::GradeTeamClass
     expose :articles,              using: ::Entities::SimpleArticle
     expose :work_attachments,      using: ::Entities::Attachment
+    expose :work_complete do |object, options|
+      options[:work_complete]
+    end
   end
 
   class SimpleWork < Grape::Entity
