@@ -11,6 +11,7 @@ module Entities
     expose :work_complete do |object, options|
       options[:work_complete]
     end
+    expose :created_at
   end
 
   class SimpleWork < Grape::Entity
