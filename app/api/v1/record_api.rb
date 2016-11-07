@@ -85,6 +85,11 @@ module V1
         records = Record.find_by_sql("SELECT a.* FROM records as a join views as b on a.id = b.view_record_id
                           WHERE (b.`created_at` BETWEEN '#{Time.now - 1.day }' AND '#{Time.now}')
                           GROUP BY(a.id) ORDER BY count(b.num) DESC")
+        if records.blank?
+          records = Record.find_by_sql("SELECT a.* FROM records as a join views as b on a.id = b.view_record_id
+                            WHERE (b.`created_at` BETWEEN '#{Time.now.beginning_of_week - 1.week }' AND '#{Time.now.beginning_of_week}')
+                            GROUP BY(a.id) ORDER BY count(b.num) DESC")
+        end
         present paginate(Kaminari.paginate_array(records)), with: ::Entities::Record
       end
 

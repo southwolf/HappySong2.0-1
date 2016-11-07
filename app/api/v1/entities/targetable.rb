@@ -29,5 +29,12 @@ module Entities
     expose :work_attachments,  if: ->(object, option) { object.respond_to?(:work_attachments)}, using: ::Entities::WorkAttachment do |object|
       object.work_attachments
     end
+
+    expose :commentable_id,  if: ->(object, option) { object.respond_to?(:commentable_id)} do |object|
+      object.commentable_id
+    end
+    expose :commentable_type,  if: ->(object, option) { object.respond_to?(:commentable_type)} do |object|
+      object.commentable_type
+    end
   end
 end

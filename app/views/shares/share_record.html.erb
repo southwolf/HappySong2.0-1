@@ -193,7 +193,7 @@
            style="display:block;width:3.7rem;float:left;margin-left:1rem;margin-right:0.7rem;margin-top:0.6rem">
       <div style="float:left;margin-top:0.7rem;">
         <h3 style="font-size:1.4rem;margin-bottom:0.01rem;color:#fff">欢乐诵</h3>
-        <p style="font-size:1rem;color:#fff">注册立即送一个会月</p>
+        <p style="font-size:1rem;color:#fff">注册立即送1个月会员</p>
       </div>
       <div style="float:right;margin-right:1.1rem;margin-top:0.9rem">
         <button style="background:#f1404b;width:8.2rem;color:#fff;font-size:1.3rem;height:3.1rem;border-radius:4px;border-color:#f1404b;">
@@ -216,12 +216,12 @@
 <% if @record.style != 'video' %>
     <script>
 
-     
+
 
       var curIndex = 0;
       var timeInterval = 3000;
       var arr = new Array();
-    
+
 
       $.ajax({
         url: '/api/v1/albums/my_albums?token='+"<%= @record.user.auth_token%>",
@@ -239,7 +239,7 @@
 
 
      if(arr.length == 0){
-       
+
      }else{
         setInterval(changeImg, timeInterval);
           function changeImg() {
@@ -256,7 +256,7 @@
             $('#obj').fadeIn(800);
          }
 
-      
+
       }
     </script>
 <% end %>
