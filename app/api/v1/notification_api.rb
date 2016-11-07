@@ -71,7 +71,7 @@ module V1
 
       get '/comment' do
         authenticate!
-        notifications = Notification.where(user: current_user, notice_type: "comment").order( created_at: :DESC)
+        notifications = Notification.where(user: current_user).where(" notice_type = ? && notice_type = ?", "comment", "reply").order( created_at: :DESC)
         notifications = notifications.select { |notification| notification.targetable.user == current_user}
         present paginate(Kaminari.paginate_array(notifications)), with: ::Entities::Notification
         notifications.each do |notification|
