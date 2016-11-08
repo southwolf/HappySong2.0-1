@@ -76,7 +76,7 @@ module V1
       post '/delete' do
         authenticate!
         class_id = params[:class_id]
-        if current_user.grade_team_classes.where(id: class_id).destroy
+        if current_user.grade_team_classes.find_by(id: class_id).destroy
           present :message, "成功"
         else
           present :message, "失败"
