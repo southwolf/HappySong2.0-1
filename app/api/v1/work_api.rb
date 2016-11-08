@@ -365,8 +365,11 @@ module V1
       get '/complete_work_users' do
         work_id = params[:work_id]
         work = Work.find(work_id)
+        work_type = work.style
         result = work.complete_users
-        present  paginate(Kaminari.paginate_array(result)), with: ::Entities::User
+        present  paginate(Kaminari.paginate_array(result)), with: ::Entities::AddWorkUser,
+                                                            work_id: work_id,
+                                                            work_type: work_type
       end
 
 

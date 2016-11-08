@@ -94,6 +94,14 @@ class User < ActiveRecord::Base
   scope :students, ->{where(role_id: 1)}
 
 
+  def record_work(work_id)
+    records.where(work_id: work_id)
+  end
+
+  def creative_work(work_id)
+    records.where(work_id: work_id)
+  end
+
   def add_a_month_vip
     if self.try(:role).try(:name) == 'student'
       start_time  = Time.now.to_i

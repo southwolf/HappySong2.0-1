@@ -139,7 +139,14 @@ module Entities
     expose (:grade_team_classes_count) { |user| user.grade_team_classes.size}
   end
 
-
+  class AddWorkUser < User
+    expose :record_work, if: ->(object, options){ options[:work_type] == "record_work"}, using: ::Entities::Record do |object, options|
+      object.record_work(options[:work_id])
+    end
+    expose :creative_work, if: ->(object, options){ options[:work_type] == "creative_work"}, using: ::Entities::Dynamic do |object, options|
+      object.creative_work(options[:work_id])
+    end
+  end
 
   class HashUser < Grape::Entity
     expose (:time) { |object| object[0]}
