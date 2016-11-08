@@ -16,6 +16,8 @@ class Comment < ActiveRecord::Base
 
   after_commit :async_create_comment_notify, on: :create
 
+  after_destroy :delete_notification
+
   def async_create_comment_notify
     NotifyCommentJob.perform_later(id)
   end
@@ -83,6 +85,11 @@ class Comment < ActiveRecord::Base
     end
   end
 
+  def delete_notification
+    Notification.where(targetable: self).destroy_all
+    Notification.where(second_targetable: self).destroy_all
+  end
+  
   def is_reply?
     is_reply == true
   end
