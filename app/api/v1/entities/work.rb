@@ -5,7 +5,7 @@ module Entities
     expose :grade_team_classes,    using: ::Entities::GradeTeamClass
     expose :articles,              using: ::Entities::SimpleArticle
     expose :work_attachments,      using: ::Entities::Attachment
-    expose :current_user, using: ::Entities::User do |object, options|
+    expose :current_user,          using: ::Entities::User do |object, options|
       options[:current_user]
     end
     expose :work_complete do |object, options|

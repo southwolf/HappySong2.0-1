@@ -76,7 +76,7 @@ module V1
       post '/delete' do
         authenticate!
         class_id = params[:class_id]
-        if user.grade_team_classes.where(id: class_id).destroy
+        if current_user.grade_team_classes.where(id: class_id).destroy
           present :message, "成功"
         else
           present :message, "失败"
@@ -98,7 +98,7 @@ module V1
          current_user.invite_user = grade_team_class.teacher
 
          #将用户作业更新
-         
+
          present :message, "加入班级成功！"
        else
          error!({ error: "失败"}, 500)
