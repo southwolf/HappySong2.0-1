@@ -56,7 +56,7 @@ class User < ActiveRecord::Base
 
   # 子女
   has_many   :children, class_name: 'User',
-                        foreign_key: 'parent_id'
+                        foreign_key: 'parent_id', dependent: :nullify
 
   belongs_to :parent,   class_name: 'User'
 

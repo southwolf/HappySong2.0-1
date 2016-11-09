@@ -19,6 +19,7 @@ class Notification < ActiveRecord::Base
     notice_type = self.notice_type
     push_action = PushAction.find_by(action: notice_type)
     #用户不接收notice_type类型的消息
+    puts self.user.inspect
     unless self.user.push_actions.include?(push_action)
       PushToClientJob.perform_later(self.user_id, notice)
     end

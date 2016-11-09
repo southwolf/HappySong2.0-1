@@ -34,6 +34,7 @@ class Dynamic < ActiveRecord::Base
   def async_create_dynamic_notify
     NotifyDynamicJob.perform_later(id)
   end
+
   def self.push_dynamic_notify(id)
     dynamic = Dynamic.find(id)
     if dynamic.is_work
@@ -45,12 +46,14 @@ class Dynamic < ActiveRecord::Base
         targetable: dynamic
       )
       #推送给家长
-      Notification.create(
-        user:  dynamic.user.parent,
-        notice_type: 'work_complete',
-        actor: dynamic.user,
-        targetable: dynamic
-      )
+      if dynamic.user.parent.present?
+          Notification.create(
+            user:  dynamic.user.parent,
+            notice_type: 'work_complete',
+            actor: dynamic.user,
+            targetable: dynamic
+          )
+      end
     else
       follower_ids = dynamic.user.follower_ids
 
@@ -76,7 +79,7 @@ class Dynamic < ActiveRecord::Base
       WorkToStudent.transaction do
         work= WorkToStudent.find_by(work_id: self.work_id, student: self.user)
         work.complete = true
-        work.save
+        work.save!
       end
     end
   end

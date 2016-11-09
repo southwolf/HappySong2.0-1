@@ -11,6 +11,9 @@ class GradeTeamClass < ActiveRecord::Base
 
   validates  :teacher_id, :uniqueness => { :scope => [:grade_id,:team_class_id, :school_id]}
   before_create :set_code
+  before_destroy :delete_work
+
+
   # 生成4位 code
   def set_code
     loop do
