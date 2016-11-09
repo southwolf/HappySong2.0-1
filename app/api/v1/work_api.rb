@@ -141,12 +141,15 @@ module V1
       get '/complete_work_infos' do
         authenticate!
         work_id = params[:work_id]
+        work_type = Work.find(work_id).style
         grade_team_class_id = params[:grade_team_class_id]
         grade_team_class = GradeTeamClass.find(grade_team_class_id)
         uncomplete_students = WorkToStudent.where(work_id: work_id, complete: true).includes(:student, student:[:role,:grade_team_class])
                                           .select { |work_to_student| work_to_student.student.grade_team_class == grade_team_class}
                                           .map { |work_to_student| work_to_student.student  }
-        present paginate(Kaminari.paginate_array(uncomplete_students)), with: ::Entities::SimpleUser
+        present paginate(Kaminari.paginate_array(uncomplete_students)), with: ::Entities::AddWorkUser,
+                                                                        work_id: work_id,
+                                                                        work_type: work_type
 
       end
 
