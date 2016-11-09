@@ -99,7 +99,7 @@ class User < ActiveRecord::Base
   end
 
   def creative_work(work_id)
-    records.where(work_id: work_id)
+    dynamics.where(work_id: work_id)
   end
 
   def add_a_month_vip
