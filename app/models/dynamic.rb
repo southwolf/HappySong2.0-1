@@ -88,7 +88,7 @@ class Dynamic < ActiveRecord::Base
     if self.is_work
       WorkToStudent.transaction do
         work = WorkToStudent.find_by(work_id: self.work.id, student: self.user)
-        work.update_attribute(complete: false)
+        work.update_attribute(:complete, false)
       end
     end
   end
