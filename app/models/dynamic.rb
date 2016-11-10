@@ -22,7 +22,7 @@ class Dynamic < ActiveRecord::Base
 
   after_create :async_create_dynamic_notify, :update_work_status
 
-  after_destroy :delete_notification
+  after_destroy :delete_notification, :reset_work_status_to_unread
 
   # default_scope { where(is_work: false)}
   def delete_notification
@@ -83,7 +83,15 @@ class Dynamic < ActiveRecord::Base
       end
     end
   end
-
+  # 删除作业完成状态
+  def reset_work_status_to_unread
+    if self.is_work
+      WorkToStudent.transaction do
+        work = WorkToStudent.find_by(work_id: self.work.id, student: self.user)
+        work.update_attribute(complete: false)
+      end
+    end
+  end
 
   def addTag tag_name
     tag = Tag.find_by_name(tag_name)

@@ -15,7 +15,7 @@ module V1
       post '/record_work' do
         authenticate!
         content              = params[:content]
-        article_ids         = params[:article_ids]
+        article_ids          = params[:article_ids]
         grade_team_class_ids = params[:grade_team_class_ids]
         start_time           = params[:start_time]
         end_time             = params[:end_time]
@@ -111,7 +111,7 @@ module V1
 
       desc "显示作业详情"
       params do
-        requires :token, type: String, desc: '用户访问令牌'
+        requires :token,   type: String,  desc: '用户访问令牌'
         requires :work_id, type: Integer, desc: "作业ID"
       end
 

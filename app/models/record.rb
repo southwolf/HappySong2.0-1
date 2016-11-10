@@ -22,8 +22,9 @@ class Record < ActiveRecord::Base
   # default_scope { where(is_work: false)}
   # has_many  :notifications, as: :targetable
 
-  after_create  :async_create_record_notify, :update_work_complete_status
-  after_destroy :delete_notification
+  after_create  :async_create_record_notify
+  after_update  :update_work_complete_status
+  after_destroy :delete_notification, :reset_work_status_to_unread
 
   def delete_notification
     Notification.where(targetable: self).destroy_all
@@ -36,6 +37,8 @@ class Record < ActiveRecord::Base
   def self.push_record_notify(id)
     record = Record.find(id)
     if record.is_work
+      return  if record.is_public == false
+
       #完成作业推送通知到老师
       Notification.create(
         user: record.work.user,
@@ -75,13 +78,22 @@ class Record < ActiveRecord::Base
   def update_work_complete_status
     if self.is_work
       work_article_size = self.work.articles.size
-      complete_size = Record.where(user: self.user, work: self.work).size
+      #只有朗读时公开的才是已完成的
+      complete_size = Record.where(user: self.user, work: self.work, is_public: true).size
 
       #如果完成的和布置的数目一致，将状态更新成完成状态
       if complete_size  == work_article_size
         self.work.work_to_students.find_by( work_id: self.work.id, student: self.user)
                                   .update(  complete: true)
       end
+    end
+  end
+
+  # 删除朗读作业重置作业完成情况
+  def reset_work_status_to_unread
+    if self.is_work
+      self.work.work_to_students.find_by(work_id: self.work.id, student: self.user)
+                                .update_attribute(complete, false)
     end
   end
 end
