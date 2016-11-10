@@ -37,6 +37,7 @@ class Record < ActiveRecord::Base
   def self.push_record_notify(id)
     record = Record.find(id)
     if record.is_work
+      # 只有当朗读作业是公开的才推送通知
       return  if record.is_public == false
 
       #完成作业推送通知到老师
@@ -84,7 +85,7 @@ class Record < ActiveRecord::Base
       #如果完成的和布置的数目一致，将状态更新成完成状态
       if complete_size  == work_article_size
         self.work.work_to_students.find_by( work_id: self.work.id, student: self.user)
-                                  .update(  complete: true)
+                                  .update(complete: true)
       end
     end
   end
@@ -93,7 +94,7 @@ class Record < ActiveRecord::Base
   def reset_work_status_to_unread
     if self.is_work
       self.work.work_to_students.find_by(work_id: self.work.id, student: self.user)
-                                .update_attribute(complete, false)
+                                .update_attribute(:complete, false)
     end
   end
 end
