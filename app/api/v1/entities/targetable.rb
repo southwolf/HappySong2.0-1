@@ -26,6 +26,10 @@ module Entities
       object.style
     end
 
+    expose :articles, if: ->(object, option) { object.respond_to?(:articles)}, using: ::Entities::SimpleArticle do |object|
+      object.articles
+    end
+
     expose :work_attachments,  if: ->(object, option) { object.respond_to?(:work_attachments)}, using: ::Entities::WorkAttachment do |object|
       object.work_attachments
     end
