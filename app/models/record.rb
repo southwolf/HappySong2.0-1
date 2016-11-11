@@ -23,7 +23,7 @@ class Record < ActiveRecord::Base
   # has_many  :notifications, as: :targetable
 
   after_create  :async_create_record_notify
-  after_update  :update_work_complete_status
+  after_create  :update_work_complete_status
   after_destroy :delete_notification, :reset_work_status_to_unread
 
   def delete_notification
