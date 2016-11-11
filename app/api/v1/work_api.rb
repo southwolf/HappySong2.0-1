@@ -357,7 +357,7 @@ module V1
 
       get '/work_info_student' do
         authenticate!
-        works = current_user.work_to_students.includes(:my_work, :student, my_work:[:articles,:work_attachments])
+        works = current_user.work_to_students.order(created_at: :DESC).includes(:my_work, :student, my_work:[:articles,:work_attachments])
         present paginate(works), with: ::Entities::WorkToStudent
       end
 
