@@ -416,7 +416,7 @@ module V1
       end
       get '/check_complete' do
         authenticate!
-        result = WorkToStudent.find_by(work_id: params[:work_id], user: current_user).complete
+        result = WorkToStudent.find_by(work_id: params[:work_id], user_id: current_user.id).complete
         if result
           present :message, true
         else
