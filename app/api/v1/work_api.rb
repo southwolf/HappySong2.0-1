@@ -408,6 +408,21 @@ module V1
         end
       end
 
+      desc "检查是否完成这个作业"
+
+      params do
+        requires :token, type: String, desc: '用户访问令牌'
+        requires :work_id, type: Integer, desc: "作业ID"
+      end
+      get '/check_complete' do
+        authenticate!
+        result = WorkToStudent.find_by(work_id: params[:work_id], user: current_user).complete
+        if result
+          present :message, true
+        else
+          present :message, false
+        end
+      end
 
     end
   end
