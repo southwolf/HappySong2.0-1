@@ -7,7 +7,7 @@ class Bill < ActiveRecord::Base
   validates  :amount, presence:{ message: "不能为空!"}
   # validates  :order_no,  uniqueness:{ message: "订单号重复!"}
 
-  def complete
+  def complete_bill?
     self.update_attribute(:complete, true)
     # puts "成功"
     # time = 0
