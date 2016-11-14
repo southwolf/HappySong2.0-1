@@ -54,7 +54,7 @@ class PingsController < ApplicationController
             end
 
           else
-            puts "支付失败"
+            response_body =  "支付失败"
           end
           status = 200
         else
