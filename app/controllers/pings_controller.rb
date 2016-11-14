@@ -36,6 +36,9 @@ class PingsController < ApplicationController
               return if invite.nil?
               invite.cash_back_count += 12
               invite.save
+              response_body = "OK"
+            else
+              response_body = "失败"
             end
             #月费
           elsif event['data']['object']['amount'] == 100
@@ -54,8 +57,6 @@ class PingsController < ApplicationController
             puts "支付失败"
           end
           status = 200
-          response_body = 'OK'
-
         else
           response_body = '未知类型'
         end
@@ -69,7 +70,7 @@ class PingsController < ApplicationController
       else
         response.status = 403
       end
-      format.json { render json: { message: "code"}}
+      format.json { render json: { message: response_body}}
     end
   end
 end
