@@ -41,7 +41,7 @@ class PingsController < ApplicationController
               response_body = "失败"
             end
             #月费
-          elsif event['data']['object']['amount'] == 100
+          elsif event['data']['object']['amount'] == 1000
             puts "月费"
             order_no = event['data']['object']['order_no']
             bill = Bill.find_by(order_no: order_no)
@@ -52,7 +52,6 @@ class PingsController < ApplicationController
               invite.cash_back_count += 1
               invite.save
             end
-
           else
             response_body =  "支付失败"
           end
