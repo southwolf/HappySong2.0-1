@@ -18,7 +18,7 @@ class PingsController < ApplicationController
         event = params
         puts  "begin"
         if event['type'].nil?
-          puts "fuck"
+          response_body = "type异常"
         elsif event['type'] == 'charge.succeeded'
           # 年费
           #
