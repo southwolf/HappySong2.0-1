@@ -51,6 +51,9 @@ class PingsController < ApplicationController
               return if invite.nil?
               invite.cash_back_count += 1
               invite.save
+              response_body = "OK"
+            else
+              response_body = "失败"
             end
           else
             response_body =  "支付失败"
