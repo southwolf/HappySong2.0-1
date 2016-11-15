@@ -66,10 +66,11 @@ class PingsController < ApplicationController
         response.body = response_body
         request['Content-Type'] = 'text/plain; charset=utf-8'
         response.status = status
+        format.json { render json: { message: response_body}}
       else
         response.status = 403
+        format.json { render json: { message: "失败"}}
       end
-      format.json { render json: { message: response_body}}
     end
   end
 end
