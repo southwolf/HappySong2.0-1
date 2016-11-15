@@ -1,25 +1,22 @@
 source "https://gems.ruby-china.org/"
 
 
-gem 'rails', '4.2.6'
+gem 'rails', '~> 5.0.0', '>= 5.0.0.1'
 gem 'mysql2', '~> 0.4.4'
-gem 'sass-rails', '~> 4.0', '>= 4.0.5'
+gem 'sass-rails'
 gem 'uglifier', '>= 1.3.0'
-gem 'coffee-rails', '~> 4.1.0'
+gem 'coffee-rails'
 
 gem 'slim'
 gem 'jquery-rails'
-gem 'turbolinks'
-gem 'jbuilder', '~> 2.0'
+gem 'turbolinks', '~> 5'
+gem 'jbuilder', '~> 2.5'
 gem 'sdoc', '~> 0.4.0', group: :doc
-# Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
 gem 'bulk_insert'
-# Use Unicorn as the app server
-# gem 'unicorn'
 
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
+gem 'puma'
+
 gem 'kaminari', '~> 0.17.0'
 
 gem 'grape', '~> 0.16.2'
@@ -50,7 +47,6 @@ gem 'hiredis'
 gem 'redis-namespace'
 gem 'redis-objects'
 
-gem 'thin'
 # 队列
 gem 'sidekiq'
 # Sidekiq Web
