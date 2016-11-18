@@ -54,11 +54,18 @@ gem 'sidekiq'
 # 推送通知
 gem 'jpush', '~> 4.0', '>= 4.0.2'
 
+group :test do
+  gem 'faker'
+  gem 'database_cleaner'
+end
+
 group :development, :test do
   gem 'byebug'
   gem 'pry-rails', '~> 0.3.4'
   gem 'pry-nav', '~> 0.2.4'
   gem 'pry-byebug', '~> 3.4'
+  gem 'rspec-rails'
+  # gem 'factory_girl_rails'
 end
 
 group :development do
