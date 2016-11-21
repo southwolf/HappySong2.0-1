@@ -4,3 +4,5 @@ test:
   shared_url: 'http://localhost:3000/'
 production:
   shared_url: 'http://abc.happysong.com.cn/'
+staging:
+  shared_url: 'http://abc.happysong.com.cn/'
