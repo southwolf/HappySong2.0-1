@@ -1,6 +1,5 @@
 class SharesController < ApplicationController
-  skip_before_action :authenticate!
-
+  
   def share_article
     @article=Article.find(params[:id])
     render :layout => false
