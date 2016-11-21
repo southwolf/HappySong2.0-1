@@ -13,7 +13,8 @@ else
   require File.expand_path("../deploy/#{ENV['on']}.rb", __FILE__)
 end
 
-set :repository, 'git://...'
+set :repository, 'https://github.com/SHMUJI/HappySong2.0.git'
+set :branch, 'rails-5'
 set :cmd_prefix, -> { "RAILS_ENV=#{rails_env}" }
 set :rack_prefix, -> { %{RACK_ENV="#{rails_env}" #{bundle_bin} exec } }
 set :shared_paths, [

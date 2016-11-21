@@ -59,10 +59,7 @@ group :test do
 end
 
 group :development, :test do
-  gem 'byebug'
-  gem 'pry-rails', '~> 0.3.4'
-  gem 'pry-nav', '~> 0.2.4'
-  gem 'pry-byebug', '~> 3.4'
+  gem 'pry'
   gem 'rspec-rails'
   # gem 'factory_girl_rails'
 end
