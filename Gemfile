@@ -25,8 +25,6 @@ gem 'grape-kaminari', '~> 0.1.9'
 gem 'grape-swagger', '~> 0.22.0'
 gem 'grape-swagger-rails', '~> 0.2.2'
 gem 'grape-swagger-entity', '~> 0.1.4'
-
-gem 'sinatra', require: false
 gem 'require_all', '~> 1.3', '>= 1.3.3'
 #短信
 # gem 'smart_sms'
@@ -35,6 +33,7 @@ gem 'require_all', '~> 1.3', '>= 1.3.3'
 
 #定时任务
 gem 'whenever', '~> 0.9.7', require: false
+
 # ping++支付
 gem 'pingpp', '~> 2.0', '>= 2.0.1'
 gem 'qiniu', '~> 6.8'
@@ -49,8 +48,8 @@ gem 'redis-objects'
 
 # 队列
 gem 'sidekiq'
-# Sidekiq Web
-# gem 'sinatra', require: false
+gem 'sinatra', require: false
+
 # 推送通知
 gem 'jpush', '~> 4.0', '>= 4.0.2'
 
@@ -69,12 +68,8 @@ group :development, :test do
 end
 
 group :development do
-  gem 'capistrano'
-  gem 'capistrano-bundler'
-  gem 'capistrano-sidekiq', '~> 0.5.4'
-  gem 'capistrano-rails'
-  gem 'capistrano-rbenv'
   gem 'web-console', '~> 2.0'
   gem 'spring'
   gem 'meta_request'
+  gem 'mina'
 end

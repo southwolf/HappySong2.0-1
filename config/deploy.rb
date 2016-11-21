@@ -1,65 +1,91 @@
-# config valid only for current version of Capistrano
-lock '3.6.0'
+require 'mina/bundler'
+require 'mina/rails'
+require 'mina/git'
+require 'mina/rbenv'
+require 'mina/whenever'
+require_relative 'deploy/sidekiq'
+require_relative 'deploy/puma'
 
-set :application, 'love_to_read_version2'
-set :user, 'deploy'
 
-set :ssh_options, {
-  forward_agent: true,
-  keys: %w(~/.ssh/aliyun_dora),
-  port: 2200
-}
+if ENV['on'].nil?
+  require File.expand_path('../deploy/staging.rb', __FILE__)
+else
+  require File.expand_path("../deploy/#{ENV['on']}.rb", __FILE__)
+end
 
-set :use_sudo, false
-set :scm, :git
-set :repo_url, 'git@git.oschina.net:ljmob/love_to_read_version2.git'
-ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
-set :deploy_to, '/apps/love_to_read_version2'
-set :linked_files, %w{config/database.yml config/secrets.yml}
-set :linked_dirs, %w{log tmp/pids tmp/cache tmp/sockets vendor/bundle }
+set :repository, 'git://...'
+set :cmd_prefix, -> { "RAILS_ENV=#{rails_env}" }
+set :rack_prefix, -> { %{RACK_ENV="#{rails_env}" #{bundle_bin} exec } }
+set :shared_paths, [
+  'config/database.yml',
+  'config/secrets.yml',
+  'log'
+]
 
-# set :whenever_identifier, ->{ "#{fetch(:application)}_#{fetch(:stage)}" }
-set :keep_releases, 5
-set :bundle_binstubs, nil
+# Optional settings:
+#   set :user, 'foobar'    # Username in the server to SSH to.
+#   set :port, '30000'     # SSH port number.
+#   set :forward_agent, true     # SSH forward_agent.
 
-set :rbenv_ruby, '2.3.0'
+# This task is the environment that is loaded for most commands, such as
+# `mina deploy` or `mina rake`.
+task :environment do
+  # If you're using rbenv, use this to load the rbenv environment.
+  # Be sure to commit your .ruby-version or .rbenv-version to your repository.
+  invoke :'rbenv:load'
+end
 
-set :rbenv_prefix, "RBENV_ROOT=#{fetch(:rbenv_path)} RBENV_VERSION=#{fetch(:rbenv_ruby)} #{fetch(:rbenv_path)}/bin/rbenv exec"
-set :rbenv_map_bins, %w{rake gem bundle ruby rails}
-set :rbenv_roles, :all # default value
+task :setup => :environment do
+  queue! %[mkdir -p "#{deploy_to}/#{shared_path}/log"]
+  queue! %[chmod g+rx,u+rwx "#{deploy_to}/#{shared_path}/log"]
 
-# set :pty,  false
-set :sidekiq_config, "config/sidekqi.yml"
-namespace :deploy do
-  desc "Start Application"
-  task :start do
-    on roles(:app), in: :sequence, wait: 5 do
-      within release_path do
-        execute :bundle, "exec thin start -C #{shared_path}/config/thin.yml"
-      end
+  queue! %[mkdir -p "#{deploy_to}/#{shared_path}/config"]
+  queue! %[chmod g+rx,u+rwx "#{deploy_to}/#{shared_path}/config"]
+
+  queue! %[touch "#{deploy_to}/#{shared_path}/config/database.yml"]
+  queue! %[touch "#{deploy_to}/#{shared_path}/config/secrets.yml"]
+  queue! %[touch "#{deploy_to}/#{shared_path}/config/puma.rb"]
+
+  queue  %[echo "-----> Be sure to edit '#{deploy_to}/#{shared_path}/config/database.yml' 'puma.rb' and 'secrets.yml'."]
+
+  if repository
+    repo_host = repository.split(%r{@|://}).last.split(%r{:|\/}).first
+    repo_port = /:([0-9]+)/.match(repository) && /:([0-9]+)/.match(repository)[1] || '22'
+
+    queue %[
+      if ! ssh-keygen -H  -F #{repo_host} &>/dev/null; then
+        ssh-keyscan -t rsa -p #{repo_port} -H #{repo_host} >> ~/.ssh/known_hosts
+      fi
+    ]
+  end
+end
+
+desc "Deploys the current version to the server."
+task :deploy => :environment do
+  to :before_hook do
+    # Put things to run locally before ssh
+  end
+  deploy do
+
+    invoke :'git:clone'
+    invoke :'deploy:link_shared_paths'
+    invoke :'bundle:install'
+    invoke :'rails:assets_precompile'
+    invoke :'rails:db_create'
+    invoke :'rails:db_migrate'
+    invoke :'deploy:cleanup'
+
+    to :launch do
+      invoke :'puma:restart'
+      invoke :'sidekiq:restart'
+      invoke :'whenever:update'
     end
   end
+end
 
-  desc "restart Application"
-  task :restart do
-    on roles(:app), in: :sequence, wait: 5 do
-      within release_path do
-        execute :bundle, "exec thin restart -C #{shared_path}/config/thin.yml"
-      end
-    end
-  end
-
-  desc "stop Application"
-  task :stop do
-    on roles(:app), in: :sequence, wait: 5 do
-      within release_path do
-        execute :bundle, "exec thin stop -C #{shared_path}/config/thin.yml"
-      end
-    end
-  end
-
-  after "deploy", "deploy:migrate"
-  after "deploy", "deploy:restart"
-  after :finishing, 'deploy:cleanup'
-  after :finishing, 'deploy:compile_assets'
+desc "Restart"
+task :restart do
+  queue! %{
+    touch "#{deploy_to}/#{current_path}/tmp/restart.txt"
+  }
 end
