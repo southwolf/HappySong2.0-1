@@ -7,3 +7,5 @@ test:
   <<: *defaults
 production:
   <<: *defaults
+staging:
+  <<: *defaults
