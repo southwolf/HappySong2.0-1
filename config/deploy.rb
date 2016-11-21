@@ -19,6 +19,7 @@ set :rack_prefix, -> { %{RACK_ENV="#{rails_env}" #{bundle_bin} exec } }
 set :shared_paths, [
   'config/database.yml',
   'config/secrets.yml',
+  'config/puma.rb',
   'log'
 ]
 
@@ -77,8 +78,8 @@ task :deploy => :environment do
 
     to :launch do
       invoke :'puma:restart'
-      invoke :'sidekiq:restart'
-      invoke :'whenever:update'
+      # invoke :'sidekiq:restart'
+      # invoke :'whenever:update'
     end
   end
 end
