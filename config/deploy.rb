@@ -3,8 +3,9 @@ require 'mina/rails'
 require 'mina/git'
 require 'mina/rbenv'
 require 'mina/whenever'
-require_relative 'deploy/sidekiq'
+
 require_relative 'deploy/puma'
+require_relative 'deploy/sidekiq'
 
 
 if ENV['on'].nil?
@@ -44,9 +45,18 @@ task :setup => :environment do
   queue! %[mkdir -p "#{deploy_to}/#{shared_path}/config"]
   queue! %[chmod g+rx,u+rwx "#{deploy_to}/#{shared_path}/config"]
 
+  # queue! %[mkdir -p "#{deploy_to}/shared/tmp/pids"]
+  # queue! %[chmod g+rx,u+rwx "#{deploy_to}/shared/tmp/pids"]
+  # queue! %[mkdir -p "#{deploy_to}/shared/tmp/sockets"]
+  # queue! %[chmod g+rx,u+rwx "#{deploy_to}/shared/tmp/sockets"]
+
   queue! %[touch "#{deploy_to}/#{shared_path}/config/database.yml"]
   queue! %[touch "#{deploy_to}/#{shared_path}/config/secrets.yml"]
   queue! %[touch "#{deploy_to}/#{shared_path}/config/puma.rb"]
+
+  # queue! %[touch "#{deploy_to}/shared/tmp/sockets/puma.state"]
+  # queue! %[touch "#{deploy_to}/shared/log/puma.stdout.log"]
+  # queue! %[touch "#{deploy_to}/shared/log/puma.stderr.log"]
 
   queue  %[echo "-----> Be sure to edit '#{deploy_to}/#{shared_path}/config/database.yml' 'puma.rb' and 'secrets.yml'."]
 
