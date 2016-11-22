@@ -22,17 +22,19 @@ namespace :sidekiq do
   # ### sidekiq:quiet
   desc "Quiet sidekiq (stop accepting new work)"
   task :quiet => :environment do
-    comment 'Quiet sidekiq (stop accepting new work)'
-    in_path(fetch(:current_path)) do
-      for_each_process do |pid_file, idx|
-        queue %{
-          if [ -f #{pid_file} ] && kill -0 `cat #{pid_file}` > /dev/null 2>&1; then
-            #{fetch(:sidekiqctl)} quiet #{pid_file}
-          else
-            echo 'Skip quiet command (no pid file found)'
-          fi
-        }.strip
-      end
+    queue %{
+      echo '-------> Quiet sidekiq (stop accepting new work)'
+    }
+
+    for_each_process do |pid_file, idx|
+      queue %{
+        cd #{deploy_to}/#{current_path}
+        if [ -f #{pid_file} ] && kill -0 `cat #{pid_file}` > /dev/null 2>&1; then
+          #{sidekiqctl} quiet #{pid_file}
+        else
+          echo 'Skip quiet command (no pid file found)'
+        fi
+      }
     end
   end
 
@@ -61,6 +63,7 @@ namespace :sidekiq do
     queue %{
       echo '-------> Start sidekiq'
     }
+
     for_each_process do |pid_file, idx|
       queue! %{
         cd #{deploy_to}/#{current_path}
