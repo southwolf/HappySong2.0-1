@@ -39,17 +39,19 @@ namespace :sidekiq do
   # ### sidekiq:stop
   desc "Stop sidekiq"
   task :stop => :environment do
-    comment 'Stop sidekiq'
-    in_path(fetch(:current_path)) do
-      for_each_process do |pid_file, idx|
-        queue %{
-          if [ -f #{pid_file} ] && kill -0 `cat #{pid_file}`> /dev/null 2>&1; then
-            #{fetch(:sidekiqctl)} stop #{pid_file} #{fetch(:sidekiq_timeout)}
-          else
-            echo 'Skip stopping sidekiq (no pid file found)'
-          fi
-        }.strip
-      end
+    queue %{
+      echo '-------> Stop sidekiq'
+    }
+
+    for_each_process do |pid_file, idx|
+      queue %{
+        cd #{deploy_to}/#{current_path}
+        if [ -f #{pid_file} ] && kill -0 `cat #{pid_file}`> /dev/null 2>&1; then
+          #{sidekiqctl} stop #{pid_file} #{sidekiq_timeout}
+        else
+          echo '--> Skip stopping sidekiq (no pid file found)'
+        fi
+      }
     end
   end
 
