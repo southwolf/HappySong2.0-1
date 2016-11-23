@@ -31,7 +31,7 @@ module NewApi
 
       private
       def set_team_class
-        @team_class = TeamClass.find_by(id: params[:class_id])
+        @team_class = TeamClass.find_by(id: params[:id])
       end
     end
   end
