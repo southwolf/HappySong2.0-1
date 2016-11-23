@@ -1,0 +1,20 @@
+<div id="backgroundImage">
+  <%= image_tag 'web/happy.png' %>
+</div>
+<div id="onbackgroundbody">
+  <div class="anniu">
+    <%= image_tag 'web/pause.png', id: "pop", onclick: 'myMusic.playOrPause()' %>
+  </div>
+  <div class="down">
+    <%= link_to 'http://7xpl2d.com1.z0.glb.clouddn.com/happysong_V2.0.2.apk', class: 'android' do %>
+      <%= image_tag 'web/android.png', size: "170x52" %>
+    <% end %>
+
+    <%= link_to 'https://itunes.apple.com/us/app/huan-le-song/id1071039522', class: 'ios' do %>
+      <%= image_tag 'web/ios.png', size: "170x52" %>
+    <% end %>
+  </div>
+  <div style='display: none;'>
+    <audio id="musicBox" onended="myMusic.nextMusic()"></audio>
+  </div>
+</div>
