@@ -5,5 +5,5 @@ set :port, '22'
 set :user, 'deploy'
 set :deploy_to, '/opt/rails/happysong2'
 set :rails_env, 'staging'
-set :branch, 'rails-5'
+set :branch, 'staging'
 set :keep_releases, 1

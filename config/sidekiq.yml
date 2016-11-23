@@ -2,7 +2,7 @@
 #   sidekiq -C sidekiq.yml
 ---
 :concurrency: 20
-:pidfile: tmp/pids/sidekiq.pid
+:pidfile: shared/tmp/pids/sidekiq.pid
 :logfile: log/sidekiq.log
 :queues:
   - [notifications, 100]

@@ -15,7 +15,6 @@ else
 end
 
 set :repository, 'https://github.com/SHMUJI/HappySong2.0.git'
-set :branch, 'rails-5'
 set :cmd_prefix, -> { "RAILS_ENV=#{rails_env}" }
 set :rack_prefix, -> { %{RACK_ENV="#{rails_env}" #{bundle_bin} exec } }
 set :shared_paths, [
@@ -90,8 +89,8 @@ task :deploy => :environment do
 
     to :launch do
       invoke :'puma:restart'
-      # invoke :'sidekiq:restart'
-      # invoke :'whenever:update'
+      invoke :'sidekiq:restart'
+      invoke :'whenever:update'
     end
   end
 end
