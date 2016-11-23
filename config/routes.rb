@@ -17,6 +17,12 @@ Rails.application.routes.draw do
     resources :home, only: [:index]
   end
 
+  namespace :new_api do
+    scope module: :v1 do
+      resources :team_classes, only: [:index, :destroy]
+    end
+  end
+
   namespace :channel do
     root "channel#index"
     resources :channel_users do
