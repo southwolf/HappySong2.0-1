@@ -3,8 +3,6 @@ Rails.application.routes.draw do
   mount Sidekiq::Web => '/sidekiq'
   mount API => '/'
   mount GrapeSwaggerRails::Engine => '/swagger_doc'
-
-  root "welcome#index"
   get 'xieyi/xieyi'    => 'xieyi#xieyi'
   get '/zhifu' => 'zhifu#zhifu'
 
@@ -12,6 +10,12 @@ Rails.application.routes.draw do
   get 'web_pay/other_pay' => 'web_pay#other_pay'
   get 'web_pay/success' => 'web_pay#success'
   get 'web_pay/cancel'  => 'web_pay#cancel'
+
+  root 'web/home#index'
+
+  namespace :web do
+    resources :home, only: [:index]
+  end
 
   namespace :channel do
     root "channel#index"
