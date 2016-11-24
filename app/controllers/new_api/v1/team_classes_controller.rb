@@ -7,7 +7,7 @@ module NewApi
 
       def index
         render json: {
-          test: 'test'
+          team_classes: TeamClass.all
         } if true
       end
 
