@@ -1,6 +1,5 @@
 source "https://gems.ruby-china.org/"
 
-
 gem 'rails', '~> 5.0.0', '>= 5.0.0.1'
 gem 'mysql2', '~> 0.4.4'
 gem 'sass-rails'
@@ -10,8 +9,6 @@ gem 'coffee-rails'
 gem 'slim'
 gem 'jquery-rails'
 gem 'turbolinks', '~> 5'
-gem 'jbuilder', '~> 2.5'
-gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'bcrypt', '~> 3.1.7'
 gem 'bulk_insert'
 
@@ -52,6 +49,10 @@ gem 'sinatra', require: false
 
 # 推送通知
 gem 'jpush', '~> 4.0', '>= 4.0.2'
+
+# API 序列化
+gem 'jbuilder', '~> 2.5'
+gem 'active_model_serializers'
 
 group :test do
   gem 'faker'

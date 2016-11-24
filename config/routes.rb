@@ -1,6 +1,7 @@
+require 'sidekiq/web'
+
 Rails.application.routes.draw do
-  require 'sidekiq/web'
-  mount Sidekiq::Web => '/sidekiq'
+  mount Sidekiq::Web => '/ohmymissing'
   mount API => '/'
   mount GrapeSwaggerRails::Engine => '/swagger_doc'
   get 'xieyi/xieyi'    => 'xieyi#xieyi'
@@ -20,9 +21,14 @@ Rails.application.routes.draw do
   namespace :new_api do
     scope module: :v1 do
       resources :team_classes, only: [:index, :destroy]
+      resources :schools, shallow: true, only: [:index, :show, :create, :update] do
+        resources :classes
+      end
+      resources :classes, only: [:index]
     end
   end
 
+  # 渠道管理
   namespace :channel do
     root "channel#index"
     resources :channel_users do
