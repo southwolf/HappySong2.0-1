@@ -13,6 +13,12 @@ FADE_NAME = {
 
 
 namespace :init do
+
+  desc "Test C"
+  task :migrate_init => [:import_nations, :user_type, :migrate_school] do
+    puts 'Over'
+  end
+
   desc "migrate school data"
   task migrate_school: :environment do
     School.find_each do |school|
