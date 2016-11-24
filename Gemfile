@@ -65,6 +65,9 @@ group :development, :test do
 end
 
 group :development do
+  gem 'bullet'
+  gem 'awesome_print'
+  gem 'better_errors'
   gem 'web-console', '~> 2.0'
   gem 'spring'
   gem 'meta_request'

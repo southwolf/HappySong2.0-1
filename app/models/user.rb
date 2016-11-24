@@ -1,7 +1,3 @@
-module User
-
-end
-
 class User < ActiveRecord::Base
 
   before_create :create_auth_token, :set_code, :set_id_code
@@ -279,8 +275,8 @@ class User < ActiveRecord::Base
   private
   def create_auth_token
     loop do
-    self.auth_token = User.encrypt(User.new_token)
-    break if User.where(auth_token: auth_token).empty?
+      self.auth_token = User.encrypt(User.new_token)
+      break if User.where(auth_token: auth_token).empty?
     end
   end
   # 生成4位 code

@@ -14,16 +14,16 @@ module LoveToReadVersion2
 
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
-     config.time_zone = 'Beijing'
-     config.active_record.default_timezone = :local
+    config.time_zone = 'Beijing'
+    config.active_record.default_timezone = :local
 
-     config.paths.add File.join('app', 'api'), glob: File.join('**','*.rb')
-     config.autoload_paths += Dir[Rails.root.join('app', 'api','*')]
+    config.paths.add File.join('app', 'api'), glob: File.join('**','*.rb')
+    config.autoload_paths += Dir[Rails.root.join('app', 'api','*')]
+    config.autoload_paths += Dir["#{config.root}/app/models/org/*"]
+    config.autoload_paths += Dir["#{config.root}/app/models/user"]
 
-     config.autoload_paths += Dir["#{config.root}/app/models/*"]
-
-     config.autoload_paths += ["#{config.root}/lib/module"]
-     config.active_record.raise_in_transactional_callbacks = true
+    config.autoload_paths += ["#{config.root}/lib/module"]
+    config.active_record.raise_in_transactional_callbacks = true
 
   end
 end
