@@ -25,8 +25,11 @@ Rails.application.routes.draw do
         resources :classes
       end
       resources :classes, only: [:index]
-      resources :cities, only: [:index]
-      # resources :
+      resources :cities, shallow: true, only: [:index] do
+        scope module: :cities do
+          resources :countries, only: [:index]
+        end
+      end
     end
   end
 
