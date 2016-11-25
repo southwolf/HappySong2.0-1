@@ -1,11 +1,9 @@
 class User < ActiveRecord::Base
 
-  before_create :create_auth_token, :set_code, :set_id_code
+  before_create :create_auth_token, :create_code, :create_uid
 
   # after_create :add_a_month_vip
   validates :phone, uniqueness: true
-  # validates :phone, format: { with: /\d{11}/,
-  #                             message: "手机号格式不对"}
   validates :phone, :avatar, presence: true
 
   belongs_to :role
@@ -279,19 +277,18 @@ class User < ActiveRecord::Base
       break if User.where(auth_token: auth_token).empty?
     end
   end
-  # 生成4位 code
-  def set_code
+
+  def create_code
     loop do
-    self.code = ([*?a..?z]+[*?1..?9]).sample(4).join
-    break if User.where(code: code).empty?
+      self.code = ([*?a..?z]+[*?1..?9]).sample(4).join
+      break if User.where(code: code).empty?
     end
   end
 
-  # 生成8位code
-  def set_id_code
+  def create_uid
     loop do
-    self.uid = ([*?a..?z]+[*?1..?9]).sample(8).join
-    break if User.where(uid: uid).empty?
+      self.uid = ([*?a..?z]+[*?1..?9]).sample(8).join
+      break if User.where(uid: uid).empty?
     end
   end
 end

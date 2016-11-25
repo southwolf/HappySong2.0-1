@@ -9,7 +9,7 @@ module NewApi
           schools: @schools,
           meta: {
             page: params[:page],
-            total: School.count
+            total: Org::School.count
           }
         }
       end

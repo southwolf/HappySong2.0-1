@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161125061511) do
+ActiveRecord::Schema.define(version: 20161125140237) do
 
   create_table "admins", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
     t.string   "name"
@@ -172,13 +172,6 @@ ActiveRecord::Schema.define(version: 20161125061511) do
     t.string   "status"
   end
 
-  create_table "cities", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
-    t.string   "name"
-    t.integer  "province_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
     t.text     "content",          limit: 65535
     t.integer  "commentable_id"
@@ -213,13 +206,6 @@ ActiveRecord::Schema.define(version: 20161125061511) do
     t.integer  "user_id"
   end
 
-  create_table "districts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
-    t.string   "name"
-    t.integer  "city_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "dynamics", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
     t.integer  "user_id"
     t.text     "content",             limit: 65535
@@ -245,22 +231,6 @@ ActiveRecord::Schema.define(version: 20161125061511) do
     t.integer "grade_id"
     t.integer "school_id"
     t.index ["grade_id", "school_id"], name: "index_grade_join_schools_on_grade_id_and_school_id", using: :btree
-  end
-
-  create_table "grade_team_classes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
-    t.string   "code"
-    t.integer  "grade_id"
-    t.integer  "team_class_id"
-    t.integer  "teacher_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "school_id"
-  end
-
-  create_table "grades", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
-    t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
   end
 
   create_table "invites", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
@@ -361,12 +331,6 @@ ActiveRecord::Schema.define(version: 20161125061511) do
     t.index ["nation_id"], name: "index_org_schools_on_nation_id", using: :btree
   end
 
-  create_table "provinces", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
-    t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "push_actions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
     t.string   "action"
     t.datetime "created_at"
@@ -416,13 +380,6 @@ ActiveRecord::Schema.define(version: 20161125061511) do
     t.datetime "updated_at"
   end
 
-  create_table "schools", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT" do |t|
-    t.string   "name"
-    t.integer  "district_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "schools_team_classes", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
     t.integer "school_id"
     t.integer "team_class_id"
@@ -449,12 +406,6 @@ ActiveRecord::Schema.define(version: 20161125061511) do
     t.boolean  "recommend",  default: false
     t.string   "cover_img"
     t.integer  "tag_heat",   default: 0
-  end
-
-  create_table "team_classes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
-    t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
   end
 
   create_table "transfers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|

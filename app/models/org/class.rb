@@ -27,11 +27,32 @@ class Org::Class < ApplicationRecord
   # associations
   belongs_to :school, foreign_key: 'school_id', class_name: 'Org::School'
 
-  # instance methods
+  # delegate
+  delegate :nation_name, :nation_fullname, to: :school
+
+  #instance methods
+
+  def full_title
+  end
+
+  def title_with_county
+
+  end
+
+  def title_with_school
+    school.name + title
+  end
+
+  def title
+    grade_name + class_name
+  end
+
+  private
+  def class_name
+    Org::Class.classes.invert[self.class_no]
+  end
+
+  def grade_name
+    Org::Class.grades.invert[self.grade_no]
+  end
 end
-
-
-# grade -> 年级 （enum）
-# team_class -> 班级（enum）
-# grade_team_class -> Org::Class 班级
-#
