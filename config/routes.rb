@@ -25,6 +25,8 @@ Rails.application.routes.draw do
         resources :classes
       end
       resources :classes, only: [:index]
+      resources :cities, only: [:index]
+      # resources :
     end
   end
 

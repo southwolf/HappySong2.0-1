@@ -24,8 +24,8 @@ module NewApi
       end
 
       def ensure_school
-        @school = School.find_by(id: params[:school_id])
-        @school = School.create(
+        @school = Org::School.find_by(id: params[:school_id])
+        @school = Org::School.create(
 
         ) unless @school
       end

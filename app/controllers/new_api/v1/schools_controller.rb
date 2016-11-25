@@ -4,13 +4,18 @@ module NewApi
       before_action :authenticate, only: [:create]
 
       def index
+        @schools = Org::School.all.page(params[:page])
         render json: {
-          schools: Org::School.all.page(params[:page])
+          schools: @schools,
+          meta: {
+            page: params[:page],
+            total: School.count
+          }
         }
       end
 
       def create
-        
+
       end
 
       private
