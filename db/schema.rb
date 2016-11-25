@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161124085732) do
+ActiveRecord::Schema.define(version: 20161125061511) do
 
   create_table "admins", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
     t.string   "name"
@@ -338,6 +338,19 @@ ActiveRecord::Schema.define(version: 20161124085732) do
     t.integer  "push_action_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "org_classes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
+    t.string   "name"
+    t.integer  "school_id"
+    t.integer  "grade_no"
+    t.integer  "class_no"
+    t.string   "code",                    comment: "班级码"
+    t.integer  "teacher_id",              comment: "班主任ID"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["school_id"], name: "index_org_classes_on_school_id", using: :btree
+    t.index ["teacher_id"], name: "index_org_classes_on_teacher_id", using: :btree
   end
 
   create_table "org_schools", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|

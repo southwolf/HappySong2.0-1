@@ -15,11 +15,30 @@ FADE_NAME = {
 namespace :init do
 
   desc "Test C"
-  task :migrate_init => [:import_nations, :user_type, :migrate_school] do
+  task :migrate_init => [:import_nations, :user_type, :migrate_school, :migrate_class] do
     puts 'Over'
   end
 
-  desc "migrate school data"
+  desc "迁移班级数据"
+  task :migrate_class => :environment do
+    GradeTeamClass.find_each do |gt_class|
+      school_id = gt_class.school_id
+      teacher_id = gt_class.teacher_id
+      grade_no = gt_class.grade_id
+      class_no = gt_class.team_class_id
+      code = gt_class.code
+      org_class = Org::Class.new(
+        school_id: school_id,
+        grade_no: grade_no,
+        class_no: class_no,
+        code: code,
+        teacher_id: teacher_id
+      )
+      org_class.save
+    end
+  end
+
+  desc "迁移学校数据"
   task migrate_school: :environment do
     School.find_each do |school|
       @district = District.find_by(id: school.district_id)
@@ -33,12 +52,12 @@ namespace :init do
     end
   end
 
-  desc "import nations from json file"
+  desc "导入地区数据"
   task import_nations: :environment do
     CityCodesParser.new("lib/3rds/china_code.txt").parse
   end
 
-  desc "Set User Type"
+  desc "初始化用户类型"
   task user_type: :environment do
     User.find_each do |user|
       puts user.id

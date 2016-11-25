@@ -17,19 +17,20 @@ module NewApi
       def create
         @school = Org::School.new(school_params)
         if @school.save
-          render json: {
-            school: @school
-          }
+          render json:
+            @school, serializer: SchoolSerializer, adapter: :attributes
         else
           render json: {
-            error: '400'
+            error: 400
           }
         end
       end
 
       private
       def school_params
-        params.require(:school).permit(:nation_id, :name)
+        _school_params = params.fetch(:school, {}).permit(:name, :nation_id)
+        _school_params = params.permit(:name, :nation_id) if _school_params.blank?
+        _school_params
       end
     end
   end
