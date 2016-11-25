@@ -12,10 +12,6 @@ gem 'turbolinks', '~> 5'
 gem 'bcrypt', '~> 3.1.7'
 gem 'bulk_insert'
 
-gem 'puma'
-
-gem 'kaminari', '~> 0.17.0'
-
 gem 'grape', '~> 0.16.2'
 gem 'grape-entity', '0.5.0'
 gem 'grape-kaminari', '~> 0.1.9'
@@ -25,19 +21,25 @@ gem 'grape-swagger-entity', '~> 0.1.4'
 gem 'require_all', '~> 1.3', '>= 1.3.3'
 #短信
 # gem 'smart_sms'
-#角色
-# gem 'rolify', '~> 5.1'
 
-#定时任务
+# Rack Server
+gem 'puma'
+
+# 定时任务
 gem 'whenever', '~> 0.9.7', require: false
 
 # ping++支付
 gem 'pingpp', '~> 2.0', '>= 2.0.1'
+
+# 分页
+gem 'kaminari', '~> 0.17.0'
+
+# 七牛
 gem 'qiniu', '~> 6.8'
 #  notifications
 # gem 'notifications', '~> 0.2.0'
 
-# redis
+# Redis
 gem 'redis'
 gem 'hiredis'
 gem 'redis-namespace'
@@ -50,7 +52,7 @@ gem 'sinatra', require: false
 # 推送通知
 gem 'jpush', '~> 4.0', '>= 4.0.2'
 
-# API 序列化
+# API序列化
 gem 'jbuilder', '~> 2.5'
 gem 'active_model_serializers'
 
@@ -66,11 +68,11 @@ group :development, :test do
 end
 
 group :development do
+  gem 'mina'
   gem 'bullet'
   gem 'awesome_print'
   gem 'better_errors'
-  gem 'web-console', '~> 2.0'
   gem 'spring'
   gem 'meta_request'
-  gem 'mina'
+  gem 'web-console', '~> 2.0'
 end
