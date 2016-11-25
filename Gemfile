@@ -68,7 +68,7 @@ group :development, :test do
 end
 
 group :development do
-  gem 'mina'
+  gem 'mina', '0.3.8'
   gem 'bullet'
   gem 'awesome_print'
   gem 'better_errors'
