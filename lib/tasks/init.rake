@@ -21,6 +21,7 @@ namespace :init do
 
   desc "迁移班级数据"
   task :migrate_class => :environment do
+    puts '------> Start migrate class'
     GradeTeamClass.find_each do |gt_class|
       school_id = gt_class.school_id
       teacher_id = gt_class.teacher_id
@@ -40,6 +41,7 @@ namespace :init do
 
   desc "迁移学校数据"
   task migrate_school: :environment do
+    puts '------> Start migrate school'
     School.find_each do |school|
       @district = District.find_by(id: school.district_id)
       district_name  = FADE_NAME[@district.name.to_sym].blank? ? @district.name : FADE_NAME[@district.name.to_sym]
@@ -54,13 +56,14 @@ namespace :init do
 
   desc "导入地区数据"
   task import_nations: :environment do
+    puts '------> Start import_nations'
     CityCodesParser.new("lib/3rds/china_code.txt").parse
   end
 
   desc "初始化用户类型"
   task user_type: :environment do
+    puts '------> Start migrate user type'
     User.find_each do |user|
-      puts user.id
       user.update_columns({type: user.role.try(:name).try(:capitalize)})
     end
   end

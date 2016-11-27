@@ -1,7 +1,10 @@
-require 'sidekiq/web'
+class ActionDispatch::Routing::Mapper
+  def draw(routes_name)
+    instance_eval(File.read(Rails.root.join("config/routes/#{routes_name}.rb")))
+  end
+end
 
 Rails.application.routes.draw do
-  mount Sidekiq::Web => '/ohmymissing'
   mount API => '/'
   mount GrapeSwaggerRails::Engine => '/swagger_doc'
   get 'xieyi/xieyi'    => 'xieyi#xieyi'
@@ -12,26 +15,8 @@ Rails.application.routes.draw do
   get 'web_pay/success' => 'web_pay#success'
   get 'web_pay/cancel'  => 'web_pay#cancel'
 
-  root 'web/home#index'
-
-  namespace :web do
-    resources :home, only: [:index]
-  end
-
-  namespace :new_api do
-    scope module: :v1 do
-      resources :team_classes, only: [:index, :destroy]
-      resources :schools, shallow: true, only: [:index, :show, :create, :update] do
-        resources :classes, only: [:create, :show, :index]
-      end
-      resources :classes, only: [:index]
-      resources :cities, shallow: true, only: [:index] do
-        scope module: :cities do
-          resources :countries, only: [:index]
-        end
-      end
-    end
-  end
+  draw :new_api
+  draw :web
 
   # 渠道管理
   namespace :channel do
@@ -85,7 +70,7 @@ Rails.application.routes.draw do
     resources :school, only: [:show,:new, :create]
 
     resource :session, only: [:new, :create, :destroy]
- end
+   end
 
   namespace :admin do
     root "admin#index"
@@ -109,4 +94,7 @@ Rails.application.routes.draw do
   get  '/webhooks', to: 'pings#test',     as: :test
   post '/webhooks', to: 'pings#webhooks', as: :webhooks
   resource :invites, only: [:show, :create]
+  
+  require 'sidekiq/web'
+  mount Sidekiq::Web => '/ohmymissing'
 end
