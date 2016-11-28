@@ -4,6 +4,10 @@ module NewApi
       rescue_from ApiError, with: :handle_error
 
       protected
+    
+      def handle_error(e)
+        render json: { error_code: e.code, error_message: e.text }, status: e.status
+      end
 
       def current_user
         token = params[:token].presence
@@ -11,19 +15,11 @@ module NewApi
       end
 
       def authenticate
-        render json: {
-          error: 'token is invalid'
-        } unless current_user
+        raise MissingAuthTokenError unless current_user
       end
 
       def authenticate_teacher
-        render json: {
-          error: 'current_user is not a teacher'
-        } unless current_user.class.name == "Teacher"
-      end
-
-      def handle_error(e)
-        render json: { error_code: e.code, error_message: e.text }, status: e.status
+        raise InvalidTeacherAuthorizationError unless current_user.class.name == "Teacher"
       end
     end
   end

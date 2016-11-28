@@ -1,3 +1,9 @@
+# 1xxx: Authentication errors
+# 2xxx: HTTP params validation errors
+# 3xxx: Authorization errors
+# 4xxx: Domain errors
+# 9xxx: Other errors
+
 module NewApi
   module V1
     class ApiError < StandardError
@@ -10,9 +16,27 @@ module NewApi
       end
     end
 
+    class MissingAuthTokenError < ApiError
+      def initialize
+        super code: 1001, text: 'Authentication token is required', status: 401
+      end
+    end
+
     class RecordNotFound < ApiError
       def initialize
         super code: 1102, text: "Record not found.", status: 404
+      end
+    end
+
+    class MissingClassCodeError < ApiError
+      def initialize
+        super code: 1201, text: 'Missing Class Code', status: 400
+      end
+    end
+
+    class InvalidTeacherAuthorizationError < ApiError
+      def initialize
+        super code: 3001, text: "Teacher Authorization error.", status: 401
       end
     end
   end
