@@ -2,7 +2,7 @@
 class Org::Class < ApplicationRecord
 
   # enum
-  enum grades: {
+  enum grade: {
     '一年级': 1,
     '二年级': 2,
     '三年级': 3,
@@ -11,7 +11,7 @@ class Org::Class < ApplicationRecord
     '六年级': 6
   }
 
-  enum classes: {
+  enum class: {
     '一班': 1,
     '二班': 2,
     '三班': 3,
@@ -30,8 +30,16 @@ class Org::Class < ApplicationRecord
   # delegate
   delegate :nation_name, :nation_fullname, to: :school
 
-  #instance methods
+  # callbacks
+  before_create :ensure_code
+  def ensure_code
+    loop do
+      self.code = ([*?a..?z]+[*?1..?9]).sample(4).join
+      break if Org::Class.where(code: code).empty?
+    end
+  end
 
+  #instance methods
   def full_title
   end
 

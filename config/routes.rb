@@ -15,7 +15,22 @@ Rails.application.routes.draw do
   get 'web_pay/success' => 'web_pay#success'
   get 'web_pay/cancel'  => 'web_pay#cancel'
 
-  draw :new_api
+  namespace :new_api do
+    scope module: :v1 do
+      resources :schools, shallow: true, only: [:index, :show, :create, :update] do
+        scope module: :schools do
+          resources :classes, only: [:create, :show, :index]
+        end
+      end
+      resources :classes, only: [:index]
+
+      resources :cities, shallow: true, only: [:index] do
+        scope module: :cities do
+          resources :countries, only: [:index]
+        end
+      end
+    end
+  end
   draw :web
 
   # 渠道管理
@@ -94,7 +109,7 @@ Rails.application.routes.draw do
   get  '/webhooks', to: 'pings#test',     as: :test
   post '/webhooks', to: 'pings#webhooks', as: :webhooks
   resource :invites, only: [:show, :create]
-  
+
   require 'sidekiq/web'
   mount Sidekiq::Web => '/ohmymissing'
 end

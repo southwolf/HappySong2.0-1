@@ -28,9 +28,22 @@ module NewApi
       end
     end
 
+
+    class SchoolNotFound < ApiError
+      def initialize
+        super code: 1103, text: "School not found.", status: 401
+      end
+    end
+
     class MissingClassCodeError < ApiError
       def initialize
         super code: 1201, text: 'Missing Class Code', status: 400
+      end
+    end
+
+    class RecordNotCreate < ApiError
+      def initialize
+        super code: 2001, text: 'Record Created Error', status: 400
       end
     end
 
