@@ -28,7 +28,9 @@ module NewApi
 
         private
         def class_params
-          params.require(:class).permit(:name, :grade_no, :class_no)
+         _class_params = params.require(:class).permit(:name, :grade_no, :class_no)
+         _class_params = params.permit(:name, :grade_no, :class_no) if _class_params.blank?
+         _class_params
         end
 
         def set_school
