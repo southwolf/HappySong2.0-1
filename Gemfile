@@ -23,7 +23,7 @@ gem 'require_all', '~> 1.3', '>= 1.3.3'
 # gem 'smart_sms'
 
 # Rack Server
-gem 'puma', '3.6.0'
+gem 'puma', '3.6.2'
 
 # 定时任务
 gem 'whenever', '~> 0.9.7', require: false
