@@ -11,6 +11,7 @@ namespace :new_api do
       end
     end
     resources :classes, only: [:index]
+    resources :profiles, only: [:show]
 
     resources :cities, shallow: true, only: [:index] do
       scope module: :cities do
