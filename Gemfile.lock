@@ -166,7 +166,7 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
-    puma (3.6.1)
+    puma (3.6.0)
     qiniu (6.8.0)
       json (~> 1.8)
       mime-types (>= 2.4.0)
@@ -320,7 +320,7 @@ DEPENDENCIES
   mysql2 (~> 0.4.4)
   pingpp (~> 2.0, >= 2.0.1)
   pry
-  puma (= 3.6.1)
+  puma (= 3.6.0)
   qiniu (~> 6.8)
   rails (~> 5.0.0, >= 5.0.0.1)
   redis
