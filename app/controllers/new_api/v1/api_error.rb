@@ -35,6 +35,12 @@ module NewApi
       end
     end
 
+    class NationNotFound < ApiError
+      def initialize
+        super code: 1104, text: "Nation not found.", status: 401
+      end
+    end
+
     class MissingClassCodeError < ApiError
       def initialize
         super code: 1201, text: 'Missing Class Code', status: 400

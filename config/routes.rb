@@ -15,22 +15,7 @@ Rails.application.routes.draw do
   get 'web_pay/success' => 'web_pay#success'
   get 'web_pay/cancel'  => 'web_pay#cancel'
 
-  namespace :new_api do
-    scope module: :v1 do
-      resources :schools, shallow: true, only: [:index, :show, :create, :update] do
-        scope module: :schools do
-          resources :classes, only: [:create, :show, :index]
-        end
-      end
-      resources :classes, only: [:index]
-
-      resources :cities, shallow: true, only: [:index] do
-        scope module: :cities do
-          resources :countries, only: [:index]
-        end
-      end
-    end
-  end
+  draw :new_api
   draw :web
 
   # 渠道管理
