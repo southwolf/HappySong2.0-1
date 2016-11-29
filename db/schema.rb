@@ -10,7 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161125140237) do
+
+ActiveRecord::Schema.define(version: 20161129013916) do
 
   create_table "admins", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
     t.string   "name"
@@ -430,6 +431,14 @@ ActiveRecord::Schema.define(version: 20161125140237) do
     t.index ["school_id", "team_class_id"], name: "index_schools_team_classes_on_school_id_and_team_class_id", using: :btree
   end
 
+  create_table "sms_codes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
+    t.string   "code",         limit: 10
+    t.integer  "user_id"
+    t.datetime "invalid_time"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+  
   create_table "subjects", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
     t.string   "name"
     t.datetime "created_at"
@@ -492,6 +501,7 @@ ActiveRecord::Schema.define(version: 20161125140237) do
     t.integer  "parent_id"
     t.string   "bg_image_url",                   default: "bg_image.png"
     t.string   "type",                limit: 20,                                comment: "User Role(Type)"
+    t.string   "sms_code",            limit: 10
   end
 
   create_table "views", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
