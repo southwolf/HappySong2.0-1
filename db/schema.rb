@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161128124201) do
+ActiveRecord::Schema.define(version: 20161129013916) do
 
   create_table "admins", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
     t.string   "name"
@@ -452,12 +452,12 @@ ActiveRecord::Schema.define(version: 20161128124201) do
     t.string   "phone"
     t.string   "name"
     t.string   "uid"
-    t.string   "avatar",              default: "happysong_logo.jpg"
+    t.string   "avatar",                         default: "happysong_logo.jpg"
     t.string   "sex"
     t.string   "age"
     t.string   "desc"
-    t.boolean  "vip",                 default: false
-    t.boolean  "is_first",            default: true
+    t.boolean  "vip",                            default: false
+    t.boolean  "is_first",                       default: true
     t.string   "code"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -466,7 +466,8 @@ ActiveRecord::Schema.define(version: 20161128124201) do
     t.integer  "grade_team_class_id"
     t.integer  "credit_id"
     t.integer  "parent_id"
-    t.string   "bg_image_url",        default: "bg_image.png"
+    t.string   "bg_image_url",                   default: "bg_image.png"
+    t.string   "sms_code",            limit: 10
   end
 
   create_table "views", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|

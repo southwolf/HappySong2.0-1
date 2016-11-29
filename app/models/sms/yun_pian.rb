@@ -23,6 +23,7 @@ module Sms
         user = load_user(mobile)
         sms_code = Sms::Code.find_by(user_id: user.id)
         code = sms_code.code
+        user.update_columns(sms_code: code)
         sms_code.save unless '18602118683' == mobile
         return code
       end
