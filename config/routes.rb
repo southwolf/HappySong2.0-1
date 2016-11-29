@@ -86,6 +86,7 @@ Rails.application.routes.draw do
     scope module: :v1 do
       namespace :users do
         resources :sms_codes, only: [:create]
+        resources :sessions, only: [:create]
       end
     end
   end

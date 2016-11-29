@@ -3,10 +3,8 @@ module NewApi
     class Users::SmsCodesController < ActionController::Base
       def create
         phone = params[:phone].to_s
-        Sms::YunPian.send(phone)
-        render json: {
-          status: 201
-        }
+        response = Sms::YunPian.send(phone)
+        render json: response
       end
     end
   end
