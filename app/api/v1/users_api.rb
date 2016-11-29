@@ -13,15 +13,8 @@ module V1
       end
       get '/getcode' do
         phone = params[:phone].to_s
-        # user = User.find_by_phone(phone)
-        # if user.blank?
-        #   user = User.create(:phone => phone)
-        # end
-        user = User.find_or_create_by(phone: phone)
-        if YunPian.deliver(user.phone)
+        if Sms::YunPian.deliver(phone)
           present :message, "成功"
-        else
-          error!({ error: "失败"}, 500)
         end
       end
 
