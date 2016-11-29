@@ -82,6 +82,14 @@ Rails.application.routes.draw do
     post 'admin/forbidden' => 'admin/forbidden'
   end
 
+  namespace :new_api do
+    scope module: :v1 do
+      namespace :users do
+        resources :sms_codes, only: [:create]
+      end
+    end
+  end
+
 
 
   get  '/share_article/:id', to: 'shares#share_article', as: :share_article
