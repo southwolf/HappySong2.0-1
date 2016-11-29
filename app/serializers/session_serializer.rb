@@ -50,9 +50,7 @@ class SessionSerializer < ActiveModel::Serializer
     end
   end
 
-  def role
-    object.class.name.downcase
-  end
+  has_one :role, serializer: RoleSerializer
 
   def vip
     object.vip?
