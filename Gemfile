@@ -50,6 +50,9 @@ gem 'redis-objects'
 gem 'sidekiq'
 gem 'sinatra', require: false
 
+# Http客户端
+gem 'typhoeus'
+
 # 推送通知
 gem 'jpush', '~> 4.0', '>= 4.0.2'
 
