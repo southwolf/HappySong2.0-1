@@ -73,7 +73,7 @@ Rails.application.routes.draw do
    end
 
   namespace :admin do
-    root "admin#index"
+    get "admin/index" => 'admin/index'
     post 'admin/index_ajax' => 'admin/index_ajax'
     get 'admin/show' => 'admin/show'
     patch 'admin/update' => 'admin/update'
