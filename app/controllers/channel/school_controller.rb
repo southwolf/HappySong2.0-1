@@ -25,7 +25,7 @@ module Channel
       end
 
       if !arr.include?(params[:id].to_i)
-        redirect_to channel_root_path
+        redirect_to channel_channel_index_url
         return false
       end
 

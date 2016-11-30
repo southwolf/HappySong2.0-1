@@ -20,7 +20,8 @@ Rails.application.routes.draw do
 
   # 渠道管理
   namespace :channel do
-    root "channel#index"
+    # root "channel#index"
+    get 'channel/index' => 'channel/index'
     resources :channel_users do
       resources  :transfers, only: [:index, :new, :create]
     end

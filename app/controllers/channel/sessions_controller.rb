@@ -10,7 +10,7 @@ class Channel::SessionsController < Channel::ChannelAdminController
     if user.admin?
       redirect_to admin_admin_index_url
     else
-      redirect_to channel_root_url
+      redirect_to channel_channel_index_url
     end
 
   end
