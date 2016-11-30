@@ -114,7 +114,7 @@
     <span class="s1"><%= link_to "添加渠道商 |", new_channel_channel_user_path, class: 's1' %></a>
     </span><span class="s1"><%= link_to "退出登录 |", channel_session_path, class: 's1', method: :delete, :confirm => "Are you sure ?" %></span>
     <span class="s1" style="color:#ff5c5c"> <%= link_to "转账记录 |", channel_channel_user_transfers_path(current_user), class: 's1' %></span>
-    <%= link_to "首页|", admin_root_path, class: 's1' %>
+    <%= link_to "首页|", admin_admin_index_path, class: 's1' %>
   <div class='clear'></div>
   </p>
 <% else %>
