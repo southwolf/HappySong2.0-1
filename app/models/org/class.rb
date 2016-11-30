@@ -1,4 +1,4 @@
-# 具体的某一个班级
+# teacher_id 班级创建者 id
 class Org::Class < ApplicationRecord
 
   # enum
@@ -40,6 +40,12 @@ class Org::Class < ApplicationRecord
   end
 
   #instance methods
+  def add_student(student)
+  end
+
+  def add_parent(parent)
+  end
+
   def full_title
   end
 

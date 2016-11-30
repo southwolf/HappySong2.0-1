@@ -10,6 +10,14 @@ namespace :new_api do
         resources :classes, only: [:create, :show, :index]
       end
     end
+
+    resources :teachers, shallow: true, only: [:show, :index] do 
+      scope module: :teachers do
+        resources :classes, only: [:index]
+        resources :profiles, only: [:index]
+      end
+    end
+
     resources :classes, only: [:index]
     resources :profiles, only: [:show]
 
