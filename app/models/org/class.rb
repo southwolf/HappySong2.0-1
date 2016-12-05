@@ -26,6 +26,7 @@ class Org::Class < ApplicationRecord
 
   # associations
   belongs_to :school, foreign_key: 'school_id', class_name: 'Org::School'
+  belongs_to :teacher, foreign_key: 'teacher_id', class_name: 'User'
 
   # delegate
   delegate :nation_name, :nation_fullname, to: :school
