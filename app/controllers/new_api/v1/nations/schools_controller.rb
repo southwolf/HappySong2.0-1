@@ -2,6 +2,7 @@ module NewApi
   module V1
     class Nations::SchoolsController < BaseController
       before_action :load_nation
+      
       def index
         schools = @nation.schools
         render json:

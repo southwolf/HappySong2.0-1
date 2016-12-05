@@ -1,6 +1,6 @@
 class SessionSerializer < ActiveModel::Serializer
   attributes :id, :code, :uid, :phone, :auth_token, :name, :is_first, :age, :sex, :desc
-  attributes :ios_pay_url, :vip, :avatar, :bg_image, :role
+  attributes :ios_pay_url, :avatar, :bg_image, :role
 
   has_one :share_url do
     ENV['SHARERECORD'] + "share_profile/#{object.id}"
@@ -27,6 +27,10 @@ class SessionSerializer < ActiveModel::Serializer
     else
      " "
     end
+  end
+
+  has_one :vip do
+    object.vip?
   end
 
   has_one :school_full_name do

@@ -20,7 +20,8 @@ Rails.application.routes.draw do
 
   # 渠道管理
   namespace :channel do
-    root "channel#index"
+    # root "channel#index"
+    get 'channel/index' => 'channel/index'
     resources :channel_users do
       resources  :transfers, only: [:index, :new, :create]
     end
@@ -73,7 +74,7 @@ Rails.application.routes.draw do
    end
 
   namespace :admin do
-    root "admin#index"
+    get "admin/index" => 'admin/index'
     post 'admin/index_ajax' => 'admin/index_ajax'
     get 'admin/show' => 'admin/show'
     patch 'admin/update' => 'admin/update'

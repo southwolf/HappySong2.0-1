@@ -38,7 +38,7 @@ module Sms
 
       def load_sms_code(mobile)
         user = load_user(mobile)
-        sms_code = Sms::Code.find_by(user_id: user.id)
+        sms_code = Sms::Code.find_or_create_by(user_id: user.id)
         code = sms_code.code
         user.update_columns(sms_code: code)
         sms_code.save unless '18602118683' == mobile

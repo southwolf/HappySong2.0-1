@@ -2,7 +2,7 @@ module NewApi
   module V1
     class Cities::CountriesController < BaseController
       def index
-        set_city
+        load_city
         @counties = @city.children if @city
         @counties = Nation.counties unless @counties
         render json:
@@ -10,7 +10,7 @@ module NewApi
       end
 
       private
-      def set_city
+      def load_city
         @city = Nation.find_by(id: params[:city_id])
       end
     end
