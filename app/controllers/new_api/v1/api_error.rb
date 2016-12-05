@@ -24,10 +24,15 @@ module NewApi
 
     class RecordNotFound < ApiError
       def initialize
-        super code: 1102, text: "Record not found.", status: 404
+        super code: 1101, text: "Record not found.", status: 404
       end
     end
 
+    class NationNotFound < ApiError
+      def initialize
+        super code: 1102, text: "Nation not found.", status: 401
+      end
+    end
 
     class SchoolNotFound < ApiError
       def initialize
@@ -35,9 +40,9 @@ module NewApi
       end
     end
 
-    class NationNotFound < ApiError
+    class ClassNotFound < ApiError
       def initialize
-        super code: 1104, text: "Nation not found.", status: 401
+        super code: 1104, text: "Class not found.", status: 401
       end
     end
 
