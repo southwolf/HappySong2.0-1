@@ -1,3 +1,4 @@
+# 班级作业表 一个作业可以布置给多个班级
 class ClassWork < ApplicationRecord
 
   # associations

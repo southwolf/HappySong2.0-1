@@ -5,7 +5,7 @@ module NewApi
       def index
         load_teacher
         render json:
-          @teacher, serializer: Teacher::ProfileSerializer, status: 200, root: "profile", adapter: :json
+          @teacher, serializer: Teacher::ProfileSerializer, status: 200, root: "user", adapter: :json
       end
     end
   end

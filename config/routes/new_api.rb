@@ -11,14 +11,18 @@ namespace :new_api do
       end
     end
 
-    resources :teachers, shallow: true, only: [:show, :index] do 
+    resources :teachers, shallow: true, only: [:show, :index] do
       scope module: :teachers do
         resources :classes, only: [:index]
         resources :profile, only: [:index]
       end
     end
 
-    resources :classes, only: [:index]
+    resources :classes, shallow: true, only: [:index] do
+      scope module: :classes do
+        resources :students, only: [:index]
+      end
+    end
     resources :profiles, only: [:show]
 
     resources :cities, shallow: true, only: [:index] do

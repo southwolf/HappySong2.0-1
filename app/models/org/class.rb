@@ -21,7 +21,17 @@ class Org::Class < ApplicationRecord
     '七班': 7,
     '八班': 8,
     '九班': 9,
-    '十班': 10
+    '十班': 10,
+    '十一班': 11,
+    '十二班': 12,
+    '十三班': 13,
+    '十四班': 14,
+    '十五班': 15,
+    '十六班': 16,
+    '十七班': 17,
+    '十八班': 18,
+    '十九班': 19,
+    '二十班': 20
   }
 
   # associations
@@ -30,6 +40,9 @@ class Org::Class < ApplicationRecord
 
   has_many :class_works, foreign_key: :class_id, class_name: 'ClassWork'
   has_many :works, through: :class_works
+
+  has_many :class_students, foreign_key: :class_id, class_name: 'ClassStudent'
+  has_many :students, through: :class_students
 
   # delegate
   delegate :nation_name, :nation_fullname, to: :school
@@ -65,12 +78,12 @@ class Org::Class < ApplicationRecord
     grade_name + class_name
   end
 
-  private
+  # private
   def class_name
-    Org::Class.classes.invert[self.class_no]
+    Org::Class.classes.invert[class_no]
   end
 
   def grade_name
-    Org::Class.grades.invert[self.grade_no]
+    Org::Class.grades.invert[grade_no]
   end
 end

@@ -1,7 +1,7 @@
 class ClassSerializer < ActiveModel::Serializer
-  attributes :id, :code
+  attributes :id, :code, :title
 
-  has_one :class_name do
-    object.title
+  def title
+    object.title 
   end
 end
