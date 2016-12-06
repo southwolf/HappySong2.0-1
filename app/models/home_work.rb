@@ -5,6 +5,6 @@ class HomeWork < ApplicationRecord
   belongs_to :teacher
   belongs_to :article
 
-  has_many :class_workes, foreign_key: :work_id, class_name: 'ClassWork'
-  has_many :classes, through: class_workes
+  has_many :class_works, foreign_key: :work_id, class_name: 'ClassWork'
+  has_many :classes, through: class_works
 end

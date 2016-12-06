@@ -28,8 +28,8 @@ class Org::Class < ApplicationRecord
   belongs_to :school, foreign_key: :school_id, class_name: 'Org::School'
   belongs_to :teacher, foreign_key: :teacher_id, class_name: 'User'
 
-  has_many :class_workes, foreign_key: :class_id, class_name: 'ClassWork'
-  has_many :works, through: class_workes
+  has_many :class_works, foreign_key: :class_id, class_name: 'ClassWork'
+  has_many :works, through: :class_works
 
   # delegate
   delegate :nation_name, :nation_fullname, to: :school
