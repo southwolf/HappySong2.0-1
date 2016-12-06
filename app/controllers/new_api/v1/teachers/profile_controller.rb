@@ -1,6 +1,6 @@
+# 老师 -> 个人中心
 module NewApi
   module V1
-    # module Teachers
     class Teachers::ProfileController < Teachers::BaseController
       def index
         load_teacher
@@ -8,6 +8,5 @@ module NewApi
           @teacher, serializer: Teacher::ProfileSerializer, status: 200, root: "profile", adapter: :json
       end
     end
-    # end
   end
 end
