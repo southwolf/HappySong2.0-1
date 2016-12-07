@@ -40,6 +40,7 @@ namespace :new_api do
     resources :students, only: [] do
       scope module: :students do
         resources :classes, only: [:index, :destroy, :create]
+        resources :profile, only: [:index]
       end
     end
   end
