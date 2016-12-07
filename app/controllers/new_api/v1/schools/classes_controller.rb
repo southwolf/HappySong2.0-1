@@ -7,12 +7,6 @@ module NewApi
 
       # 当前学校所有的班级
       def index
-        # @classes = @school.classes
-        # render json:
-        #   @classes, each_serializer: SchoolSerializer, adapter: :attributes
-      end
-
-      def show
       end
 
       def create
