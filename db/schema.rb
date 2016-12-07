@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161206061314) do
+ActiveRecord::Schema.define(version: 20161207081824) do
 
   create_table "admins", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT" do |t|
     t.string   "name"
@@ -56,6 +56,15 @@ ActiveRecord::Schema.define(version: 20161206061314) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "article_works", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "article_id"
+    t.integer  "work_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["article_id"], name: "index_article_works_on_article_id", using: :btree
+    t.index ["work_id"], name: "index_article_works_on_work_id", using: :btree
   end
 
   create_table "articles", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT" do |t|
@@ -286,11 +295,9 @@ ActiveRecord::Schema.define(version: 20161206061314) do
     t.string   "type",       limit: 15
     t.datetime "end_time"
     t.datetime "start_time"
-    t.integer  "article_id"
     t.text     "content",    limit: 65535
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
-    t.index ["article_id"], name: "index_home_works_on_article_id", using: :btree
     t.index ["teacher_id"], name: "index_home_works_on_teacher_id", using: :btree
   end
 

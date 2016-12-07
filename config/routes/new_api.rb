@@ -5,9 +5,19 @@ namespace :new_api do
         resources :schools, only: [:index]
       end
     end
+
+    resources :classes, only: [:index, :show] do
+      collection do
+        get :code
+      end
+      scope module: :classes do
+        resources :students, only: [:index]
+      end
+    end
+
     resources :schools, shallow: true, only: [:index, :show, :create, :update] do
       scope module: :schools do
-        resources :classes, only: [:create, :show, :index]
+        resources :classes, only: [:create, :index]
       end
     end
 
@@ -18,11 +28,7 @@ namespace :new_api do
       end
     end
 
-    resources :classes, shallow: true, only: [:index] do
-      scope module: :classes do
-        resources :students, only: [:index]
-      end
-    end
+
     resources :profiles, only: [:show]
 
     resources :cities, shallow: true, only: [:index] do
@@ -31,7 +37,7 @@ namespace :new_api do
       end
     end
 
-    resources :students, only: [] do 
+    resources :students, only: [] do
       scope module: :students do
         resources :classes, only: [:index, :destroy, :create]
       end
