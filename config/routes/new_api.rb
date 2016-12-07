@@ -30,5 +30,11 @@ namespace :new_api do
         resources :countries, only: [:index]
       end
     end
+
+    resources :students, only: [] do 
+      scope module: :students do
+        resources :classes, only: [:index, :destroy, :create]
+      end
+    end
   end
 end

@@ -5,9 +5,19 @@ class Student < User
   has_many :org_classes, through: :class_students # 学生可以加入多个班级
 
   # instance methods
-  def join_class(class_code) # 加入班级
-    org_class = Org::Class.find_by(code: class_code)
+  def join_class(org_class) # 加入班级
     class_student = class_students.build(org_class: org_class)
-    class_student.save
+    begin
+      class_student.save
+    rescue
+      return nil
+    end
   end
+
+  # TODO 日后还是使用 SoftDelete 比较好
+  def quit_class(org_class) # 学生可以退出某个班级
+    class_student = class_students.find_by(org_class: org_class)
+    class_student.destroy if class_student
+  end
+
 end

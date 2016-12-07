@@ -52,6 +52,12 @@ module NewApi
       end
     end
 
+    class StudentNotFound < ApiError
+      def initialize
+        super code: 1106, text: "Student not found.", status: 404
+      end
+    end
+
     class MissingClassCodeError < ApiError
       def initialize
         super code: 1201, text: 'Missing Class Code', status: 400
