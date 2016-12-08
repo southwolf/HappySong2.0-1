@@ -1,6 +1,6 @@
 # 朗读作业
 
-class RecordWork < HomeWork
+class RecordWork < HomeWork  
   # methods
   def build_record_work(article_ids, class_ids) #TODO Maybe ActiceJob
     # TODO bulk_insert

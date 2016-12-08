@@ -70,6 +70,12 @@ module NewApi
       end
     end
 
+    class RecordWorkNotCreate < ApiError
+      def initialize
+        super code: 2002, text: 'RecordWork Created Error, check article_ids & class_ids', status: 400
+      end
+    end
+
     class InvalidTeacherAuthorizationError < ApiError
       def initialize
         super code: 3001, text: "Teacher Authorization error.", status: 401

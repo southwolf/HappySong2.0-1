@@ -3,6 +3,9 @@
 # 作业 -> 包含多个文章
 class HomeWork < ApplicationRecord
 
+  # validation
+  validates :teacher_id, presence: true
+
   # associations
   belongs_to :teacher
 
