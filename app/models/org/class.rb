@@ -38,10 +38,10 @@ class Org::Class < ApplicationRecord
   belongs_to :school, foreign_key: :school_id, class_name: 'Org::School'
   belongs_to :teacher, foreign_key: :teacher_id, class_name: 'User'
 
-  has_many :class_works, foreign_key: :class_id, class_name: 'ClassWork'
+  has_many :class_works, foreign_key: :class_id, class_name: 'ClassWork', dependent: :destroy
   has_many :works, through: :class_works
 
-  has_many :class_students, foreign_key: :class_id, class_name: 'ClassStudent'
+  has_many :class_students, foreign_key: :class_id, class_name: 'ClassStudent', dependent: :destroy
   has_many :students, through: :class_students
 
   # delegate
@@ -57,19 +57,6 @@ class Org::Class < ApplicationRecord
   end
 
   #instance methods
-  def add_student(student)
-  end
-
-  def add_parent(parent)
-  end
-
-  def full_title
-  end
-
-  def title_with_county
-
-  end
-
   def title_with_school
     school.name + title
   end
@@ -78,7 +65,7 @@ class Org::Class < ApplicationRecord
     grade_name + class_name
   end
 
-  # private
+  private
   def class_name
     Org::Class.classes.invert[class_no]
   end

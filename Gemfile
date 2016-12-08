@@ -61,11 +61,11 @@ gem 'active_model_serializers'
 
 group :test do
   gem 'faker'
-  gem 'database_cleaner'
 end
 
 group :development, :test do
   gem 'pry'
+  gem 'database_cleaner'
   gem 'rspec-rails'
   # gem 'factory_girl_rails'
 end

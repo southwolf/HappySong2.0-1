@@ -25,6 +25,8 @@ namespace :new_api do
       scope module: :teachers do
         resources :classes, only: [:index]
         resources :profile, only: [:index]
+        resources :works, only: [:create, :destroy, :index, :show, :update] # 作业需要有增删改查
+        resources :records, only: [:create]
       end
     end
 

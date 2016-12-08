@@ -1,3 +1,4 @@
+# 中间模型 Article - Work
 class ArticleWork < ApplicationRecord
   # associations
   belongs_to :article
