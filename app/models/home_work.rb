@@ -10,9 +10,11 @@ class HomeWork < ApplicationRecord
   belongs_to :teacher
 
   has_many :class_works, foreign_key: :work_id, class_name: 'ClassWork', dependent: :destroy
-  has_many :classes, through: :class_works
+  has_many :classes, through: :class_works, source: 'org_class'
 
   has_many :article_works, foreign_key: :work_id, class_name: 'ArticleWork', dependent: :destroy
   has_many :articles, through: :article_works
+
+  has_one :notification, as: :targetable, class_name: 'NewNotification'
 
 end

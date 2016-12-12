@@ -1,3 +1,9 @@
+GIT
+  remote: https://github.com/jpush/jpush-api-ruby-client.git
+  revision: 2ae2263f7fe333dd3f98e41898b458ffdac34a2b
+  specs:
+    jpush (4.0.4)
+
 GEM
   remote: https://gems.ruby-china.org/
   specs:
@@ -125,7 +131,6 @@ GEM
     jbuilder (2.6.0)
       activesupport (>= 3.0.0, < 5.1)
       multi_json (~> 1.2)
-    jpush (4.0.4)
     jquery-rails (4.2.1)
       rails-dom-testing (>= 1, < 3)
       railties (>= 4.2.0)
@@ -317,7 +322,7 @@ DEPENDENCIES
   grape-swagger-rails (~> 0.2.2)
   hiredis
   jbuilder (~> 2.5)
-  jpush (~> 4.0, >= 4.0.2)
+  jpush!
   jquery-rails
   kaminari (~> 0.17.0)
   meta_request

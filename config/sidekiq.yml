@@ -1,13 +1,13 @@
 # Options here can still be overridden by cmd line args.
 #   sidekiq -C sidekiq.yml
 ---
-:concurrency: 20
+:concurrency: 80
 :pidfile: shared/tmp/pids/sidekiq.pid
 :logfile: log/sidekiq.log
 :queues:
-  - [notifications, 100]
-  - [http_request, 50]
-  - [search_indexer, 30]
+  - [notifications, 40]
+  - [http_request, 10]
+  - [search_indexer, 10]
   - [mailer, 5]
   - [mailers, 5]
-  - [default, 3]
+  - [default, 10]

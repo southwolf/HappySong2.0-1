@@ -1,6 +1,15 @@
 # 朗读作业
 
-class RecordWork < HomeWork  
+class RecordWork < HomeWork
+
+  # callback
+  after_create :notify_students
+  def notify_students
+    # index 1 代表作业
+    ans = NewNotification.create(actor_id: teacher_id, index: 1, targetable_id: id, targetable_type: 'RecordWork')
+    binding.pry
+  end
+
   # methods
   def build_record_work(article_ids, class_ids) #TODO Maybe ActiceJob
     # TODO bulk_insert

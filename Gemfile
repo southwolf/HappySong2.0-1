@@ -53,7 +53,7 @@ gem 'sinatra', require: false
 gem 'typhoeus'
 
 # 推送通知
-gem 'jpush', '~> 4.0', '>= 4.0.2'
+gem 'jpush', git: 'https://github.com/jpush/jpush-api-ruby-client.git'
 
 # API序列化
 gem 'jbuilder', '~> 2.5'

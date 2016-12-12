@@ -7,7 +7,7 @@ module NewApi
       def create
         load_teacher
         ans = build_record
-        return render json: { }, status: 201 if ans
+        return render json: { message: 'Success' }, status: 201 if ans
       end
 
       private

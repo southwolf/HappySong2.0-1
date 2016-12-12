@@ -1,5 +1,5 @@
 class NotifyWorkJob < ActiveJob::Base
-  queue_as :default
+  queue_as :notifications
 
   def perform(id)
     Work.push_work_notify(id)
