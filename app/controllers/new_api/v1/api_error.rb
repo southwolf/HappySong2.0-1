@@ -76,6 +76,12 @@ module NewApi
       end
     end
 
+    class DynamicWorkNotCreate < ApiError
+      def initialize
+        super code: 2003, text: 'DynamicWork Created Error, check files & class_ids', status: 400
+      end
+    end
+
     class InvalidTeacherAuthorizationError < ApiError
       def initialize
         super code: 3001, text: "Teacher Authorization error.", status: 401

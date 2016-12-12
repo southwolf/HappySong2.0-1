@@ -2,8 +2,7 @@
 module NewApi
   module V1
     class Teachers::RecordsController < Teachers::WorksController
-      before_action :authenticate
-
+      
       def create
         load_teacher
         ans = build_record
