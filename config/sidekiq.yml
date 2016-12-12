@@ -5,9 +5,5 @@
 :pidfile: shared/tmp/pids/sidekiq.pid
 :logfile: log/sidekiq.log
 :queues:
+  - default
   - [notifications, 40]
-  - [http_request, 10]
-  - [search_indexer, 10]
-  - [mailer, 5]
-  - [mailers, 5]
-  - [default, 10]

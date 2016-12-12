@@ -25,5 +25,7 @@ module LoveToReadVersion2
     config.autoload_paths += Dir["#{config.root}/app/models/jpush"]
 
     config.autoload_paths += ["#{config.root}/lib/module"]
+
+    config.active_job.queue_adapter = :sidekiq
   end
 end

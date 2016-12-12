@@ -5,9 +5,7 @@ class RecordWork < HomeWork
   # callback
   after_create :notify_students
   def notify_students
-    # index 1 代表作业
-    ans = NewNotification.create(actor_id: teacher_id, index: 1, targetable_id: id, targetable_type: 'RecordWork')
-    binding.pry
+    NewNotificationJob.perform_later(teacher_id, 1, id, 'RecordWork')
   end
 
   # methods

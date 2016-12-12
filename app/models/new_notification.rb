@@ -23,14 +23,18 @@ class NewNotification < ApplicationRecord
   def user_ids
     case index
     when 1
-      ['108']
+      relative_class_students
     when 2
     else
     end
   end
 
   def relative_class_students # 布置作业的时候 actor<老师> targetable<作业>
-    # binding.pry
+    ids = []
+    targetable.classes.each do |org_class|
+      ids += org_class.students.pluck(:id)
+    end
+    ids.uniq!.map(&:to_s)
   end
 
 end
