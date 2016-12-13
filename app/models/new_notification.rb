@@ -35,7 +35,7 @@ class NewNotification < ApplicationRecord
       ids += org_class.students.pluck(:id)
     end
     return ids.uniq!.map(&:to_s) unless ids.blank?
-    ids
+    ids = ['108'] # 108内部账号 重定向到这里吧暂时
   end
 
 end
