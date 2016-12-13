@@ -11,7 +11,6 @@ RSpec.describe NewApi::V1::Teachers::DynamicsController, type: :request do
       post "/new_api/teachers/#{Teacher.first.id}/dynamics",
       params: post_params
       parsed_response = JSON.parse(response.body)
-      binding.pry
       expect(response.status).to be(201)
     end
   end
