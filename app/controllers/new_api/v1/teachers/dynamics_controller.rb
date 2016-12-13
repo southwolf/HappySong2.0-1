@@ -23,7 +23,6 @@ module NewApi
 
       def create
         load_teacher
-        binding.pry
         ans = build_dynamic
         return render json: { message: 'Success' }, status: 201 if ans
       end
