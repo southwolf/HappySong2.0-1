@@ -12,17 +12,15 @@
 
 ActiveRecord::Schema.define(version: 20161213070013) do
 
-  create_table "admins", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT" do |t|
+  create_table "admins", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
     t.string   "password_digest"
     t.string   "remember_token"
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
-    t.string   "email"
-    t.string   "phone",           limit: 20
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
   end
 
-  create_table "advises", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT" do |t|
+  create_table "advises", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "content"
     t.integer  "user_id"
     t.datetime "created_at"
@@ -30,20 +28,20 @@ ActiveRecord::Schema.define(version: 20161213070013) do
     t.string   "contact"
   end
 
-  create_table "albums", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT" do |t|
+  create_table "albums", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "file_url"
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "announces", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT" do |t|
+  create_table "announces", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "content"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "apply_cash_backs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT" do |t|
+  create_table "apply_cash_backs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "channel_user_id"
     t.integer  "amount"
     t.string   "alipay"
@@ -52,7 +50,7 @@ ActiveRecord::Schema.define(version: 20161213070013) do
     t.datetime "updated_at"
   end
 
-  create_table "article_grades", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT" do |t|
+  create_table "article_grades", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -67,7 +65,7 @@ ActiveRecord::Schema.define(version: 20161213070013) do
     t.index ["work_id"], name: "index_article_works_on_work_id", using: :btree
   end
 
-  create_table "articles", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT" do |t|
+  create_table "articles", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "title"
     t.string   "cover_img"
     t.text     "content",          limit: 65535,                 null: false
@@ -77,19 +75,19 @@ ActiveRecord::Schema.define(version: 20161213070013) do
     t.integer  "unit_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "author",                         default: "佚名"
+    t.string   "author"
     t.integer  "records_count",                  default: 0
     t.boolean  "has_demo",                       default: false
     t.boolean  "is_hot",                         default: false
     t.boolean  "article_type",                   default: true
   end
 
-  create_table "articles_cate_items", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT" do |t|
+  create_table "articles_cate_items", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "cate_item_id"
     t.integer "article_id"
   end
 
-  create_table "attachments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT" do |t|
+  create_table "attachments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "dynamic_id"
     t.boolean  "is_video",   default: false
     t.string   "file_url"
@@ -97,17 +95,17 @@ ActiveRecord::Schema.define(version: 20161213070013) do
     t.datetime "updated_at"
   end
 
-  create_table "banners", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT" do |t|
+  create_table "banners", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "cover_img"
     t.string   "text"
-    t.integer  "targetable_id"
     t.string   "targetable_type"
+    t.integer  "targetable_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "link_url"
   end
 
-  create_table "bills", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT" do |t|
+  create_table "bills", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "user_id"
     t.integer  "target_user_id"
     t.integer  "amount"
@@ -120,7 +118,7 @@ ActiveRecord::Schema.define(version: 20161213070013) do
     t.string   "client_ip"
   end
 
-  create_table "cash_backs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT" do |t|
+  create_table "cash_backs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "cash",       default: 0
     t.integer  "used",       default: 0
     t.integer  "user_id"
@@ -128,7 +126,7 @@ ActiveRecord::Schema.define(version: 20161213070013) do
     t.datetime "updated_at"
   end
 
-  create_table "cash_managers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT" do |t|
+  create_table "cash_managers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "amount",         default: 0
     t.integer  "user_id"
     t.integer  "target_user_id"
@@ -136,20 +134,20 @@ ActiveRecord::Schema.define(version: 20161213070013) do
     t.datetime "updated_at"
   end
 
-  create_table "cate_items", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT" do |t|
+  create_table "cate_items", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
     t.integer  "category_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "categories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT" do |t|
+  create_table "categories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "channel_schools", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT" do |t|
+  create_table "channel_schools", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "channel_user_id"
     t.integer  "school_id"
     t.datetime "created_at"
@@ -158,15 +156,15 @@ ActiveRecord::Schema.define(version: 20161213070013) do
     t.string   "reason"
   end
 
-  create_table "channel_user_cash_backs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT" do |t|
+  create_table "channel_user_cash_backs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "channel_user_id"
     t.integer  "amount",          default: 0
-    t.integer  "used",            default: 0
+    t.integer  "userd",           default: 0
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
   end
 
-  create_table "channel_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT" do |t|
+  create_table "channel_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "email"
     t.string   "name"
     t.string   "password_digest"
@@ -181,7 +179,7 @@ ActiveRecord::Schema.define(version: 20161213070013) do
     t.string   "status"
   end
 
-  create_table "cities", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT" do |t|
+  create_table "cities", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
     t.integer  "province_id"
     t.datetime "created_at"
@@ -206,10 +204,10 @@ ActiveRecord::Schema.define(version: 20161213070013) do
     t.index ["work_id"], name: "index_class_works_on_work_id", using: :btree
   end
 
-  create_table "comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT" do |t|
+  create_table "comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.text     "content",          limit: 65535
+    t.string   "commentable_type"
     t.integer  "commentable_id"
-    t.string   "commentable_type",                               collation: "utf8_unicode_ci"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "root_id"
@@ -218,21 +216,21 @@ ActiveRecord::Schema.define(version: 20161213070013) do
     t.boolean  "is_reply",                       default: false
   end
 
-  create_table "configs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT" do |t|
+  create_table "configs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "num"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "credit_managers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT" do |t|
+  create_table "credit_managers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "user_id"
     t.integer  "target_user_id"
-    t.integer  "point"
+    t.integer  "point",          default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "credits", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT" do |t|
+  create_table "credits", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "point",      default: 0
     t.integer  "used",       default: 0
     t.datetime "created_at"
@@ -240,17 +238,17 @@ ActiveRecord::Schema.define(version: 20161213070013) do
     t.integer  "user_id"
   end
 
-  create_table "districts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT" do |t|
+  create_table "districts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
     t.integer  "city_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "dynamics", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT" do |t|
+  create_table "dynamics", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "user_id"
     t.text     "content",             limit: 65535
-    t.string   "address",                                           collation: "utf8_unicode_ci"
+    t.string   "address"
     t.boolean  "is_relay",                          default: false
     t.integer  "original_dynamic_id"
     t.integer  "root_dynamic_id"
@@ -262,19 +260,19 @@ ActiveRecord::Schema.define(version: 20161213070013) do
     t.integer  "work_id"
   end
 
-  create_table "editions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT" do |t|
+  create_table "editions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "grade_join_schools", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT" do |t|
+  create_table "grade_join_schools", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "grade_id"
     t.integer "school_id"
     t.index ["grade_id", "school_id"], name: "index_grade_join_schools_on_grade_id_and_school_id", using: :btree
   end
 
-  create_table "grade_team_classes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT" do |t|
+  create_table "grade_team_classes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "code"
     t.integer  "grade_id"
     t.integer  "team_class_id"
@@ -284,7 +282,7 @@ ActiveRecord::Schema.define(version: 20161213070013) do
     t.integer  "school_id"
   end
 
-  create_table "grades", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT" do |t|
+  create_table "grades", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -302,7 +300,7 @@ ActiveRecord::Schema.define(version: 20161213070013) do
     t.index ["teacher_id"], name: "index_home_works_on_teacher_id", using: :btree
   end
 
-  create_table "invites", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT" do |t|
+  create_table "invites", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "user_id"
     t.integer  "target_user_id"
     t.integer  "cash_back_count", default: 0
@@ -311,10 +309,10 @@ ActiveRecord::Schema.define(version: 20161213070013) do
     t.datetime "updated_at",                      null: false
   end
 
-  create_table "likes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT" do |t|
+  create_table "likes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "like_user_id"
-    t.integer  "likeable_id"
     t.string   "likeable_type"
+    t.integer  "likeable_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -328,7 +326,7 @@ ActiveRecord::Schema.define(version: 20161213070013) do
     t.datetime "updated_at",                   null: false
   end
 
-  create_table "members", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT" do |t|
+  create_table "members", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "user_id"
     t.integer  "start_time"
     t.integer  "expire_time"
@@ -337,13 +335,13 @@ ActiveRecord::Schema.define(version: 20161213070013) do
     t.datetime "updated_at"
   end
 
-  create_table "music_types", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT" do |t|
+  create_table "music_types", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "musics", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT" do |t|
+  create_table "musics", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
     t.string   "file_url"
     t.integer  "music_type_id"
@@ -374,16 +372,16 @@ ActiveRecord::Schema.define(version: 20161213070013) do
     t.index ["actor_id"], name: "index_new_notifications_on_actor_id", using: :btree
   end
 
-  create_table "notifications", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT" do |t|
+  create_table "notifications", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "notice_type",                           null: false
     t.integer  "actor_id"
     t.integer  "user_id"
-    t.integer  "targetable_id"
     t.string   "targetable_type"
-    t.integer  "second_targetable_id"
+    t.integer  "targetable_id"
     t.string   "second_targetable_type"
-    t.integer  "third_targetable_id"
+    t.integer  "second_targetable_id"
     t.string   "third_targetable_type"
+    t.integer  "third_targetable_id"
     t.boolean  "unread",                 default: true
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -391,7 +389,7 @@ ActiveRecord::Schema.define(version: 20161213070013) do
     t.index ["user_id"], name: "index_notifications_on_user_id", using: :btree
   end
 
-  create_table "notify_configs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT" do |t|
+  create_table "notify_configs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "user_id"
     t.integer  "push_action_id"
     t.datetime "created_at"
@@ -420,22 +418,22 @@ ActiveRecord::Schema.define(version: 20161213070013) do
     t.index ["nation_id"], name: "index_org_schools_on_nation_id", using: :btree
   end
 
-  create_table "provinces", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT" do |t|
+  create_table "provinces", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "push_actions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT" do |t|
+  create_table "push_actions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "action"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "records", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT" do |t|
-    t.string   "file_url",                                     collation: "utf8_unicode_ci"
+  create_table "records", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "file_url"
     t.text     "feeling",        limit: 65535
-    t.string   "style",                                        collation: "utf8_unicode_ci"
+    t.string   "style"
     t.integer  "user_id"
     t.integer  "article_id"
     t.integer  "music_id"
@@ -451,7 +449,7 @@ ActiveRecord::Schema.define(version: 20161213070013) do
     t.integer  "work_id"
   end
 
-  create_table "relationships", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT" do |t|
+  create_table "relationships", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "follower_id"
     t.integer  "following_id"
     t.datetime "created_at"
@@ -461,34 +459,34 @@ ActiveRecord::Schema.define(version: 20161213070013) do
     t.index ["following_id"], name: "index_relationships_on_following_id", using: :btree
   end
 
-  create_table "reports", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT" do |t|
+  create_table "reports", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "user_id"
-    t.integer  "reportable_id"
     t.string   "reportable_type"
+    t.integer  "reportable_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "roles", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT" do |t|
+  create_table "roles", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "schools", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT" do |t|
+  create_table "schools", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
     t.integer  "district_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "schools_team_classes", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT" do |t|
+  create_table "schools_team_classes", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "school_id"
     t.integer "team_class_id"
     t.index ["school_id", "team_class_id"], name: "index_schools_team_classes_on_school_id_and_team_class_id", using: :btree
   end
 
-  create_table "sms_codes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPACT" do |t|
+  create_table "sms_codes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "code",         limit: 10
     t.integer  "user_id"
     t.datetime "invalid_time"
@@ -506,20 +504,20 @@ ActiveRecord::Schema.define(version: 20161213070013) do
     t.index ["work_id"], name: "index_student_works_on_work_id", using: :btree
   end
 
-  create_table "subjects", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT" do |t|
+  create_table "subjects", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "taggings", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT" do |t|
+  create_table "taggings", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "dynamic_id"
     t.integer  "tag_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "tags", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT" do |t|
+  create_table "tags", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -528,13 +526,13 @@ ActiveRecord::Schema.define(version: 20161213070013) do
     t.integer  "tag_heat",   default: 0
   end
 
-  create_table "team_classes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT" do |t|
+  create_table "team_classes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "transfers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT" do |t|
+  create_table "transfers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "transfer_user_id"
     t.integer  "collector_id"
     t.string   "amount"
@@ -542,13 +540,13 @@ ActiveRecord::Schema.define(version: 20161213070013) do
     t.datetime "updated_at",       null: false
   end
 
-  create_table "units", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT" do |t|
+  create_table "units", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT" do |t|
+  create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "phone"
     t.string   "name"
     t.string   "uid"
@@ -564,14 +562,13 @@ ActiveRecord::Schema.define(version: 20161213070013) do
     t.string   "auth_token"
     t.integer  "role_id"
     t.integer  "grade_team_class_id"
-    t.integer  "credit_id"
     t.integer  "parent_id"
     t.string   "bg_image_url",                   default: "bg_image.png"
     t.string   "type",                limit: 20,                                comment: "User Role(Type)"
     t.string   "sms_code",            limit: 10
   end
 
-  create_table "views", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT" do |t|
+  create_table "views", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "viewer_id"
     t.integer  "view_record_id"
     t.integer  "num",            default: 1
@@ -579,7 +576,7 @@ ActiveRecord::Schema.define(version: 20161213070013) do
     t.datetime "updated_at"
   end
 
-  create_table "withdraw_cashes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT" do |t|
+  create_table "withdraw_cashes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "user_id"
     t.string   "alipay"
     t.integer  "amount"
@@ -588,7 +585,7 @@ ActiveRecord::Schema.define(version: 20161213070013) do
     t.datetime "updated_at",                 null: false
   end
 
-  create_table "work_attachments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT" do |t|
+  create_table "work_attachments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "work_id"
     t.boolean  "is_video"
     t.string   "file_url"
@@ -596,14 +593,14 @@ ActiveRecord::Schema.define(version: 20161213070013) do
     t.datetime "updated_at"
   end
 
-  create_table "work_to_articles", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT" do |t|
+  create_table "work_to_articles", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "article_id"
     t.integer  "work_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "work_to_students", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT" do |t|
+  create_table "work_to_students", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "work_id"
     t.integer  "student_id"
     t.boolean  "complete",   default: false
@@ -611,18 +608,18 @@ ActiveRecord::Schema.define(version: 20161213070013) do
     t.datetime "updated_at"
   end
 
-  create_table "work_to_teams", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT" do |t|
+  create_table "work_to_teams", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "work_id"
     t.integer  "grade_team_class_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "works", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT" do |t|
+  create_table "works", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "user_id"
-    t.text     "content",        limit: 65535
-    t.string   "style",                                    collation: "utf8_unicode_ci"
-    t.integer  "comments_count",               default: 0
+    t.string   "content"
+    t.string   "style"
+    t.integer  "comments_count", default: 0
     t.datetime "start_time"
     t.datetime "end_time"
     t.datetime "created_at"

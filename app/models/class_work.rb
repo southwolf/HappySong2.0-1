@@ -11,7 +11,17 @@ class ClassWork < ApplicationRecord
   # callbacks
   after_commit :build_student_works, on: :create
   def build_student_works # ActiveJob 去创建学生完成作业情况表
-    CreateStudentWorkJob.perform_later(self.id)
+    unless Rails.env == 'test'
+      CreateStudentWorkJob.perform_later(self.id)
+    else
+      org_class.students.pluck(:id).each do |stu_id|
+        begin
+          StudentWork.create(work_id: home_work.id, student_id: stu_id, state: 0)
+        rescue => e
+          Rails.logger.info 'cause an exception but did not maters'
+        end
+      end
+    end
   end
 
   private

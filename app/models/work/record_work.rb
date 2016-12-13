@@ -9,8 +9,7 @@ class RecordWork < HomeWork
   end
 
   # methods
-  def build_record_work(article_ids, class_ids) #TODO Maybe ActiceJob
-    # TODO bulk_insert
+  def build_record_work(article_ids, class_ids)
     begin
       @classes = Org::Class.where(id: class_ids)
       @classes.each do |org_class|

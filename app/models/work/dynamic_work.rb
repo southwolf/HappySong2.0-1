@@ -7,7 +7,11 @@ class DynamicWork < HomeWork
   # callback
   after_create :notify_students
   def notify_students
-    NewNotificationJob.perform_later(teacher_id, 1, id, 'DynamicWork')
+    unless Rails.env == 'test'
+      NewNotificationJob.perform_later(teacher_id, 1, id, 'DynamicWork')
+    else
+      NewNotification.create(actor_id: teacher_id, index: 1, targetable_id: id, targetable_type: DynamicWork)
+    end
   end
 
   # methods
