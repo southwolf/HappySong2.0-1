@@ -2,7 +2,17 @@
 module NewApi
   module V1
     class Teachers::RecordsController < Teachers::WorksController
-      
+
+      skip_before_action :authenticate, only: [:index]
+
+      def index #当前老师布置的所有朗读作业
+        load_teacher
+        @record_works = @teacher.record_works.group_by { |e| e.created_at.strftime("%Y%m") }
+        render json: {
+          record_works: @record_works
+        }, status: 200
+      end
+
       def create
         load_teacher
         ans = build_record

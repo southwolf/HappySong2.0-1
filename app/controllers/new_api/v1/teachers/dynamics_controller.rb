@@ -3,6 +3,20 @@ module NewApi
   module V1
     class Teachers::DynamicsController < Teachers::WorksController
 
+      skip_before_action :authenticate, only: [:index, :month]
+
+      def index
+        load_teacher
+        @dynamic_works = @teacher.dynamic_works.group_by { |e| e.created_at.strftime("%Y%m") }
+        render json: {
+          dynamic_works: @dynamic_works
+        }, status: 200
+      end
+
+      def month
+        
+      end
+
       def create
         load_teacher
         ans = build_dynamic
