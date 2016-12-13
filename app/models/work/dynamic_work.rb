@@ -4,6 +4,12 @@ class DynamicWork < HomeWork
   # associations
   has_many :materials, as: :materialable , class_name: 'Material'
 
+  # callback
+  after_create :notify_students
+  def notify_students
+    NewNotificationJob.perform_later(teacher_id, 1, id, 'DynamicWork')
+  end
+
   # methods
   def build_dynamic_work(qiniu_files, class_ids)
     begin
