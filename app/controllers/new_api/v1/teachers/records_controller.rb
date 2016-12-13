@@ -3,11 +3,19 @@ module NewApi
   module V1
     class Teachers::RecordsController < Teachers::WorksController
 
-      skip_before_action :authenticate, only: [:index]
+      skip_before_action :authenticate, only: [:index, :month]
 
       def index #当前老师布置的所有朗读作业
         load_teacher
-        @record_works = @teacher.record_works.group_by { |e| e.created_at.strftime("%Y%m") }
+        @record_works = @teacher.record_works.select(:id, :avatar, :created_at).group_by { |e| e.created_at.strftime("%Y%m") }
+        render json: {
+          record_works: @record_works
+        }, status: 200
+      end
+
+      def month
+        load_teacher
+        @record_works = @teacher.record_works.select(:id, :avatar, :created_at).where("date_format(created_at, '%Y%m') = ?", params[:month])
         render json: {
           record_works: @record_works
         }, status: 200

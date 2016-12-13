@@ -18,6 +18,8 @@ class RecordWork < HomeWork
       end
 
       @articles = Article.where(id: article_ids)
+      self.avatar = ENV['QINIUPREFIX'] + @articles.first.try(:cover_img)
+      self.save
       @articles.each do |article|
         article_works.create!(article: article)
       end

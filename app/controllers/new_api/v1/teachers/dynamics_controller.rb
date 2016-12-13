@@ -7,14 +7,18 @@ module NewApi
 
       def index
         load_teacher
-        @dynamic_works = @teacher.dynamic_works.group_by { |e| e.created_at.strftime("%Y%m") }
+        @dynamic_works = @teacher.dynamic_works.select(:id, :avatar, :created_at).group_by { |e| e.created_at.strftime("%Y%m") }
         render json: {
           dynamic_works: @dynamic_works
         }, status: 200
       end
 
       def month
-        
+        load_teacher
+        @dynamic_works = @teacher.dynamic_works.select(:id, :avatar, :created_at).where("date_format(created_at, '%Y%m') = ?", params[:month])
+        render json: {
+          record_works: @dynamic_works
+        }, status: 200
       end
 
       def create

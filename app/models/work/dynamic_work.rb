@@ -13,6 +13,8 @@ class DynamicWork < HomeWork
   # methods
   def build_dynamic_work(qiniu_files, class_ids)
     begin
+      self.avatar = ENV['QINIUPREFIX'] + qiniu_files[0]['url']
+      self.save
       qiniu_files.each do |file|
         materials.create!(url: file['url'], kind: file['type'])
       end
