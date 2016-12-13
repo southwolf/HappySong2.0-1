@@ -7,3 +7,4 @@
 :queues:
   - default
   - [notifications, 40]
+  - [callbacks, 35]

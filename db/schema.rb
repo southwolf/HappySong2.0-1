@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161213045710) do
+ActiveRecord::Schema.define(version: 20161213070013) do
 
   create_table "admins", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT" do |t|
     t.string   "name"
@@ -494,6 +494,16 @@ ActiveRecord::Schema.define(version: 20161213045710) do
     t.datetime "invalid_time"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
+  end
+
+  create_table "student_works", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "sudent_id"
+    t.integer  "work_id"
+    t.integer  "state"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["sudent_id"], name: "index_student_works_on_sudent_id", using: :btree
+    t.index ["work_id"], name: "index_student_works_on_work_id", using: :btree
   end
 
   create_table "subjects", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT" do |t|
