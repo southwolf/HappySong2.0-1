@@ -34,7 +34,8 @@ class NewNotification < ApplicationRecord
     targetable.classes.each do |org_class|
       ids += org_class.students.pluck(:id)
     end
-    ids.uniq!.map(&:to_s)
+    return ids.uniq!.map(&:to_s) unless ids.blank?
+    ids
   end
 
 end

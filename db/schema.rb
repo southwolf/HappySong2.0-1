@@ -497,12 +497,12 @@ ActiveRecord::Schema.define(version: 20161213070013) do
   end
 
   create_table "student_works", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.integer  "sudent_id"
+    t.integer  "student_id"
     t.integer  "work_id"
     t.integer  "state"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["sudent_id"], name: "index_student_works_on_sudent_id", using: :btree
+    t.index ["student_id"], name: "index_student_works_on_student_id", using: :btree
     t.index ["work_id"], name: "index_student_works_on_work_id", using: :btree
   end
 
