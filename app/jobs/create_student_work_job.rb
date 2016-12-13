@@ -5,7 +5,7 @@ class CreateStudentWorkJob < ApplicationJob
     class_work = ClassWork.find_by(id: class_work_id)
     class_work.org_class.students.pluck(:id).each do |stu_id|
       begin # 这里避免了一个同学在两个班级的时候同时收到了同一份作业的尴尬
-        StudentWork.create(work_id: home_work.id, student_id: stu_id, state: 0)
+        StudentWork.create(work_id: class_work.home_work.id, student_id: stu_id, state: 0)
       rescue => e
         Rails.logger.info 'cause an exception but did not maters'
       end

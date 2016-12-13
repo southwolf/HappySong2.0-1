@@ -10,7 +10,7 @@ class DynamicWork < HomeWork
     unless Rails.env == 'test'
       NewNotificationJob.perform_later(teacher_id, 1, id, 'DynamicWork')
     else
-      NewNotification.create(actor_id: teacher_id, index: 1, targetable_id: id, targetable_type: DynamicWork)
+      NewNotification.create(actor_id: teacher_id, index: 1, targetable_id: id, targetable_type: 'DynamicWork')
     end
   end
 

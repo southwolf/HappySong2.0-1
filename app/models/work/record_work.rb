@@ -5,7 +5,11 @@ class RecordWork < HomeWork
   # callback
   after_create :notify_students
   def notify_students
-    NewNotificationJob.perform_later(teacher_id, 1, id, 'RecordWork')
+    unless Rails.env == 'test'
+      NewNotificationJob.perform_later(teacher_id, 1, id, 'RecordWork')
+    else
+      NewNotification.create(actor_id: teacher_id, index: 1, targetable_id: id, targetable_type: 'RecordWork')
+    end
   end
 
   # methods
