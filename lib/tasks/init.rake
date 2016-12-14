@@ -15,7 +15,7 @@ FADE_NAME = {
 namespace :init do
 
   desc "Test C"
-  task :migrate_init => [:import_nations, :user_type, :migrate_school, :migrate_class] do
+  task :migrate_init => [:user_type, :migrate_school, :migrate_class] do
     puts 'Over'
   end
 
@@ -23,6 +23,7 @@ namespace :init do
   task :migrate_class => :environment do
     puts '------> Start migrate class'
     GradeTeamClass.find_each do |gt_class|
+      puts "---------> GradeTeamClass id: #{gt_class.id} "
       school_id = gt_class.school_id
       teacher_id = gt_class.teacher_id
       grade_no = gt_class.grade_id
@@ -43,6 +44,7 @@ namespace :init do
   task migrate_school: :environment do
     puts '------> Start migrate school'
     School.find_each do |school|
+      puts "---------> School id: #{school.id} "
       @district = District.find_by(id: school.district_id)
       district_name  = FADE_NAME[@district.name.to_sym].blank? ? @district.name : FADE_NAME[@district.name.to_sym]
       @nation = Nation.find_by(name: district_name)
