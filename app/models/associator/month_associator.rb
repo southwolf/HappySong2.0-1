@@ -1,0 +1,2 @@
+class MonthAssociator < Associator
+end

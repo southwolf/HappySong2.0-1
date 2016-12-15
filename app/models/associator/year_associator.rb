@@ -1,0 +1,2 @@
+class YearAssociator < Associator
+end
