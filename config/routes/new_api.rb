@@ -52,7 +52,7 @@ namespace :new_api do
       scope module: :students do
         resources :classes, only: [:index, :destroy, :create]
         resources :profile, only: [:index]
-        resources :works, only: [:index]
+        resources :works, only: [:index, :show]
       end
     end
   end
