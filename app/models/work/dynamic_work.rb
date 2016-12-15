@@ -5,7 +5,7 @@ class DynamicWork < HomeWork
   has_many :materials, as: :materialable , class_name: 'Material'
 
   # callback
-  after_create :notify_students
+  after_commit :notify_students, on: :create
   def notify_students
     unless Rails.env == 'test'
       NewNotificationJob.perform_later(teacher_id, 1, id, 'DynamicWork')

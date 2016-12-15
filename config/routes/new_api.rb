@@ -48,10 +48,11 @@ namespace :new_api do
       end
     end
 
-    resources :students, only: [] do
+    resources :students, only: [:show, :index] do
       scope module: :students do
         resources :classes, only: [:index, :destroy, :create]
         resources :profile, only: [:index]
+        resources :works, only: [:index]
       end
     end
   end

@@ -11,7 +11,20 @@ class StudentWork < ApplicationRecord
 
   # associations
   belongs_to :student, class_name: 'Student', foreign_key: :student_id
-  belongs_to :home_work, class_name: 'HomeWork', foreign_key: :work_id
+  belongs_to :home_work, -> { eager_load :teacher }, class_name: 'HomeWork', foreign_key: :work_id
   belongs_to :record_work, class_name: 'RecordWork', foreign_key: :work_id
   belongs_to :dynamic_work, class_name: 'DynamicWork', foreign_key: :work_id
+
+  # delegate
+  delegate :teacher_name, to: :home_work, allow_nil: true
+  delegate :avatar, to: :home_work, allow_nil: true
+  delegate :type, to: :home_work, allow_nil: true
+  delegate :content, to: :home_work, allow_nil: true
+  delegate :end_time, to: :home_work, allow_nil: true
+
+  def title
+    home_work.send(:title)
+  end
+
+
 end

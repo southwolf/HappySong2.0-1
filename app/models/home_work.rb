@@ -17,4 +17,10 @@ class HomeWork < ApplicationRecord
 
   has_one :notification, as: :targetable, class_name: 'NewNotification'
 
+  # delegate
+  delegate :name, to: :teacher, prefix: :teacher, allow_nil: true # teacher_name
+
+  def title
+    articles.first.send(:title)
+  end
 end
