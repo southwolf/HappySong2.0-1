@@ -21,6 +21,7 @@ class StudentWork < ApplicationRecord
   delegate :type, to: :home_work, allow_nil: true
   delegate :content, to: :home_work, allow_nil: true
   delegate :end_time, to: :home_work, allow_nil: true
+  delegate :id, to: :home_work, prefix: :work, allow_nil: true
 
   def title
     home_work.send(:title)
