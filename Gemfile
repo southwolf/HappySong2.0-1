@@ -52,6 +52,9 @@ gem 'typhoeus'
 gem 'jbuilder', '~> 2.5'
 gem 'active_model_serializers'
 
+# ActiveType
+gem 'active_type', git: 'https://github.com/makandra/active_type'
+
 group :test do
   gem 'faker'
 end
