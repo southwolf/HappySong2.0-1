@@ -8,6 +8,7 @@ class Student < User
   has_many :home_works, through: :student_works
 
   has_many :orders, foreign_key: :user_id, class_name: 'Order'
+  has_one :associator, foreign_key: :student_id, class_name: 'Associator'
 
   # instance methods
   def join_class(org_class) # 加入班级

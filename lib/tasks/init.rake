@@ -19,6 +19,19 @@ namespace :init do
     puts 'Over'
   end
 
+  desc "给学生生成会员信息"
+  task generate_associator: :environment do
+    puts '------> Start generate_associator'
+    Student.find_each do |student|
+      a = student.create_associator(
+        start_time: Date.today,
+        expire_time: Date.today + 30,
+        type: 'MonthAssociator'
+      )
+    end
+
+  end
+
   desc "迁移班级数据"
   task :migrate_class => :environment do
     puts '------> Start migrate class'

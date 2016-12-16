@@ -1,4 +1,5 @@
 # 学生 -> 会员
+# TODO 学生的个人详情的时候返回会员信息
 class Associator < ApplicationRecord
   # associations
   belongs_to :student, class_name: 'Student', foreign_key: 'student_id'
