@@ -4,7 +4,7 @@ module NewApi
 
       before_action :authenticate, only: [:create]
       def create
-        order = Order.create(order_params)
+        order = @current_user.orders.create(order_params)
         charge = order.connect_pingpp
         render json:
           charge, adapter: :attributes, status: 201

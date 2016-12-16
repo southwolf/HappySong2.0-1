@@ -12,7 +12,15 @@ class Order < ApplicationRecord
     self.order_no = generate_order_no if order_no.blank?
   end
 
-  # after_commit :connect_pingpp, on: :create
+  before_update :update_associator # 会员 TODO 批处理脚本 所有的学生生成会员对象
+  def update_associator
+    binding.pry
+    if self.complete_changed?(from: false, to: true)
+
+    end
+  end
+
+  # methods
   def connect_pingpp
     begin
       charge = Pingpp::Charge.create(build_pingpp_params)
