@@ -38,12 +38,11 @@ namespace :new_api do
         end
       end
     end
-
-
+    
     resources :profiles, only: [:show]
     resources :orders, only: [:create]
-    namespace :pingpp do 
-      resources :webhooks, only: [:index, :create]
+    namespace :pingpp do
+      resources :webhooks, only: [:create]
     end
 
     resources :cities, shallow: true, only: [:index] do

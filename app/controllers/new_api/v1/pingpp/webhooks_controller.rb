@@ -1,16 +1,6 @@
 module NewApi
   module V1
     class Pingpp::WebhooksController < BaseController
-      def index
-        render json: {
-          ztao: {
-            error: 'this is test'
-          }
-        }
-      end
-
-      # TODO refactory with AcType
-      # ZENGTAO-TODO TEST
       def create
         case params['type']
         when "charge.succeeded" # 改变 order 状态 | 添加 会员
