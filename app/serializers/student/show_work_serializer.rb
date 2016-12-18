@@ -1,5 +1,9 @@
 class Student::ShowWorkSerializer < ActiveModel::Serializer
-  attributes :id, :teacher_name, :teacher_avatar, :content, :start_time, :end_time, :type
+  attributes :id, :teacher_name, :teacher_avatar, :content, :start_time, :end_time, :type, :state
+
+  def state
+    object.state
+  end
 
   def teacher_avatar
     ENV['QINIUPREFIX'] + object.teacher_avatar

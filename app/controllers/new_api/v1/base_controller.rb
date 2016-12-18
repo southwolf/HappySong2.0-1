@@ -2,11 +2,15 @@ module NewApi
   module V1
     class BaseController < ActionController::API
       rescue_from ApiError, with: :handle_error
+      before_action :set_model_current_user
 
       protected
-
       def handle_error(e)
         render json: { error_code: e.code, error_message: e.text }, status: e.status
+      end
+
+      def set_model_current_user
+        User.current = current_user
       end
 
       def current_user

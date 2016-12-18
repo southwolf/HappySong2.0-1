@@ -16,9 +16,14 @@ class HomeWork < ApplicationRecord
   has_many :articles, through: :article_works
 
   has_one :notification, as: :targetable, class_name: 'NewNotification'
+  has_many :student_works, foreign_key: :work_id, class_name: 'StudentWork'
 
   # delegate
   delegate :name, :avatar, to: :teacher, prefix: :teacher, allow_nil: true # teacher_name
+
+  def state(user = User.current)
+    state = student_works.find_by(student_id: user.id).state
+  end
 
   def title
     articles.first.try(:title)
