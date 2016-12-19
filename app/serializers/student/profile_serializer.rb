@@ -1,5 +1,10 @@
 class Student::ProfileSerializer < ProfileSerializer
   attributes :followers_count, :followings_count
+  attributes :vip
+
+  def vip
+    true
+  end
 
   def followers_count
     object.followers.count
