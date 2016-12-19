@@ -6,6 +6,14 @@ namespace :new_api do
       end
     end
 
+    resources :works, only: [] do
+      scope module: :works do
+        resources :finished_students, only: [:index]
+        resources :unfinished_students, only: [:index]
+        resources :check_states, only: [:index]
+      end
+    end
+
     resources :classes, only: [:index, :show] do
       collection do
         get :code
@@ -39,8 +47,11 @@ namespace :new_api do
       end
     end
 
-
     resources :profiles, only: [:show]
+    resources :orders, only: [:create]
+    namespace :pingpp do
+      resources :webhooks, only: [:create]
+    end
 
     resources :cities, shallow: true, only: [:index] do
       scope module: :cities do
@@ -52,7 +63,7 @@ namespace :new_api do
       scope module: :students do
         resources :classes, only: [:index, :destroy, :create]
         resources :profile, only: [:index]
-        resources :works, only: [:index]
+        resources :works, only: [:index, :show]
       end
     end
   end

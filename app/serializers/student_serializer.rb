@@ -1,5 +1,5 @@
 class StudentSerializer < ActiveModel::Serializer
-  attributes :name, :uid, :avatar
+  attributes :name, :uid, :avatar, :desc
 
   def avatar
     ENV['QINIUPREFIX'] + object.avatar

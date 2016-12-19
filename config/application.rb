@@ -22,6 +22,7 @@ module LoveToReadVersion2
     config.autoload_paths += Dir["#{config.root}/app/models/org/*"]
     config.autoload_paths += Dir["#{config.root}/app/models/user"]
     config.autoload_paths += Dir["#{config.root}/app/models/work"]
+    config.autoload_paths += Dir["#{config.root}/app/models/associator"]
     config.autoload_paths += Dir["#{config.root}/app/models/jpush"]
 
     config.autoload_paths += ["#{config.root}/lib/module"]

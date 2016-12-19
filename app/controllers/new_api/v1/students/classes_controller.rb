@@ -26,7 +26,7 @@ module NewApi
 
       private
       def load_class
-        @org_class = Org::Class.where("code = ? or id = ?", params[:class][:code], params[:id]).first
+        @org_class = Org::Class.where("code = ?", params[:class][:code]).first
         raise ClassNotFound unless @org_class
       end
 

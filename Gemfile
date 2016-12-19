@@ -19,8 +19,6 @@ gem 'grape-swagger', '~> 0.22.0'
 gem 'grape-swagger-rails', '~> 0.2.2'
 gem 'grape-swagger-entity', '~> 0.1.4'
 gem 'require_all', '~> 1.3', '>= 1.3.3'
-#短信
-# gem 'smart_sms'
 
 # Rack Server
 gem 'puma', '3.6.2'
@@ -29,15 +27,13 @@ gem 'puma', '3.6.2'
 gem 'whenever', '~> 0.9.7', require: false
 
 # ping++支付
-gem 'pingpp', '~> 2.0', '>= 2.0.1'
-
+gem 'pingpp', git: 'https://github.com/PingPlusPlus/pingpp-ruby'
+# 推送通知
+gem 'jpush', git: 'https://github.com/jpush/jpush-api-ruby-client.git'
 # 分页
 gem 'kaminari', '~> 0.17.0'
-
 # 七牛
 gem 'qiniu', '~> 6.8'
-#  notifications
-# gem 'notifications', '~> 0.2.0'
 
 # Redis
 gem 'redis'
@@ -52,12 +48,12 @@ gem 'sinatra', require: false
 # Http客户端
 gem 'typhoeus'
 
-# 推送通知
-gem 'jpush', git: 'https://github.com/jpush/jpush-api-ruby-client.git'
-
 # API序列化
 gem 'jbuilder', '~> 2.5'
 gem 'active_model_serializers'
+
+# ActiveType
+gem 'active_type', git: 'https://github.com/makandra/active_type'
 
 group :test do
   gem 'faker'

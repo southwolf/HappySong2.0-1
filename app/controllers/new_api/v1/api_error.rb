@@ -58,6 +58,18 @@ module NewApi
       end
     end
 
+    class HomeWorkNotFound < ApiError
+      def initialize
+        super code: 1107, text: "HomeWork not found.", status: 404
+      end
+    end
+
+    class StudentWorkNotFound < ApiError
+      def initialize
+        super code: 1108, text: "StudentWork not found", status: 404
+      end
+    end
+
     class MissingClassCodeError < ApiError
       def initialize
         super code: 1201, text: 'Missing Class Code', status: 400

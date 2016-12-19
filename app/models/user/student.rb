@@ -7,6 +7,9 @@ class Student < User
   has_many :student_works, foreign_key: :student_id, class_name: 'StudentWork'
   has_many :home_works, through: :student_works
 
+  has_many :orders, foreign_key: :user_id, class_name: 'Order'
+  has_one :associator, foreign_key: :student_id, class_name: 'Associator'
+
   # instance methods
   def join_class(org_class) # 加入班级
     class_student = class_students.build(org_class: org_class)
@@ -22,4 +25,7 @@ class Student < User
     class_student.destroy if class_student
   end
 
+  def current_class
+    org_classes.first
+  end
 end

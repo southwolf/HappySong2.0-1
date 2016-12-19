@@ -1,5 +1,14 @@
 class User < ActiveRecord::Base
 
+  class << self
+    def current
+      Thread.current[:user]
+    end
+    def current=(user)
+      Thread.current[:user] = user
+    end
+  end
+
   before_create :create_auth_token, :create_code, :create_uid
 
   # after_create :add_a_month_vip

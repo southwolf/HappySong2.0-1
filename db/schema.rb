@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161213070013) do
+ActiveRecord::Schema.define(version: 20161216083950) do
 
   create_table "admins", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT" do |t|
     t.string   "name"
@@ -89,6 +89,16 @@ ActiveRecord::Schema.define(version: 20161213070013) do
     t.integer "article_id"
   end
 
+  create_table "associators", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.date     "start_time"
+    t.date     "expire_time"
+    t.string   "type"
+    t.integer  "student_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["student_id"], name: "index_associators_on_student_id", using: :btree
+  end
+
   create_table "attachments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT" do |t|
     t.integer  "dynamic_id"
     t.boolean  "is_video",   default: false
@@ -118,6 +128,7 @@ ActiveRecord::Schema.define(version: 20161213070013) do
     t.string   "order_no"
     t.string   "channel"
     t.string   "client_ip"
+    t.string   "charge_id"
   end
 
   create_table "cash_backs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT" do |t|
