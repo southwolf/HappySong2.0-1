@@ -9,7 +9,7 @@ module NewApi
       end
 
       protected
-      def load_student_work
+      def load_student_works
         @student_works = load_work.student_works.finished
         raise StudentWorkNotFound unless @student_works
         @student_works

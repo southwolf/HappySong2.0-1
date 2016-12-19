@@ -10,6 +10,7 @@ namespace :new_api do
       scope module: :works do
         resources :finished_students, only: [:index]
         resources :unfinished_students, only: [:index]
+        resources :check_states, only: [:index]
       end
     end
 

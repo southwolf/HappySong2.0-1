@@ -15,7 +15,7 @@ module NewApi
       end
 
       def load_students
-        @students = Student.where(id: load_student_work.pluck(:student_id))
+        @students = Student.where(id: load_student_works.pluck(:student_id))
       end
     end
   end
