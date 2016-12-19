@@ -6,6 +6,13 @@ namespace :new_api do
       end
     end
 
+    resources :works, only: [] do
+      scope module: :works do
+        resources :finished_students, only: [:index]
+        resources :unfinished_students, only: [:index]
+      end
+    end
+
     resources :classes, only: [:index, :show] do
       collection do
         get :code
@@ -38,7 +45,7 @@ namespace :new_api do
         end
       end
     end
-    
+
     resources :profiles, only: [:show]
     resources :orders, only: [:create]
     namespace :pingpp do

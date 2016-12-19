@@ -25,4 +25,7 @@ class Student < User
     class_student.destroy if class_student
   end
 
+  def current_class
+    org_classes.first
+  end
 end

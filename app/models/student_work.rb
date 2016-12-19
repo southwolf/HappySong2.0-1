@@ -6,6 +6,11 @@ class StudentWork < ApplicationRecord
     '未完成': 0,
     '已完成': 1
   }
+
+  # scope
+  scope :unfinished, -> { where(state: 0) }
+  scope :finished, -> { where(state: 1) }
+
   # validation
   validates :student_id, uniqueness: { scope: :work_id }
 
@@ -22,6 +27,7 @@ class StudentWork < ApplicationRecord
   delegate :content, to: :home_work, allow_nil: true
   delegate :end_time, to: :home_work, allow_nil: true
   delegate :id, to: :home_work, prefix: :work, allow_nil: true
+  delegate :avatar, to: :student, prefix: :user, allow_nil: true
 
   def title
     home_work.send(:title)
