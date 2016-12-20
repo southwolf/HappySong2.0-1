@@ -20,6 +20,8 @@ namespace :new_api do
       end
       scope module: :classes do
         resources :students, only: [:index]
+        resources :finished_students, only: [:index]
+        resources :unfinished_students, only: [:index]
       end
     end
 

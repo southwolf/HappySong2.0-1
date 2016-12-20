@@ -195,6 +195,7 @@ GEM
       rack (>= 0.4)
     rack-contrib (1.2.0)
       rack (>= 0.9.1)
+    rack-cors (0.4.0)
     rack-protection (1.5.3)
       rack
     rack-test (0.6.3)
@@ -343,6 +344,7 @@ DEPENDENCIES
   pry
   puma (= 3.6.2)
   qiniu (~> 6.8)
+  rack-cors
   rails (~> 5.0.0, >= 5.0.0.1)
   redis
   redis-namespace

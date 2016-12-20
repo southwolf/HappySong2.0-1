@@ -23,6 +23,9 @@ gem 'require_all', '~> 1.3', '>= 1.3.3'
 # Rack Server
 gem 'puma', '3.6.2'
 
+# Cross Site
+gem 'rack-cors', :require => 'rack/cors'
+
 # 定时任务
 gem 'whenever', '~> 0.9.7', require: false
 
