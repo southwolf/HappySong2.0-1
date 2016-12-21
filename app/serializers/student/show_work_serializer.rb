@@ -1,5 +1,7 @@
 class Student::ShowWorkSerializer < ActiveModel::Serializer
-  attributes :id, :teacher_name, :teacher_avatar, :content, :start_time, :end_time, :type, :state
+  attributes :id, :teacher_name, :teacher_avatar, :teacher_desc,  :content, :start_time, :end_time, :type, :state
+  attributes :created_at
+  attributes :type
 
   def state
     object.state
@@ -11,7 +13,7 @@ class Student::ShowWorkSerializer < ActiveModel::Serializer
 
   has_many :articles
   class ArticleSerializer < ActiveModel::Serializer
-    attributes :cover_img
+    attributes :cover_img, :title, :author
     def cover_img
       ENV['QINIUPREFIX'] + object.cover_img
     end
