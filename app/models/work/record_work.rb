@@ -31,4 +31,8 @@ class RecordWork < HomeWork
       return false
     end
   end
+
+  def materials
+    []
+  end
 end

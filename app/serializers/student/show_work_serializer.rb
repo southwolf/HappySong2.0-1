@@ -11,6 +11,14 @@ class Student::ShowWorkSerializer < ActiveModel::Serializer
     ENV['QINIUPREFIX'] + object.teacher_avatar
   end
 
+  has_many :materials
+  class MaterialSerializer < ActiveModel::Serializer
+    attributes :url, :id
+    def url
+      ENV['QINIUPREFIX'] + object.url
+    end
+  end
+
   has_many :articles
   class ArticleSerializer < ActiveModel::Serializer
     attributes :cover_img, :title, :author
