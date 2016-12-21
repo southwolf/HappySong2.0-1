@@ -33,6 +33,7 @@ namespace :new_api do
 
     resources :teachers, shallow: true, only: [:show, :index] do
       scope module: :teachers do
+        resources :students, only: [:index]
         resources :classes, only: [:index]
         resources :profile, only: [:index]
         resources :works, only: [:create, :destroy, :index, :show, :update] # 作业需要有增删改查
@@ -66,6 +67,7 @@ namespace :new_api do
         resources :classes, only: [:index, :destroy, :create]
         resources :profile, only: [:index]
         resources :works, only: [:index, :show]
+        resources :students, only: [:index]
       end
     end
   end
