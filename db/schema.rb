@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161216083950) do
+ActiveRecord::Schema.define(version: 20161221152055) do
 
   create_table "admins", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT" do |t|
     t.string   "name"
@@ -89,7 +89,7 @@ ActiveRecord::Schema.define(version: 20161216083950) do
     t.integer "article_id"
   end
 
-  create_table "associators", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "associators", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPACT" do |t|
     t.date     "start_time"
     t.date     "expire_time"
     t.string   "type"
@@ -258,6 +258,17 @@ ActiveRecord::Schema.define(version: 20161216083950) do
     t.datetime "updated_at"
   end
 
+  create_table "do_works", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "student_work_id"
+    t.string   "content"
+    t.string   "type"
+    t.integer  "user_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.index ["student_work_id"], name: "index_do_works_on_student_work_id", using: :btree
+    t.index ["user_id"], name: "index_do_works_on_user_id", using: :btree
+  end
+
   create_table "dynamics", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT" do |t|
     t.integer  "user_id"
     t.text     "content",             limit: 65535
@@ -330,7 +341,7 @@ ActiveRecord::Schema.define(version: 20161216083950) do
     t.datetime "updated_at"
   end
 
-  create_table "materials", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "materials", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPACT" do |t|
     t.integer  "materialable_id"
     t.string   "materialable_type", limit: 40
     t.string   "kind",              limit: 20,              comment: "Vidio | Image | Sound"
@@ -507,7 +518,7 @@ ActiveRecord::Schema.define(version: 20161216083950) do
     t.datetime "updated_at",              null: false
   end
 
-  create_table "student_works", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "student_works", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=COMPACT" do |t|
     t.integer  "student_id"
     t.integer  "work_id"
     t.integer  "state"
