@@ -2,11 +2,11 @@ module NewApi
   module V1
     class Students::DynamicsController < Students::BaseController
 
-      def index # 学生查看自己的创作列表
+      def index
         load_student
-        dynamics = @student.do_works
-        # render json:
-          # dynamics, each_serializer: Student::WorkSerializer, status: 200, root: 'works', adapter: :json
+        dynamics = @student.do_dynamic_works.select(:id, :avatar, :created_at).group_by { |e| e.created_at.strftime("%Y%m") }
+        render json:
+          dynamics, status: 200, adapter: :json
       end
 
       def show
@@ -35,7 +35,6 @@ module NewApi
       def load_student_work
         @student_work = @student.student_works.find_by(work_id: params[:work_id])
         return nil unless @student_work # 少年说
-        # raise StudentWorkNotFound unless @student_work
         raise StudentWorkHasBeenUploaded if StudentWork.states[@student_work.state] == 1 # block repeat
       end
 
@@ -45,8 +44,11 @@ module NewApi
 
       def build_dynamic_work(dynamic_params)
         begin
-          @dynamic = @student.do_works.create!(dynamic_params.merge({type: 'DoDynamicWork', student_work: @student_work}))
-          @student_work.update_columns(state: 1) if @student_work
+          ActiveRecord::Base.transaction do
+            @dynamic = @student.do_works.create!(dynamic_params.merge({type: 'DoDynamicWork', student_work: @student_work}))
+            @dynamic.update_columns(avatar: dynamic_params[:materials_attributes].first[:url])
+            @student_work.update_columns(state: 1) if @student_work
+          end
         rescue => e
           raise DoDynamicWorkNotCreate
         end
