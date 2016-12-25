@@ -4,9 +4,13 @@ module NewApi
 
       def index # 学生查看自己的创作列表
         load_student
-        works = @student.student_works
+        dynamics = @student.do_works
         render json:
-          works, each_serializer: Student::WorkSerializer, status: 200, root: 'works', adapter: :json
+          # dynamics, each_serializer: Student::WorkSerializer, status: 200, root: 'works', adapter: :json
+      end
+
+      def show
+
       end
 
       def create
@@ -30,7 +34,8 @@ module NewApi
 
       def load_student_work
         @student_work = @student.student_works.find_by(work_id: params[:work_id])
-        raise StudentWorkNotFound unless @student_work
+        return nil unless @student_work # 少年说
+        # raise StudentWorkNotFound unless @student_work
         raise StudentWorkHasBeenUploaded if StudentWork.states[@student_work.state] == 1 # block repeat
       end
 
