@@ -4,9 +4,9 @@ module NewApi
 
       def index # 学生查看自己的朗读列表
         load_student
-        records = @student.do_works
-        # render json:
-          # records, each_serializer: Student::WorkSerializer, status: 200, root: 'works', adapter: :json
+        records = @student.do_works.select(:id, :avatar, :created_at).group_by { |e| e.created_at.strftime("%Y%m") }
+        render json:
+          records, status: 200, adapter: :json
       end
 
       def show
@@ -51,7 +51,7 @@ module NewApi
         begin
           ActiveRecord::Base.transaction do
             @record = @student.do_works.create!(record_params.merge({type: 'DoRecordWork', student_work: @student_work}))
-            @record.update_columns(avatar: (ENV['QINIUPREFIX'] + @article.cover_img) if @article
+            @record.update_columns(avatar: (ENV['QINIUPREFIX'] + @article.cover_img)) if @article
             @student_work.update_columns(state: 1) if @student_work
             @record.update_columns(avatar: @student_work.avatar) if @student_work
           end
