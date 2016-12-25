@@ -68,6 +68,7 @@ namespace :new_api do
         resources :profile, only: [:index]
         resources :works, only: [:index, :show]
         resources :students, only: [:index]
+        resources :dynamics, only: [:create, :index, :destroy]
       end
     end
   end

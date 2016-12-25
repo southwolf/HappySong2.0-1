@@ -10,6 +10,8 @@ class Student < User
   has_many :orders, foreign_key: :user_id, class_name: 'Order'
   has_one :associator, foreign_key: :student_id, class_name: 'Associator'
 
+  has_many :do_works, foreign_key: :user_id, class_name: 'DoWork'
+
   # instance methods
   def join_class(org_class) # 加入班级
     class_student = class_students.build(org_class: org_class)
