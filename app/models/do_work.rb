@@ -1,4 +1,5 @@
 # 学生写作业
+# 自由朗读的话需要有 Article 的 ID
 class DoWork < ApplicationRecord
 
   # validation
