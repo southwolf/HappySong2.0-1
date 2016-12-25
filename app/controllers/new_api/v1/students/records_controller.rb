@@ -1,12 +1,12 @@
 module NewApi
   module V1
-    class Students::DynamicsController < Students::BaseController
+    class Students::RecordsController < Students::BaseController
 
-      def index # 学生查看自己的创作列表
+      def index # 学生查看自己的朗读列表
         load_student
-        dynamics = @student.do_works
+        records = @student.do_works
         # render json:
-          # dynamics, each_serializer: Student::WorkSerializer, status: 200, root: 'works', adapter: :json
+          # records, each_serializer: Student::WorkSerializer, status: 200, root: 'works', adapter: :json
       end
 
       def show
@@ -16,7 +16,7 @@ module NewApi
       def create
         load_student
         load_student_work
-        build_dynamic_work(dynamic_params)
+        build_record_work(record_params)
         render json: {
           message: 'success',
         }, status: 201
@@ -34,21 +34,20 @@ module NewApi
 
       def load_student_work
         @student_work = @student.student_works.find_by(work_id: params[:work_id])
-        return nil unless @student_work # 少年说
-        # raise StudentWorkNotFound unless @student_work
+        return nil unless @student_work
         raise StudentWorkHasBeenUploaded if StudentWork.states[@student_work.state] == 1 # block repeat
       end
 
-      def dynamic_params
-        params.require(:dynamic).permit(:content, materials_attributes: [:kind, :url])
+      def record_params
+        params.require(:record).permit(:content, materials_attributes: [:kind, :url])
       end
 
-      def build_dynamic_work(dynamic_params)
+      def build_record_work(record_params)
         begin
-          @dynamic = @student.do_works.create!(dynamic_params.merge({type: 'DoDynamicWork', student_work: @student_work}))
+          @record = @student.do_works.create!(record_params.merge({type: 'DoRecordWork', student_work: @student_work}))
           @student_work.update_columns(state: 1) if @student_work
         rescue => e
-          raise DoDynamicWorkNotCreate
+          raise DoRecordWorkNotCreate
         end
       end
     end
