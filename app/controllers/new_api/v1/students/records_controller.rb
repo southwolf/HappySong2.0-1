@@ -6,7 +6,7 @@ module NewApi
         load_student
         records = @student.do_works.select(:id, :avatar, :created_at).group_by { |e| e.created_at.strftime("%Y%m") }
         render json:
-          records, status: 200, adapter: :json
+          records, adapter: :json, status: 200
       end
 
       def show

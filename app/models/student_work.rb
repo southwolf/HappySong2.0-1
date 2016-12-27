@@ -20,6 +20,8 @@ class StudentWork < ApplicationRecord
   belongs_to :record_work, class_name: 'RecordWork', foreign_key: :work_id
   belongs_to :dynamic_work, class_name: 'DynamicWork', foreign_key: :work_id
 
+  has_many :articles, through: :home_work
+
   # delegate
   delegate :teacher_name, to: :home_work, allow_nil: true
   delegate :avatar, to: :home_work, allow_nil: true

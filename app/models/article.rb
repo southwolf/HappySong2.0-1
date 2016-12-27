@@ -11,4 +11,7 @@ class Article < ActiveRecord::Base
 
   has_many   :work_to_articles
   has_many   :work, through: :work_to_articles
+
+  has_many :article_works, foreign_key: :article_id, class_name: 'ArticleWork'
+  has_many :home_works, through: :article_works, source: 'work'
 end
