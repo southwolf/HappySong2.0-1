@@ -39,7 +39,7 @@ class Org::Class < ApplicationRecord
   belongs_to :teacher, foreign_key: :teacher_id, class_name: 'User'
 
   has_many :class_works, foreign_key: :class_id, class_name: 'ClassWork', dependent: :destroy
-  has_many :works, through: :class_works
+  has_many :works, through: :class_works, source: 'home_work'
 
   has_many :class_students, foreign_key: :class_id, class_name: 'ClassStudent', dependent: :destroy
   has_many :students, through: :class_students

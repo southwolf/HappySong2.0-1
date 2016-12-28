@@ -11,6 +11,7 @@ namespace :new_api do
         resources :finished_students, only: [:index]
         resources :unfinished_students, only: [:index]
         resources :check_states, only: [:index]
+        resources :org_classes, only: [:index]
       end
     end
 
