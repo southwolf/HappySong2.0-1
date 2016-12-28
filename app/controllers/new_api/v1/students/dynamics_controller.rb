@@ -46,7 +46,7 @@ module NewApi
         begin
           ActiveRecord::Base.transaction do
             @dynamic = @student.do_works.create!(dynamic_params.merge({type: 'DoDynamicWork', student_work: @student_work}))
-            @dynamic.update_columns(avatar: dynamic_params[:materials_attributes].first[:url])
+            @dynamic.update_columns(avatar: (ENV['QINIUPREFIX'] + dynamic_params[:materials_attributes].first[:url]))
             @student_work.update_columns(state: 1) if @student_work
           end
         rescue => e
