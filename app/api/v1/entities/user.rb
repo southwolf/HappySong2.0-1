@@ -59,17 +59,17 @@ module Entities
 
     # expose :grade_team_classes, if: ->(user, options) { user.role.name == "teacher"}, using: Entities::GradeTeamClass
     #学生的学校全名
-    expose :school_full_name, if: ->(object, options){ object.try(:role).try(:name) == "student"} do |object, options|
-      school = object.grade_team_class.try(:school)
-      district = school.try(:district) if school.present?
-      city = district.try(:city) if district.present?
-
-      if school.present? && district.present? && city.present?
-        "#{city.try(:name)}#{district.try(:name)}#{school.try(:name)}"
-      else
-        " "
-      end
-    end
+    # expose :school_full_name, if: ->(object, options){ object.try(:role).try(:name) == "student"} do |object, options|
+    #   school = object.grade_team_class.try(:school)
+    #   district = school.try(:district) if school.present?
+    #   city = district.try(:city) if district.present?
+    #
+    #   if school.present? && district.present? && city.present?
+    #     "#{city.try(:name)}#{district.try(:name)}#{school.try(:name)}"
+    #   else
+    #     " "
+    #   end
+    # end
 
     expose (:share_url) {|object| ENV['SHARERECORD']+"share_profile/#{object.id}"}
 
