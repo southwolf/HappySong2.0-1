@@ -176,17 +176,7 @@ class User < ActiveRecord::Base
   def show_phone
     "#{self.phone.slice(0..2)}****#{self.phone.slice(-4..-1)}"
   end
-  # 是否是VIP
-  def vip?
-    return false if self.member.nil?
-    if self.member.expire_time > Time.now.to_i
-      self.update(:vip => true)
-      return true
-    else
-      self.update(:vip => false )
-      return false
-    end
-  end
+
 
   def has_student?(student)
     return false if self.grade_team_classes.blank?

@@ -1,0 +1,2 @@
+class FreeList < ApplicationRecord
+end

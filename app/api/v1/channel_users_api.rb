@@ -7,8 +7,8 @@ module V1
       end
       get '/getcode' do
         phone = params[:phone].to_s
-        if YunPian.deliver(phone)
-          present :message, "发送成功"
+        if Sms::YunPian.send(phone)
+             present :message, "发送成功"
         else
           error!({ message: "失败"}, 500)
         end

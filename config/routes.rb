@@ -10,6 +10,9 @@ Rails.application.routes.draw do
   get 'xieyi/xieyi'    => 'xieyi#xieyi'
   get '/zhifu' => 'zhifu#zhifu'
 
+
+  get 'formal/download' => 'codes#index'
+
   get 'web_pay/pay'     => 'web_pay#pay'
   get 'web_pay/other_pay' => 'web_pay#other_pay'
   get 'web_pay/success' => 'web_pay#success'
@@ -20,7 +23,7 @@ Rails.application.routes.draw do
 
   # 渠道管理
   namespace :channel do
-    # root "channel#index"
+    root "channel#index"
     get 'channel/index' => 'channel/index'
     resources :channel_users do
       resources  :transfers, only: [:index, :new, :create]

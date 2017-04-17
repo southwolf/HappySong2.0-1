@@ -51,4 +51,9 @@ class School < ActiveRecord::Base
   def address
     "#{self.try(:district).try(:city).try(:name)}#{self.try(:district).try(:name)}"
   end
+
+  def free?
+    FreeList.where("expire_time > ?", Time.now).where(school_name: name).present?^M
+  end^M
+
 end

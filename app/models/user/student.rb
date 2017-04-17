@@ -29,6 +29,19 @@ class Student < User
     class_student.destroy if class_student
   end
 
+  # 是否是VIP
+  def vip?
+    return false if self.member.nil?
+    return true if school.free?
+    if self.member.expire_time > Time.now.to_i
+      self.update(:vip => true)
+      return true
+    else
+      self.update(:vip => false )
+      return false
+    end
+  end
+
   def current_class
     org_classes.first
   end

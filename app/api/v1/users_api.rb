@@ -13,7 +13,7 @@ module V1
       end
       get '/getcode' do
         phone = params[:phone].to_s
-        if Sms::YunPian.deliver(phone)
+        if Sms::YunPian.send(phone)
           present :message, "成功"
         end
       end
