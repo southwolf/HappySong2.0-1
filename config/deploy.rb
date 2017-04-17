@@ -14,7 +14,7 @@ require_relative 'deploy/sidekiq'
   require File.expand_path("../deploy/production.rb", __FILE__)
 # end
 
-set :repository, 'http://121.41.104.215/Ljmob/HappySong2.0.git'
+set :repository, 'git@github.com:narutohinata/HappySong2.0.git'
 set :cmd_prefix, -> { "RAILS_ENV=#{rails_env}" }
 set :rack_prefix, -> { %{RACK_ENV="#{rails_env}" #{bundle_bin} exec } }
 set :shared_paths, [

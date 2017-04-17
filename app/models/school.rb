@@ -53,7 +53,7 @@ class School < ActiveRecord::Base
   end
 
   def free?
-    FreeList.where("expire_time > ?", Time.now).where(school_name: name).present?^M
-  end^M
+    FreeList.where("expire_time > ?", Time.now).where(school_name: name).present?
+  end
 
 end
