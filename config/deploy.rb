@@ -8,13 +8,13 @@ require_relative 'deploy/puma'
 require_relative 'deploy/sidekiq'
 
 
-if ENV['on'].nil?
-  require File.expand_path('../deploy/staging.rb', __FILE__)
-else
-  require File.expand_path("../deploy/#{ENV['on']}.rb", __FILE__)
-end
+# if ENV['on'].nil?
+#   require File.expand_path('../deploy/staging.rb', __FILE__)
+# else
+  require File.expand_path("../deploy/production.rb", __FILE__)
+# end
 
-set :repository, 'https://github.com/SHMUJI/HappySong2.0.git'
+set :repository, 'http://121.41.104.215/Ljmob/HappySong2.0.git'
 set :cmd_prefix, -> { "RAILS_ENV=#{rails_env}" }
 set :rack_prefix, -> { %{RACK_ENV="#{rails_env}" #{bundle_bin} exec } }
 set :shared_paths, [
