@@ -13,7 +13,7 @@ module Entities
 
   class Dynamic < SimpleDynamic
     expose :is_relay, :comments_count, :created_at, :is_work
-    # expose :user,                    using: Entities::User
+    expose :user,                    using: Entities::User
     # expose :attachments,             using: Entities::Attachment
     expose :root_dynamic,            using: Entities::SimpleDynamic, if: lambda { |object, options| object.root_dynamic.present?}
     expose :original_dynamic, using: Entities::SimpleDynamic do |object|
