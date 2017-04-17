@@ -48,8 +48,8 @@ module Entities
     #教师的学校全名
     expose :school_full_name, if: ->(object, options){ object.try(:role).try(:name) =="teacher" } do |object, options|
       school   = object.grade_team_classes.first.try(:school)
-      district = school.try(:district)
-      city     = district.try(:city)
+      district = school.try(:district) if school.present?
+      city     = district.try(:city) if district.present?
       if school.present? && district.present? && city.present?
         "#{city.try(:name)}#{district.try(:name)}#{school.try(:name)}"
       else
