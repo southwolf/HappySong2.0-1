@@ -122,11 +122,12 @@ module Entities
       object.can_inviter?
     end
     #会员到期时间
-    expose :expire_time, if: ->(object, options){ object.member.present? } do |object|
+    expose :expire_time, if: ->(object, options){ object.vip? || object.member.present? } do |object|
       if object.school.present? && object.school.free?
         object.school.free_list.expire_time.to_i >  object.member.expire_time.to_i ? object.school.free_list.expire_time.to_i : object.member.expire_time.to_i
+      else
+        object.member.expire_time.to_i
       end
-      object.member.expire_time.to_i
     end
     expose (:followers_count)  { |user| user.followers.size }
     expose (:followings_count) { |user| user.followings.size }
