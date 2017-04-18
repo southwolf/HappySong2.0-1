@@ -124,7 +124,7 @@ module Entities
     #会员到期时间
     expose :expire_time, if: ->(object, options){ object.member.present? } do |object|
       if object.school.free?
-        object.school.free_list.expire_time.to_i
+        object.school.free_list.expire_time.to_i > object.member.expire_time.to_i ? object.school.free_list.expire_time.to_i : object.member.expire_time.to_i
       else
         object.member.expire_time.to_i
       end
