@@ -269,7 +269,7 @@ class User < ActiveRecord::Base
     end
   end
 
-  def myschool
+  def school
     grade_team_class.try(:school)
   end
 
