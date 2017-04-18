@@ -222,6 +222,20 @@ class User < ActiveRecord::Base
     end
   end
 
+  # 是否是VIP
+  def vip?
+    return false if self.member.nil?
+    if self.school.present?
+      return true if school.free?
+    end
+    if self.member.expire_time > Time.now.to_i
+      self.update(:vip => true)
+      return true
+    else
+      self.update(:vip => false )
+      return false
+    end
+  end
 
   # 添加角色
   def add_role name

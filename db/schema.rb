@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170418094100) do
+ActiveRecord::Schema.define(version: 20170418094658) do
 
   create_table "admins", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
     t.string   "name"
@@ -601,6 +601,7 @@ ActiveRecord::Schema.define(version: 20170418094100) do
     t.string   "bg_image_url",                   default: "bg_image.png"
     t.string   "type",                limit: 20,                                comment: "User Role(Type)"
     t.string   "sms_code",            limit: 10
+    t.boolean  "vip",                            default: true
   end
 
   create_table "views", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
