@@ -42,9 +42,7 @@ class Student < User
     end
   end
 
-  def school
-    grade_team_class.try(:school)
-  end
+
 
   def current_class
     org_classes.first

@@ -290,4 +290,9 @@ class User < ActiveRecord::Base
       break if User.where(uid: uid).empty?
     end
   end
+
+
+  def school
+    grade_team_class.try(:school)
+  end
 end
