@@ -123,11 +123,11 @@ module Entities
     end
     #会员到期时间
     expose :expire_time, if: ->(object, options){ object.member.present? } do |object|
-      if object.try(:school).try(:free?)
-        object.school.free_list.expire_time.to_i > object.member.expire_time.to_i ? object.school.free_list.expire_time.to_i : object.member.expire_time.to_i
-      else
+      # if object.try(:school).try(:free?)
+      #   object.school.free_list.expire_time.to_i > object.member.expire_time.to_i ? object.school.free_list.expire_time.to_i : object.member.expire_time.to_i
+      # else
         object.member.expire_time.to_i
-      end
+      # end
     end
     expose (:followers_count)  { |user| user.followers.size }
     expose (:followings_count) { |user| user.followings.size }
