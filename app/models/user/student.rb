@@ -32,7 +32,9 @@ class Student < User
   # 是否是VIP
   def vip?
     return false if self.member.nil?
-    return true if school.free?
+    if self.school.present?
+      return true if school.free?
+    end
     if self.member.expire_time > Time.now.to_i
       self.update(:vip => true)
       return true
