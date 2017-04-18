@@ -269,6 +269,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  def myschool
+    grade_team_class.try(:school)
+  end
+
   private
   def create_auth_token
     loop do
@@ -292,7 +296,5 @@ class User < ActiveRecord::Base
   end
 
 
-  def myschool
-    grade_team_class.try(:school)
-  end
+
 end
