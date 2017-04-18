@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170417071652) do
+ActiveRecord::Schema.define(version: 20170418094100) do
 
   create_table "admins", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
     t.string   "name"
@@ -589,7 +589,6 @@ ActiveRecord::Schema.define(version: 20170417071652) do
     t.string   "sex"
     t.string   "age"
     t.string   "desc"
-    t.boolean  "vip",                            default: false
     t.boolean  "is_first",                       default: true
     t.string   "code"
     t.datetime "created_at"
