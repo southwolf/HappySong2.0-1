@@ -224,10 +224,11 @@ class User < ActiveRecord::Base
 
   # 是否是VIP
   def vip?
-    return false if self.member.nil?
     if self.school.present?
       return true if school.free?
     end
+    return false if self.member.nil?
+
     if self.member.expire_time > Time.now.to_i
       self.update(:vip => true)
       return true
