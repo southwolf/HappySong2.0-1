@@ -1,6 +1,13 @@
 module Entities
   class User < Grape::Entity
-    expose :id, :uid, :phone, :code, :auth_token, :is_first
+    expose :id, :uid,  :code, :auth_token, :is_first
+    expose :phone do |object|
+      if object.phone.present?
+        object.phone
+      else
+        ""
+      end
+    end
     expose :ios_pay_url do |object|
       if object.try(:role).try(:name) =="student"
         "http://abc.happysong.com.cn/web_pay/pay"
